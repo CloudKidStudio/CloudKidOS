@@ -1,0 +1,4438 @@
+{
+    "project": {
+        "name": "CloudKid OS API",
+        "description": "CloudKid OS API: A framework for HTML5 content built on top of createjs",
+        "version": "1.0.0",
+        "logo": "cloudkid.png"
+    },
+    "files": {
+        "src/cloudkid/loaders/CacheManager.js": {
+            "name": "src/cloudkid/loaders/CacheManager.js",
+            "modules": {},
+            "classes": {
+                "cloudkid.CacheManager": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/cloudkid/loaders/LoaderQueueItem.js": {
+            "name": "src/cloudkid/loaders/LoaderQueueItem.js",
+            "modules": {},
+            "classes": {
+                "cloudkid.LoaderQueueItem": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/cloudkid/loaders/MediaLoader.js": {
+            "name": "src/cloudkid/loaders/MediaLoader.js",
+            "modules": {},
+            "classes": {
+                "cloudkid.MediaLoader": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/cloudkid/loaders/MediaLoaderResult.js": {
+            "name": "src/cloudkid/loaders/MediaLoaderResult.js",
+            "modules": {},
+            "classes": {
+                "cloudkid.MediaLoaderResult": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/cloudkid/scaling/ScreenSettings.js": {
+            "name": "src/cloudkid/scaling/ScreenSettings.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/cloudkid/scaling/UIElement.js": {
+            "name": "src/cloudkid/scaling/UIElement.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/cloudkid/scaling/UIElementSettings.js": {
+            "name": "src/cloudkid/scaling/UIElementSettings.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/cloudkid/scaling/UIScaler.js": {
+            "name": "src/cloudkid/scaling/UIScaler.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/cloudkid/Application.js": {
+            "name": "src/cloudkid/Application.js",
+            "modules": {},
+            "classes": {
+                "cloudkid.Application": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/cloudkid/AssetManager.js": {
+            "name": "src/cloudkid/AssetManager.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/cloudkid/CKWorker.js": {
+            "name": "src/cloudkid/CKWorker.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/cloudkid/EaselJSButton.js": {
+            "name": "src/cloudkid/EaselJSButton.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/cloudkid/EaselJSDragManager.js": {
+            "name": "src/cloudkid/EaselJSDragManager.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/cloudkid/FunctionUtils.js": {
+            "name": "src/cloudkid/FunctionUtils.js",
+            "modules": {},
+            "classes": {
+                "bind": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/cloudkid/OS.js": {
+            "name": "src/cloudkid/OS.js",
+            "modules": {},
+            "classes": {
+                "cloudkid.OS": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/cloudkid/PixiAnimator.js": {
+            "name": "src/cloudkid/PixiAnimator.js",
+            "modules": {},
+            "classes": {
+                "cloudkid.PixiAnimator": 1,
+                "cloudkid.PixiAnimator.AnimTimeline": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/cloudkid/PixiButton.js": {
+            "name": "src/cloudkid/PixiButton.js",
+            "modules": {},
+            "classes": {
+                "cloudkid.Button": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/cloudkid/PixiDragManager.js": {
+            "name": "src/cloudkid/PixiDragManager.js",
+            "modules": {},
+            "classes": {
+                "cloudkid.DragManager": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/cloudkid/SavedData.js": {
+            "name": "src/cloudkid/SavedData.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/amf.js": {
+            "name": "src/amf.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/bytearray.js": {
+            "name": "src/bytearray.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        }
+    },
+    "modules": {},
+    "classes": {
+        "cloudkid.CacheManager": {
+            "name": "cloudkid.CacheManager",
+            "shortname": "cloudkid.CacheManager",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "src/cloudkid/loaders/CacheManager.js",
+            "line": 3,
+            "description": "Used for managing the browser cache of loading external elements\ncan easily load version manifest and apply it to the media loader\nsupports cache busting all media load requests\nuses the query string to bust browser versions."
+        },
+        "cloudkid.LoaderQueueItem": {
+            "name": "cloudkid.LoaderQueueItem",
+            "shortname": "cloudkid.LoaderQueueItem",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "src/cloudkid/loaders/LoaderQueueItem.js",
+            "line": 3,
+            "description": "Represents a single item in the loader queue"
+        },
+        "cloudkid.MediaLoader": {
+            "name": "cloudkid.MediaLoader",
+            "shortname": "cloudkid.MediaLoader",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "src/cloudkid/loaders/MediaLoader.js",
+            "line": 3,
+            "description": "The Medialoader is the singleton loader for loading all assets\nincluding images, data, code and sounds. MediaLoader supports cache-busting\nin the browser using dynamic query string parameters."
+        },
+        "cloudkid.MediaLoaderResult": {
+            "name": "cloudkid.MediaLoaderResult",
+            "shortname": "cloudkid.MediaLoaderResult",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "src/cloudkid/loaders/MediaLoaderResult.js",
+            "line": 3,
+            "description": "The return result of the MediaLoader load",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "content",
+                    "description": "The dynamic content loaded",
+                    "type": "*"
+                },
+                {
+                    "name": "string",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "loader",
+                    "description": "",
+                    "type": "createjs.LoadQueue"
+                }
+            ]
+        },
+        "cloudkid.Application": {
+            "name": "cloudkid.Application",
+            "shortname": "cloudkid.Application",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "src/cloudkid/Application.js",
+            "line": 4,
+            "description": "An application is an abstract class which extends `createjs.Container`\nand is managed by the `cloudkid.OS`"
+        },
+        "cloudkid.Button": {
+            "name": "cloudkid.Button",
+            "shortname": "cloudkid.Button",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "src/cloudkid/PixiButton.js",
+            "line": 2,
+            "description": "A Multipurpose button class. It is designed to have one image, and an optional text label.\nThe button can be a normal button or a selectable button.\nThe button functions similarly with both CreateJS and PIXI, but slightly differently in\ninitialization and callbacks.\n\n- Initialization - the parameters for initialization are different. See the documentation for initialize().\n- [PIXI only] Use releaseCallback and overCallback to know about button clicks and mouse overs, respectively.\n- [CreateJS only] Add event listeners for click and mouseover to know about button clicks and mouse overs, respectively.",
+            "extends": "createjs.Container|PIXI.DisplayObjectContainer"
+        },
+        "cloudkid.DragManager": {
+            "name": "cloudkid.DragManager",
+            "shortname": "cloudkid.DragManager",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "src/cloudkid/PixiDragManager.js",
+            "line": 3,
+            "description": "[CreateJS only] Drag manager is responsible for handling the dragging of stage elements\nsupports click-n-stick and click-n-drag functionality"
+        },
+        "bind": {
+            "name": "bind",
+            "shortname": "bind",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "src/cloudkid/FunctionUtils.js",
+            "line": 1,
+            "description": "[CreateJS only] Designed to provide utility related to functions, the\nmost important of which is the `bind` method, used to properly scope callbacks."
+        },
+        "cloudkid.OS": {
+            "name": "cloudkid.OS",
+            "shortname": "cloudkid.OS",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "src/cloudkid/OS.js",
+            "line": 3,
+            "description": "Designed to mimic the feature-set of the CloudKidOS for AS3\nProvides a staging framework for other things to load\nhandles the stage query string parameters, provides debug tools,\nas well as browser cache-busting.",
+            "extends": "createjs.Container|PIXI.DisplayObjectContainer"
+        },
+        "cloudkid.PixiAnimator": {
+            "name": "cloudkid.PixiAnimator",
+            "shortname": "cloudkid.PixiAnimator",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "src/cloudkid/PixiAnimator.js",
+            "line": 3,
+            "description": "[PIXI Only] Animator for interacting with Spine animations",
+            "is_constructor": 1
+        },
+        "cloudkid.PixiAnimator.AnimTimeline": {
+            "name": "cloudkid.PixiAnimator.AnimTimeline",
+            "shortname": "cloudkid.PixiAnimator.AnimTimeline",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "src/cloudkid/PixiAnimator.js",
+            "line": 399,
+            "description": "[Pixi Only] Internal PixiAnimator class for keeping track of animations",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "clip",
+                    "description": "The AnimTimeline's clip",
+                    "type": "PIXI.MovieClip|Pixi.Spine"
+                },
+                {
+                    "name": "callback",
+                    "description": "The function to call when the clip is finished playing",
+                    "type": "Function"
+                },
+                {
+                    "name": "speed",
+                    "description": "The speed at which the clip should be played",
+                    "type": "Int"
+                }
+            ]
+        }
+    },
+    "classitems": [
+        {
+            "file": "src/cloudkid/loaders/CacheManager.js",
+            "line": 16,
+            "class": "cloudkid.CacheManager"
+        },
+        {
+            "file": "src/cloudkid/loaders/CacheManager.js",
+            "line": 19,
+            "description": "The collection of version numbers",
+            "access": "protected",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "_versions",
+            "type": "Dictionary",
+            "class": "cloudkid.CacheManager"
+        },
+        {
+            "file": "src/cloudkid/loaders/CacheManager.js",
+            "line": 26,
+            "description": "If we are suppose to cache bust every file",
+            "itemtype": "property",
+            "name": "cacheBust",
+            "type": "Bool",
+            "access": "public",
+            "tagname": "",
+            "default": "false",
+            "class": "cloudkid.CacheManager"
+        },
+        {
+            "file": "src/cloudkid/loaders/CacheManager.js",
+            "line": 34,
+            "description": "The constructor for the Cache manager",
+            "access": "public",
+            "tagname": "",
+            "is_constructor": 1,
+            "itemtype": "method",
+            "name": "initialize",
+            "class": "cloudkid.CacheManager"
+        },
+        {
+            "file": "src/cloudkid/loaders/CacheManager.js",
+            "line": 53,
+            "description": "Destroy the cache manager, don't use after this",
+            "access": "public",
+            "tagname": "",
+            "itemtype": "method",
+            "name": "destroy",
+            "class": "cloudkid.CacheManager"
+        },
+        {
+            "file": "src/cloudkid/loaders/CacheManager.js",
+            "line": 63,
+            "description": "Add the versions",
+            "access": "public",
+            "tagname": "",
+            "itemtype": "method",
+            "name": "addVersionsFile",
+            "params": [
+                {
+                    "name": "url",
+                    "description": "The url of the versions file",
+                    "type": "String"
+                },
+                {
+                    "name": "callback",
+                    "description": "Callback when the url has been laoded",
+                    "type": "Function"
+                },
+                {
+                    "name": "baseUrl",
+                    "description": "A base url to prepend all lines of the file",
+                    "type": "String"
+                }
+            ],
+            "class": "cloudkid.CacheManager"
+        },
+        {
+            "file": "src/cloudkid/loaders/CacheManager.js",
+            "line": 121,
+            "description": "Add a version number for a file",
+            "itemtype": "method",
+            "name": "addVersion",
+            "access": "public",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "url",
+                    "description": "The url of the object",
+                    "type": "String"
+                },
+                {
+                    "name": "version",
+                    "description": "Version number or has of file",
+                    "type": "String"
+                }
+            ],
+            "class": "cloudkid.CacheManager"
+        },
+        {
+            "file": "src/cloudkid/loaders/CacheManager.js",
+            "line": 135,
+            "description": "Search for a version number by url",
+            "itemtype": "method",
+            "name": "_getVersionByUrl",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "url",
+                    "description": "The url to search",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "The version number as a string or null",
+                "type": "String"
+            },
+            "class": "cloudkid.CacheManager"
+        },
+        {
+            "file": "src/cloudkid/loaders/CacheManager.js",
+            "line": 155,
+            "description": "Prepare a URL with the necessary cache busting and/or versioning\nas well as the base directoryr",
+            "access": "public",
+            "tagname": "",
+            "itemtype": "method",
+            "name": "prepare",
+            "params": [
+                {
+                    "name": "url",
+                    "description": "The url to prepare",
+                    "type": "String"
+                },
+                {
+                    "name": "applyBasePath",
+                    "description": "If the global base path should be applied to the url. This defaults to false because it can \n\t\t\t\t\t\t\t\tpotentially interfere with later regular expression checks, particularly with PreloadJS",
+                    "type": "Bool"
+                }
+            ],
+            "return": {
+                "description": "The final url with version/cache and basePath added",
+                "type": "String"
+            },
+            "class": "cloudkid.CacheManager"
+        },
+        {
+            "file": "src/cloudkid/loaders/LoaderQueueItem.js",
+            "line": 9,
+            "class": "cloudkid.LoaderQueueItem"
+        },
+        {
+            "file": "src/cloudkid/loaders/LoaderQueueItem.js",
+            "line": 12,
+            "description": "Highest priority",
+            "static": 1,
+            "access": "public",
+            "tagname": "",
+            "final": 1,
+            "itemtype": "property",
+            "name": "PRIORITY_HIGH",
+            "type": "Int",
+            "class": "cloudkid.LoaderQueueItem"
+        },
+        {
+            "file": "src/cloudkid/loaders/LoaderQueueItem.js",
+            "line": 21,
+            "description": "Normal priority, the default",
+            "static": 1,
+            "access": "public",
+            "tagname": "",
+            "final": 1,
+            "itemtype": "property",
+            "name": "PRIORITY_NORMAL",
+            "type": "Int",
+            "class": "cloudkid.LoaderQueueItem"
+        },
+        {
+            "file": "src/cloudkid/loaders/LoaderQueueItem.js",
+            "line": 30,
+            "description": "Lowest priority",
+            "static": 1,
+            "access": "public",
+            "tagname": "",
+            "final": 1,
+            "itemtype": "property",
+            "name": "PRIORITY_LOW",
+            "type": "Int",
+            "class": "cloudkid.LoaderQueueItem"
+        },
+        {
+            "file": "src/cloudkid/loaders/LoaderQueueItem.js",
+            "line": 39,
+            "description": "The url of the load",
+            "access": "public",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "url",
+            "type": "String",
+            "class": "cloudkid.LoaderQueueItem"
+        },
+        {
+            "file": "src/cloudkid/loaders/LoaderQueueItem.js",
+            "line": 46,
+            "description": "Data associate with the load",
+            "access": "public",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "data",
+            "type": "*",
+            "class": "cloudkid.LoaderQueueItem"
+        },
+        {
+            "file": "src/cloudkid/loaders/LoaderQueueItem.js",
+            "line": 53,
+            "description": "The callback function of the load, to call when \nthe load as finished, takes one argument as result",
+            "access": "public",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "callback",
+            "type": "Function",
+            "class": "cloudkid.LoaderQueueItem"
+        },
+        {
+            "file": "src/cloudkid/loaders/LoaderQueueItem.js",
+            "line": 61,
+            "description": "The priority of this item",
+            "itemtype": "property",
+            "name": "priority",
+            "type": "Int",
+            "access": "public",
+            "tagname": "",
+            "class": "cloudkid.LoaderQueueItem"
+        },
+        {
+            "file": "src/cloudkid/loaders/LoaderQueueItem.js",
+            "line": 68,
+            "description": "The amount we've loaded so far, from 0 to 1",
+            "access": "public",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "progress",
+            "type": "Number",
+            "class": "cloudkid.LoaderQueueItem"
+        },
+        {
+            "file": "src/cloudkid/loaders/LoaderQueueItem.js",
+            "line": 75,
+            "description": "The progress callback",
+            "access": "public",
+            "tagname": "",
+            "proprty": "{function} updateCallback",
+            "class": "cloudkid.LoaderQueueItem"
+        },
+        {
+            "file": "src/cloudkid/loaders/LoaderQueueItem.js",
+            "line": 86,
+            "description": "Represent this object as a string",
+            "access": "public",
+            "tagname": "",
+            "itemtype": "method",
+            "name": "toString",
+            "return": {
+                "description": "The string representation of this object",
+                "type": "String"
+            },
+            "class": "cloudkid.LoaderQueueItem"
+        },
+        {
+            "file": "src/cloudkid/loaders/LoaderQueueItem.js",
+            "line": 97,
+            "description": "Destroy this result",
+            "access": "public",
+            "tagname": "",
+            "itemtype": "method",
+            "name": "destroy",
+            "class": "cloudkid.LoaderQueueItem"
+        },
+        {
+            "file": "src/cloudkid/loaders/MediaLoader.js",
+            "line": 12,
+            "class": "cloudkid.MediaLoader"
+        },
+        {
+            "file": "src/cloudkid/loaders/MediaLoader.js",
+            "line": 15,
+            "description": "Reference to the private instance object",
+            "static": 1,
+            "access": "protected",
+            "tagname": "",
+            "class": "cloudkid.MediaLoader"
+        },
+        {
+            "file": "src/cloudkid/loaders/MediaLoader.js",
+            "line": 22,
+            "description": "The collection of LoaderQueueItems",
+            "access": "private",
+            "tagname": "",
+            "class": "cloudkid.MediaLoader"
+        },
+        {
+            "file": "src/cloudkid/loaders/MediaLoader.js",
+            "line": 28,
+            "description": "The collection of LoaderQueueItems by url",
+            "access": "private",
+            "tagname": "",
+            "class": "cloudkid.MediaLoader"
+        },
+        {
+            "file": "src/cloudkid/loaders/MediaLoader.js",
+            "line": 34,
+            "description": "The collection of loaders",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "loaders",
+            "type": "Object",
+            "class": "cloudkid.MediaLoader"
+        },
+        {
+            "file": "src/cloudkid/loaders/MediaLoader.js",
+            "line": 45,
+            "description": "The current number of items loading",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "numLoads",
+            "type": "Int",
+            "default": "0",
+            "class": "cloudkid.MediaLoader"
+        },
+        {
+            "file": "src/cloudkid/loaders/MediaLoader.js",
+            "line": 55,
+            "description": "If we can load",
+            "access": "private",
+            "tagname": "",
+            "class": "cloudkid.MediaLoader"
+        },
+        {
+            "file": "src/cloudkid/loaders/MediaLoader.js",
+            "line": 61,
+            "description": "The maximum number of simulaneous loads",
+            "access": "public",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "maxSimultaneousLoads",
+            "type": "Int",
+            "default": "2",
+            "class": "cloudkid.MediaLoader"
+        },
+        {
+            "file": "src/cloudkid/loaders/MediaLoader.js",
+            "line": 69,
+            "description": "The reference to the cache manager",
+            "access": "public",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "cacheManager",
+            "type": "cloudkid.CacheManager",
+            "class": "cloudkid.MediaLoader"
+        },
+        {
+            "file": "src/cloudkid/loaders/MediaLoader.js",
+            "line": 76,
+            "description": "Static constructor creating the singleton",
+            "itemtype": "method",
+            "name": "init",
+            "static": 1,
+            "access": "public",
+            "tagname": "",
+            "class": "cloudkid.MediaLoader"
+        },
+        {
+            "file": "src/cloudkid/loaders/MediaLoader.js",
+            "line": 92,
+            "description": "Static function for getting the singleton instance",
+            "static": 1,
+            "readonly": "",
+            "access": "public",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "instance",
+            "type": "cloudkid.OS",
+            "class": "cloudkid.MediaLoader"
+        },
+        {
+            "file": "src/cloudkid/loaders/MediaLoader.js",
+            "line": 110,
+            "description": "Destroy the MediaLoader singleton, don't use after this",
+            "access": "public",
+            "tagname": "",
+            "itemtype": "method",
+            "name": "destroy",
+            "class": "cloudkid.MediaLoader"
+        },
+        {
+            "file": "src/cloudkid/loaders/MediaLoader.js",
+            "line": 147,
+            "description": "Initilize the object",
+            "access": "protected",
+            "tagname": "",
+            "itemtype": "method",
+            "name": "_initialize",
+            "class": "cloudkid.MediaLoader"
+        },
+        {
+            "file": "src/cloudkid/loaders/MediaLoader.js",
+            "line": 164,
+            "description": "Load a file",
+            "itemtype": "method",
+            "name": "load",
+            "access": "public",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "url",
+                    "description": "The file path to load",
+                    "type": "String"
+                },
+                {
+                    "name": "callback",
+                    "description": "The callback function when completed",
+                    "type": "Function"
+                },
+                {
+                    "name": "updateCallback",
+                    "description": "The callback for load progress update, passes 0-1 as param",
+                    "type": "Function*"
+                },
+                {
+                    "name": "priority",
+                    "description": "The priority of the load",
+                    "type": "Int*"
+                },
+                {
+                    "name": "data",
+                    "description": "optional data",
+                    "type": "*"
+                }
+            ],
+            "class": "cloudkid.MediaLoader"
+        },
+        {
+            "file": "src/cloudkid/loaders/MediaLoader.js",
+            "line": 201,
+            "description": "There was an error loading the file",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "method",
+            "name": "_onLoadFailed",
+            "params": [
+                {
+                    "name": "qi",
+                    "description": "The loader queue item",
+                    "type": "cloudkid.LoaderQueueItem"
+                }
+            ],
+            "class": "cloudkid.MediaLoader"
+        },
+        {
+            "file": "src/cloudkid/loaders/MediaLoader.js",
+            "line": 233,
+            "description": "The file load progress event",
+            "itemtype": "method",
+            "name": "_onLoadProgress",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "qi",
+                    "description": "The loader queue item",
+                    "type": "cloudkid.LoaderQueueItem"
+                },
+                {
+                    "name": "event",
+                    "description": "The progress event",
+                    "type": "Object"
+                }
+            ],
+            "class": "cloudkid.MediaLoader"
+        },
+        {
+            "file": "src/cloudkid/loaders/MediaLoader.js",
+            "line": 248,
+            "description": "The file was loaded successfully",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "method",
+            "name": "_onLoadCompleted",
+            "params": [
+                {
+                    "name": "qi",
+                    "description": "The loader queue item",
+                    "type": "cloudkid.LoaderQueueItem"
+                },
+                {
+                    "name": "ev",
+                    "description": "The load event",
+                    "type": "Object"
+                }
+            ],
+            "class": "cloudkid.MediaLoader"
+        },
+        {
+            "file": "src/cloudkid/loaders/MediaLoader.js",
+            "line": 271,
+            "description": "Attempt to do the next load",
+            "itemtype": "method",
+            "name": "_tryNextLoad",
+            "access": "private",
+            "tagname": "",
+            "class": "cloudkid.MediaLoader"
+        },
+        {
+            "file": "src/cloudkid/loaders/MediaLoader.js",
+            "line": 303,
+            "description": "Alert that the loading is finished",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "method",
+            "name": "_loadDone",
+            "params": [
+                {
+                    "name": "qi",
+                    "description": "The loader queue item",
+                    "type": "cloudkid.LoaderQueueItem"
+                },
+                {
+                    "name": "result",
+                    "description": "The event from preloadjs or null",
+                    "type": "Object"
+                }
+            ],
+            "class": "cloudkid.MediaLoader"
+        },
+        {
+            "file": "src/cloudkid/loaders/MediaLoader.js",
+            "line": 321,
+            "description": "Cancel a load that's currently in progress",
+            "access": "public",
+            "tagname": "",
+            "itemtype": "method",
+            "name": "cancel",
+            "params": [
+                {
+                    "name": "url",
+                    "description": "The url",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "If canceled returns true, false if not canceled",
+                "type": "Bool"
+            },
+            "class": "cloudkid.MediaLoader"
+        },
+        {
+            "file": "src/cloudkid/loaders/MediaLoaderResult.js",
+            "line": 18,
+            "class": "cloudkid.MediaLoaderResult"
+        },
+        {
+            "file": "src/cloudkid/loaders/MediaLoaderResult.js",
+            "line": 21,
+            "description": "The contents of the load",
+            "access": "public",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "content",
+            "type": "*",
+            "class": "cloudkid.MediaLoaderResult"
+        },
+        {
+            "file": "src/cloudkid/loaders/MediaLoaderResult.js",
+            "line": 28,
+            "description": "The url of the load",
+            "access": "public",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "url",
+            "type": "String",
+            "class": "cloudkid.MediaLoaderResult"
+        },
+        {
+            "file": "src/cloudkid/loaders/MediaLoaderResult.js",
+            "line": 35,
+            "description": "Reference to the preloader object",
+            "access": "public",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "loader",
+            "type": "createjs.LoaderQueue",
+            "class": "cloudkid.MediaLoaderResult"
+        },
+        {
+            "file": "src/cloudkid/loaders/MediaLoaderResult.js",
+            "line": 42,
+            "description": "A to string method",
+            "access": "public",
+            "tagname": "",
+            "itemtype": "method",
+            "name": "toString",
+            "return": {
+                "description": "A string rep of the object",
+                "type": "String"
+            },
+            "class": "cloudkid.MediaLoaderResult"
+        },
+        {
+            "file": "src/cloudkid/loaders/MediaLoaderResult.js",
+            "line": 53,
+            "description": "Destroy this result",
+            "access": "public",
+            "tagname": "",
+            "itemtype": "method",
+            "name": "destroy",
+            "class": "cloudkid.MediaLoaderResult"
+        },
+        {
+            "file": "src/cloudkid/scaling/ScreenSettings.js",
+            "line": 3,
+            "description": "Object that contains the screen settings to help scaling",
+            "params": [
+                {
+                    "name": "The",
+                    "description": "screen width in pixels"
+                },
+                {
+                    "name": "The",
+                    "description": "screen height in pixels"
+                },
+                {
+                    "name": "The",
+                    "description": "screen pixel density (PPI)"
+                }
+            ],
+            "class": "cloudkid.Application"
+        },
+        {
+            "file": "src/cloudkid/scaling/UIElement.js",
+            "line": 2,
+            "description": "A single UI item that needs to be resized",
+            "class": "cloudkid.Application"
+        },
+        {
+            "file": "src/cloudkid/scaling/UIElement.js",
+            "line": 5,
+            "description": "Create the UI Item",
+            "params": [
+                {
+                    "name": "The",
+                    "description": "item to affect"
+                },
+                {
+                    "name": "The",
+                    "description": "scale settings"
+                },
+                {
+                    "name": "The",
+                    "description": "original screen the item was designed for"
+                }
+            ],
+            "class": "cloudkid.Application"
+        },
+        {
+            "file": "src/cloudkid/scaling/UIElement.js",
+            "line": 97,
+            "class": "cloudkid.Application"
+        },
+        {
+            "file": "src/cloudkid/scaling/UIElement.js",
+            "line": 100,
+            "class": "cloudkid.Application"
+        },
+        {
+            "file": "src/cloudkid/scaling/UIElement.js",
+            "line": 103,
+            "class": "cloudkid.Application"
+        },
+        {
+            "file": "src/cloudkid/scaling/UIElement.js",
+            "line": 106,
+            "class": "cloudkid.Application"
+        },
+        {
+            "file": "src/cloudkid/scaling/UIElement.js",
+            "line": 109,
+            "class": "cloudkid.Application"
+        },
+        {
+            "file": "src/cloudkid/scaling/UIElement.js",
+            "line": 112,
+            "class": "cloudkid.Application"
+        },
+        {
+            "file": "src/cloudkid/scaling/UIElement.js",
+            "line": 115,
+            "class": "cloudkid.Application"
+        },
+        {
+            "file": "src/cloudkid/scaling/UIElement.js",
+            "line": 118,
+            "class": "cloudkid.Application"
+        },
+        {
+            "file": "src/cloudkid/scaling/UIElement.js",
+            "line": 121,
+            "class": "cloudkid.Application"
+        },
+        {
+            "file": "src/cloudkid/scaling/UIElement.js",
+            "line": 124,
+            "description": "Adjust the item scale and position, to reflect new screen",
+            "params": [
+                {
+                    "name": "The",
+                    "description": "current screen settings"
+                }
+            ],
+            "class": "cloudkid.Application"
+        },
+        {
+            "file": "src/cloudkid/scaling/UIElement.js",
+            "line": 258,
+            "description": "Destroy this item, don't use after this",
+            "class": "cloudkid.Application"
+        },
+        {
+            "file": "src/cloudkid/scaling/UIElementSettings.js",
+            "line": 3,
+            "description": "The UI Item Settings",
+            "class": "cloudkid.Application"
+        },
+        {
+            "file": "src/cloudkid/scaling/UIElementSettings.js",
+            "line": 10,
+            "class": "cloudkid.Application"
+        },
+        {
+            "file": "src/cloudkid/scaling/UIElementSettings.js",
+            "line": 12,
+            "class": "cloudkid.Application"
+        },
+        {
+            "file": "src/cloudkid/scaling/UIElementSettings.js",
+            "line": 14,
+            "class": "cloudkid.Application"
+        },
+        {
+            "file": "src/cloudkid/scaling/UIElementSettings.js",
+            "line": 16,
+            "class": "cloudkid.Application"
+        },
+        {
+            "file": "src/cloudkid/scaling/UIElementSettings.js",
+            "line": 18,
+            "class": "cloudkid.Application"
+        },
+        {
+            "file": "src/cloudkid/scaling/UIScaler.js",
+            "line": 3,
+            "description": "The UI scale is responsible for scaling UI components\nto help easy the burden of different device aspect ratios",
+            "author": "Matt Moore <matt@cloudkid.com>",
+            "class": "cloudkid.Application"
+        },
+        {
+            "file": "src/cloudkid/scaling/UIScaler.js",
+            "line": 10,
+            "description": "Create the scaler",
+            "params": [
+                {
+                    "name": "The",
+                    "description": "UI display container"
+                },
+                {
+                    "name": "The",
+                    "description": "designed width of the UI"
+                },
+                {
+                    "name": "The",
+                    "description": "designed height of the UI"
+                },
+                {
+                    "name": "The",
+                    "description": "designed PPI of the UI"
+                }
+            ],
+            "class": "cloudkid.Application"
+        },
+        {
+            "file": "src/cloudkid/scaling/UIScaler.js",
+            "line": 26,
+            "class": "cloudkid.Application"
+        },
+        {
+            "file": "src/cloudkid/scaling/UIScaler.js",
+            "line": 29,
+            "class": "cloudkid.Application"
+        },
+        {
+            "file": "src/cloudkid/scaling/UIScaler.js",
+            "line": 32,
+            "class": "cloudkid.Application"
+        },
+        {
+            "file": "src/cloudkid/scaling/UIScaler.js",
+            "line": 35,
+            "class": "cloudkid.Application"
+        },
+        {
+            "file": "src/cloudkid/scaling/UIScaler.js",
+            "line": 38,
+            "class": "cloudkid.Application"
+        },
+        {
+            "file": "src/cloudkid/scaling/UIScaler.js",
+            "line": 41,
+            "class": "cloudkid.Application"
+        },
+        {
+            "file": "src/cloudkid/scaling/UIScaler.js",
+            "line": 48,
+            "description": "Create the scaler from JSON data",
+            "params": [
+                {
+                    "name": "The",
+                    "description": "UI display container"
+                },
+                {
+                    "name": "The",
+                    "description": "json of the designed settings (designedWidth, designedHeight, designedPPI keys)"
+                },
+                {
+                    "name": "The",
+                    "description": "json items object"
+                },
+                {
+                    "name": "If",
+                    "description": "we should immediately cleanup the UIScaler after scaling items (default is true)"
+                },
+                {
+                    "name": "Return",
+                    "description": "the UIScaler object"
+                }
+            ],
+            "class": "cloudkid.Application"
+        },
+        {
+            "file": "src/cloudkid/scaling/UIScaler.js",
+            "line": 108,
+            "description": "Set the current screen settings. If the stagesize changes at all, re-call this function",
+            "params": [
+                {
+                    "name": "The",
+                    "description": "fullscreen width"
+                },
+                {
+                    "name": "The",
+                    "description": "fullscreen height"
+                },
+                {
+                    "name": "The",
+                    "description": "screen resolution density"
+                }
+            ],
+            "class": "cloudkid.Application"
+        },
+        {
+            "file": "src/cloudkid/scaling/UIScaler.js",
+            "line": 127,
+            "description": "Manually add an item",
+            "params": [
+                {
+                    "name": "The",
+                    "description": "display object item to add"
+                },
+                {
+                    "name": "The",
+                    "description": "vertical align of the item (cefault is center)"
+                },
+                {
+                    "name": "The",
+                    "description": "horizontal align of the item (default is center)"
+                },
+                {
+                    "name": "If",
+                    "description": "the item needs to be in the title safe area (default is false)"
+                },
+                {
+                    "name": "The",
+                    "description": "minimum scale amount (default, scales the same size as the stage)"
+                },
+                {
+                    "name": "The",
+                    "description": "maximum scale amount (default, scales the same size as the stage)"
+                }
+            ],
+            "class": "cloudkid.Application"
+        },
+        {
+            "file": "src/cloudkid/scaling/UIScaler.js",
+            "line": 160,
+            "description": "Scale a single background image according to the UIScaler.width and height",
+            "params": [
+                {
+                    "name": "The",
+                    "description": "bitmap to scale"
+                }
+            ],
+            "class": "cloudkid.Application"
+        },
+        {
+            "file": "src/cloudkid/scaling/UIScaler.js",
+            "line": 178,
+            "description": "Convenience function to scale a collection of backgrounds",
+            "params": [
+                {
+                    "name": "The",
+                    "description": "vector of bitmap images"
+                }
+            ],
+            "class": "cloudkid.Application"
+        },
+        {
+            "file": "src/cloudkid/scaling/UIScaler.js",
+            "line": 190,
+            "description": "Scale the UI items that have been registered",
+            "class": "cloudkid.Application"
+        },
+        {
+            "file": "src/cloudkid/scaling/UIScaler.js",
+            "line": 204,
+            "description": "Destroy the scaler object",
+            "class": "cloudkid.Application"
+        },
+        {
+            "file": "src/cloudkid/Application.js",
+            "line": 36,
+            "description": "The application is ready to use, added to stage",
+            "access": "public",
+            "tagname": "",
+            "itemtype": "method",
+            "name": "init",
+            "class": "cloudkid.Application"
+        },
+        {
+            "file": "src/cloudkid/Application.js",
+            "line": 44,
+            "description": "The updated function called by the OS\nthis function is implementation-specific",
+            "access": "public",
+            "tagname": "",
+            "itemtype": "method",
+            "name": "update",
+            "params": [
+                {
+                    "name": "elapsed",
+                    "description": "The number of MS since the last frame update",
+                    "type": "Int"
+                }
+            ],
+            "class": "cloudkid.Application"
+        },
+        {
+            "file": "src/cloudkid/Application.js",
+            "line": 54,
+            "description": "Destroy the application, don't use after this",
+            "access": "public",
+            "tagname": "",
+            "itemtype": "method",
+            "name": "destroy",
+            "class": "cloudkid.Application"
+        },
+        {
+            "file": "src/cloudkid/Application.js",
+            "line": 62,
+            "description": "Resize the application",
+            "access": "public",
+            "tagname": "",
+            "itemtype": "method",
+            "name": "resize",
+            "class": "cloudkid.Application"
+        },
+        {
+            "file": "src/cloudkid/AssetManager.js",
+            "line": 3,
+            "description": "The UI Item Settings",
+            "class": "cloudkid.Button"
+        },
+        {
+            "file": "src/cloudkid/AssetManager.js",
+            "line": 10,
+            "class": "cloudkid.Button"
+        },
+        {
+            "file": "src/cloudkid/AssetManager.js",
+            "line": 13,
+            "class": "cloudkid.Button"
+        },
+        {
+            "file": "src/cloudkid/AssetManager.js",
+            "line": 16,
+            "class": "cloudkid.Button"
+        },
+        {
+            "file": "src/cloudkid/CKWorker.js",
+            "line": 15,
+            "params": [
+                {
+                    "name": "codeString",
+                    "description": "The code in string form to make the worker from. As a string, fallback support is easier."
+                }
+            ],
+            "class": "cloudkid.Button"
+        },
+        {
+            "file": "src/cloudkid/EaselJSButton.js",
+            "line": 24,
+            "description": "The sprite that is the body of the button.\nThe type of this property is dependent on which version of the OS library is used.",
+            "access": "public",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "back",
+            "type": "createjs.Bitmap|PIXI.Sprite",
+            "readonly": "",
+            "class": "cloudkid.Button"
+        },
+        {
+            "file": "src/cloudkid/EaselJSButton.js",
+            "line": 32,
+            "description": "The text field of the button. The label is centered by both width and height on the button.\nThe type of this property is dependent on which version of the OS library is used.",
+            "access": "public",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "label",
+            "type": "createjs.Text|PIXI.Text|PIXI.BitmapText",
+            "readonly": "",
+            "class": "cloudkid.Button"
+        },
+        {
+            "file": "src/cloudkid/EaselJSButton.js",
+            "line": 42,
+            "description": "Callback for mouse over, bound to this button.",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "_overCB",
+            "type": "Function",
+            "class": "cloudkid.Button"
+        },
+        {
+            "file": "src/cloudkid/EaselJSButton.js",
+            "line": 48,
+            "description": "Callback for mouse out, bound to this button.",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "_outCB",
+            "type": "Function",
+            "class": "cloudkid.Button"
+        },
+        {
+            "file": "src/cloudkid/EaselJSButton.js",
+            "line": 54,
+            "description": "Callback for mouse down, bound to this button.",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "_downCB",
+            "type": "Function",
+            "class": "cloudkid.Button"
+        },
+        {
+            "file": "src/cloudkid/EaselJSButton.js",
+            "line": 60,
+            "description": "Callback for mouse up, bound to this button.",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "_upCB",
+            "type": "Function",
+            "class": "cloudkid.Button"
+        },
+        {
+            "file": "src/cloudkid/EaselJSButton.js",
+            "line": 66,
+            "description": "A reference to the mouse down event that was triggered on this button.",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "_downEvent",
+            "type": "createjs.MouseEvent",
+            "class": "cloudkid.Button"
+        },
+        {
+            "file": "src/cloudkid/EaselJSButton.js",
+            "line": 74,
+            "description": "If this button is enabled.",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "_enabled",
+            "type": "Boolean",
+            "class": "cloudkid.Button"
+        },
+        {
+            "file": "src/cloudkid/EaselJSButton.js",
+            "line": 80,
+            "description": "If this button is held down.",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "_isDown",
+            "type": "Boolean",
+            "class": "cloudkid.Button"
+        },
+        {
+            "file": "src/cloudkid/EaselJSButton.js",
+            "line": 86,
+            "description": "If the mouse is over this button",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "_isOver",
+            "type": "Boolean",
+            "class": "cloudkid.Button"
+        },
+        {
+            "file": "src/cloudkid/EaselJSButton.js",
+            "line": 92,
+            "description": "If this button is selected.",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "_isSelected",
+            "type": "Boolean",
+            "class": "cloudkid.Button"
+        },
+        {
+            "file": "src/cloudkid/EaselJSButton.js",
+            "line": 98,
+            "description": "If this button is a selectable button, and will respond to select being set.",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "_isSelectable",
+            "type": "Boolean",
+            "class": "cloudkid.Button"
+        },
+        {
+            "file": "src/cloudkid/EaselJSButton.js",
+            "line": 104,
+            "description": "If this button is highlighted.",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "_isHighlighted",
+            "type": "Boolean",
+            "class": "cloudkid.Button"
+        },
+        {
+            "file": "src/cloudkid/EaselJSButton.js",
+            "line": 112,
+            "description": "[CreateJS only] An object noting the rectangles for the button up state. This should have a src property\n\tand an optional trim property, both createjs.Rectangles.",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "_upRects",
+            "type": "Object",
+            "class": "cloudkid.Button"
+        },
+        {
+            "file": "src/cloudkid/EaselJSButton.js",
+            "line": 119,
+            "description": "[CreateJS only] An object noting the rectangles for the button over state. This should have a src property\n\tand an optional trim property, both createjs.Rectangles.",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "_overRects",
+            "type": "Object",
+            "class": "cloudkid.Button"
+        },
+        {
+            "file": "src/cloudkid/EaselJSButton.js",
+            "line": 126,
+            "description": "[CreateJS only] An object noting the rectangles for the button down state. This should have a src property\n\tand an optional trim property, both createjs.Rectangles.",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "_downRects",
+            "type": "Object",
+            "class": "cloudkid.Button"
+        },
+        {
+            "file": "src/cloudkid/EaselJSButton.js",
+            "line": 133,
+            "description": "[CreateJS only] An object noting the rectangles for the button disabled state. This should have a src property\n\tand an optional trim property, both createjs.Rectangles.",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "_disabledRects",
+            "type": "Object",
+            "class": "cloudkid.Button"
+        },
+        {
+            "file": "src/cloudkid/EaselJSButton.js",
+            "line": 140,
+            "description": "[CreateJS only] An object noting the rectangles for the button selected state. This should have a src property\n\tand an optional trim property, both createjs.Rectangles.",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "_selectedRects",
+            "type": "Object",
+            "class": "cloudkid.Button"
+        },
+        {
+            "file": "src/cloudkid/EaselJSButton.js",
+            "line": 147,
+            "description": "[CreateJS only] An object noting the rectangles for the button highlighted state. This should have a src property\n\tand an optional trim property, both createjs.Rectangles.",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "_highlightedRects",
+            "type": "Object",
+            "class": "cloudkid.Button"
+        },
+        {
+            "file": "src/cloudkid/EaselJSButton.js",
+            "line": 155,
+            "description": "The width of the button art, independent of the scaling of the button itself.",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "_width",
+            "type": "Number",
+            "class": "cloudkid.Button"
+        },
+        {
+            "file": "src/cloudkid/EaselJSButton.js",
+            "line": 161,
+            "description": "The height of the button art, independent of the scaling of the button itself.",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "_height",
+            "type": "Number",
+            "class": "cloudkid.Button"
+        },
+        {
+            "file": "src/cloudkid/EaselJSButton.js",
+            "line": 168,
+            "description": "**[CreateJS only]** Constructor for the button when using CreateJS.",
+            "itemtype": "method",
+            "name": "initialize",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "imageSettings",
+                    "description": "Information about the art to be used for button states, as well as if the button is selectable or not.\n\t\t\tIf this is an Image or Canvas element, then the button assumes that the image is full width and 3 images\n\t\t\ttall, in the order (top to bottom) up, over, down. If so, then the properties of imageSettings are ignored.",
+                    "type": "Object|Image|HTMLCanvasElement",
+                    "optional": true,
+                    "props": [
+                        {
+                            "name": "image",
+                            "description": "The image to use for all of the button states.",
+                            "type": "Image|HTMLCanvasElement",
+                            "optional": true
+                        },
+                        {
+                            "name": "up",
+                            "description": "The rectangle information about the up state.",
+                            "type": "Object",
+                            "optional": true,
+                            "props": [
+                                {
+                                    "name": "src",
+                                    "description": "The sourceRect for the state within the image.",
+                                    "type": "createjs.Rectangle",
+                                    "optional": true
+                                },
+                                {
+                                    "name": "trim",
+                                    "description": "Trim data about the state, where x & y are how many pixels were \n\t\t\ttrimmed off the left and right, and height & width are the untrimmed size of the button.",
+                                    "type": "createjs.Rectangle",
+                                    "optional": true,
+                                    "optdefault": "null"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "over",
+                            "description": "The rectangle information about the over state. If omitted, uses the up state.",
+                            "type": "Object",
+                            "optional": true,
+                            "optdefault": "null",
+                            "props": [
+                                {
+                                    "name": "src",
+                                    "description": "The sourceRect for the state within the image.",
+                                    "type": "createjs.Rectangle",
+                                    "optional": true
+                                },
+                                {
+                                    "name": "trim",
+                                    "description": "Trim data about the state, where x & y are how many pixels were \n\t\t\ttrimmed off the left and right, and height & width are the untrimmed size of the button.",
+                                    "type": "createjs.Rectangle",
+                                    "optional": true,
+                                    "optdefault": "null"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "down",
+                            "description": "The rectangle information about the down state. If omitted, uses the up state.",
+                            "type": "Object",
+                            "optional": true,
+                            "optdefault": "null",
+                            "props": [
+                                {
+                                    "name": "src",
+                                    "description": "The sourceRect for the state within the image.",
+                                    "type": "createjs.Rectangle",
+                                    "optional": true
+                                },
+                                {
+                                    "name": "trim",
+                                    "description": "Trim data about the state, where x & y are how many pixels were \n\t\t\ttrimmed off the left and right, and height & width are the untrimmed size of the button.",
+                                    "type": "createjs.Rectangle",
+                                    "optional": true,
+                                    "optdefault": "null"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "disabled",
+                            "description": "The rectangle information about the disabled state. If omitted, uses the up state.",
+                            "type": "Object",
+                            "optional": true,
+                            "optdefault": "null",
+                            "props": [
+                                {
+                                    "name": "src",
+                                    "description": "The sourceRect for the state within the image.",
+                                    "type": "createjs.Rectangle",
+                                    "optional": true
+                                },
+                                {
+                                    "name": "trim",
+                                    "description": "Trim data about the state, where x & y are how many pixels were \n\t\t\ttrimmed off the left and right, and height & width are the untrimmed size of the button.",
+                                    "type": "createjs.Rectangle",
+                                    "optional": true,
+                                    "optdefault": "null"
+                                },
+                                {
+                                    "name": "src",
+                                    "description": "The sourceRect for the state within the image.",
+                                    "type": "createjs.Rectangle",
+                                    "optional": true
+                                },
+                                {
+                                    "name": "trim",
+                                    "description": "Trim data about the state, where x & y are how many pixels were \n\t\t\ttrimmed off the left and right, and height & width are the untrimmed size of the button.",
+                                    "type": "createjs.Rectangle",
+                                    "optional": true,
+                                    "optdefault": "null"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "highlighted",
+                            "description": "The rectangle information about the highlighted state. If omitted, uses the over state.",
+                            "type": "Object",
+                            "optional": true,
+                            "optdefault": "null"
+                        },
+                        {
+                            "name": "selected",
+                            "description": "The rectangle information about the over state. If omitted, the button is not a selectable button.",
+                            "type": "Object",
+                            "optional": true,
+                            "optdefault": "null",
+                            "props": [
+                                {
+                                    "name": "src",
+                                    "description": "The sourceRect for the state within the image.",
+                                    "type": "createjs.Rectangle",
+                                    "optional": true
+                                },
+                                {
+                                    "name": "trim",
+                                    "description": "Trim data about the state, where x & y are how many pixels were \n\t\t\ttrimmed off the left and right, and height & width are the untrimmed size of the button.",
+                                    "type": "createjs.Rectangle",
+                                    "optional": true,
+                                    "optdefault": "null"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "label",
+                    "description": "Information about the text label on the button. Omitting this makes the button not use a label.",
+                    "type": "Object",
+                    "optional": true,
+                    "optdefault": "null",
+                    "props": [
+                        {
+                            "name": "text",
+                            "description": "The text to display on the label.",
+                            "type": "String",
+                            "optional": true
+                        },
+                        {
+                            "name": "font",
+                            "description": "The font name and size to use on the label, as createjs.Text expects.",
+                            "type": "String",
+                            "optional": true
+                        },
+                        {
+                            "name": "color",
+                            "description": "The color of the text to use on the label, as createjs.Text expects.",
+                            "type": "String",
+                            "optional": true
+                        },
+                        {
+                            "name": "textBaseline",
+                            "description": "The baseline for the label text, as createjs.Text expects.",
+                            "type": "String",
+                            "optional": true,
+                            "optdefault": "top"
+                        },
+                        {
+                            "name": "stroke",
+                            "description": "The stroke to use for the label text, if desired, as createjs.Text expects.",
+                            "type": "String",
+                            "optional": true,
+                            "optdefault": "null"
+                        }
+                    ]
+                },
+                {
+                    "name": "enabled",
+                    "description": "Whether or not the button is initially enabled.",
+                    "type": "Boolean",
+                    "optional": true,
+                    "optdefault": "true"
+                }
+            ],
+            "class": "cloudkid.Button"
+        },
+        {
+            "file": "src/cloudkid/EaselJSButton.js",
+            "line": 275,
+            "description": "The width of the button, based on the width of back. This value is affected by scale.",
+            "access": "public",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "width",
+            "type": "Number",
+            "class": "cloudkid.Button"
+        },
+        {
+            "file": "src/cloudkid/EaselJSButton.js",
+            "line": 286,
+            "description": "The height of the button, based on the height of back. This value is affected by scale.",
+            "access": "public",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "height",
+            "type": "Number",
+            "class": "cloudkid.Button"
+        },
+        {
+            "file": "src/cloudkid/EaselJSButton.js",
+            "line": 298,
+            "description": "Sets the text of the label. This does nothing if the button was not initialized with a label.",
+            "access": "public",
+            "tagname": "",
+            "itemtype": "method",
+            "name": "setText",
+            "params": [
+                {
+                    "name": "text",
+                    "description": "The text to set the label to.",
+                    "type": "String"
+                }
+            ],
+            "class": "cloudkid.Button"
+        },
+        {
+            "file": "src/cloudkid/EaselJSButton.js",
+            "line": 315,
+            "description": "Whether or not the button is enabled.",
+            "access": "public",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "enabled",
+            "type": "Boolean",
+            "default": "true",
+            "class": "cloudkid.Button"
+        },
+        {
+            "file": "src/cloudkid/EaselJSButton.js",
+            "line": 347,
+            "description": "Whether or not the button is selected. Setting this only works if the button was given selected state when initialized.",
+            "access": "public",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "selected",
+            "type": "Boolean",
+            "default": "false",
+            "class": "cloudkid.Button"
+        },
+        {
+            "file": "src/cloudkid/EaselJSButton.js",
+            "line": 365,
+            "description": "Whether or not the button is highlighted. The default highlighted state is the over state, but a specific texture can be supplied.",
+            "access": "public",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "highlighted",
+            "type": "Boolean",
+            "default": "false",
+            "class": "cloudkid.Button"
+        },
+        {
+            "file": "src/cloudkid/EaselJSButton.js",
+            "line": 380,
+            "description": "Updates back based on the current button state.",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "method",
+            "name": "_updateState",
+            "class": "cloudkid.Button"
+        },
+        {
+            "file": "src/cloudkid/EaselJSButton.js",
+            "line": 413,
+            "description": "[CreateJS only] The callback for when the button receives a mouse down event.",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "method",
+            "name": "_onMouseDown",
+            "class": "cloudkid.Button"
+        },
+        {
+            "file": "src/cloudkid/EaselJSButton.js",
+            "line": 426,
+            "description": "The callback for when the button for when the mouse/touch is released on the button\n- only when the button was held down initially.",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "method",
+            "name": "_onMouseUp",
+            "class": "cloudkid.Button"
+        },
+        {
+            "file": "src/cloudkid/EaselJSButton.js",
+            "line": 440,
+            "description": "[CreateJS only] The callback for when the button is moused over.",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "method",
+            "name": "_onMouseOver",
+            "class": "cloudkid.Button"
+        },
+        {
+            "file": "src/cloudkid/EaselJSButton.js",
+            "line": 452,
+            "description": "[CreateJS only] The callback for when the mouse leaves the button area.",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "method",
+            "name": "_onMouseOut",
+            "class": "cloudkid.Button"
+        },
+        {
+            "file": "src/cloudkid/EaselJSButton.js",
+            "line": 463,
+            "description": "Destroys the button.",
+            "access": "public",
+            "tagname": "",
+            "itemtype": "method",
+            "name": "destroy",
+            "class": "cloudkid.Button"
+        },
+        {
+            "file": "src/cloudkid/EaselJSDragManager.js",
+            "line": 13,
+            "class": "cloudkid.DragManager"
+        },
+        {
+            "file": "src/cloudkid/EaselJSDragManager.js",
+            "line": 16,
+            "description": "The function call when finished dragging",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "_updateCallback",
+            "type": "Function",
+            "class": "cloudkid.DragManager"
+        },
+        {
+            "file": "src/cloudkid/EaselJSDragManager.js",
+            "line": 23,
+            "description": "The moust down event while draggin",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "_mouseDownEvent",
+            "type": "createjs.MouseEvent",
+            "class": "cloudkid.DragManager"
+        },
+        {
+            "file": "src/cloudkid/EaselJSDragManager.js",
+            "line": 30,
+            "description": "The object that's being dragged",
+            "access": "public",
+            "tagname": "",
+            "readonly": "",
+            "itemtype": "property",
+            "name": "draggedObj",
+            "type": "createjs.DisplayObject",
+            "class": "cloudkid.DragManager"
+        },
+        {
+            "file": "src/cloudkid/EaselJSDragManager.js",
+            "line": 38,
+            "description": "The local to global position of the drag",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "_dragOffset",
+            "type": "createjs.Point",
+            "class": "cloudkid.DragManager"
+        },
+        {
+            "file": "src/cloudkid/EaselJSDragManager.js",
+            "line": 45,
+            "description": "The radius in pixel to allow for dragging, or else does sticky click",
+            "access": "public",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "dragStartThreshold",
+            "default": "20",
+            "class": "cloudkid.DragManager"
+        },
+        {
+            "file": "src/cloudkid/EaselJSDragManager.js",
+            "line": 53,
+            "description": "The position x, y of the mouse down on the stage",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "mouseDownStagePos",
+            "type": "Object",
+            "class": "cloudkid.DragManager"
+        },
+        {
+            "file": "src/cloudkid/EaselJSDragManager.js",
+            "line": 60,
+            "description": "The position x, y of the object when interaction with it started.",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "mouseDownObjPos",
+            "type": "Object",
+            "class": "cloudkid.DragManager"
+        },
+        {
+            "file": "src/cloudkid/EaselJSDragManager.js",
+            "line": 67,
+            "description": "Is the move touch based",
+            "access": "public",
+            "tagname": "",
+            "readonly": "",
+            "itemtype": "property",
+            "name": "isTouchMove",
+            "type": "Bool",
+            "default": "false",
+            "class": "cloudkid.DragManager"
+        },
+        {
+            "file": "src/cloudkid/EaselJSDragManager.js",
+            "line": 76,
+            "description": "Is the drag being held on mouse down (not sticky clicking)",
+            "access": "public",
+            "tagname": "",
+            "readonly": "",
+            "itemtype": "property",
+            "name": "isHeldDrag",
+            "type": "Bool",
+            "default": "false",
+            "class": "cloudkid.DragManager"
+        },
+        {
+            "file": "src/cloudkid/EaselJSDragManager.js",
+            "line": 85,
+            "description": "Is the drag a sticky clicking (click on a item, then mouse the mouse)",
+            "access": "public",
+            "tagname": "",
+            "readonly": "",
+            "itemtype": "property",
+            "name": "isStickyClick",
+            "type": "Bool",
+            "default": "false",
+            "class": "cloudkid.DragManager"
+        },
+        {
+            "file": "src/cloudkid/EaselJSDragManager.js",
+            "line": 94,
+            "description": "Reference to the stage",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "_theStage",
+            "type": "CreatejsStage",
+            "class": "cloudkid.DragManager"
+        },
+        {
+            "file": "src/cloudkid/EaselJSDragManager.js",
+            "line": 101,
+            "description": "Callback when we start dragging",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "_dragStartCallback",
+            "type": "Function",
+            "class": "cloudkid.DragManager"
+        },
+        {
+            "file": "src/cloudkid/EaselJSDragManager.js",
+            "line": 108,
+            "description": "Callback when we are done dragging",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "_dragEndCallback",
+            "type": "Function",
+            "class": "cloudkid.DragManager"
+        },
+        {
+            "file": "src/cloudkid/EaselJSDragManager.js",
+            "line": 115,
+            "description": "Callback when we are done dragging holding drag",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "_triggerHeldDragCallback",
+            "type": "Function",
+            "class": "cloudkid.DragManager"
+        },
+        {
+            "file": "src/cloudkid/EaselJSDragManager.js",
+            "line": 122,
+            "description": "Callback when we are done width sticky clicking",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "_triggerStickyClickCallback",
+            "type": "Function",
+            "class": "cloudkid.DragManager"
+        },
+        {
+            "file": "src/cloudkid/EaselJSDragManager.js",
+            "line": 129,
+            "description": "Callback when we are done width sticky clicking",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "_stageMouseUpCallback",
+            "type": "Function",
+            "class": "cloudkid.DragManager"
+        },
+        {
+            "file": "src/cloudkid/EaselJSDragManager.js",
+            "line": 136,
+            "description": "The collection of draggable objects",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "_draggableObjects",
+            "type": "Array",
+            "class": "cloudkid.DragManager"
+        },
+        {
+            "file": "src/cloudkid/EaselJSDragManager.js",
+            "line": 143,
+            "description": "Constructor",
+            "itemtype": "method",
+            "name": "initialize",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "startCallback",
+                    "description": "The callback when when starting",
+                    "type": "Function"
+                },
+                {
+                    "name": "endCallback",
+                    "description": "The callback when ending",
+                    "type": "Function"
+                }
+            ],
+            "class": "cloudkid.DragManager"
+        },
+        {
+            "file": "src/cloudkid/EaselJSDragManager.js",
+            "line": 164,
+            "description": "Manually starts dragging an object. If a mouse down event is not supplied as the second argument, it \n   defaults to a held drag, that ends as soon as the mouse is released.",
+            "itemtype": "method",
+            "name": "startDrag",
+            "access": "public",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "object",
+                    "description": "The object that should be dragged.",
+                    "type": "createjs.DisplayObject"
+                },
+                {
+                    "name": "ev",
+                    "description": "A mouse down event to listen to to determine what type of drag should be used.",
+                    "type": "createjs.MouseEvent"
+                }
+            ],
+            "class": "cloudkid.DragManager"
+        },
+        {
+            "file": "src/cloudkid/EaselJSDragManager.js",
+            "line": 177,
+            "description": "Mouse down on an obmect",
+            "itemtype": "method",
+            "name": "_objMouseDown",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "ev",
+                    "description": "A mouse down event to listen to to determine what type of drag should be used.",
+                    "type": "createjs.MouseEvent"
+                },
+                {
+                    "name": "object",
+                    "description": "The object that should be dragged.",
+                    "type": "createjs.DisplayObject"
+                }
+            ],
+            "class": "cloudkid.DragManager"
+        },
+        {
+            "file": "src/cloudkid/EaselJSDragManager.js",
+            "line": 229,
+            "description": "Start the sticky click",
+            "itemtype": "method",
+            "name": "_triggerStickyClick",
+            "access": "private",
+            "tagname": "",
+            "class": "cloudkid.DragManager"
+        },
+        {
+            "file": "src/cloudkid/EaselJSDragManager.js",
+            "line": 242,
+            "description": "Start hold dragging",
+            "itemtype": "method",
+            "name": "_triggerHeldDrag",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "ev",
+                    "description": "The mouse down event",
+                    "type": "createjs.MouseEvent"
+                }
+            ],
+            "class": "cloudkid.DragManager"
+        },
+        {
+            "file": "src/cloudkid/EaselJSDragManager.js",
+            "line": 261,
+            "description": "Internal start dragging on the stage",
+            "itemtype": "method",
+            "name": "_startDrag",
+            "access": "private",
+            "tagname": "",
+            "class": "cloudkid.DragManager"
+        },
+        {
+            "file": "src/cloudkid/EaselJSDragManager.js",
+            "line": 276,
+            "description": "Stops dragging the currently dragged object.",
+            "access": "public",
+            "tagname": "",
+            "itemtype": "method",
+            "name": "stopDrag",
+            "params": [
+                {
+                    "name": "doCallback",
+                    "description": "If the drag end callback should be called. Default is false.",
+                    "type": "Bool"
+                }
+            ],
+            "class": "cloudkid.DragManager"
+        },
+        {
+            "file": "src/cloudkid/EaselJSDragManager.js",
+            "line": 287,
+            "description": "Internal stop dragging on the stage",
+            "itemtype": "method",
+            "name": "_stopDrag",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "ev",
+                    "description": "Mouse up event",
+                    "type": "createjs.MouseEvent"
+                },
+                {
+                    "name": "doCallback",
+                    "description": "If we should do the callback",
+                    "type": "Bool"
+                }
+            ],
+            "class": "cloudkid.DragManager"
+        },
+        {
+            "file": "src/cloudkid/EaselJSDragManager.js",
+            "line": 313,
+            "description": "Update the object position based on the mouse",
+            "itemtype": "method",
+            "name": "_updateObjPosition",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "e",
+                    "description": "Mouse move event",
+                    "type": "createjs.MouseEvent"
+                }
+            ],
+            "class": "cloudkid.DragManager"
+        },
+        {
+            "file": "src/cloudkid/EaselJSDragManager.js",
+            "line": 329,
+            "description": "Simple clamp function",
+            "class": "cloudkid.DragManager"
+        },
+        {
+            "file": "src/cloudkid/EaselJSDragManager.js",
+            "line": 355,
+            "description": "Adds properties and functions to the object - use enableDrag() and disableDrag() on \nobjects to enable/disable them (they start out disabled). Properties added to objects:\n_dragBounds (Rectangle), _onMouseDownListener (Function), _dragMan (cloudkid.DragManager) reference to the DragManager\nthese will override any existing properties of the same name",
+            "itemtype": "method",
+            "name": "addObject",
+            "access": "public",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "obj",
+                    "description": "The display object",
+                    "type": "createjs.DisplayObject"
+                },
+                {
+                    "name": "bound",
+                    "description": "The rectangle bounds",
+                    "type": "createjs.Rectangle"
+                }
+            ],
+            "class": "cloudkid.DragManager"
+        },
+        {
+            "file": "src/cloudkid/EaselJSDragManager.js",
+            "line": 386,
+            "description": "Removes properties and functions added by addObject().",
+            "access": "public",
+            "tagname": "",
+            "itemtype": "method",
+            "name": "removeObject",
+            "params": [
+                {
+                    "name": "obj",
+                    "description": "The display object",
+                    "type": "createjs.DisplayObject"
+                }
+            ],
+            "class": "cloudkid.DragManager"
+        },
+        {
+            "file": "src/cloudkid/EaselJSDragManager.js",
+            "line": 405,
+            "description": "Destroy the manager",
+            "access": "public",
+            "tagname": "",
+            "itemtype": "method",
+            "name": "destroy",
+            "class": "cloudkid.DragManager"
+        },
+        {
+            "file": "src/cloudkid/EaselJSDragManager.js",
+            "line": 440,
+            "class": "cloudkid.DragManager"
+        },
+        {
+            "file": "src/cloudkid/FunctionUtils.js",
+            "line": 11,
+            "description": "Add the bind functionality to the Function prototype\nthis allows passing a reference in the function callback \n\t\n\t\tvar callback = function(){};\n\t\tcloudkid.MediaLoader.instance.load('something.json', callback.bind(this));",
+            "is_constructor": 1,
+            "itemtype": "method",
+            "name": "bind",
+            "params": [
+                {
+                    "name": "that",
+                    "description": "The reference to the function",
+                    "type": "Function"
+                }
+            ],
+            "class": "bind"
+        },
+        {
+            "file": "src/cloudkid/FunctionUtils.js",
+            "line": 61,
+            "description": "A polyfill for requestAnimationFrame",
+            "itemtype": "method",
+            "name": "requestAnimationFrame",
+            "class": "bind"
+        },
+        {
+            "file": "src/cloudkid/FunctionUtils.js",
+            "line": 66,
+            "description": "A polyfill for cancelAnimationFrame",
+            "itemtype": "method",
+            "name": "cancelAnimationFrame",
+            "class": "bind"
+        },
+        {
+            "file": "src/cloudkid/OS.js",
+            "line": 13,
+            "description": "The prototype extends the easeljs' Container class\nor the PIXI.DisplayObjectContainer class",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "p",
+            "type": "createjs.Container|PIXI.DisplayObjectContainer",
+            "class": "cloudkid.OS"
+        },
+        {
+            "file": "src/cloudkid/OS.js",
+            "line": 22,
+            "description": "Boolean to keep track if we're paused",
+            "itemtype": "property",
+            "name": "_paused",
+            "type": "Bool",
+            "access": "private",
+            "tagname": "",
+            "class": "cloudkid.OS"
+        },
+        {
+            "file": "src/cloudkid/OS.js",
+            "line": 30,
+            "description": "When the OS is ready to use",
+            "itemtype": "property",
+            "name": "_isReady",
+            "type": "Bool",
+            "access": "private",
+            "tagname": "",
+            "class": "cloudkid.OS"
+        },
+        {
+            "file": "src/cloudkid/OS.js",
+            "line": 38,
+            "description": "The frame rate object",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "_framerate",
+            "type": "createjs.Text|PIXI.Text",
+            "class": "cloudkid.OS"
+        },
+        {
+            "file": "src/cloudkid/OS.js",
+            "line": 45,
+            "description": "The number of ms since the last frame update",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "_lastFrameTime",
+            "type": "Int",
+            "class": "cloudkid.OS"
+        },
+        {
+            "file": "src/cloudkid/OS.js",
+            "line": 52,
+            "description": "The last time since the last fps update",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "_lastFPSUpdateTime",
+            "type": "Int",
+            "class": "cloudkid.OS"
+        },
+        {
+            "file": "src/cloudkid/OS.js",
+            "line": 59,
+            "description": "The calculated _framerate",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "_framerateValue",
+            "type": "Number",
+            "class": "cloudkid.OS"
+        },
+        {
+            "file": "src/cloudkid/OS.js",
+            "line": 66,
+            "description": "The number of frames since the last fps update",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "_frameCount",
+            "type": "Int",
+            "class": "cloudkid.OS"
+        },
+        {
+            "file": "src/cloudkid/OS.js",
+            "line": 73,
+            "description": "The bound callback for listening to tick events",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "_tickCallback",
+            "type": "Function",
+            "class": "cloudkid.OS"
+        },
+        {
+            "file": "src/cloudkid/OS.js",
+            "line": 80,
+            "description": "Reference to the private instance object",
+            "itemtype": "property",
+            "name": "_instance",
+            "type": "cloudkid.OS",
+            "static": 1,
+            "access": "protected",
+            "tagname": "",
+            "class": "cloudkid.OS"
+        },
+        {
+            "file": "src/cloudkid/OS.js",
+            "line": 89,
+            "description": "The id of the active requestAnimationFrame or setTimeout call.",
+            "itemtype": "property",
+            "name": "_tickId",
+            "type": "Number",
+            "access": "private",
+            "tagname": "",
+            "class": "cloudkid.OS"
+        },
+        {
+            "file": "src/cloudkid/OS.js",
+            "line": 97,
+            "description": "If requestionAnimationFrame should be used",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "_useRAF",
+            "type": "Bool",
+            "default": "false",
+            "class": "cloudkid.OS"
+        },
+        {
+            "file": "src/cloudkid/OS.js",
+            "line": 106,
+            "description": "The current internal frames per second",
+            "itemtype": "property",
+            "name": "_fps",
+            "type": "Number",
+            "access": "private",
+            "tagname": "",
+            "class": "cloudkid.OS"
+        },
+        {
+            "file": "src/cloudkid/OS.js",
+            "line": 114,
+            "description": "The number of milliseconds per frame",
+            "itemtype": "property",
+            "name": "_msPerFrame",
+            "type": "Int",
+            "access": "private",
+            "tagname": "",
+            "class": "cloudkid.OS"
+        },
+        {
+            "file": "src/cloudkid/OS.js",
+            "line": 122,
+            "description": "The version number",
+            "access": "public",
+            "tagname": "",
+            "static": 1,
+            "itemtype": "property",
+            "name": "VERSION",
+            "type": "String",
+            "class": "cloudkid.OS"
+        },
+        {
+            "file": "src/cloudkid/OS.js",
+            "line": 130,
+            "description": "Reference to the Container initialize()",
+            "access": "protected",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "Container_initialize",
+            "type": "Function",
+            "class": "cloudkid.OS"
+        },
+        {
+            "file": "src/cloudkid/OS.js",
+            "line": 138,
+            "description": "Reference to the stage object",
+            "itemtype": "property",
+            "name": "stage",
+            "type": "createjs.Stage|PIXI.Stage",
+            "access": "public",
+            "tagname": "",
+            "class": "cloudkid.OS"
+        },
+        {
+            "file": "src/cloudkid/OS.js",
+            "line": 146,
+            "description": "[Pixi Only] The renderer used to draw the frame.",
+            "itemtype": "property",
+            "name": "_renderer The PixiJS renderer.",
+            "type": "PIXI.CanvasRenderer|PIXI.WebGLRenderer",
+            "access": "private",
+            "tagname": "",
+            "class": "cloudkid.OS"
+        },
+        {
+            "file": "src/cloudkid/OS.js",
+            "line": 155,
+            "description": "[Pixi Only] A div that contains the canvas, so that games can layer it with other canvases if desired",
+            "itemtype": "property",
+            "name": "canvasContainer The div element.",
+            "class": "cloudkid.OS"
+        },
+        {
+            "file": "src/cloudkid/OS.js",
+            "line": 163,
+            "description": "Reference to the current application",
+            "access": "protected",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "_app",
+            "type": "cloudkid.Application",
+            "class": "cloudkid.OS"
+        },
+        {
+            "file": "src/cloudkid/OS.js",
+            "line": 170,
+            "description": "The collection of query string parameters",
+            "access": "public",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "options",
+            "type": "Dictionary",
+            "class": "cloudkid.OS"
+        },
+        {
+            "file": "src/cloudkid/OS.js",
+            "line": 177,
+            "description": "Collection of update functions",
+            "access": "protected",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "_updateFunctions",
+            "type": "Dictionary",
+            "class": "cloudkid.OS"
+        },
+        {
+            "file": "src/cloudkid/OS.js",
+            "line": 184,
+            "description": "Static constructor for setting up the stage",
+            "example": [
+                "\n\t\tvar os = cloudkid.OS.init(\"stage\", {\n\t\t\tshowFramerate: true,\n\t\t\tfps: 60,\n\t\t\tparseQueryString: true,\n\t\t\tdebug: true\n\t\t});\n\t\t\n\t\tos.addApp(myApplication);"
+            ],
+            "itemtype": "method",
+            "name": "init",
+            "static": 1,
+            "access": "public",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "stageName",
+                    "description": "The stage name selector",
+                    "type": "String"
+                },
+                {
+                    "name": "options",
+                    "description": "Additional options",
+                    "type": "Dictionary"
+                }
+            ],
+            "class": "cloudkid.OS"
+        },
+        {
+            "file": "src/cloudkid/OS.js",
+            "line": 218,
+            "description": "The internal constructor extends Container constructor",
+            "is_constructor": 1,
+            "access": "public",
+            "tagname": "",
+            "itemtype": "method",
+            "name": "initialize",
+            "params": [
+                {
+                    "name": "stageName",
+                    "description": "The string name of the stage id",
+                    "type": "String"
+                },
+                {
+                    "name": "opts",
+                    "description": "The optional options to set",
+                    "type": "Object*"
+                }
+            ],
+            "class": "cloudkid.OS"
+        },
+        {
+            "file": "src/cloudkid/OS.js",
+            "line": 470,
+            "description": "Define all of the query string parameters",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "method",
+            "name": "parseQueryStringParams",
+            "params": [
+                {
+                    "name": "output",
+                    "description": "The object reference to update",
+                    "type": "Object"
+                }
+            ],
+            "class": "cloudkid.OS"
+        },
+        {
+            "file": "src/cloudkid/OS.js",
+            "line": 499,
+            "description": "Pause the OS and stop frame updates",
+            "access": "public",
+            "tagname": "",
+            "itemtype": "method",
+            "name": "pause",
+            "class": "cloudkid.OS"
+        },
+        {
+            "file": "src/cloudkid/OS.js",
+            "line": 526,
+            "description": "Gets the current time in milliseconds for timing purposes",
+            "access": "public",
+            "tagname": "",
+            "itemtype": "method",
+            "name": "getTime",
+            "class": "cloudkid.OS"
+        },
+        {
+            "file": "src/cloudkid/OS.js",
+            "line": 536,
+            "description": "Resume the OS updates",
+            "access": "public",
+            "tagname": "",
+            "itemtype": "method",
+            "name": "resume",
+            "class": "cloudkid.OS"
+        },
+        {
+            "file": "src/cloudkid/OS.js",
+            "line": 554,
+            "description": "The FPS that the OS is targeting.",
+            "itemtype": "property",
+            "name": "fps",
+            "type": "Number",
+            "access": "public",
+            "tagname": "",
+            "class": "cloudkid.OS"
+        },
+        {
+            "file": "src/cloudkid/OS.js",
+            "line": 569,
+            "description": "Convenience for accessing the stage's width",
+            "itemtype": "property",
+            "name": "stageWidth",
+            "type": "Number",
+            "access": "public",
+            "tagname": "",
+            "readonly": "",
+            "class": "cloudkid.OS"
+        },
+        {
+            "file": "src/cloudkid/OS.js",
+            "line": 583,
+            "description": "Convenience for accessing the stage's height",
+            "itemtype": "property",
+            "name": "stageHeight",
+            "type": "Number",
+            "access": "public",
+            "tagname": "",
+            "readonly": "",
+            "class": "cloudkid.OS"
+        },
+        {
+            "file": "src/cloudkid/OS.js",
+            "line": 605,
+            "description": "Remove the application",
+            "access": "public",
+            "tagname": "",
+            "itemtype": "method",
+            "name": "removeApp",
+            "params": [
+                {
+                    "name": "destroying",
+                    "description": "If the OS is being destroyed and shouldn't bother running any resetting code.",
+                    "type": "Boolean"
+                }
+            ],
+            "return": {
+                "description": "If an `cloudkid.Application` was successfully removed",
+                "type": "Boolean"
+            },
+            "class": "cloudkid.OS"
+        },
+        {
+            "file": "src/cloudkid/OS.js",
+            "line": 659,
+            "description": "Add an app to this display list",
+            "access": "public",
+            "tagname": "",
+            "itemtype": "method",
+            "name": "addApp",
+            "params": [
+                {
+                    "name": "app",
+                    "description": "The application to add",
+                    "type": "cloudkid.Application"
+                }
+            ],
+            "class": "cloudkid.OS"
+        },
+        {
+            "file": "src/cloudkid/OS.js",
+            "line": 681,
+            "description": "Get the current application",
+            "itemtype": "method",
+            "name": "getApp",
+            "access": "public",
+            "tagname": "",
+            "return": {
+                "description": "The current Application, null if no application",
+                "type": "cloudkid.Application"
+            },
+            "class": "cloudkid.OS"
+        },
+        {
+            "file": "src/cloudkid/OS.js",
+            "line": 692,
+            "description": "Add an update callback, must take elapsed as a parameter",
+            "itemtype": "method",
+            "name": "addUpdateCallback",
+            "access": "public",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "alias",
+                    "description": "An alias to associate with this callback",
+                    "type": "String"
+                },
+                {
+                    "name": "f",
+                    "description": "The callback function",
+                    "type": "Function"
+                }
+            ],
+            "class": "cloudkid.OS"
+        },
+        {
+            "file": "src/cloudkid/OS.js",
+            "line": 707,
+            "description": "Remove an update callback, must take elapsed as a parameter",
+            "access": "public",
+            "tagname": "",
+            "itemtype": "method",
+            "name": "removeUpdateCallback",
+            "params": [
+                {
+                    "name": "alias",
+                    "description": "The callback function alias",
+                    "type": "String"
+                }
+            ],
+            "class": "cloudkid.OS"
+        },
+        {
+            "file": "src/cloudkid/OS.js",
+            "line": 721,
+            "description": "Called by the stage listener",
+            "access": "public",
+            "tagname": "",
+            "itemtype": "method",
+            "name": "tick",
+            "class": "cloudkid.OS"
+        },
+        {
+            "file": "src/cloudkid/OS.js",
+            "line": 775,
+            "description": "[PIXI Only] Resizes the renderer and the canvasContainer.",
+            "access": "public",
+            "tagname": "",
+            "itemtype": "method",
+            "name": "resize",
+            "class": "cloudkid.OS"
+        },
+        {
+            "file": "src/cloudkid/OS.js",
+            "line": 789,
+            "description": "Destroy the instance of the OS, can init after this,\nalso destroys the application, if around",
+            "access": "public",
+            "tagname": "",
+            "itemtype": "method",
+            "name": "destroy",
+            "class": "cloudkid.OS"
+        },
+        {
+            "file": "src/cloudkid/OS.js",
+            "line": 826,
+            "description": "Static function for getting the singleton instance",
+            "static": 1,
+            "readonly": "",
+            "access": "public",
+            "tagname": "",
+            "itemtype": "attribute",
+            "name": "instance",
+            "type": "cloudkid.OS",
+            "class": "cloudkid.OS"
+        },
+        {
+            "file": "src/cloudkid/PixiAnimator.js",
+            "line": 16,
+            "description": "A reference to this instance of PixiAnimator. This is internal to PixiAnimator and can't be accessed externally.",
+            "itemtype": "property",
+            "name": "_instance",
+            "type": "cloudkid.PixiAnimator",
+            "access": "private",
+            "tagname": "",
+            "static": 1,
+            "class": "cloudkid.PixiAnimator"
+        },
+        {
+            "file": "src/cloudkid/PixiAnimator.js",
+            "line": 24,
+            "description": "The collection of AnimTimelines that are playing",
+            "itemtype": "property",
+            "name": "_timelines",
+            "type": "Array",
+            "access": "private",
+            "tagname": "",
+            "class": "cloudkid.PixiAnimator"
+        },
+        {
+            "file": "src/cloudkid/PixiAnimator.js",
+            "line": 31,
+            "description": "The number of animations",
+            "itemtype": "property",
+            "name": "_numAnims",
+            "type": "Int",
+            "access": "private",
+            "tagname": "",
+            "class": "cloudkid.PixiAnimator"
+        },
+        {
+            "file": "src/cloudkid/PixiAnimator.js",
+            "line": 38,
+            "description": "A string reference to PixiAnimator's update callback\nso it can be removed in the event that there are no\nanimations to play",
+            "itemtype": "property",
+            "name": "_updateAlias",
+            "type": "String",
+            "access": "private",
+            "tagname": "",
+            "class": "cloudkid.PixiAnimator"
+        },
+        {
+            "file": "src/cloudkid/PixiAnimator.js",
+            "line": 47,
+            "description": "The function that PixiAnimator uses for update calls. Do not modify.",
+            "itemtype": "property",
+            "name": "_boundUpdate",
+            "type": "Function",
+            "access": "private",
+            "tagname": "",
+            "class": "cloudkid.PixiAnimator"
+        },
+        {
+            "file": "src/cloudkid/PixiAnimator.js",
+            "line": 54,
+            "description": "Stored collection of AnimTimelines. This is internal to PixiAnimator and can't be accessed externally.",
+            "itemtype": "property",
+            "name": "_animPool",
+            "type": "Array",
+            "access": "private",
+            "tagname": "",
+            "static": 1,
+            "class": "cloudkid.PixiAnimator"
+        },
+        {
+            "file": "src/cloudkid/PixiAnimator.js",
+            "line": 62,
+            "description": "Initializes the singleton instance of PixiAnimator.",
+            "itemtype": "method",
+            "name": "init",
+            "static": 1,
+            "class": "cloudkid.PixiAnimator"
+        },
+        {
+            "file": "src/cloudkid/PixiAnimator.js",
+            "line": 73,
+            "description": "Getter for the reference to this instance of PixiAnimator",
+            "itemtype": "property",
+            "name": "instance",
+            "type": "cloudkid.PixiAnimator",
+            "readonly": "",
+            "static": 1,
+            "class": "cloudkid.PixiAnimator"
+        },
+        {
+            "file": "src/cloudkid/PixiAnimator.js",
+            "line": 85,
+            "description": "Play a specified animation",
+            "itemtype": "method",
+            "name": "play",
+            "params": [
+                {
+                    "name": "clip",
+                    "description": "The clip to play",
+                    "type": "PIXI.MovieClip|PIXI.Spine"
+                },
+                {
+                    "name": "anim",
+                    "description": "The alias for the animation to play",
+                    "type": "String"
+                },
+                {
+                    "name": "callback",
+                    "description": "The function to call once the animation has finished",
+                    "type": "Function"
+                },
+                {
+                    "name": "loop",
+                    "description": "Whether the animation should loop",
+                    "type": "Bool"
+                },
+                {
+                    "name": "speed",
+                    "description": "The speed at which to play the animation",
+                    "type": "Int"
+                },
+                {
+                    "name": "startTime",
+                    "description": "The time in milliseconds into the animation to start.",
+                    "type": "Int"
+                }
+            ],
+            "class": "cloudkid.PixiAnimator"
+        },
+        {
+            "file": "src/cloudkid/PixiAnimator.js",
+            "line": 192,
+            "description": "Checks to see if a spine includes a given animation alias",
+            "itemtype": "method",
+            "name": "checkSpineForAnimation",
+            "params": [
+                {
+                    "name": "clip",
+                    "description": "The spine to search",
+                    "type": "PIXI.spine"
+                },
+                {
+                    "name": "anim",
+                    "description": "The animation alias to search",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "Returns true if the animation is found",
+                "type": "Boolean"
+            },
+            "class": "cloudkid.PixiAnimator"
+        },
+        {
+            "file": "src/cloudkid/PixiAnimator.js",
+            "line": 205,
+            "description": "Stop a clip",
+            "itemtype": "method",
+            "name": "stop",
+            "params": [
+                {
+                    "name": "clip",
+                    "description": "The clip to stop",
+                    "type": "PIXI.MovieClip|PIXI.Spine"
+                },
+                {
+                    "name": "doCallback",
+                    "description": "Whether the animations callback should be run",
+                    "type": "Bool"
+                }
+            ],
+            "class": "cloudkid.PixiAnimator"
+        },
+        {
+            "file": "src/cloudkid/PixiAnimator.js",
+            "line": 232,
+            "description": "Stops all current animations",
+            "itemtype": "method",
+            "name": "stop",
+            "class": "cloudkid.PixiAnimator"
+        },
+        {
+            "file": "src/cloudkid/PixiAnimator.js",
+            "line": 251,
+            "description": "Put an AnimTimeline back into the general pool after it's done playing\nor has been manually stopped",
+            "itemtype": "method",
+            "name": "_repool",
+            "params": [
+                {
+                    "name": "timeline",
+                    "description": "",
+                    "type": "cloudkid.PixiAnimator.AnimTimeline"
+                }
+            ],
+            "access": "private",
+            "tagname": "",
+            "class": "cloudkid.PixiAnimator"
+        },
+        {
+            "file": "src/cloudkid/PixiAnimator.js",
+            "line": 270,
+            "description": "Update each frame",
+            "itemtype": "method",
+            "name": "_update",
+            "params": [
+                {
+                    "name": "elapsed",
+                    "description": "The time since the last frame",
+                    "type": "Int"
+                }
+            ],
+            "access": "private",
+            "tagname": "",
+            "class": "cloudkid.PixiAnimator"
+        },
+        {
+            "file": "src/cloudkid/PixiAnimator.js",
+            "line": 358,
+            "description": "Called when a movie clip is done playing, calls the AnimTimeline's\ncallback if it has one",
+            "itemtype": "method",
+            "name": "_onMovieClipDone",
+            "params": [
+                {
+                    "name": "timeline",
+                    "description": "",
+                    "type": "cloudkid.PixiAnimator.AnimTimeline"
+                }
+            ],
+            "access": "private",
+            "tagname": "",
+            "class": "cloudkid.PixiAnimator"
+        },
+        {
+            "file": "src/cloudkid/PixiAnimator.js",
+            "line": 385,
+            "description": "Destroy this",
+            "itemtype": "method",
+            "name": "destroy",
+            "class": "cloudkid.PixiAnimator"
+        },
+        {
+            "file": "src/cloudkid/PixiAnimator.js",
+            "line": 415,
+            "description": "Initialize the AnimTimeline",
+            "itemtype": "method",
+            "name": "init",
+            "params": [
+                {
+                    "name": "clip",
+                    "description": "The AnimTimeline's clip",
+                    "type": "PIXI.MovieClip|Pixi.Spine"
+                },
+                {
+                    "name": "callback",
+                    "description": "The function to call when the clip is finished playing",
+                    "type": "Function"
+                },
+                {
+                    "name": "speed",
+                    "description": "The speed at which the clip should be played",
+                    "type": "Int"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "cloudkid.PixiAnimator.AnimTimeline"
+            },
+            "class": "cloudkid.PixiAnimator.AnimTimeline"
+        },
+        {
+            "file": "src/cloudkid/PixiAnimator.js",
+            "line": 426,
+            "description": "The clip for this AnimTimeLine",
+            "itemtype": "property",
+            "name": "clip",
+            "type": "PIXI.MovieClip|PIXI.Spine",
+            "class": "cloudkid.PixiAnimator.AnimTimeline"
+        },
+        {
+            "file": "src/cloudkid/PixiAnimator.js",
+            "line": 431,
+            "description": "Whether the clip is a PIXI.Spine",
+            "itemtype": "property",
+            "name": "isSpine",
+            "type": "Bool",
+            "class": "cloudkid.PixiAnimator.AnimTimeline"
+        },
+        {
+            "file": "src/cloudkid/PixiAnimator.js",
+            "line": 436,
+            "description": "The function to call when the clip is finished playing",
+            "itemtype": "property",
+            "name": "callback",
+            "type": "Function",
+            "class": "cloudkid.PixiAnimator.AnimTimeline"
+        },
+        {
+            "file": "src/cloudkid/PixiAnimator.js",
+            "line": 441,
+            "description": "The speed at which the clip should be played",
+            "itemtype": "property",
+            "name": "speed",
+            "type": "Int",
+            "class": "cloudkid.PixiAnimator.AnimTimeline"
+        },
+        {
+            "file": "src/cloudkid/PixiAnimator.js",
+            "line": 446,
+            "itemtype": "property",
+            "name": "spineStates",
+            "type": "Array",
+            "class": "cloudkid.PixiAnimator.AnimTimeline"
+        },
+        {
+            "file": "src/cloudkid/PixiAnimator.js",
+            "line": 450,
+            "description": "Not used by PixiAnimator, but potentially useful for other code to keep track of what type of animation is being played",
+            "itemtype": "property",
+            "name": "loop",
+            "type": "Bool",
+            "class": "cloudkid.PixiAnimator.AnimTimeline"
+        },
+        {
+            "file": "src/cloudkid/PixiAnimator.js",
+            "line": 455,
+            "itemtype": "property",
+            "name": "The position of the animation in seconds",
+            "type": "Number",
+            "class": "cloudkid.PixiAnimator.AnimTimeline"
+        },
+        {
+            "file": "src/cloudkid/PixiAnimator.js",
+            "line": 459,
+            "class": "cloudkid.PixiAnimator.AnimTimeline"
+        },
+        {
+            "file": "src/cloudkid/PixiAnimator.js",
+            "line": 461,
+            "itemtype": "property",
+            "name": "A sound instance object from cloudkid.Sound, used for tracking sound position.",
+            "type": "Object",
+            "class": "cloudkid.PixiAnimator.AnimTimeline"
+        },
+        {
+            "file": "src/cloudkid/PixiAnimator.js",
+            "line": 465,
+            "class": "cloudkid.PixiAnimator.AnimTimeline"
+        },
+        {
+            "file": "src/cloudkid/PixiAnimator.js",
+            "line": 467,
+            "class": "cloudkid.PixiAnimator.AnimTimeline"
+        },
+        {
+            "file": "src/cloudkid/PixiAnimator.js",
+            "line": 469,
+            "class": "cloudkid.PixiAnimator.AnimTimeline"
+        },
+        {
+            "file": "src/cloudkid/PixiButton.js",
+            "line": 39,
+            "description": "**[PIXI only]** The function that should be called when the button is released.",
+            "access": "public",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "releaseCallback",
+            "type": "Function",
+            "class": "cloudkid.Button"
+        },
+        {
+            "file": "src/cloudkid/PixiButton.js",
+            "line": 45,
+            "description": "**[PIXI only]** The function that should be called when the button is moused over.",
+            "access": "public",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "overCallback",
+            "type": "Function",
+            "class": "cloudkid.Button"
+        },
+        {
+            "file": "src/cloudkid/PixiButton.js",
+            "line": 52,
+            "description": "**[PIXI only]** The function that should be called when mouse leaves the button.",
+            "access": "public",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "outCallback",
+            "type": "Function",
+            "class": "cloudkid.Button"
+        },
+        {
+            "file": "src/cloudkid/PixiButton.js",
+            "line": 122,
+            "description": "[PIXI only] Callback for mouse up outside, bound to this button.",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "_upOutCB",
+            "type": "Function",
+            "class": "cloudkid.Button"
+        },
+        {
+            "file": "src/cloudkid/PixiButton.js",
+            "line": 130,
+            "description": "[PIXI only] The texture for the up state of the button",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "_upTex",
+            "type": "PIXI.Texture",
+            "class": "cloudkid.Button"
+        },
+        {
+            "file": "src/cloudkid/PixiButton.js",
+            "line": 136,
+            "description": "[PIXI only] The texture for the over state of the button",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "_overTex",
+            "type": "PIXI.Texture",
+            "class": "cloudkid.Button"
+        },
+        {
+            "file": "src/cloudkid/PixiButton.js",
+            "line": 142,
+            "description": "[PIXI only] The texture for the down state of the button",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "_downTex",
+            "type": "PIXI.Texture",
+            "class": "cloudkid.Button"
+        },
+        {
+            "file": "src/cloudkid/PixiButton.js",
+            "line": 148,
+            "description": "[PIXI only] The texture for the disabled state of the button",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "_disabledTex",
+            "type": "PIXI.Texture",
+            "class": "cloudkid.Button"
+        },
+        {
+            "file": "src/cloudkid/PixiButton.js",
+            "line": 154,
+            "description": "[PIXI only] The texture for the selected state of the button",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "_selectedTex",
+            "type": "PIXI.Texture",
+            "class": "cloudkid.Button"
+        },
+        {
+            "file": "src/cloudkid/PixiButton.js",
+            "line": 160,
+            "description": "[PIXI only] The texture for the highlighted state of the button",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "_highlightedTex",
+            "type": "PIXI.Texture",
+            "class": "cloudkid.Button"
+        },
+        {
+            "file": "src/cloudkid/PixiButton.js",
+            "line": 176,
+            "description": "[PIXI only] The texture for the up state of the button",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "_slaveUpTex",
+            "type": "PIXI.Texture",
+            "class": "cloudkid.Button"
+        },
+        {
+            "file": "src/cloudkid/PixiButton.js",
+            "line": 182,
+            "description": "[PIXI only] The texture for the over state of the button",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "_slaveOverTex",
+            "type": "PIXI.Texture",
+            "class": "cloudkid.Button"
+        },
+        {
+            "file": "src/cloudkid/PixiButton.js",
+            "line": 188,
+            "description": "[PIXI only] The texture for the down state of the button",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "_slaveDownTex",
+            "type": "PIXI.Texture",
+            "class": "cloudkid.Button"
+        },
+        {
+            "file": "src/cloudkid/PixiButton.js",
+            "line": 194,
+            "description": "[PIXI only] The texture for the disabled state of the button",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "_slaveDisabledTex",
+            "type": "PIXI.Texture",
+            "class": "cloudkid.Button"
+        },
+        {
+            "file": "src/cloudkid/PixiButton.js",
+            "line": 200,
+            "description": "[PIXI only] The texture for the selected state of the button",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "_slaveSelectedTex",
+            "type": "PIXI.Texture",
+            "class": "cloudkid.Button"
+        },
+        {
+            "file": "src/cloudkid/PixiButton.js",
+            "line": 206,
+            "description": "[PIXI only] The texture for the highlighted state of the button",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "_slaveHighlightedTex",
+            "type": "PIXI.Texture",
+            "class": "cloudkid.Button"
+        },
+        {
+            "file": "src/cloudkid/PixiButton.js",
+            "line": 226,
+            "description": "**[PIXI only]** Constructor for the button when using PIXI.",
+            "itemtype": "method",
+            "name": "initialize",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "imageSettings",
+                    "description": "Information about the art to be used for button states, as well as if the button is selectable or not.",
+                    "type": "Object",
+                    "optional": true,
+                    "props": [
+                        {
+                            "name": "up",
+                            "description": "The texture for the up state of the button.",
+                            "type": "PIXI.Texture",
+                            "optional": true
+                        },
+                        {
+                            "name": "over",
+                            "description": "The texture for the over state of the button. If omitted, uses the up state.",
+                            "type": "PIXI.Texture",
+                            "optional": true,
+                            "optdefault": "null"
+                        },
+                        {
+                            "name": "down",
+                            "description": "The texture for the down state of the button. If omitted, uses the up state.",
+                            "type": "PIXI.Texture",
+                            "optional": true,
+                            "optdefault": "null"
+                        },
+                        {
+                            "name": "disabled",
+                            "description": "The texture for the disabled state of the button. If omitted, uses the up state.",
+                            "type": "PIXI.Texture",
+                            "optional": true,
+                            "optdefault": "null"
+                        },
+                        {
+                            "name": "highlighted",
+                            "description": "The texture for the highlighted state of the button. If omitted, uses the over state.",
+                            "type": "PIXI.Texture",
+                            "optional": true,
+                            "optdefault": "null"
+                        },
+                        {
+                            "name": "selected",
+                            "description": "The texture for the selected state of the button. If omitted, the button is not a selectable button.",
+                            "type": "PIXI.Texture",
+                            "optional": true,
+                            "optdefault": "null"
+                        },
+                        {
+                            "name": "scale",
+                            "description": "The scale to use for the textures. This allows smaller art assets than the designed size to be used.",
+                            "type": "Number",
+                            "optional": true,
+                            "optdefault": "1"
+                        }
+                    ]
+                },
+                {
+                    "name": "label",
+                    "description": "Information about the text label on the button. Omitting this makes the button not use a label.",
+                    "type": "Object",
+                    "optional": true,
+                    "optdefault": "null",
+                    "props": [
+                        {
+                            "name": "type",
+                            "description": "If label.type is \"bitmap\", then a PIXI.BitmapText text is created, otherwise a PIXI.Text is created for the label.",
+                            "type": "String",
+                            "optional": true
+                        },
+                        {
+                            "name": "text",
+                            "description": "The text to display on the label.",
+                            "type": "String",
+                            "optional": true
+                        },
+                        {
+                            "name": "style",
+                            "description": "The style of the text field, in the format that PIXI.BitmapText and PIXI.Text expect.",
+                            "type": "Object",
+                            "optional": true
+                        }
+                    ]
+                },
+                {
+                    "name": "enabled",
+                    "description": "Whether or not the button is initially enabled.",
+                    "type": "Boolean",
+                    "optional": true,
+                    "optdefault": "true"
+                }
+            ],
+            "class": "cloudkid.Button"
+        },
+        {
+            "file": "src/cloudkid/PixiButton.js",
+            "line": 445,
+            "description": "[PIXI only] The callback for when the button is moused over.",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "method",
+            "name": "_onOver",
+            "class": "cloudkid.Button"
+        },
+        {
+            "file": "src/cloudkid/PixiButton.js",
+            "line": 458,
+            "description": "[PIXI only] The callback for when the mouse leaves the button area.",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "method",
+            "name": "_onOut",
+            "class": "cloudkid.Button"
+        },
+        {
+            "file": "src/cloudkid/PixiButton.js",
+            "line": 471,
+            "description": "[PIXI only] The callback for when the button receives a mouse down event.",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "method",
+            "name": "_onDown",
+            "class": "cloudkid.Button"
+        },
+        {
+            "file": "src/cloudkid/PixiButton.js",
+            "line": 486,
+            "description": "[PIXI only] The callback for when the button for when the mouse/touch is released on the button\n- only when the button was held down initially.",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "method",
+            "name": "_onUp",
+            "class": "cloudkid.Button"
+        },
+        {
+            "file": "src/cloudkid/PixiButton.js",
+            "line": 504,
+            "description": "[PIXI only] The callback for when the mouse/touch is released outside the button when the button was held down.",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "method",
+            "name": "_onUpOutside",
+            "class": "cloudkid.Button"
+        },
+        {
+            "file": "src/cloudkid/PixiDragManager.js",
+            "line": 13,
+            "class": "cloudkid.DragManager"
+        },
+        {
+            "file": "src/cloudkid/PixiDragManager.js",
+            "line": 16,
+            "description": "The function call when finished dragging",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "_updateCallback",
+            "type": "Function",
+            "class": "cloudkid.DragManager"
+        },
+        {
+            "file": "src/cloudkid/PixiDragManager.js",
+            "line": 23,
+            "description": "The object that's being dragged",
+            "access": "public",
+            "tagname": "",
+            "readonly": "",
+            "itemtype": "property",
+            "name": "draggedObj",
+            "type": "PIXI.DisplayObject",
+            "class": "cloudkid.DragManager"
+        },
+        {
+            "file": "src/cloudkid/PixiDragManager.js",
+            "line": 31,
+            "description": "The local to global position of the drag",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "_dragOffset",
+            "type": "PIXI.Point",
+            "class": "cloudkid.DragManager"
+        },
+        {
+            "file": "src/cloudkid/PixiDragManager.js",
+            "line": 38,
+            "description": "The radius in pixel to allow for dragging, or else does sticky click",
+            "access": "public",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "dragStartThreshold",
+            "default": "20",
+            "class": "cloudkid.DragManager"
+        },
+        {
+            "file": "src/cloudkid/PixiDragManager.js",
+            "line": 46,
+            "description": "The position x, y of the mouse down on the stage",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "mouseDownStagePos",
+            "type": "PIXI.Point",
+            "class": "cloudkid.DragManager"
+        },
+        {
+            "file": "src/cloudkid/PixiDragManager.js",
+            "line": 53,
+            "description": "The position x, y of the object when interaction with it started.",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "mouseDownObjPos",
+            "type": "PIXI.Point",
+            "class": "cloudkid.DragManager"
+        },
+        {
+            "file": "src/cloudkid/PixiDragManager.js",
+            "line": 60,
+            "description": "Is the move touch based",
+            "access": "public",
+            "tagname": "",
+            "readonly": "",
+            "itemtype": "property",
+            "name": "isTouchMove",
+            "type": "Bool",
+            "default": "false",
+            "class": "cloudkid.DragManager"
+        },
+        {
+            "file": "src/cloudkid/PixiDragManager.js",
+            "line": 69,
+            "description": "Is the drag being held on mouse down (not sticky clicking)",
+            "access": "public",
+            "tagname": "",
+            "readonly": "",
+            "itemtype": "property",
+            "name": "isHeldDrag",
+            "type": "Bool",
+            "default": "false",
+            "class": "cloudkid.DragManager"
+        },
+        {
+            "file": "src/cloudkid/PixiDragManager.js",
+            "line": 78,
+            "description": "Is the drag a sticky clicking (click on a item, then mouse the mouse)",
+            "access": "public",
+            "tagname": "",
+            "readonly": "",
+            "itemtype": "property",
+            "name": "isStickyClick",
+            "type": "Bool",
+            "default": "false",
+            "class": "cloudkid.DragManager"
+        },
+        {
+            "file": "src/cloudkid/PixiDragManager.js",
+            "line": 87,
+            "description": "If sticky click dragging is allowed.",
+            "access": "public",
+            "tagname": "",
+            "readonly": "",
+            "itemtype": "property",
+            "name": "allowStickyClick",
+            "type": "Bool",
+            "default": "true",
+            "class": "cloudkid.DragManager"
+        },
+        {
+            "file": "src/cloudkid/PixiDragManager.js",
+            "line": 96,
+            "description": "Reference to the stage",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "_theStage",
+            "type": "CreatejsStage",
+            "class": "cloudkid.DragManager"
+        },
+        {
+            "file": "src/cloudkid/PixiDragManager.js",
+            "line": 103,
+            "description": "Callback when we start dragging",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "_dragStartCallback",
+            "type": "Function",
+            "class": "cloudkid.DragManager"
+        },
+        {
+            "file": "src/cloudkid/PixiDragManager.js",
+            "line": 110,
+            "description": "Callback when we are done dragging",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "_dragEndCallback",
+            "type": "Function",
+            "class": "cloudkid.DragManager"
+        },
+        {
+            "file": "src/cloudkid/PixiDragManager.js",
+            "line": 117,
+            "description": "Callback when we are done dragging holding drag",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "_triggerHeldDragCallback",
+            "type": "Function",
+            "class": "cloudkid.DragManager"
+        },
+        {
+            "file": "src/cloudkid/PixiDragManager.js",
+            "line": 124,
+            "description": "Callback when we are done width sticky clicking",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "_triggerStickyClickCallback",
+            "type": "Function",
+            "class": "cloudkid.DragManager"
+        },
+        {
+            "file": "src/cloudkid/PixiDragManager.js",
+            "line": 131,
+            "description": "Callback when we are done width sticky clicking",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "_stageMouseUpCallback",
+            "type": "Function",
+            "class": "cloudkid.DragManager"
+        },
+        {
+            "file": "src/cloudkid/PixiDragManager.js",
+            "line": 138,
+            "description": "The collection of draggable objects",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "_draggableObjects",
+            "type": "Array",
+            "class": "cloudkid.DragManager"
+        },
+        {
+            "file": "src/cloudkid/PixiDragManager.js",
+            "line": 150,
+            "description": "Constructor",
+            "itemtype": "method",
+            "name": "initialize",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "startCallback",
+                    "description": "The callback when when starting",
+                    "type": "Function"
+                },
+                {
+                    "name": "endCallback",
+                    "description": "The callback when ending",
+                    "type": "Function"
+                }
+            ],
+            "class": "cloudkid.DragManager"
+        },
+        {
+            "file": "src/cloudkid/PixiDragManager.js",
+            "line": 172,
+            "description": "Manually starts dragging an object. If a mouse down event is not supplied as the second argument, it \n   defaults to a held drag, that ends as soon as the mouse is released.",
+            "itemtype": "method",
+            "name": "startDrag",
+            "access": "public",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "object",
+                    "description": "The object that should be dragged.",
+                    "type": "PIXI.DisplayObject"
+                },
+                {
+                    "name": "interactionData",
+                    "description": "The interaction data about the input event that triggered this.",
+                    "type": "PIXI.InteractionData"
+                }
+            ],
+            "class": "cloudkid.DragManager"
+        },
+        {
+            "file": "src/cloudkid/PixiDragManager.js",
+            "line": 185,
+            "description": "Mouse down on an obmect",
+            "itemtype": "method",
+            "name": "_objMouseDown",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "type",
+                    "description": "The type of input that triggered this call - either TYPE_MOUSE or TYPE_TOUCH.",
+                    "type": "Int"
+                },
+                {
+                    "name": "object",
+                    "description": "The object that should be dragged.",
+                    "type": "PIXI.DisplayObject"
+                }
+            ],
+            "class": "cloudkid.DragManager"
+        },
+        {
+            "file": "src/cloudkid/PixiDragManager.js",
+            "line": 227,
+            "description": "Start the sticky click",
+            "itemtype": "method",
+            "name": "_triggerStickyClick",
+            "access": "private",
+            "tagname": "",
+            "class": "cloudkid.DragManager"
+        },
+        {
+            "file": "src/cloudkid/PixiDragManager.js",
+            "line": 240,
+            "description": "Start hold dragging",
+            "itemtype": "method",
+            "name": "_triggerHeldDrag",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "interactionData",
+                    "description": "The ineraction data about the moved mouse",
+                    "type": "PIXI.InteractionData"
+                }
+            ],
+            "class": "cloudkid.DragManager"
+        },
+        {
+            "file": "src/cloudkid/PixiDragManager.js",
+            "line": 259,
+            "description": "Internal start dragging on the stage",
+            "itemtype": "method",
+            "name": "_startDrag",
+            "access": "private",
+            "tagname": "",
+            "class": "cloudkid.DragManager"
+        },
+        {
+            "file": "src/cloudkid/PixiDragManager.js",
+            "line": 273,
+            "description": "Stops dragging the currently dragged object.",
+            "access": "public",
+            "tagname": "",
+            "itemtype": "method",
+            "name": "stopDrag",
+            "params": [
+                {
+                    "name": "doCallback",
+                    "description": "If the drag end callback should be called. Default is false.",
+                    "type": "Bool"
+                }
+            ],
+            "class": "cloudkid.DragManager"
+        },
+        {
+            "file": "src/cloudkid/PixiDragManager.js",
+            "line": 284,
+            "description": "Internal stop dragging on the stage",
+            "itemtype": "method",
+            "name": "_stopDrag",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "ev",
+                    "description": "Mouse up event",
+                    "type": "createjs.MouseEvent"
+                },
+                {
+                    "name": "doCallback",
+                    "description": "If we should do the callback",
+                    "type": "Bool"
+                }
+            ],
+            "class": "cloudkid.DragManager"
+        },
+        {
+            "file": "src/cloudkid/PixiDragManager.js",
+            "line": 307,
+            "description": "Update the object position based on the mouse",
+            "itemtype": "method",
+            "name": "_updateObjPosition",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "interactionData",
+                    "description": "Mouse move event",
+                    "type": "PIXI.InteractionData"
+                }
+            ],
+            "class": "cloudkid.DragManager"
+        },
+        {
+            "file": "src/cloudkid/PixiDragManager.js",
+            "line": 328,
+            "description": "Simple clamp function",
+            "class": "cloudkid.DragManager"
+        },
+        {
+            "file": "src/cloudkid/PixiDragManager.js",
+            "line": 355,
+            "description": "Adds properties and functions to the object - use enableDrag() and disableDrag() on \nobjects to enable/disable them (they start out disabled). Properties added to objects:\n_dragBounds (Rectangle), _onMouseDownListener (Function), _dragMan (cloudkid.DragManager) reference to the DragManager\nthese will override any existing properties of the same name",
+            "itemtype": "method",
+            "name": "addObject",
+            "access": "public",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "obj",
+                    "description": "The display object",
+                    "type": "createjs.DisplayObject"
+                },
+                {
+                    "name": "bound",
+                    "description": "The rectangle bounds",
+                    "type": "createjs.Rectangle"
+                }
+            ],
+            "class": "cloudkid.DragManager"
+        },
+        {
+            "file": "src/cloudkid/PixiDragManager.js",
+            "line": 388,
+            "description": "Removes properties and functions added by addObject().",
+            "access": "public",
+            "tagname": "",
+            "itemtype": "method",
+            "name": "removeObject",
+            "params": [
+                {
+                    "name": "obj",
+                    "description": "The display object",
+                    "type": "createjs.DisplayObject"
+                }
+            ],
+            "class": "cloudkid.DragManager"
+        },
+        {
+            "file": "src/cloudkid/PixiDragManager.js",
+            "line": 410,
+            "description": "Destroy the manager",
+            "access": "public",
+            "tagname": "",
+            "itemtype": "method",
+            "name": "destroy",
+            "class": "cloudkid.DragManager"
+        },
+        {
+            "file": "src/cloudkid/PixiDragManager.js",
+            "line": 442,
+            "class": "cloudkid.DragManager"
+        },
+        {
+            "file": "src/cloudkid/SavedData.js",
+            "line": 4,
+            "class": ""
+        },
+        {
+            "file": "src/cloudkid/SavedData.js",
+            "line": 8,
+            "class": ""
+        },
+        {
+            "file": "src/cloudkid/SavedData.js",
+            "line": 11,
+            "class": ""
+        },
+        {
+            "file": "src/cloudkid/SavedData.js",
+            "line": 14,
+            "description": "Remove a saved variable by name.",
+            "params": [
+                {
+                    "name": "name",
+                    "description": "The name of the value to remove"
+                }
+            ],
+            "class": ""
+        },
+        {
+            "file": "src/cloudkid/SavedData.js",
+            "line": 29,
+            "description": "Save a variable.",
+            "params": [
+                {
+                    "name": "name",
+                    "description": "The name of the value to save"
+                },
+                {
+                    "name": "value",
+                    "description": "The value to save. This will be run through JSON.stringify()."
+                },
+                {
+                    "name": "tempOnly",
+                    "description": "If the value should be saved only in the current browser session."
+                }
+            ],
+            "class": ""
+        },
+        {
+            "file": "src/cloudkid/SavedData.js",
+            "line": 61,
+            "description": "Read the value of a saved variable",
+            "params": [
+                {
+                    "name": "name",
+                    "description": "The name of the variable"
+                }
+            ],
+            "return": {
+                "description": "The value (run through JSON.parse()) or null if it doesn't exist"
+            },
+            "class": ""
+        },
+        {
+            "file": "src/amf.js",
+            "line": 4,
+            "description": "AMF 3 JavaScript library by Emil Malinov https://github.com/emilkm/amfjs\nbased on Surrey's R-AMF (AMF 99) implementation https://code.google.com/p/r-amf\nFor more information on R-AMF (AMF 99), including Java (Spring) R-AMF server\nsee http://www.reignite.com.au/binary-communication-using-ajax-and-amf",
+            "class": ""
+        },
+        {
+            "file": "src/bytearray.js",
+            "line": 1,
+            "preserve": "Adamia 3D Engine v0.1\nCopyright (c) 2010 Adam R. Smith\nLicensed under the new BSD License:\nhttp://www.opensource.org/licenses/bsd-license.php\n\nProject home: http://code.google.com/p/adamia-3d/\n\nDate: 01/12/2010",
+            "class": ""
+        },
+        {
+            "file": "src/bytearray.js",
+            "line": 14,
+            "description": "}\n\n// Taken from http://ejohn.org/blog/simple-javascript-inheritance/\n\n// Inspired by base2 and Prototype\n(function(){\n  var initializing = false, fnTest = /xyz/.test(function(){xyz;}) ? /\\b_super\\b/ : /.*/;\n\n  // The base Class implementation (does nothing)",
+            "class": ""
+        },
+        {
+            "file": "src/bytearray.js",
+            "line": 80,
+            "description": "Enum for big or little endian.",
+            "enum": "{number}",
+            "class": ""
+        },
+        {
+            "file": "src/bytearray.js",
+            "line": 89,
+            "description": "Attempt to imitate AS3's ByteArray as very high-performance javascript.\nI aliased the functions to have shorter names, like ReadUInt32 as well as ReadUnsignedInt.\nI used some code from http://fhtr.blogspot.com/2009/12/3d-models-and-parsing-binary-data-with.html\nto kick-start it, but I added optimizations and support both big and little endian.\nNote that you cannot change the endianness after construction.",
+            "extends": "Class",
+            "class": ""
+        },
+        {
+            "file": "src/bytearray.js",
+            "line": 106,
+            "class": ""
+        }
+    ],
+    "warnings": [
+        {
+            "message": "unknown tag: proprty",
+            "line": " src/cloudkid/loaders/LoaderQueueItem.js:75"
+        },
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " src/cloudkid/PixiAnimator.js:85"
+        },
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " src/cloudkid/PixiAnimator.js:192"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " src/cloudkid/PixiAnimator.js:192"
+        },
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " src/cloudkid/PixiAnimator.js:205"
+        },
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " src/cloudkid/PixiAnimator.js:232"
+        },
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " src/cloudkid/PixiAnimator.js:251"
+        },
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " src/cloudkid/PixiAnimator.js:270"
+        },
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " src/cloudkid/PixiAnimator.js:358"
+        },
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " src/cloudkid/PixiAnimator.js:385"
+        },
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " src/cloudkid/PixiAnimator.js:415"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " src/cloudkid/PixiAnimator.js:415"
+        },
+        {
+            "message": "unknown tag: preserve",
+            "line": " src/bytearray.js:1"
+        },
+        {
+            "message": "unknown tag: enum",
+            "line": " src/bytearray.js:80"
+        },
+        {
+            "message": "Missing item type",
+            "line": " src/cloudkid/loaders/CacheManager.js:16"
+        },
+        {
+            "message": "Missing item type",
+            "line": " src/cloudkid/loaders/LoaderQueueItem.js:9"
+        },
+        {
+            "message": "Missing item type\nThe progress callback",
+            "line": " src/cloudkid/loaders/LoaderQueueItem.js:75"
+        },
+        {
+            "message": "Missing item type",
+            "line": " src/cloudkid/loaders/MediaLoader.js:12"
+        },
+        {
+            "message": "Missing item type\nReference to the private instance object",
+            "line": " src/cloudkid/loaders/MediaLoader.js:15"
+        },
+        {
+            "message": "Missing item type\nThe collection of LoaderQueueItems",
+            "line": " src/cloudkid/loaders/MediaLoader.js:22"
+        },
+        {
+            "message": "Missing item type\nThe collection of LoaderQueueItems by url",
+            "line": " src/cloudkid/loaders/MediaLoader.js:28"
+        },
+        {
+            "message": "Missing item type\nIf we can load",
+            "line": " src/cloudkid/loaders/MediaLoader.js:55"
+        },
+        {
+            "message": "Missing item type",
+            "line": " src/cloudkid/loaders/MediaLoaderResult.js:18"
+        },
+        {
+            "message": "Missing item type\nObject that contains the screen settings to help scaling",
+            "line": " src/cloudkid/scaling/ScreenSettings.js:3"
+        },
+        {
+            "message": "Missing item type\nA single UI item that needs to be resized",
+            "line": " src/cloudkid/scaling/UIElement.js:2"
+        },
+        {
+            "message": "Missing item type\nCreate the UI Item",
+            "line": " src/cloudkid/scaling/UIElement.js:5"
+        },
+        {
+            "message": "Missing item type",
+            "line": " src/cloudkid/scaling/UIElement.js:97"
+        },
+        {
+            "message": "Missing item type",
+            "line": " src/cloudkid/scaling/UIElement.js:100"
+        },
+        {
+            "message": "Missing item type",
+            "line": " src/cloudkid/scaling/UIElement.js:103"
+        },
+        {
+            "message": "Missing item type",
+            "line": " src/cloudkid/scaling/UIElement.js:106"
+        },
+        {
+            "message": "Missing item type",
+            "line": " src/cloudkid/scaling/UIElement.js:109"
+        },
+        {
+            "message": "Missing item type",
+            "line": " src/cloudkid/scaling/UIElement.js:112"
+        },
+        {
+            "message": "Missing item type",
+            "line": " src/cloudkid/scaling/UIElement.js:115"
+        },
+        {
+            "message": "Missing item type",
+            "line": " src/cloudkid/scaling/UIElement.js:118"
+        },
+        {
+            "message": "Missing item type",
+            "line": " src/cloudkid/scaling/UIElement.js:121"
+        },
+        {
+            "message": "Missing item type\nAdjust the item scale and position, to reflect new screen",
+            "line": " src/cloudkid/scaling/UIElement.js:124"
+        },
+        {
+            "message": "Missing item type\nDestroy this item, don't use after this",
+            "line": " src/cloudkid/scaling/UIElement.js:258"
+        },
+        {
+            "message": "Missing item type\nThe UI Item Settings",
+            "line": " src/cloudkid/scaling/UIElementSettings.js:3"
+        },
+        {
+            "message": "Missing item type",
+            "line": " src/cloudkid/scaling/UIElementSettings.js:10"
+        },
+        {
+            "message": "Missing item type",
+            "line": " src/cloudkid/scaling/UIElementSettings.js:12"
+        },
+        {
+            "message": "Missing item type",
+            "line": " src/cloudkid/scaling/UIElementSettings.js:14"
+        },
+        {
+            "message": "Missing item type",
+            "line": " src/cloudkid/scaling/UIElementSettings.js:16"
+        },
+        {
+            "message": "Missing item type",
+            "line": " src/cloudkid/scaling/UIElementSettings.js:18"
+        },
+        {
+            "message": "Missing item type\nThe UI scale is responsible for scaling UI components\nto help easy the burden of different device aspect ratios",
+            "line": " src/cloudkid/scaling/UIScaler.js:3"
+        },
+        {
+            "message": "Missing item type\nCreate the scaler",
+            "line": " src/cloudkid/scaling/UIScaler.js:10"
+        },
+        {
+            "message": "Missing item type",
+            "line": " src/cloudkid/scaling/UIScaler.js:26"
+        },
+        {
+            "message": "Missing item type",
+            "line": " src/cloudkid/scaling/UIScaler.js:29"
+        },
+        {
+            "message": "Missing item type",
+            "line": " src/cloudkid/scaling/UIScaler.js:32"
+        },
+        {
+            "message": "Missing item type",
+            "line": " src/cloudkid/scaling/UIScaler.js:35"
+        },
+        {
+            "message": "Missing item type",
+            "line": " src/cloudkid/scaling/UIScaler.js:38"
+        },
+        {
+            "message": "Missing item type",
+            "line": " src/cloudkid/scaling/UIScaler.js:41"
+        },
+        {
+            "message": "Missing item type\nCreate the scaler from JSON data",
+            "line": " src/cloudkid/scaling/UIScaler.js:48"
+        },
+        {
+            "message": "Missing item type\nSet the current screen settings. If the stagesize changes at all, re-call this function",
+            "line": " src/cloudkid/scaling/UIScaler.js:108"
+        },
+        {
+            "message": "Missing item type\nManually add an item",
+            "line": " src/cloudkid/scaling/UIScaler.js:127"
+        },
+        {
+            "message": "Missing item type\nScale a single background image according to the UIScaler.width and height",
+            "line": " src/cloudkid/scaling/UIScaler.js:160"
+        },
+        {
+            "message": "Missing item type\nConvenience function to scale a collection of backgrounds",
+            "line": " src/cloudkid/scaling/UIScaler.js:178"
+        },
+        {
+            "message": "Missing item type\nScale the UI items that have been registered",
+            "line": " src/cloudkid/scaling/UIScaler.js:190"
+        },
+        {
+            "message": "Missing item type\nDestroy the scaler object",
+            "line": " src/cloudkid/scaling/UIScaler.js:204"
+        },
+        {
+            "message": "Missing item type\nThe UI Item Settings",
+            "line": " src/cloudkid/AssetManager.js:3"
+        },
+        {
+            "message": "Missing item type",
+            "line": " src/cloudkid/AssetManager.js:10"
+        },
+        {
+            "message": "Missing item type",
+            "line": " src/cloudkid/AssetManager.js:13"
+        },
+        {
+            "message": "Missing item type",
+            "line": " src/cloudkid/AssetManager.js:16"
+        },
+        {
+            "message": "Missing item type",
+            "line": " src/cloudkid/CKWorker.js:15"
+        },
+        {
+            "message": "Missing item type",
+            "line": " src/cloudkid/EaselJSDragManager.js:13"
+        },
+        {
+            "message": "Missing item type\nSimple clamp function",
+            "line": " src/cloudkid/EaselJSDragManager.js:329"
+        },
+        {
+            "message": "Missing item type",
+            "line": " src/cloudkid/EaselJSDragManager.js:440"
+        },
+        {
+            "message": "Missing item type",
+            "line": " src/cloudkid/PixiAnimator.js:459"
+        },
+        {
+            "message": "Missing item type",
+            "line": " src/cloudkid/PixiAnimator.js:465"
+        },
+        {
+            "message": "Missing item type",
+            "line": " src/cloudkid/PixiAnimator.js:467"
+        },
+        {
+            "message": "Missing item type",
+            "line": " src/cloudkid/PixiAnimator.js:469"
+        },
+        {
+            "message": "Missing item type",
+            "line": " src/cloudkid/PixiDragManager.js:13"
+        },
+        {
+            "message": "Missing item type\nSimple clamp function",
+            "line": " src/cloudkid/PixiDragManager.js:328"
+        },
+        {
+            "message": "Missing item type",
+            "line": " src/cloudkid/PixiDragManager.js:442"
+        },
+        {
+            "message": "Missing item type",
+            "line": " src/cloudkid/SavedData.js:4"
+        },
+        {
+            "message": "Missing item type",
+            "line": " src/cloudkid/SavedData.js:8"
+        },
+        {
+            "message": "Missing item type",
+            "line": " src/cloudkid/SavedData.js:11"
+        },
+        {
+            "message": "Missing item type\nRemove a saved variable by name.",
+            "line": " src/cloudkid/SavedData.js:14"
+        },
+        {
+            "message": "Missing item type\nSave a variable.",
+            "line": " src/cloudkid/SavedData.js:29"
+        },
+        {
+            "message": "Missing item type\nRead the value of a saved variable",
+            "line": " src/cloudkid/SavedData.js:61"
+        },
+        {
+            "message": "Missing item type\nAMF 3 JavaScript library by Emil Malinov https://github.com/emilkm/amfjs\nbased on Surrey's R-AMF (AMF 99) implementation https://code.google.com/p/r-amf\nFor more information on R-AMF (AMF 99), including Java (Spring) R-AMF server\nsee http://www.reignite.com.au/binary-communication-using-ajax-and-amf",
+            "line": " src/amf.js:4"
+        },
+        {
+            "message": "Missing item type",
+            "line": " src/bytearray.js:1"
+        },
+        {
+            "message": "Missing item type\n}\n\n// Taken from http://ejohn.org/blog/simple-javascript-inheritance/\n\n// Inspired by base2 and Prototype\n(function(){\n  var initializing = false, fnTest = /xyz/.test(function(){xyz;}) ? /\\b_super\\b/ : /.*/;\n\n  // The base Class implementation (does nothing)",
+            "line": " src/bytearray.js:14"
+        },
+        {
+            "message": "Missing item type\nEnum for big or little endian.",
+            "line": " src/bytearray.js:80"
+        },
+        {
+            "message": "Missing item type\nAttempt to imitate AS3's ByteArray as very high-performance javascript.\nI aliased the functions to have shorter names, like ReadUInt32 as well as ReadUnsignedInt.\nI used some code from http://fhtr.blogspot.com/2009/12/3d-models-and-parsing-binary-data-with.html\nto kick-start it, but I added optimizations and support both big and little endian.\nNote that you cannot change the endianness after construction.",
+            "line": " src/bytearray.js:89"
+        },
+        {
+            "message": "Missing item type",
+            "line": " src/bytearray.js:106"
+        }
+    ]
+}
