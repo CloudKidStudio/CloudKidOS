@@ -1,0 +1,5 @@
+CreateJS/EaselJS/lib/easeljs-0.6.1.min.js
+CreateJS/PreloadJS/lib/preloadjs-0.3.2.min.js
+pixijs/bin/pixi.js
+CloudKidDebug/Debug.js
+namespace/namespace.js

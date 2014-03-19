@@ -1,0 +1,185 @@
+<?xml version="1.0"?>
+<project name="CloudKidOS" default="build-all" basedir="./">
+	<property file="${os.name}.build.properties"/>
+	<property file="build.properties"/>
+	
+	<macrodef name="uglifyjs">
+		<attribute name="options" default="-m" />
+		<attribute name="debug" default="false" />
+		<attribute name="createjs" default="true" />
+ 		<attribute name="compress" default="" />
+		<attribute name="order" default="${source.createjs.order}" />
+		<attribute name="output" />
+		<sequential>
+			<fail unless="source.dir" message="The folder that contains all the source" />
+			<fail unless="compressor" message="Path to the uglify-js program" />
+			<jshint list="@{order}" dir="${source.dir}" />
+			<echo message="+---------------------------------+" />
+			<echo message="| Building the Library JavaScript |" />
+			<echo message="+---------------------------------+" />
+			<resourcelist id="files"> 
+				<file file="@{order}" />
+				<filterchain>
+					<prefixlines prefix="${source.dir}/" /> 
+				</filterchain>
+			</resourcelist>
+		    <pathconvert property="allFiles" refid="files" pathsep=" " />
+			<exec osfamily="mac" executable="${compressor}" failonerror="true">
+				<arg line="${allFiles}" />
+				<arg line="-o @{output}" />
+				<arg line="@{options}" />
+				<arg line="-c @{compress}" />
+				<arg line="--define DEBUG=@{debug},RELEASE=!@{debug},CONFIG_CREATEJS=@{createjs},CONFIG_PIXI=!@{createjs}" />
+			</exec>
+			<exec osfamily="windows" executable="cmd.exe" failonerror="true">
+				<arg line="/c" />
+				<arg line="${compressor}" />
+				<arg line="${allFiles}" />
+				<arg line="-o @{output}" />
+				<arg line="@{options}" />
+				<arg line="-c @{compress}" />
+				<arg line="--define DEBUG=@{debug},RELEASE=!@{debug},CONFIG_CREATEJS=@{createjs},CONFIG_PIXI=!@{createjs}" />
+			</exec>
+			<replaceregexp file="@{output}" match="\$\{version\}" replace="${version}" flags="g" />
+		</sequential>
+	</macrodef>
+	
+	<macrodef name="jshint">
+		<attribute name="list" />
+		<attribute name="dir" />
+		<sequential>
+			<fail unless="js.validator" message="js.validator needs to be specified in the build.properties as the JSHint or similar lint app" />
+			<echo message="+--------------------------+" />
+			<echo message="| Validating the JS Source |" />
+			<echo message="+--------------------------+" />
+			<resourcelist id="files"> 
+				<file file="@{list}" />
+				<filterchain>
+					<prefixlines prefix="@{dir}/" /> 
+				</filterchain>
+			</resourcelist>
+		    <pathconvert property="allFiles" refid="files" pathsep=" " />
+			<exec osfamily="mac" executable="${js.validator}">
+	            <arg line="${allFiles}" />
+	        </exec>
+			<exec osfamily="windows" executable="cmd.exe">
+				<arg line="/c" />
+				<arg line="${js.validator}" />
+	            <arg line="${allFiles}" />
+	        </exec>
+		</sequential>
+	</macrodef>
+	
+	<target name="build-createjs-debug" description="Compile JS project in debug mode">
+		<uglifyjs output="${output.createjs.debug}" debug="true" options="-b" />
+	</target>
+	
+	<target name="build-createjs-release" description="Compile JS project in release mode">
+		<uglifyjs output="${output.createjs.min}" />
+	</target>
+	
+	<target name="build-createjs-uncompressed" description="Compile JS project with the docs">
+		<concat-source output="${output.createjs.docs}" dir="${source.dir}" order="${source.createjs.order}" />
+		<replaceregexp file="${output.createjs.docs}" match="\( ?RELEASE ?\)" replace="(false)" flags="g" />
+		<replaceregexp file="${output.createjs.docs}" match="\( ?DEBUG ?\)" replace="(true)" flags="g" />
+		<replaceregexp file="${output.createjs.docs}" match="\( ?CONFIG_CREATEJS ?\)" replace="(true)" flags="g" />
+		<replaceregexp file="${output.createjs.docs}" match="\( ?CONFIG_PIXI ?\)" replace="(false)" flags="g" />
+	</target>
+	
+	<target name="build-pixi-debug" description="Compile JS project in debug mode">
+		<uglifyjs output="${output.pixi.debug}" debug="true" options="-b" createjs="false" order="${source.pixi.order}" />
+	</target>
+	
+	<target name="build-pixi-release" description="Compile JS project in release mode">
+		<uglifyjs output="${output.pixi.min}" createjs="false" order="${source.pixi.order}" />
+	</target>
+	
+	<target name="build-pixi-uncompressed" description="Compile JS project with the docs">
+		<concat-source output="${output.pixi.docs}" dir="${source.dir}" order="${source.pixi.order}" />
+		<replaceregexp file="${output.pixi.docs}" match="\( ?RELEASE ?\)" replace="(false)" flags="g" />
+		<replaceregexp file="${output.pixi.docs}" match="\( ?DEBUG ?\)" replace="(true)" flags="g" />
+		<replaceregexp file="${output.pixi.docs}" match="\( ?CONFIG_PIXI ?\)" replace="(true)" flags="g" />
+		<replaceregexp file="${output.pixi.docs}" match="\( ?CONFIG_CREATEJS ?\)" replace="(false)" flags="g" />
+	</target>
+	
+	<target name="build-all" description="Compile the Minified, Debug and Uncompressed versions of the library">
+		<antcall target="build-createjs-debug" />
+		<antcall target="build-createjs-release" />
+		<antcall target="build-createjs-uncompressed" />
+		<antcall target="build-pixi-debug" />
+		<antcall target="build-pixi-release" />
+		<antcall target="build-pixi-uncompressed" />
+	</target>
+	
+	<macrodef name="concat-source">
+		<attribute name="output" />
+		<attribute name="dir" />
+		<attribute name="order" />
+		<sequential>
+			<concat destfile="@{output}" encoding="UTF-8" outputencoding="UTF-8" fixlastline="true">
+			     <resourcelist> 
+					<file file="@{order}" />
+					<filterchain>
+						<prefixlines prefix="@{dir}/" /> 
+					</filterchain>
+				</resourcelist>
+			</concat>
+		</sequential>
+	</macrodef>
+	
+	<target name="import-libs" description="Copy the files specified in dependencies.txt to libs.dir">
+		<fail unless="libs.dir" message="libs.dir needs to be specified in build.properties as the location to put external library SWC files" />
+		<fail unless="libs.root.dir" message="libs.root.dir needs to be specified in build.properties as the root directory that all external libraries are in" />
+		<fail unless="libs.imports" message="libs.imports needs to be specified in build.properties as the directory to output built files to" />
+		<copy todir="${libs.dir}" flatten="true" overwrite="true">
+			<fileset dir="${libs.root.dir}">
+				<patternset>
+					<includesfile name="${libs.imports}" />
+				</patternset>
+			</fileset>
+		</copy>
+	</target>
+	
+	<macrodef name="docs-config">
+		<attribute name="template" default="${docs.config}" />
+		<attribute name="file" default="temp.json" />
+		<sequential>
+			<copy file="@{template}" tofile="@{file}" overwrite="true" />
+			<replaceregexp file="@{file}" match="\$\{docs\.description\}" replace="${docs.description}" flags="g" />
+			<replaceregexp file="@{file}" match="\$\{docs\.name\}" replace="${docs.name}" flags="g" />
+			<replaceregexp file="@{file}" match="\$\{version\}" replace="${version}" flags="g" />
+			<replaceregexp file="@{file}" match="\$\{docs\.outdir\}" replace="${docs.outdir}" flags="g" />
+			<replaceregexp file="@{file}" match="\$\{docs\.logo\}" replace="${docs.logo}" flags="g" />
+		</sequential>
+	</macrodef>
+		
+	<macrodef name="docs-cleanup">
+		<attribute name="file" default="temp.json" />
+		<sequential>
+			<delete file="@{file}" />
+			<delete dir="${docs.outdir}" />
+		</sequential>
+	</macrodef>
+	
+	<target name="docs" description="Use YUIDoc to build the documentation for this library.">
+		<docs-config />
+		<exec executable="${docs}">
+			<arg line="${source.dir}" />
+			<arg line="--config temp.json" />
+		</exec>
+		<copy toDir="${docs.dir}" overwrite="true">
+		    <fileset dir="${docs.outdir}" />
+		</copy>
+		<docs-cleanup />
+	</target>
+
+	<target name="docs-server" description="Set up a server to show a real-time preview of the docs page.  Visit http://127.0.0.1:3000/ and refresh to see changes">
+		<docs-config />
+		<exec executable="${docs}">
+			<arg line="--server" />
+			<arg line="--config temp.json" />
+			<arg line="${source.dir}" />
+		</exec>
+		<docs-cleanup />
+	</target>
+</project>
