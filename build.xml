@@ -127,17 +127,12 @@
 		</sequential>
 	</macrodef>
 	
-	<target name="import-libs" description="Copy the files specified in dependencies.txt to libs.dir">
-		<fail unless="libs.dir" message="libs.dir needs to be specified in build.properties as the location to put external library SWC files" />
-		<fail unless="libs.root.dir" message="libs.root.dir needs to be specified in build.properties as the root directory that all external libraries are in" />
-		<fail unless="libs.imports" message="libs.imports needs to be specified in build.properties as the directory to output built files to" />
-		<copy todir="${libs.dir}" flatten="true" overwrite="true">
-			<fileset dir="${libs.root.dir}">
-				<patternset>
-					<includesfile name="${libs.imports}" />
-				</patternset>
-			</fileset>
-		</copy>
+	<target name="import-example-libs" description="Copy the files specified in dependencies.txt to examples project">
+		<fail unless="libs" message="libs needs to be specified in build.properties as the bower libs to install" />
+		<exec executable="${bower}" failonerror="true">
+			<arg line="install" />
+			<arg line="${libs}" />
+		</exec>
 	</target>
 	
 	<macrodef name="docs-config">
@@ -157,7 +152,6 @@
 		<attribute name="file" default="temp.json" />
 		<sequential>
 			<delete file="@{file}" />
-			<delete dir="${docs.outdir}" />
 		</sequential>
 	</macrodef>
 	
@@ -167,9 +161,7 @@
 			<arg line="${source.dir}" />
 			<arg line="--config temp.json" />
 		</exec>
-		<copy toDir="${docs.dir}" overwrite="true">
-		    <fileset dir="${docs.outdir}" />
-		</copy>
+		<copy toDir="${docs.outdir}" file="${docs.logo}" overwrite="true" />
 		<docs-cleanup />
 	</target>
 
@@ -181,5 +173,50 @@
 			<arg line="${source.dir}" />
 		</exec>
 		<docs-cleanup />
+	</target>
+
+	<target name="docs-to-git" description="Auto-sync the docs to the Git docs branch">
+		<antcall target="docs" />
+		<delete dir="../${docs.outdir}" />
+		<copy todir="../${docs.outdir}">
+			<fileset dir="${docs.outdir}"/>
+		</copy>
+		<!-- Switch the branch -->
+		<exec executable="${git}" failonerror="true">
+			<arg line="checkout" />
+			<arg line="${git.docs}" />
+		</exec>
+		<delete includeEmptyDirs="true">
+			<fileset dir="." />
+		</delete>
+		<copy todir="./" overwrite="true">
+			<fileset dir="../${docs.outdir}" includes="**/*">
+				<depth max="3" />
+			</fileset>
+		</copy>
+		<delete dir="../${docs.outdir}" />
+		<!-- Add the files -->
+		<exec executable="${git}" failonerror="true">
+			<arg line="add" />
+			<arg line="-A" />
+			<arg line="." />
+		</exec>
+		<!-- Commit the files -->
+		<exec executable="${git}" failonerror="true">
+			<arg line="commit" />
+			<arg line="-m" />
+			<arg line='"Auto updated docs"' />
+		</exec>
+		<!-- Sync the files -->
+		<exec executable="${git}" failonerror="true">
+			<arg line="push" />
+			<arg line="origin" />
+			<arg line="${git.docs}" />
+		</exec>
+		<!-- Switch the branch back -->
+		<exec executable="${git}" failonerror="true">
+			<arg line="checkout" />
+			<arg line="${git.master}" />
+		</exec>
 	</target>
 </project>

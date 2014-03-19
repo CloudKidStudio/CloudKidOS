@@ -1,5 +1,5 @@
 (function(){
-	
+		
 	// Import library dependencies
 	var OS = cloudkid.OS,
 		Texture = PIXI.Texture,
