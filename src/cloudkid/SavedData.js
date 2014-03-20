@@ -10,6 +10,20 @@
 	
 	/** A constant for cookie fallback for SavedData.clear() */
 	ERASE_COOKIE = -1;
+
+	//in iOS, if the user is in Private Browsing, writing to localStorage throws an error.
+	if(WEB_STORAGE_SUPPORT)
+	{
+		try
+		{
+			localStorage.setItem("LS_TEST");
+			localStorage.removeItem("LS_TEST");
+		}
+		catch(e)
+		{
+			WEB_STORAGE_SUPPORT = false;
+		}
+	}
 	
 	/** 
 	*  Remove a saved variable by name.
