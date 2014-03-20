@@ -1,6 +1,6 @@
 !function(undefined) {
     var OS = function() {}, p = OS.prototype = new createjs.Container(), _paused = !1, _isReady = !1, _framerate = null, _lastFrameTime = 0, _lastFPSUpdateTime = 0, _framerateValue = null, _frameCount = 0, _tickCallback = null, _instance = null, _tickId = -1, _useRAF = !1, _fps = 0, _msPerFrame = 0;
-    OS.VERSION = "1.0.0", p.Container_initialize = p.initialize, p.stage = null, 
+    OS.VERSION = "1.0.1", p.Container_initialize = p.initialize, p.stage = null, 
     p._app = null, p.options = null, p._updateFunctions = {}, OS.init = function(stageName, options) {
         return _instance || (Debug.log("Creating the singleton instance of OS"), _instance = new OS(), 
         _instance.initialize(stageName, options)), _instance;
@@ -109,7 +109,7 @@
     }, p.removeUpdateCallback = function(alias) {
         this._updateFunctions[alias] !== undefined && delete this._updateFunctions[alias];
     }, p.tick = function() {
-        if (_paused) return _tickId = -1, void 0;
+        if (_paused) return void (_tickId = -1);
         var now = this.getTime(), dTime = now - _lastFrameTime;
         if (_framerate && _framerate.visible) {
             _frameCount++;
@@ -365,7 +365,7 @@
     }, p.addVersionsFile = function(url, callback, baseUrl) {
         Debug.assert(/^.*\.txt$/.test(url), "The versions file must be a *.txt file");
         var ml = cloudkid.MediaLoader.instance;
-        if (this.cacheBust) return callback && callback(), void 0;
+        if (this.cacheBust) return void (callback && callback());
         this.addVersion(url, Math.round(1e5 * Math.random()));
         var cm = this;
         ml.load(url, function(result) {

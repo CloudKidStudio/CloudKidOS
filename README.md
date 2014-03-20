@@ -3,6 +3,9 @@ CloudKid OS
 
 An application framework for canvas that works with Pixi or CreateJS
 
+##Documentation##
+http://cloudkidstudio.github.io/CloudKidOS/
+
 ##Installation##
 
 CloudKid OS can be install using Bower.

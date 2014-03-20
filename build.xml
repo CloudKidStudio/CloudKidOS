@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<project name="CloudKidOS" default="build-all" basedir="./">
+<project name="CloudKidOS-JS" default="build-all" basedir="./">
 	<property file="${os.name}.build.properties"/>
 	<property file="build/build.properties"/>
 	

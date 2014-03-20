@@ -1,10 +1,10 @@
 {
     "name": "cloudkid-os",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "dependencies": {
         "easeljs" : "https://github.com/CloudKidStudio/EaselJS.git",
         "preloadjs" : "https://github.com/CloudKidStudio/PreloadJS.git",
-        "pixi.js" : "https://github.com/CloudKidStudio/pixi.js.git",
+        "pixi.js" : "https://github.com/CloudKidStudio/pixi.js.git#dev",
         "cloudkid-debug" : "*",
         "cloudkid-namespace" : "*"
     },

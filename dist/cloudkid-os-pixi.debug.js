@@ -1,6 +1,6 @@
 !function(undefined) {
     var OS = function() {}, p = OS.prototype = Object.create(PIXI.DisplayObjectContainer.prototype), _paused = !1, _isReady = !1, _framerate = null, _lastFrameTime = 0, _lastFPSUpdateTime = 0, _framerateValue = null, _frameCount = 0, _tickCallback = null, _instance = null, _tickId = -1, _useRAF = !1, _fps = 0, _msPerFrame = 0;
-    OS.VERSION = "1.0.0", p.stage = null, p._renderer = null, p.canvasContainer = null, 
+    OS.VERSION = "1.0.1", p.stage = null, p._renderer = null, p.canvasContainer = null, 
     p._app = null, p.options = null, p._updateFunctions = {}, OS.init = function(stageName, options) {
         return _instance || (Debug.log("Creating the singleton instance of OS"), _instance = new OS(), 
         _instance.initialize(stageName, options)), _instance;
@@ -113,7 +113,7 @@
     }, p.removeUpdateCallback = function(alias) {
         this._updateFunctions[alias] !== undefined && delete this._updateFunctions[alias];
     }, p.tick = function() {
-        if (_paused) return _tickId = -1, void 0;
+        if (_paused) return void (_tickId = -1);
         var now = this.getTime(), dTime = now - _lastFrameTime;
         if (_framerate && _framerate.visible) {
             _frameCount++;
@@ -347,7 +347,7 @@
     }, p.addVersionsFile = function(url, callback, baseUrl) {
         Debug.assert(/^.*\.txt$/.test(url), "The versions file must be a *.txt file");
         var ml = cloudkid.MediaLoader.instance;
-        if (this.cacheBust) return callback && callback(), void 0;
+        if (this.cacheBust) return void (callback && callback());
         this.addVersion(url, Math.round(1e5 * Math.random()));
         var cm = this;
         ml.load(url, function(result) {
@@ -457,8 +457,8 @@
             this._isHighlighted = value, this._updateState();
         }
     }), p._updateState = function() {
-        this.back && (this._isHighlighted ? this.back.setTexture(this._highlightedTex) : this._enabled ? this._isDown ? this.back.setTexture(this._downTex) : this._isOver ? this.back.setTexture(this._overTex) : this._isSelected ? this.back.setTexture(this._selectedTex) : this.back.setTexture(this._upTex) : this.back.setTexture(this._disabledTex), 
-        this._slave && (this._isHighlighted ? this._slave.setTexture(this._slaveHighlightedTex) : this._enabled ? this._isDown ? this._slave.setTexture(this._slaveDownTex) : this._isOver ? this._slave.setTexture(this._slaveOverTex) : this._isSelected ? this._slave.setTexture(this._slaveSelectedTex) : this._slave.setTexture(this._slaveUpTex) : this._slave.setTexture(this._slaveDisabledTex)));
+        this.back && (this.back.setTexture(this._isHighlighted ? this._highlightedTex : this._enabled ? this._isDown ? this._downTex : this._isOver ? this._overTex : this._isSelected ? this._selectedTex : this._upTex : this._disabledTex), 
+        this._slave && this._slave.setTexture(this._isHighlighted ? this._slaveHighlightedTex : this._enabled ? this._isDown ? this._slaveDownTex : this._isOver ? this._slaveOverTex : this._isSelected ? this._slaveSelectedTex : this._slaveUpTex : this._slaveDisabledTex));
     }, p._onOver = function() {
         this._isOver = !0, this._updateState(), this.overCallback && this.overCallback(this);
     }, p._onOut = function() {
@@ -531,8 +531,7 @@
         doCallback !== !1 && this._dragEndCallback(obj);
     }, p._updateObjPosition = function(interactionData) {
         if (this.isTouchMove || this._theStage.interactionManager.mouseInStage) {
-            if (!this.draggedObj || !this.draggedObj.parent) return this._stopDrag(null, !1), 
-            void 0;
+            if (!this.draggedObj || !this.draggedObj.parent) return void this._stopDrag(null, !1);
             var mousePos = interactionData.getLocalPosition(this.draggedObj.parent, helperPoint), bounds = this.draggedObj._dragBounds;
             this.draggedObj.position.x = clamp(mousePos.x - this._dragOffset.x, bounds.x, bounds.right), 
             this.draggedObj.position.y = clamp(mousePos.y - this._dragOffset.y, bounds.y, bounds.bottom);
@@ -592,15 +591,13 @@
             return _instance;
         }
     }), p.play = function(clip, anim, callback, loop, speed, startTime, soundData) {
-        if (null === clip || !(clip instanceof PIXI.Spine) && !clip.updateAnim) return callback && callback(), 
-        void 0;
+        if (null === clip || !(clip instanceof PIXI.Spine) && !clip.updateAnim) return void (callback && callback());
         this.stop(clip), loop = loop || !1, startTime = startTime ? .001 * startTime : 0;
         var t = _animPool.length ? _animPool.pop().init(clip, callback || null, speed || 1) : new AnimTimeline(clip, callback || null, speed || 1);
         if (t.isSpine) {
             var i;
             if ("string" == typeof anim) {
-                if (!checkSpineForAnimation(clip, anim)) return this._repool(t), callback && callback(), 
-                void 0;
+                if (!checkSpineForAnimation(clip, anim)) return this._repool(t), void (callback && callback());
                 clip.state.setAnimationByName(anim, loop), clip.updateAnim(startTime > 0 ? startTime * t.speed : 0);
             } else if ("string" == typeof anim[0]) {
                 for (clip.state.setAnimationByName(anim[0], !1), i = 1; i < anim.length; ++i) clip.state.addAnimationByName(anim[i], loop && i == anim.length - 1);
