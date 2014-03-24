@@ -1,6 +1,6 @@
 !function(undefined) {
     var OS = function() {}, p = OS.prototype = Object.create(PIXI.DisplayObjectContainer.prototype), _paused = !1, _isReady = !1, _framerate = null, _lastFrameTime = 0, _lastFPSUpdateTime = 0, _framerateValue = null, _frameCount = 0, _tickCallback = null, _instance = null, _tickId = -1, _useRAF = !1, _fps = 0, _msPerFrame = 0;
-    OS.VERSION = "1.0.2", p.stage = null, p._renderer = null, p.canvasContainer = null, 
+    OS.VERSION = "1.0.3", p.stage = null, p._renderer = null, p.canvasContainer = null, 
     p._app = null, p.options = null, p._updateFunctions = {}, OS.init = function(stageName, options) {
         return _instance || (Debug.log("Creating the singleton instance of OS"), _instance = new OS(), 
         _instance.initialize(stageName, options)), _instance;
@@ -141,7 +141,7 @@
     "use strict";
     var SavedData = function() {}, WEB_STORAGE_SUPPORT = "undefined" != typeof window.Storage, ERASE_COOKIE = -1;
     if (WEB_STORAGE_SUPPORT) try {
-        localStorage.setItem("LS_TEST"), localStorage.removeItem("LS_TEST");
+        localStorage.setItem("LS_TEST", "test"), localStorage.removeItem("LS_TEST");
     } catch (e) {
         WEB_STORAGE_SUPPORT = !1;
     }

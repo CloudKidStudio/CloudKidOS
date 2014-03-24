@@ -863,7 +863,7 @@
 	{
 		try
 		{
-			localStorage.setItem("LS_TEST");
+			localStorage.setItem("LS_TEST", "test");
 			localStorage.removeItem("LS_TEST");
 		}
 		catch(e)
