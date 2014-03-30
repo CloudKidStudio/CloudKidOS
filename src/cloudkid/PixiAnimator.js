@@ -289,6 +289,7 @@
 		for(var i = this._numAnims - 1; i >= 0; --i)
 		{
 			var t = this._timelines[i];
+			if(t.paused) continue;
 			var prevTime = t.time;
 			if(t.soundInst)
 			{
