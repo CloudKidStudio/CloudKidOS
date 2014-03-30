@@ -52,6 +52,14 @@
 	p._boundUpdate = null;
 	
 	/**
+	* The instance of cloudkid.Audio or cloudkid.Sound for playing audio along with animations.
+	* 
+	* @property {cloudkid.Audio|cloudkid.Sound} soundLib
+	* @public
+	*/
+	p.soundLib = null;
+	
+	/**
 	 * Stored collection of AnimTimelines. This is internal to PixiAnimator and can't be accessed externally.
 	 * @property {Array} _animPool
 	 * @private
@@ -292,8 +300,7 @@
 				if(t.playSound && t.time >= t.soundStart)
 				{
 					t.time = t.soundStart;
-					t.soundInst = cloudkid.Sound.instance.play(t.soundAlias, undefined, 
-						undefined, undefined, undefined, undefined, undefined, 
+					t.soundInst = this.soundLib.play(t.soundAlias, 
 						onSoundDone.bind(this, t), onSoundStarted.bind(this, t));
 				}
 			}
@@ -418,58 +425,106 @@
 	 * @function init
 	 * @param {PIXI.MovieClip|Pixi.Spine} clip The AnimTimeline's clip
 	 * @param {function} callback The function to call when the clip is finished playing
-	 * @param {int} speed The speed at which the clip should be played
+	 * @param {Number} speed The speed at which the clip should be played
 	 * @returns {cloudkid.PixiAnimator.AnimTimeline}
 	 */
 	AnimTimeline.prototype.init = function(clip, callback, speed)
 	{
 		/**
-		 * The clip for this AnimTimeLine
-		 * @property {PIXI.MovieClip|PIXI.Spine} clip
-		 */
+		*	The clip for this AnimTimeLine
+		*	@property {PIXI.MovieClip|PIXI.Spine} clip
+		*	@public
+		*/
 		this.clip = clip;
 		/**
-		 * Whether the clip is a PIXI.Spine
-		 * @property {bool} isSpine
-		 */
+		*	Whether the clip is a PIXI.Spine
+		*	@property {bool} isSpine
+		*	@public
+		*/
 		this.isSpine = clip instanceof PIXI.Spine;
 		/**
-		 * The function to call when the clip is finished playing
-		 * @property {function} callback
-		 */
+		*	The function to call when the clip is finished playing
+		*	@property {function} callback
+		*	@public
+		*/
 		this.callback = callback;
 		/**
-		 * The speed at which the clip should be played
-		 * @property {int} speed
-		 */
+		*	The speed at which the clip should be played
+		*	@property {Number} speed
+		*	@public
+		*/
 		this.speed = speed;
 		/**
-		 * @property {Array} spineStates
-		 */
+		*	@property {Array} spineStates
+		*	@public
+		*/
 		this.spineStates = null;
 		/**
-		 * Not used by PixiAnimator, but potentially useful for other code to keep track of what type of animation is being played
-		 * @property {bool} loop
-		 */
+		*	Not used by PixiAnimator, but potentially useful for other code to keep track of what type of animation is being played
+		*	@property {bool} loop
+		*	@public
+		*/
 		this.loop = null;
 		/**
-		 * @property {number} The position of the animation in seconds
-		 */
+		*	The position of the animation in seconds
+		*	@property {Number} time
+		*	@public
+		*/
 		this.time = 0;
-		/** @property {string} Sound alias to sync to during the animation. */
+		/**
+		*	Sound alias to sync to during the animation.
+		*	@property {String} soundAlias
+		*	@public
+		*/
 		this.soundAlias = null;
 		/**
-		 * @property {Object} A sound instance object from cloudkid.Sound, used for tracking sound position.
-		 */
+		*	A sound instance object from cloudkid.Sound, used for tracking sound position.
+		*	@property {Object} soundInst
+		*	@public
+		*/
 		this.soundInst = null;
-		/** @property {bool} If the timeline will, but has yet to, play a sound */
+		/**
+		*	If the timeline will, but has yet to, play a sound
+		*	@property {bool} playSound
+		*	@public
+		*/
 		this.playSound = false;
-		/** @property {number} The time (seconds) into the animation that the sound starts */
+		/**
+		*	The time (seconds) into the animation that the sound starts.
+		*	@property {Number} soundStart
+		*	@public
+		*/
 		this.soundStart = 0;
-		/** @property {number} The time (seconds) into the animation that the sound ends */
+		/**
+		*	The time (seconds) into the animation that the sound ends
+		*	@property {Number} soundEnd
+		*	@public
+		*/
 		this.soundEnd = 0;
+		/**
+		*	If this animation is paused.
+		*	@property {bool} _paused
+		*	@private
+		*/
+		this._paused = false;
 		return this;
 	};
+	
+	/**
+	* Sets and gets the animation's paused status.
+	* 
+	* @property {bool} paused
+	* @public
+	*/
+	Object.defineProperty(AnimTimeline.prototype, "paused", {
+		get: function() { return this._paused; },
+		set: function(value) {
+			if(value == this._paused) return;
+			this._paused == !!value;
+			if(this.soundInst)
+				this._paused ? this.soundInst.pause() : this.soundInst.unpause();
+		}
+	});
 	
 	namespace('cloudkid').PixiAnimator = PixiAnimator;
 }());
