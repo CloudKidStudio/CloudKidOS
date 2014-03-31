@@ -293,7 +293,13 @@
 			var prevTime = t.time;
 			if(t.soundInst)
 			{
-				t.time = t.soundStart + t.soundInst.position * 0.001;//convert sound position ms -> sec
+				if(t.soundInst.isValid)
+					t.time = t.soundStart + t.soundInst.position * 0.001;//convert sound position ms -> sec
+				else//if sound is no longer valid, stop animation immediately
+				{
+					this._onMovieClipDone(t);
+					continue;
+				}
 			}
 			else
 			{
