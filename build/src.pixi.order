@@ -9,7 +9,6 @@ cloudkid/loaders/MediaLoaderResult.js
 cloudkid/loaders/CacheManager.js
 cloudkid/PixiButton.js
 cloudkid/PixiDragManager.js
-cloudkid/PixiAnimator.js
 cloudkid/scaling/Positioner.js
 cloudkid/scaling/ScreenSettings.js
 cloudkid/scaling/UIElement.js
