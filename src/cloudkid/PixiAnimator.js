@@ -527,9 +527,14 @@
 		get: function() { return this._paused; },
 		set: function(value) {
 			if(value == this._paused) return;
-			this._paused == !!value;
+			this._paused = !!value;
 			if(this.soundInst)
-				this._paused ? this.soundInst.pause() : this.soundInst.unpause();
+			{
+				if(this.paused)
+					this.soundInst.pause();
+				else
+					this.soundInst.unpause();
+			}
 		}
 	});
 	

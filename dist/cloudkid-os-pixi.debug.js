@@ -587,7 +587,8 @@
     var PixiAnimator = function() {
         this._timelines = [], this._boundUpdate = this._update.bind(this);
     }, p = PixiAnimator.prototype = {}, _instance = null;
-    p._timelines = null, p._numAnims = 0, p._updateAlias = "animator", p._boundUpdate = null;
+    p._timelines = null, p._numAnims = 0, p._updateAlias = "animator", p._boundUpdate = null, 
+    p.soundLib = null;
     var _animPool = null;
     PixiAnimator.init = function() {
         _instance = new PixiAnimator(), _animPool = [];
@@ -645,23 +646,32 @@
         timeline.speed = null, timeline.soundInst = null, _animPool.push(timeline);
     }, p._update = function(elapsed) {
         for (var delta = .001 * elapsed, i = this._numAnims - 1; i >= 0; --i) {
-            var t = this._timelines[i], prevTime = t.time;
-            t.soundInst ? t.time = t.soundStart + .001 * t.soundInst.position : (t.time += delta, 
-            t.playSound && t.time >= t.soundStart && (t.time = t.soundStart, t.soundInst = cloudkid.Sound.instance.play(t.soundAlias, void 0, void 0, void 0, void 0, void 0, void 0, onSoundDone.bind(this, t), onSoundStarted.bind(this, t))));
-            var c = t.clip;
-            if (t.isSpine) if (t.spineStates) {
-                for (var complete = !1, j = 0, len = t.spineStates.length; len > j; ++j) {
-                    var s = t.spineStates[j];
-                    s.update((t.time - prevTime) * t.speed[j]), s.apply(c.skeleton), !s.currentLoop && s.isComplete() && (complete = !0);
-                }
-                complete && (this._timelines.splice(i, 1), this._numAnims--, t.callback && t.callback(), 
-                this._repool(t));
-            } else {
-                c.updateAnim((t.time - prevTime) * t.speed);
-                var state = c.state;
-                !state.currentLoop && 0 === state.queue.length && state.currentTime >= state.current.duration && (this._timelines.splice(i, 1), 
-                this._numAnims--, t.callback && t.callback(), this._repool(t));
-            } else c.updateAnim((t.time - prevTime) * t.speed);
+            var t = this._timelines[i];
+            if (!t.paused) {
+                var prevTime = t.time;
+                if (t.soundInst) {
+                    if (!t.soundInst.isValid) {
+                        this._onMovieClipDone(t);
+                        continue;
+                    }
+                    t.time = t.soundStart + .001 * t.soundInst.position;
+                } else t.time += delta, t.playSound && t.time >= t.soundStart && (t.time = t.soundStart, 
+                t.soundInst = this.soundLib.play(t.soundAlias, onSoundDone.bind(this, t), onSoundStarted.bind(this, t)));
+                var c = t.clip;
+                if (t.isSpine) if (t.spineStates) {
+                    for (var complete = !1, j = 0, len = t.spineStates.length; len > j; ++j) {
+                        var s = t.spineStates[j];
+                        s.update((t.time - prevTime) * t.speed[j]), s.apply(c.skeleton), !s.currentLoop && s.isComplete() && (complete = !0);
+                    }
+                    complete && (this._timelines.splice(i, 1), this._numAnims--, t.callback && t.callback(), 
+                    this._repool(t));
+                } else {
+                    c.updateAnim((t.time - prevTime) * t.speed);
+                    var state = c.state;
+                    !state.currentLoop && 0 === state.queue.length && state.currentTime >= state.current.duration && (this._timelines.splice(i, 1), 
+                    this._numAnims--, t.callback && t.callback(), this._repool(t));
+                } else c.updateAnim((t.time - prevTime) * t.speed);
+            }
         }
         0 === this._numAnims && cloudkid.OS.instance.removeUpdateCallback(this._updateAlias);
     };
@@ -688,8 +698,15 @@
         return this.clip = clip, this.isSpine = clip instanceof PIXI.Spine, this.callback = callback, 
         this.speed = speed, this.spineStates = null, this.loop = null, this.time = 0, this.soundAlias = null, 
         this.soundInst = null, this.playSound = !1, this.soundStart = 0, this.soundEnd = 0, 
-        this;
-    }, namespace("cloudkid").PixiAnimator = PixiAnimator;
+        this._paused = !1, this;
+    }, Object.defineProperty(AnimTimeline.prototype, "paused", {
+        get: function() {
+            return this._paused;
+        },
+        set: function(value) {
+            value != this._paused && (this._paused = !!value, this.soundInst && (this.paused ? this.soundInst.pause() : this.soundInst.unpause()));
+        }
+    }), namespace("cloudkid").PixiAnimator = PixiAnimator;
 }(), function() {
     var Positioner = function() {};
     Positioner.prototype = {}, Positioner.positionItems = function(parent, itemSettings) {
