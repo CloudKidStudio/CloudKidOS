@@ -19,7 +19,7 @@
             
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 1.0.0</em>
+            <em>API Docs for: 1.1.0</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -58,10 +58,6 @@
                 <li><a href="../classes/cloudkid.MediaLoaderResult.html">cloudkid.MediaLoaderResult</a></li>
             
                 <li><a href="../classes/cloudkid.OS.html">cloudkid.OS</a></li>
-            
-                <li><a href="../classes/cloudkid.PixiAnimator.html">cloudkid.PixiAnimator</a></li>
-            
-                <li><a href="../classes/cloudkid.PixiAnimator.AnimTimeline.html">cloudkid.PixiAnimator.AnimTimeline</a></li>
             
             </ul>
 
@@ -118,6 +114,20 @@
 	
 	/** A constant for cookie fallback for SavedData.clear() */
 	ERASE_COOKIE = -1;
+
+	//in iOS, if the user is in Private Browsing, writing to localStorage throws an error.
+	if(WEB_STORAGE_SUPPORT)
+	{
+		try
+		{
+			localStorage.setItem(&quot;LS_TEST&quot;, &quot;test&quot;);
+			localStorage.removeItem(&quot;LS_TEST&quot;);
+		}
+		catch(e)
+		{
+			WEB_STORAGE_SUPPORT = false;
+		}
+	}
 	
 	/** 
 	*  Remove a saved variable by name.

@@ -9,9 +9,7 @@ YUI.add("yuidoc-meta", function(Y) {
         "cloudkid.LoaderQueueItem",
         "cloudkid.MediaLoader",
         "cloudkid.MediaLoaderResult",
-        "cloudkid.OS",
-        "cloudkid.PixiAnimator",
-        "cloudkid.PixiAnimator.AnimTimeline"
+        "cloudkid.OS"
     ],
     "modules": [],
     "allModules": []

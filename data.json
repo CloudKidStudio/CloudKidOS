@@ -2,7 +2,7 @@
     "project": {
         "name": "CloudKid OS API",
         "description": "CloudKid OS API: A framework for HTML5 content built on top of createjs",
-        "version": "1.0.0",
+        "version": "1.1.0",
         "logo": "cloudkid.png"
     },
     "files": {
@@ -121,16 +121,6 @@
             "modules": {},
             "classes": {
                 "cloudkid.OS": 1
-            },
-            "fors": {},
-            "namespaces": {}
-        },
-        "src/cloudkid/PixiAnimator.js": {
-            "name": "src/cloudkid/PixiAnimator.js",
-            "modules": {},
-            "classes": {
-                "cloudkid.PixiAnimator": 1,
-                "cloudkid.PixiAnimator.AnimTimeline": 1
             },
             "fors": {},
             "namespaces": {}
@@ -304,49 +294,6 @@
             "line": 3,
             "description": "Designed to mimic the feature-set of the CloudKidOS for AS3\nProvides a staging framework for other things to load\nhandles the stage query string parameters, provides debug tools,\nas well as browser cache-busting.",
             "extends": "createjs.Container|PIXI.DisplayObjectContainer"
-        },
-        "cloudkid.PixiAnimator": {
-            "name": "cloudkid.PixiAnimator",
-            "shortname": "cloudkid.PixiAnimator",
-            "classitems": [],
-            "plugins": [],
-            "extensions": [],
-            "plugin_for": [],
-            "extension_for": [],
-            "file": "src/cloudkid/PixiAnimator.js",
-            "line": 3,
-            "description": "[PIXI Only] Animator for interacting with Spine animations",
-            "is_constructor": 1
-        },
-        "cloudkid.PixiAnimator.AnimTimeline": {
-            "name": "cloudkid.PixiAnimator.AnimTimeline",
-            "shortname": "cloudkid.PixiAnimator.AnimTimeline",
-            "classitems": [],
-            "plugins": [],
-            "extensions": [],
-            "plugin_for": [],
-            "extension_for": [],
-            "file": "src/cloudkid/PixiAnimator.js",
-            "line": 399,
-            "description": "[Pixi Only] Internal PixiAnimator class for keeping track of animations",
-            "is_constructor": 1,
-            "params": [
-                {
-                    "name": "clip",
-                    "description": "The AnimTimeline's clip",
-                    "type": "PIXI.MovieClip|Pixi.Spine"
-                },
-                {
-                    "name": "callback",
-                    "description": "The function to call when the clip is finished playing",
-                    "type": "Function"
-                },
-                {
-                    "name": "speed",
-                    "description": "The speed at which the clip should be played",
-                    "type": "Int"
-                }
-            ]
         }
     },
     "classitems": [
@@ -2891,363 +2838,6 @@
             "class": "cloudkid.OS"
         },
         {
-            "file": "src/cloudkid/PixiAnimator.js",
-            "line": 16,
-            "description": "A reference to this instance of PixiAnimator. This is internal to PixiAnimator and can't be accessed externally.",
-            "itemtype": "property",
-            "name": "_instance",
-            "type": "cloudkid.PixiAnimator",
-            "access": "private",
-            "tagname": "",
-            "static": 1,
-            "class": "cloudkid.PixiAnimator"
-        },
-        {
-            "file": "src/cloudkid/PixiAnimator.js",
-            "line": 24,
-            "description": "The collection of AnimTimelines that are playing",
-            "itemtype": "property",
-            "name": "_timelines",
-            "type": "Array",
-            "access": "private",
-            "tagname": "",
-            "class": "cloudkid.PixiAnimator"
-        },
-        {
-            "file": "src/cloudkid/PixiAnimator.js",
-            "line": 31,
-            "description": "The number of animations",
-            "itemtype": "property",
-            "name": "_numAnims",
-            "type": "Int",
-            "access": "private",
-            "tagname": "",
-            "class": "cloudkid.PixiAnimator"
-        },
-        {
-            "file": "src/cloudkid/PixiAnimator.js",
-            "line": 38,
-            "description": "A string reference to PixiAnimator's update callback\nso it can be removed in the event that there are no\nanimations to play",
-            "itemtype": "property",
-            "name": "_updateAlias",
-            "type": "String",
-            "access": "private",
-            "tagname": "",
-            "class": "cloudkid.PixiAnimator"
-        },
-        {
-            "file": "src/cloudkid/PixiAnimator.js",
-            "line": 47,
-            "description": "The function that PixiAnimator uses for update calls. Do not modify.",
-            "itemtype": "property",
-            "name": "_boundUpdate",
-            "type": "Function",
-            "access": "private",
-            "tagname": "",
-            "class": "cloudkid.PixiAnimator"
-        },
-        {
-            "file": "src/cloudkid/PixiAnimator.js",
-            "line": 54,
-            "description": "Stored collection of AnimTimelines. This is internal to PixiAnimator and can't be accessed externally.",
-            "itemtype": "property",
-            "name": "_animPool",
-            "type": "Array",
-            "access": "private",
-            "tagname": "",
-            "static": 1,
-            "class": "cloudkid.PixiAnimator"
-        },
-        {
-            "file": "src/cloudkid/PixiAnimator.js",
-            "line": 62,
-            "description": "Initializes the singleton instance of PixiAnimator.",
-            "itemtype": "method",
-            "name": "init",
-            "static": 1,
-            "class": "cloudkid.PixiAnimator"
-        },
-        {
-            "file": "src/cloudkid/PixiAnimator.js",
-            "line": 73,
-            "description": "Getter for the reference to this instance of PixiAnimator",
-            "itemtype": "property",
-            "name": "instance",
-            "type": "cloudkid.PixiAnimator",
-            "readonly": "",
-            "static": 1,
-            "class": "cloudkid.PixiAnimator"
-        },
-        {
-            "file": "src/cloudkid/PixiAnimator.js",
-            "line": 85,
-            "description": "Play a specified animation",
-            "itemtype": "method",
-            "name": "play",
-            "params": [
-                {
-                    "name": "clip",
-                    "description": "The clip to play",
-                    "type": "PIXI.MovieClip|PIXI.Spine"
-                },
-                {
-                    "name": "anim",
-                    "description": "The alias for the animation to play",
-                    "type": "String"
-                },
-                {
-                    "name": "callback",
-                    "description": "The function to call once the animation has finished",
-                    "type": "Function"
-                },
-                {
-                    "name": "loop",
-                    "description": "Whether the animation should loop",
-                    "type": "Bool"
-                },
-                {
-                    "name": "speed",
-                    "description": "The speed at which to play the animation",
-                    "type": "Int"
-                },
-                {
-                    "name": "startTime",
-                    "description": "The time in milliseconds into the animation to start.",
-                    "type": "Int"
-                }
-            ],
-            "class": "cloudkid.PixiAnimator"
-        },
-        {
-            "file": "src/cloudkid/PixiAnimator.js",
-            "line": 192,
-            "description": "Checks to see if a spine includes a given animation alias",
-            "itemtype": "method",
-            "name": "checkSpineForAnimation",
-            "params": [
-                {
-                    "name": "clip",
-                    "description": "The spine to search",
-                    "type": "PIXI.spine"
-                },
-                {
-                    "name": "anim",
-                    "description": "The animation alias to search",
-                    "type": "String"
-                }
-            ],
-            "return": {
-                "description": "Returns true if the animation is found",
-                "type": "Boolean"
-            },
-            "class": "cloudkid.PixiAnimator"
-        },
-        {
-            "file": "src/cloudkid/PixiAnimator.js",
-            "line": 205,
-            "description": "Stop a clip",
-            "itemtype": "method",
-            "name": "stop",
-            "params": [
-                {
-                    "name": "clip",
-                    "description": "The clip to stop",
-                    "type": "PIXI.MovieClip|PIXI.Spine"
-                },
-                {
-                    "name": "doCallback",
-                    "description": "Whether the animations callback should be run",
-                    "type": "Bool"
-                }
-            ],
-            "class": "cloudkid.PixiAnimator"
-        },
-        {
-            "file": "src/cloudkid/PixiAnimator.js",
-            "line": 232,
-            "description": "Stops all current animations",
-            "itemtype": "method",
-            "name": "stop",
-            "class": "cloudkid.PixiAnimator"
-        },
-        {
-            "file": "src/cloudkid/PixiAnimator.js",
-            "line": 251,
-            "description": "Put an AnimTimeline back into the general pool after it's done playing\nor has been manually stopped",
-            "itemtype": "method",
-            "name": "_repool",
-            "params": [
-                {
-                    "name": "timeline",
-                    "description": "",
-                    "type": "cloudkid.PixiAnimator.AnimTimeline"
-                }
-            ],
-            "access": "private",
-            "tagname": "",
-            "class": "cloudkid.PixiAnimator"
-        },
-        {
-            "file": "src/cloudkid/PixiAnimator.js",
-            "line": 270,
-            "description": "Update each frame",
-            "itemtype": "method",
-            "name": "_update",
-            "params": [
-                {
-                    "name": "elapsed",
-                    "description": "The time since the last frame",
-                    "type": "Int"
-                }
-            ],
-            "access": "private",
-            "tagname": "",
-            "class": "cloudkid.PixiAnimator"
-        },
-        {
-            "file": "src/cloudkid/PixiAnimator.js",
-            "line": 358,
-            "description": "Called when a movie clip is done playing, calls the AnimTimeline's\ncallback if it has one",
-            "itemtype": "method",
-            "name": "_onMovieClipDone",
-            "params": [
-                {
-                    "name": "timeline",
-                    "description": "",
-                    "type": "cloudkid.PixiAnimator.AnimTimeline"
-                }
-            ],
-            "access": "private",
-            "tagname": "",
-            "class": "cloudkid.PixiAnimator"
-        },
-        {
-            "file": "src/cloudkid/PixiAnimator.js",
-            "line": 385,
-            "description": "Destroy this",
-            "itemtype": "method",
-            "name": "destroy",
-            "class": "cloudkid.PixiAnimator"
-        },
-        {
-            "file": "src/cloudkid/PixiAnimator.js",
-            "line": 415,
-            "description": "Initialize the AnimTimeline",
-            "itemtype": "method",
-            "name": "init",
-            "params": [
-                {
-                    "name": "clip",
-                    "description": "The AnimTimeline's clip",
-                    "type": "PIXI.MovieClip|Pixi.Spine"
-                },
-                {
-                    "name": "callback",
-                    "description": "The function to call when the clip is finished playing",
-                    "type": "Function"
-                },
-                {
-                    "name": "speed",
-                    "description": "The speed at which the clip should be played",
-                    "type": "Int"
-                }
-            ],
-            "return": {
-                "description": "",
-                "type": "cloudkid.PixiAnimator.AnimTimeline"
-            },
-            "class": "cloudkid.PixiAnimator.AnimTimeline"
-        },
-        {
-            "file": "src/cloudkid/PixiAnimator.js",
-            "line": 426,
-            "description": "The clip for this AnimTimeLine",
-            "itemtype": "property",
-            "name": "clip",
-            "type": "PIXI.MovieClip|PIXI.Spine",
-            "class": "cloudkid.PixiAnimator.AnimTimeline"
-        },
-        {
-            "file": "src/cloudkid/PixiAnimator.js",
-            "line": 431,
-            "description": "Whether the clip is a PIXI.Spine",
-            "itemtype": "property",
-            "name": "isSpine",
-            "type": "Bool",
-            "class": "cloudkid.PixiAnimator.AnimTimeline"
-        },
-        {
-            "file": "src/cloudkid/PixiAnimator.js",
-            "line": 436,
-            "description": "The function to call when the clip is finished playing",
-            "itemtype": "property",
-            "name": "callback",
-            "type": "Function",
-            "class": "cloudkid.PixiAnimator.AnimTimeline"
-        },
-        {
-            "file": "src/cloudkid/PixiAnimator.js",
-            "line": 441,
-            "description": "The speed at which the clip should be played",
-            "itemtype": "property",
-            "name": "speed",
-            "type": "Int",
-            "class": "cloudkid.PixiAnimator.AnimTimeline"
-        },
-        {
-            "file": "src/cloudkid/PixiAnimator.js",
-            "line": 446,
-            "itemtype": "property",
-            "name": "spineStates",
-            "type": "Array",
-            "class": "cloudkid.PixiAnimator.AnimTimeline"
-        },
-        {
-            "file": "src/cloudkid/PixiAnimator.js",
-            "line": 450,
-            "description": "Not used by PixiAnimator, but potentially useful for other code to keep track of what type of animation is being played",
-            "itemtype": "property",
-            "name": "loop",
-            "type": "Bool",
-            "class": "cloudkid.PixiAnimator.AnimTimeline"
-        },
-        {
-            "file": "src/cloudkid/PixiAnimator.js",
-            "line": 455,
-            "itemtype": "property",
-            "name": "The position of the animation in seconds",
-            "type": "Number",
-            "class": "cloudkid.PixiAnimator.AnimTimeline"
-        },
-        {
-            "file": "src/cloudkid/PixiAnimator.js",
-            "line": 459,
-            "class": "cloudkid.PixiAnimator.AnimTimeline"
-        },
-        {
-            "file": "src/cloudkid/PixiAnimator.js",
-            "line": 461,
-            "itemtype": "property",
-            "name": "A sound instance object from cloudkid.Sound, used for tracking sound position.",
-            "type": "Object",
-            "class": "cloudkid.PixiAnimator.AnimTimeline"
-        },
-        {
-            "file": "src/cloudkid/PixiAnimator.js",
-            "line": 465,
-            "class": "cloudkid.PixiAnimator.AnimTimeline"
-        },
-        {
-            "file": "src/cloudkid/PixiAnimator.js",
-            "line": 467,
-            "class": "cloudkid.PixiAnimator.AnimTimeline"
-        },
-        {
-            "file": "src/cloudkid/PixiAnimator.js",
-            "line": 469,
-            "class": "cloudkid.PixiAnimator.AnimTimeline"
-        },
-        {
             "file": "src/cloudkid/PixiButton.js",
             "line": 39,
             "description": "**[PIXI only]** The function that should be called when the button is released.",
@@ -4010,7 +3600,7 @@
         },
         {
             "file": "src/cloudkid/SavedData.js",
-            "line": 14,
+            "line": 28,
             "description": "Remove a saved variable by name.",
             "params": [
                 {
@@ -4022,7 +3612,7 @@
         },
         {
             "file": "src/cloudkid/SavedData.js",
-            "line": 29,
+            "line": 43,
             "description": "Save a variable.",
             "params": [
                 {
@@ -4042,7 +3632,7 @@
         },
         {
             "file": "src/cloudkid/SavedData.js",
-            "line": 61,
+            "line": 75,
             "description": "Read the value of a saved variable",
             "params": [
                 {
@@ -4097,50 +3687,6 @@
         {
             "message": "unknown tag: proprty",
             "line": " src/cloudkid/loaders/LoaderQueueItem.js:75"
-        },
-        {
-            "message": "replacing incorrect tag: function with method",
-            "line": " src/cloudkid/PixiAnimator.js:85"
-        },
-        {
-            "message": "replacing incorrect tag: function with method",
-            "line": " src/cloudkid/PixiAnimator.js:192"
-        },
-        {
-            "message": "replacing incorrect tag: returns with return",
-            "line": " src/cloudkid/PixiAnimator.js:192"
-        },
-        {
-            "message": "replacing incorrect tag: function with method",
-            "line": " src/cloudkid/PixiAnimator.js:205"
-        },
-        {
-            "message": "replacing incorrect tag: function with method",
-            "line": " src/cloudkid/PixiAnimator.js:232"
-        },
-        {
-            "message": "replacing incorrect tag: function with method",
-            "line": " src/cloudkid/PixiAnimator.js:251"
-        },
-        {
-            "message": "replacing incorrect tag: function with method",
-            "line": " src/cloudkid/PixiAnimator.js:270"
-        },
-        {
-            "message": "replacing incorrect tag: function with method",
-            "line": " src/cloudkid/PixiAnimator.js:358"
-        },
-        {
-            "message": "replacing incorrect tag: function with method",
-            "line": " src/cloudkid/PixiAnimator.js:385"
-        },
-        {
-            "message": "replacing incorrect tag: function with method",
-            "line": " src/cloudkid/PixiAnimator.js:415"
-        },
-        {
-            "message": "replacing incorrect tag: returns with return",
-            "line": " src/cloudkid/PixiAnimator.js:415"
         },
         {
             "message": "unknown tag: preserve",
@@ -4360,22 +3906,6 @@
         },
         {
             "message": "Missing item type",
-            "line": " src/cloudkid/PixiAnimator.js:459"
-        },
-        {
-            "message": "Missing item type",
-            "line": " src/cloudkid/PixiAnimator.js:465"
-        },
-        {
-            "message": "Missing item type",
-            "line": " src/cloudkid/PixiAnimator.js:467"
-        },
-        {
-            "message": "Missing item type",
-            "line": " src/cloudkid/PixiAnimator.js:469"
-        },
-        {
-            "message": "Missing item type",
             "line": " src/cloudkid/PixiDragManager.js:13"
         },
         {
@@ -4400,15 +3930,15 @@
         },
         {
             "message": "Missing item type\nRemove a saved variable by name.",
-            "line": " src/cloudkid/SavedData.js:14"
+            "line": " src/cloudkid/SavedData.js:28"
         },
         {
             "message": "Missing item type\nSave a variable.",
-            "line": " src/cloudkid/SavedData.js:29"
+            "line": " src/cloudkid/SavedData.js:43"
         },
         {
             "message": "Missing item type\nRead the value of a saved variable",
-            "line": " src/cloudkid/SavedData.js:61"
+            "line": " src/cloudkid/SavedData.js:75"
         },
         {
             "message": "Missing item type\nAMF 3 JavaScript library by Emil Malinov https://github.com/emilkm/amfjs\nbased on Surrey's R-AMF (AMF 99) implementation https://code.google.com/p/r-amf\nFor more information on R-AMF (AMF 99), including Java (Spring) R-AMF server\nsee http://www.reignite.com.au/binary-communication-using-ajax-and-amf",
