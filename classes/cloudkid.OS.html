@@ -19,7 +19,7 @@
             
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 1.1.0</em>
+            <em>API Docs for: 1.1.1</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -201,7 +201,7 @@ as well as browser cache-busting.</p>
                                 
                             </li>
                         
-                            <li class="index-item method public">
+                            <li class="index-item method protected">
                                 <a href="#method_initialize">initialize</a>
 
                                 
@@ -516,7 +516,7 @@ as well as browser cache-busting.</p>
             
         
         
-        <a href="../files/src_cloudkid_OS.js.html#l659"><code>src&#x2F;cloudkid&#x2F;OS.js:659</code></a>
+        <a href="../files/src_cloudkid_OS.js.html#l683"><code>src&#x2F;cloudkid&#x2F;OS.js:683</code></a>
         
         </p>
 
@@ -613,7 +613,7 @@ as well as browser cache-busting.</p>
             
         
         
-        <a href="../files/src_cloudkid_OS.js.html#l692"><code>src&#x2F;cloudkid&#x2F;OS.js:692</code></a>
+        <a href="../files/src_cloudkid_OS.js.html#l716"><code>src&#x2F;cloudkid&#x2F;OS.js:716</code></a>
         
         </p>
 
@@ -710,7 +710,7 @@ as well as browser cache-busting.</p>
             
         
         
-        <a href="../files/src_cloudkid_OS.js.html#l789"><code>src&#x2F;cloudkid&#x2F;OS.js:789</code></a>
+        <a href="../files/src_cloudkid_OS.js.html#l813"><code>src&#x2F;cloudkid&#x2F;OS.js:813</code></a>
         
         </p>
 
@@ -772,7 +772,7 @@ also destroys the application, if around</p>
             
         
         
-        <a href="../files/src_cloudkid_OS.js.html#l681"><code>src&#x2F;cloudkid&#x2F;OS.js:681</code></a>
+        <a href="../files/src_cloudkid_OS.js.html#l705"><code>src&#x2F;cloudkid&#x2F;OS.js:705</code></a>
         
         </p>
 
@@ -843,7 +843,7 @@ also destroys the application, if around</p>
             
         
         
-        <a href="../files/src_cloudkid_OS.js.html#l526"><code>src&#x2F;cloudkid&#x2F;OS.js:526</code></a>
+        <a href="../files/src_cloudkid_OS.js.html#l550"><code>src&#x2F;cloudkid&#x2F;OS.js:550</code></a>
         
         </p>
 
@@ -881,7 +881,7 @@ also destroys the application, if around</p>
             
                 <li class="arg">
                     
-                        <code>options</code>
+                        <code class="optional">[options]</code>
                     
                 </li>
             
@@ -957,8 +957,9 @@ also destroys the application, if around</p>
             
                 <li class="param">
                     
-                        <code class="param-name">options</code>
+                        <code class="param-name optional">[options]</code>
                         <span class="type">Dictionary</span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
                     
 
                     
@@ -968,6 +969,280 @@ also destroys the application, if around</p>
 
                     </div>
 
+                    
+                        <ul class="params-list">
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[mouseOverRate=30]</code>
+                                    <span class="type">Int</span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>(CreateJS only) the framerate for mouseover effects, higher is more responsive</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[debug=false]</code>
+                                    <span class="type">Boolean</span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>If we should enable the Debug class for doing console and remote logs</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[minLogLevel=0]</code>
+                                    <span class="type">Int</span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>The minimum log level for the Debug class, default is show all statements, values from 0 (all)-4 (errors only)</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[ip]</code>
+                                    <span class="type">String</span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>The IP address for doing remote debugging</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[parseQueryString=false]</code>
+                                    <span class="type">Boolean</span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>If we should convert the query string into OS options</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[showFramerate=false]</code>
+                                    <span class="type">Boolean</span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>To display the current framerate counter</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[clearView=false]</code>
+                                    <span class="type">Boolean</span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>Auto clear the stage render</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[backgroundColor]</code>
+                                    <span class="type">Int</span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>(PIXI only) The background color of the stage</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[preMultAlpha]</code>
+                                    <span class="type">Boolean</span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>(PIXI only) If the renderer is to use pre multiplied alpha for all images (options.forceContext needs to be set to &quot;webgl&quot;)</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[transparent]</code>
+                                    <span class="type">Boolean</span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>(PIXI only) The stage is transparent</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[width]</code>
+                                    <span class="type">Int</span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>(PIXI only) The width of the renderer, default is the canvas width</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[height]</code>
+                                    <span class="type">Int</span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>(PIXI only) The height of the renderer, default is the canvas height</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[forceContext=null]</code>
+                                    <span class="type">String</span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>(PIXI only) The stage renderer, options are &quot;canvas2d&quot;, &quot;webgl&quot; or null</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[raf=false]</code>
+                                    <span class="type">Boolean</span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>Use the request animation frame instead of a setInterval</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[fps=60]</code>
+                                    <span class="type">Int</span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>Set the framerate</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[versionsFile]</code>
+                                    <span class="type">String</span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>The text field to store cache-busting versions for individual files</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[basePath]</code>
+                                    <span class="type">String</span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>The base path to load all files from (useful if using a CDN)</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[cacheBust=false]</code>
+                                    <span class="type">String</span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>If all file requests with the MediaLoader should be cacheBusted (e.g., &quot;file.mp3?cb=123123&quot;)</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                        </ul>
                     
                 </li>
             
@@ -997,7 +1272,7 @@ also destroys the application, if around</p>
 </div>
 
                 
-                    <div id="method_initialize" class="method item public">
+                    <div id="method_initialize" class="method item protected">
     <h3 class="name"><code>initialize</code></h3>
 
     
@@ -1012,7 +1287,7 @@ also destroys the application, if around</p>
             
                 <li class="arg">
                     
-                        <code>opts</code>
+                        <code class="optional">[options]</code>
                     
                 </li>
             
@@ -1025,7 +1300,7 @@ also destroys the application, if around</p>
     
 
     
-        <span class="flag public">public</span>
+        <span class="flag protected">protected</span>
     
 
     
@@ -1047,7 +1322,7 @@ also destroys the application, if around</p>
             
         
         
-        <a href="../files/src_cloudkid_OS.js.html#l218"><code>src&#x2F;cloudkid&#x2F;OS.js:218</code></a>
+        <a href="../files/src_cloudkid_OS.js.html#l236"><code>src&#x2F;cloudkid&#x2F;OS.js:236</code></a>
         
         </p>
 
@@ -1086,14 +1361,15 @@ also destroys the application, if around</p>
             
                 <li class="param">
                     
-                        <code class="param-name">opts</code>
+                        <code class="param-name optional">[options]</code>
                         <span class="type">Object</span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
                     
 
                     
 
                     <div class="param-description">
-                        <p>The optional options to set</p>
+                        <p>The optional options to set, see OS.init() for more information on the options that can be set.</p>
 
                     </div>
 
@@ -1154,7 +1430,7 @@ also destroys the application, if around</p>
             
         
         
-        <a href="../files/src_cloudkid_OS.js.html#l470"><code>src&#x2F;cloudkid&#x2F;OS.js:470</code></a>
+        <a href="../files/src_cloudkid_OS.js.html#l494"><code>src&#x2F;cloudkid&#x2F;OS.js:494</code></a>
         
         </p>
 
@@ -1235,7 +1511,7 @@ also destroys the application, if around</p>
             
         
         
-        <a href="../files/src_cloudkid_OS.js.html#l499"><code>src&#x2F;cloudkid&#x2F;OS.js:499</code></a>
+        <a href="../files/src_cloudkid_OS.js.html#l523"><code>src&#x2F;cloudkid&#x2F;OS.js:523</code></a>
         
         </p>
 
@@ -1306,7 +1582,7 @@ also destroys the application, if around</p>
             
         
         
-        <a href="../files/src_cloudkid_OS.js.html#l605"><code>src&#x2F;cloudkid&#x2F;OS.js:605</code></a>
+        <a href="../files/src_cloudkid_OS.js.html#l629"><code>src&#x2F;cloudkid&#x2F;OS.js:629</code></a>
         
         </p>
 
@@ -1411,7 +1687,7 @@ also destroys the application, if around</p>
             
         
         
-        <a href="../files/src_cloudkid_OS.js.html#l707"><code>src&#x2F;cloudkid&#x2F;OS.js:707</code></a>
+        <a href="../files/src_cloudkid_OS.js.html#l731"><code>src&#x2F;cloudkid&#x2F;OS.js:731</code></a>
         
         </p>
 
@@ -1492,7 +1768,7 @@ also destroys the application, if around</p>
             
         
         
-        <a href="../files/src_cloudkid_OS.js.html#l775"><code>src&#x2F;cloudkid&#x2F;OS.js:775</code></a>
+        <a href="../files/src_cloudkid_OS.js.html#l799"><code>src&#x2F;cloudkid&#x2F;OS.js:799</code></a>
         
         </p>
 
@@ -1549,7 +1825,7 @@ also destroys the application, if around</p>
             
         
         
-        <a href="../files/src_cloudkid_OS.js.html#l536"><code>src&#x2F;cloudkid&#x2F;OS.js:536</code></a>
+        <a href="../files/src_cloudkid_OS.js.html#l560"><code>src&#x2F;cloudkid&#x2F;OS.js:560</code></a>
         
         </p>
 
@@ -1606,7 +1882,7 @@ also destroys the application, if around</p>
             
         
         
-        <a href="../files/src_cloudkid_OS.js.html#l721"><code>src&#x2F;cloudkid&#x2F;OS.js:721</code></a>
+        <a href="../files/src_cloudkid_OS.js.html#l745"><code>src&#x2F;cloudkid&#x2F;OS.js:745</code></a>
         
         </p>
 
@@ -2510,7 +2786,7 @@ also destroys the application, if around</p>
             
         
         
-        <a href="../files/src_cloudkid_OS.js.html#l554"><code>src&#x2F;cloudkid&#x2F;OS.js:554</code></a>
+        <a href="../files/src_cloudkid_OS.js.html#l578"><code>src&#x2F;cloudkid&#x2F;OS.js:578</code></a>
         
         </p>
 
@@ -2699,7 +2975,7 @@ or the PIXI.DisplayObjectContainer class</p>
             
         
         
-        <a href="../files/src_cloudkid_OS.js.html#l583"><code>src&#x2F;cloudkid&#x2F;OS.js:583</code></a>
+        <a href="../files/src_cloudkid_OS.js.html#l607"><code>src&#x2F;cloudkid&#x2F;OS.js:607</code></a>
         
         </p>
 
@@ -2746,7 +3022,7 @@ or the PIXI.DisplayObjectContainer class</p>
             
         
         
-        <a href="../files/src_cloudkid_OS.js.html#l569"><code>src&#x2F;cloudkid&#x2F;OS.js:569</code></a>
+        <a href="../files/src_cloudkid_OS.js.html#l593"><code>src&#x2F;cloudkid&#x2F;OS.js:593</code></a>
         
         </p>
 
@@ -2861,7 +3137,7 @@ or the PIXI.DisplayObjectContainer class</p>
             
         
         
-        <a href="../files/src_cloudkid_OS.js.html#l826"><code>src&#x2F;cloudkid&#x2F;OS.js:826</code></a>
+        <a href="../files/src_cloudkid_OS.js.html#l850"><code>src&#x2F;cloudkid&#x2F;OS.js:850</code></a>
         
         </p>
 

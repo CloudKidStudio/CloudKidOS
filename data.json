@@ -2,7 +2,7 @@
     "project": {
         "name": "CloudKid OS API",
         "description": "CloudKid OS API: A framework for HTML5 content built on top of createjs",
-        "version": "1.1.0",
+        "version": "1.1.1",
         "logo": "cloudkid.png"
     },
     "files": {
@@ -2593,17 +2593,138 @@
                 {
                     "name": "options",
                     "description": "Additional options",
-                    "type": "Dictionary"
+                    "type": "Dictionary",
+                    "optional": true,
+                    "props": [
+                        {
+                            "name": "mouseOverRate",
+                            "description": "(CreateJS only) the framerate for mouseover effects, higher is more responsive",
+                            "type": "Int",
+                            "optional": true,
+                            "optdefault": "30"
+                        },
+                        {
+                            "name": "debug",
+                            "description": "If we should enable the Debug class for doing console and remote logs",
+                            "type": "Boolean",
+                            "optional": true,
+                            "optdefault": "false"
+                        },
+                        {
+                            "name": "minLogLevel",
+                            "description": "The minimum log level for the Debug class, default is show all statements, values from 0 (all)-4 (errors only)",
+                            "type": "Int",
+                            "optional": true,
+                            "optdefault": "0"
+                        },
+                        {
+                            "name": "ip",
+                            "description": "The IP address for doing remote debugging",
+                            "type": "String",
+                            "optional": true
+                        },
+                        {
+                            "name": "parseQueryString",
+                            "description": "If we should convert the query string into OS options",
+                            "type": "Boolean",
+                            "optional": true,
+                            "optdefault": "false"
+                        },
+                        {
+                            "name": "showFramerate",
+                            "description": "To display the current framerate counter",
+                            "type": "Boolean",
+                            "optional": true,
+                            "optdefault": "false"
+                        },
+                        {
+                            "name": "clearView",
+                            "description": "Auto clear the stage render",
+                            "type": "Boolean",
+                            "optional": true,
+                            "optdefault": "false"
+                        },
+                        {
+                            "name": "backgroundColor",
+                            "description": "(PIXI only) The background color of the stage",
+                            "type": "Int",
+                            "optional": true
+                        },
+                        {
+                            "name": "preMultAlpha",
+                            "description": "(PIXI only) If the renderer is to use pre multiplied alpha for all images (options.forceContext needs to be set to \"webgl\")",
+                            "type": "Boolean",
+                            "optional": true
+                        },
+                        {
+                            "name": "transparent",
+                            "description": "(PIXI only) The stage is transparent",
+                            "type": "Boolean",
+                            "optional": true
+                        },
+                        {
+                            "name": "width",
+                            "description": "(PIXI only) The width of the renderer, default is the canvas width",
+                            "type": "Int",
+                            "optional": true
+                        },
+                        {
+                            "name": "height",
+                            "description": "(PIXI only) The height of the renderer, default is the canvas height",
+                            "type": "Int",
+                            "optional": true
+                        },
+                        {
+                            "name": "forceContext",
+                            "description": "(PIXI only) The stage renderer, options are \"canvas2d\", \"webgl\" or null",
+                            "type": "String",
+                            "optional": true,
+                            "optdefault": "null"
+                        },
+                        {
+                            "name": "raf",
+                            "description": "Use the request animation frame instead of a setInterval",
+                            "type": "Boolean",
+                            "optional": true,
+                            "optdefault": "false"
+                        },
+                        {
+                            "name": "fps",
+                            "description": "Set the framerate",
+                            "type": "Int",
+                            "optional": true,
+                            "optdefault": "60"
+                        },
+                        {
+                            "name": "versionsFile",
+                            "description": "The text field to store cache-busting versions for individual files",
+                            "type": "String",
+                            "optional": true
+                        },
+                        {
+                            "name": "basePath",
+                            "description": "The base path to load all files from (useful if using a CDN)",
+                            "type": "String",
+                            "optional": true
+                        },
+                        {
+                            "name": "cacheBust",
+                            "description": "If all file requests with the MediaLoader should be cacheBusted (e.g., \"file.mp3?cb=123123\")",
+                            "type": "String",
+                            "optional": true,
+                            "optdefault": "false"
+                        }
+                    ]
                 }
             ],
             "class": "cloudkid.OS"
         },
         {
             "file": "src/cloudkid/OS.js",
-            "line": 218,
+            "line": 236,
             "description": "The internal constructor extends Container constructor",
             "is_constructor": 1,
-            "access": "public",
+            "access": "protected",
             "tagname": "",
             "itemtype": "method",
             "name": "initialize",
@@ -2614,16 +2735,17 @@
                     "type": "String"
                 },
                 {
-                    "name": "opts",
-                    "description": "The optional options to set",
-                    "type": "Object*"
+                    "name": "options",
+                    "description": "The optional options to set, see OS.init() for more information on the options that can be set.",
+                    "type": "Object",
+                    "optional": true
                 }
             ],
             "class": "cloudkid.OS"
         },
         {
             "file": "src/cloudkid/OS.js",
-            "line": 470,
+            "line": 494,
             "description": "Define all of the query string parameters",
             "access": "private",
             "tagname": "",
@@ -2640,7 +2762,7 @@
         },
         {
             "file": "src/cloudkid/OS.js",
-            "line": 499,
+            "line": 523,
             "description": "Pause the OS and stop frame updates",
             "access": "public",
             "tagname": "",
@@ -2650,7 +2772,7 @@
         },
         {
             "file": "src/cloudkid/OS.js",
-            "line": 526,
+            "line": 550,
             "description": "Gets the current time in milliseconds for timing purposes",
             "access": "public",
             "tagname": "",
@@ -2660,7 +2782,7 @@
         },
         {
             "file": "src/cloudkid/OS.js",
-            "line": 536,
+            "line": 560,
             "description": "Resume the OS updates",
             "access": "public",
             "tagname": "",
@@ -2670,7 +2792,7 @@
         },
         {
             "file": "src/cloudkid/OS.js",
-            "line": 554,
+            "line": 578,
             "description": "The FPS that the OS is targeting.",
             "itemtype": "property",
             "name": "fps",
@@ -2681,7 +2803,7 @@
         },
         {
             "file": "src/cloudkid/OS.js",
-            "line": 569,
+            "line": 593,
             "description": "Convenience for accessing the stage's width",
             "itemtype": "property",
             "name": "stageWidth",
@@ -2693,7 +2815,7 @@
         },
         {
             "file": "src/cloudkid/OS.js",
-            "line": 583,
+            "line": 607,
             "description": "Convenience for accessing the stage's height",
             "itemtype": "property",
             "name": "stageHeight",
@@ -2705,7 +2827,7 @@
         },
         {
             "file": "src/cloudkid/OS.js",
-            "line": 605,
+            "line": 629,
             "description": "Remove the application",
             "access": "public",
             "tagname": "",
@@ -2726,7 +2848,7 @@
         },
         {
             "file": "src/cloudkid/OS.js",
-            "line": 659,
+            "line": 683,
             "description": "Add an app to this display list",
             "access": "public",
             "tagname": "",
@@ -2743,7 +2865,7 @@
         },
         {
             "file": "src/cloudkid/OS.js",
-            "line": 681,
+            "line": 705,
             "description": "Get the current application",
             "itemtype": "method",
             "name": "getApp",
@@ -2757,7 +2879,7 @@
         },
         {
             "file": "src/cloudkid/OS.js",
-            "line": 692,
+            "line": 716,
             "description": "Add an update callback, must take elapsed as a parameter",
             "itemtype": "method",
             "name": "addUpdateCallback",
@@ -2779,7 +2901,7 @@
         },
         {
             "file": "src/cloudkid/OS.js",
-            "line": 707,
+            "line": 731,
             "description": "Remove an update callback, must take elapsed as a parameter",
             "access": "public",
             "tagname": "",
@@ -2796,7 +2918,7 @@
         },
         {
             "file": "src/cloudkid/OS.js",
-            "line": 721,
+            "line": 745,
             "description": "Called by the stage listener",
             "access": "public",
             "tagname": "",
@@ -2806,7 +2928,7 @@
         },
         {
             "file": "src/cloudkid/OS.js",
-            "line": 775,
+            "line": 799,
             "description": "[PIXI Only] Resizes the renderer and the canvasContainer.",
             "access": "public",
             "tagname": "",
@@ -2816,7 +2938,7 @@
         },
         {
             "file": "src/cloudkid/OS.js",
-            "line": 789,
+            "line": 813,
             "description": "Destroy the instance of the OS, can init after this,\nalso destroys the application, if around",
             "access": "public",
             "tagname": "",
@@ -2826,7 +2948,7 @@
         },
         {
             "file": "src/cloudkid/OS.js",
-            "line": 826,
+            "line": 850,
             "description": "Static function for getting the singleton instance",
             "static": 1,
             "readonly": "",
