@@ -198,7 +198,25 @@
 	*  @static
 	*  @public
 	*  @param {string} stageName The stage name selector
-	*  @param {Dictionary} options Additional options
+	*  @param {Dictionary} [options] Additional options
+	*  @param {int} [options.mouseOverRate=30] (CreateJS only) the framerate for mouseover effects, higher is more responsive
+	*  @param {Boolean} [options.debug=false] If we should enable the Debug class for doing console and remote logs
+	*  @param {int} [options.minLogLevel=0] The minimum log level for the Debug class, default is show all statements, values from 0 (all)-4 (errors only)
+	*  @param {String} [options.ip] The IP address for doing remote debugging
+	*  @param {Boolean} [options.parseQueryString=false] If we should convert the query string into OS options
+	*  @param {Boolean} [options.showFramerate=false] To display the current framerate counter
+	*  @param {Boolean} [options.clearView=false] Auto clear the stage render
+	*  @param {int} [options.backgroundColor] (PIXI only) The background color of the stage
+	*  @param {Boolean} [options.preMultAlpha] (PIXI only) If the renderer is to use pre multiplied alpha for all images (options.forceContext needs to be set to "webgl")
+	*  @param {Boolean} [options.transparent] (PIXI only) The stage is transparent
+	*  @param {int} [options.width] (PIXI only) The width of the renderer, default is the canvas width
+	*  @param {int} [options.height] (PIXI only) The height of the renderer, default is the canvas height
+	*  @param {String} [options.forceContext=null] (PIXI only) The stage renderer, options are "canvas2d", "webgl" or null
+	*  @param {Boolean} [options.raf=false] Use the request animation frame instead of a setInterval
+	*  @param {int} [options.fps=60] Set the framerate 
+	*  @param {String} [options.versionsFile] The text field to store cache-busting versions for individual files
+	*  @param {String} [options.basePath] The base path to load all files from (useful if using a CDN)
+	*  @param {String} [options.cacheBust=false] If all file requests with the MediaLoader should be cacheBusted (e.g., "file.mp3?cb=123123")
 	*/
 	OS.init = function(stageName, options)
 	{
@@ -218,19 +236,19 @@
 	/**
 	*  The internal constructor extends Container constructor
 	*  @constructor
-	*  @public
+	*  @protected
 	*  @method initialize
 	*  @param {string} stageName The string name of the stage id
-	*  @param {object*} opts The optional options to set
+	*  @param {object} [options] The optional options to set, see OS.init() for more information on the options that can be set.
 	*/
-	p.initialize = function(stageName, opts)
+	p.initialize = function(stageName, options)
 	{
 		// Call the super constructor
 		if (true) this.Container_initialize();
 		if (false) PIXI.DisplayObjectContainer.call(this);
 		
 		// Setup the options container
-		this.options = opts || {};
+		this.options = options || {};
 		
 		// See if we should parse querystring
 		if (this.options.parseQueryString !== undefined)
@@ -242,11 +260,10 @@
 			
 		if (this.options.minLogLevel !== undefined)
 			Debug.minLogLevel = parseInt(this.options.minLogLevel, 10);
-		
-		if(typeof this.options.ip == "string")//if we were supplied with an IP address, connect to it with the Debug class for logging
-		{
+
+		//if we were supplied with an IP address, connect to it with the Debug class for logging
+		if(typeof this.options.ip == "string")
 			Debug.connect(this.options.ip);
-		}
 	
 		// Setup the medialoader
 		var loader = cloudkid.MediaLoader.init();
@@ -262,6 +279,11 @@
 			{
 				e.preventDefault();
 			};
+
+			// Enable the mouseover by setting the frequency
+			// if we set mouseOverRate <= 0, then turns off mouseover effects
+			var mouseOverRate = this.options.mouseOverRate = this.options.mouseOverRate || 30;
+			this.stage.enableMouseOver(mouseOverRate);
 		}
 		
 		if(false)
@@ -270,6 +292,8 @@
 		}
 		this.stage.addChild(this);
 		
+
+
 		//listen for when the page visibility changes so we can pause our timings
 		this.visibleListener = this.onWindowVisibilityChanged.bind(this);
 		addPageHideListener(this.visibleListener);

@@ -1,18 +1,20 @@
 !function(undefined) {
     var OS = function() {}, p = OS.prototype = new createjs.Container(), _paused = !1, _isReady = !1, _framerate = null, _lastFrameTime = 0, _lastFPSUpdateTime = 0, _framerateValue = null, _frameCount = 0, _tickCallback = null, _instance = null, _tickId = -1, _useRAF = !1, _fps = 0, _msPerFrame = 0;
-    OS.VERSION = "1.1.0", p.Container_initialize = p.initialize, p.stage = null, 
+    OS.VERSION = "1.1.1", p.Container_initialize = p.initialize, p.stage = null, 
     p._app = null, p.options = null, p._updateFunctions = {}, OS.init = function(stageName, options) {
         return _instance || (Debug.log("Creating the singleton instance of OS"), _instance = new OS(), 
         _instance.initialize(stageName, options)), _instance;
-    }, p.initialize = function(stageName, opts) {
-        this.Container_initialize(), this.options = opts || {}, this.options.parseQueryString !== undefined && (this.options = parseQueryStringParams(this.options)), 
+    }, p.initialize = function(stageName, options) {
+        this.Container_initialize(), this.options = options || {}, this.options.parseQueryString !== undefined && (this.options = parseQueryStringParams(this.options)), 
         this.options.debug !== undefined && (Debug.enabled = this.options.debug === !0 || "true" === this.options.debug), 
         this.options.minLogLevel !== undefined && (Debug.minLogLevel = parseInt(this.options.minLogLevel, 10)), 
         "string" == typeof this.options.ip && Debug.connect(this.options.ip);
         var loader = cloudkid.MediaLoader.init();
         this.stage = new createjs.Stage(stageName), this.stage.name = "cloudkid.OS", this.stage.canvas.onmousedown = function(e) {
             e.preventDefault();
-        }, this.stage.addChild(this), this.visibleListener = this.onWindowVisibilityChanged.bind(this), 
+        };
+        var mouseOverRate = this.options.mouseOverRate = this.options.mouseOverRate || 30;
+        this.stage.enableMouseOver(mouseOverRate), this.stage.addChild(this), this.visibleListener = this.onWindowVisibilityChanged.bind(this), 
         addPageHideListener(this.visibleListener);
         var touchDevice = window.hasOwnProperty("ontouchstart");
         -1 == window.navigator.userAgent.indexOf("MSIE 10.0") || touchDevice ? createjs.Touch.enable(this.stage) : Debug.log("IE10 Desktop"), 

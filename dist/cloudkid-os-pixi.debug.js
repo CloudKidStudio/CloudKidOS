@@ -1,11 +1,11 @@
 !function(undefined) {
     var OS = function() {}, p = OS.prototype = Object.create(PIXI.DisplayObjectContainer.prototype), _paused = !1, _isReady = !1, _framerate = null, _lastFrameTime = 0, _lastFPSUpdateTime = 0, _framerateValue = null, _frameCount = 0, _tickCallback = null, _instance = null, _tickId = -1, _useRAF = !1, _fps = 0, _msPerFrame = 0;
-    OS.VERSION = "1.1.0", p.stage = null, p._renderer = null, p.canvasContainer = null, 
+    OS.VERSION = "1.1.1", p.stage = null, p._renderer = null, p.canvasContainer = null, 
     p._app = null, p.options = null, p._updateFunctions = {}, OS.init = function(stageName, options) {
         return _instance || (Debug.log("Creating the singleton instance of OS"), _instance = new OS(), 
         _instance.initialize(stageName, options)), _instance;
-    }, p.initialize = function(stageName, opts) {
-        PIXI.DisplayObjectContainer.call(this), this.options = opts || {}, this.options.parseQueryString !== undefined && (this.options = parseQueryStringParams(this.options)), 
+    }, p.initialize = function(stageName, options) {
+        PIXI.DisplayObjectContainer.call(this), this.options = options || {}, this.options.parseQueryString !== undefined && (this.options = parseQueryStringParams(this.options)), 
         this.options.debug !== undefined && (Debug.enabled = this.options.debug === !0 || "true" === this.options.debug), 
         this.options.minLogLevel !== undefined && (Debug.minLogLevel = parseInt(this.options.minLogLevel, 10)), 
         "string" == typeof this.options.ip && Debug.connect(this.options.ip);
