@@ -206,17 +206,17 @@
 	*  @param {Boolean} [options.parseQueryString=false] If we should convert the query string into OS options
 	*  @param {Boolean} [options.showFramerate=false] To display the current framerate counter
 	*  @param {Boolean} [options.clearView=false] Auto clear the stage render
-	*  @param {int} [options.backgroundColor] (PIXI only) The background color of the stage
-	*  @param {Boolean} [options.preMultAlpha] (PIXI only) If the renderer is to use pre multiplied alpha for all images (options.forceContext needs to be set to "webgl")
+	*  @param {int} [options.backgroundColor] (PIXI only) The background color of the stage as a uint, e.g. 0xFFFFFF for white.
+	*  @param {Boolean} [options.preMultAlpha] (PIXI only) If the renderer is to use pre multiplied alpha for all images. This only affects the WebGL renderer.
 	*  @param {Boolean} [options.transparent] (PIXI only) The stage is transparent
 	*  @param {int} [options.width] (PIXI only) The width of the renderer, default is the canvas width
 	*  @param {int} [options.height] (PIXI only) The height of the renderer, default is the canvas height
-	*  @param {String} [options.forceContext=null] (PIXI only) The stage renderer, options are "canvas2d", "webgl" or null
+	*  @param {String} [options.forceContext=null] (PIXI only) The stage renderer, options are "canvas2d", "webgl" or null. Omitting this (or null) uses WebGL if available, and Canvas2D otherwise.
 	*  @param {Boolean} [options.raf=false] Use the request animation frame instead of a setInterval
 	*  @param {int} [options.fps=60] Set the framerate 
 	*  @param {String} [options.versionsFile] The text field to store cache-busting versions for individual files
 	*  @param {String} [options.basePath] The base path to load all files from (useful if using a CDN)
-	*  @param {String} [options.cacheBust=false] If all file requests with the MediaLoader should be cacheBusted (e.g., "file.mp3?cb=123123")
+	*  @param {Boolean} [options.cacheBust=false] If all file requests with the MediaLoader should be cacheBusted (e.g., "file.mp3?cb=123123")
 	*/
 	OS.init = function(stageName, options)
 	{
