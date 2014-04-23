@@ -13,6 +13,7 @@
 	*/
 	var Button = function(imageSettings, label, enabled)
 	{
+		if(!imageSettings) return;
 		PIXI.DisplayObjectContainer.call(this);
 		this.initialize(imageSettings, label, enabled);
 	};

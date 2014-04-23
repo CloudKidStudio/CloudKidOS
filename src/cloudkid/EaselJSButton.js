@@ -13,6 +13,7 @@
 	*/
 	var Button = function(imageSettings, label, enabled)
 	{
+		if(!imageSettings) return;
 		this.initialize(imageSettings, label, enabled);
 	};
 	

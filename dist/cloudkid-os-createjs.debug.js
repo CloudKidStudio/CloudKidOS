@@ -1,6 +1,6 @@
 !function(undefined) {
     var OS = function() {}, p = OS.prototype = new createjs.Container(), _paused = !1, _isReady = !1, _framerate = null, _lastFrameTime = 0, _lastFPSUpdateTime = 0, _framerateValue = null, _frameCount = 0, _tickCallback = null, _instance = null, _tickId = -1, _useRAF = !1, _fps = 0, _msPerFrame = 0;
-    OS.VERSION = "1.1.1", p.Container_initialize = p.initialize, p.stage = null, 
+    OS.VERSION = "1.1.2", p.Container_initialize = p.initialize, p.stage = null, 
     p._app = null, p.options = null, p._updateFunctions = {}, OS.init = function(stageName, options) {
         return _instance || (Debug.log("Creating the singleton instance of OS"), _instance = new OS(), 
         _instance.initialize(stageName, options)), _instance;
@@ -404,7 +404,7 @@
     }, namespace("cloudkid").CacheManager = CacheManager;
 }(), function(undefined) {
     var Button = function(imageSettings, label, enabled) {
-        this.initialize(imageSettings, label, enabled);
+        imageSettings && this.initialize(imageSettings, label, enabled);
     }, p = Button.prototype = new createjs.Container(), s = createjs.Container.prototype;
     p.back = null, p.label = null, p._overCB = null, p._outCB = null, p._downCB = null, 
     p._upCB = null, p._downEvent = null, p._enabled = !1, p._isDown = !1, p._isOver = !1, 
