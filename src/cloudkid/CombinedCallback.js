@@ -34,7 +34,7 @@
 	/**
 	*  Creates a CombinedCallback for use.
 	*  
-	*  @function create
+	*  @method create
 	*  @static
 	*  @param {function} call The callback to call when everything is complete.
 	*  @param {*} obj The object to check as an additional completion dependency.

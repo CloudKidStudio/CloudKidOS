@@ -19,10 +19,15 @@
 	//combine prefixed blob builder
 	window.BlobBuilder = window.BlobBuilder || window.WebKitBlobBuilder || window.MozBlobBuilder;
 
+	/**
+	* global functions
+	* @class GLOBAL
+	*/
+
 	//assign the function to the namespace
 	/**
 	*	Creates a Worker or a fallback with the same API.
-	*	@function createWorker
+	*	@method createWorker
 	*	@param codeString The code in string form to make the worker from. As a string, fallback support is easier.
 	*	@return Either a Worker or a fallback with the same API to use.
 	*/
@@ -94,7 +99,7 @@
 
 	/**
 	*	See https://developer.mozilla.org/en-US/docs/Web/API/Worker.postMessage
-	*	@function postMessage
+	*	@method postMessage
 	*	@param {*} data The data to send.
 	*/
 	p.postMessage = function(data)
@@ -118,7 +123,7 @@
 
 	/**
 	*	See https://developer.mozilla.org/en-US/docs/Web/API/Worker.postMessage
-	*	@function postMessage
+	*	@method postMessage
 	*	@param {*} data The data to send.
 	*/
 	p.postMessage = function(data)
@@ -129,7 +134,7 @@
 
 	/**
 	*	see https://developer.mozilla.org/en-US/docs/Web/API/Worker.terminate
-	*	@function terminate
+	*	@method terminate
 	*/
 	p.terminate = function()
 	{
