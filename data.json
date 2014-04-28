@@ -2,15 +2,24 @@
     "project": {
         "name": "CloudKid OS API",
         "description": "CloudKid OS API: A framework for HTML5 content built on top of createjs",
-        "version": "1.1.2",
+        "version": "1.1.3",
         "logo": ""
     },
     "files": {
-        "src/cloudkid/createjs/Button.js": {
-            "name": "src/cloudkid/createjs/Button.js",
+        "src/cloudkid/createjs/BitmapUtils.js": {
+            "name": "src/cloudkid/createjs/BitmapUtils.js",
             "modules": {
                 "cloudkid": 1
             },
+            "classes": {
+                "BitmapUtils (CreateJS)": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/cloudkid/createjs/Button.js": {
+            "name": "src/cloudkid/createjs/Button.js",
+            "modules": {},
             "classes": {
                 "Button (CreateJS)": 1
             },
@@ -190,6 +199,7 @@
             "name": "cloudkid",
             "submodules": {},
             "classes": {
+                "BitmapUtils (CreateJS)": 1,
                 "Button (CreateJS)": 1,
                 "DragManager (CreateJS)": 1,
                 "FunctionUtils (CreateJS)": 1,
@@ -235,6 +245,20 @@
         }
     },
     "classes": {
+        "BitmapUtils (CreateJS)": {
+            "name": "BitmapUtils (CreateJS)",
+            "shortname": "BitmapUtils (CreateJS)",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "cloudkid",
+            "namespace": "",
+            "file": "src/cloudkid/createjs/BitmapUtils.js",
+            "line": 8,
+            "description": "[CreateJS only] Designed to provide utility related to Bitmaps."
+        },
         "Button (CreateJS)": {
             "name": "Button (CreateJS)",
             "shortname": "Button (CreateJS)",
@@ -823,6 +847,58 @@
         }
     },
     "classitems": [
+        {
+            "file": "src/cloudkid/createjs/BitmapUtils.js",
+            "line": 14,
+            "description": "Replaces Bitmaps in the global lib dictionary with a version that pulls the image from a spritesheet.",
+            "itemtype": "method",
+            "name": "loadSpriteSheet",
+            "static": 1,
+            "params": [
+                {
+                    "name": "frameDict",
+                    "description": "A dictionary of frame information, with frame, trimmed, \n\tand spriteSourceSize properties (like the JSON hash output from TexturePacker).",
+                    "type": "Object"
+                },
+                {
+                    "name": "spritesheetImage",
+                    "description": "The spritesheet image that contains all of the frames.",
+                    "type": "Image|HTMLCanvasElement"
+                },
+                {
+                    "name": "scale",
+                    "description": "The scale to apply to all sprites from the spritesheet. \n\tFor example, a half sized spritesheet should have a scale of 2.",
+                    "type": "Number",
+                    "optional": true,
+                    "optdefault": "1"
+                }
+            ],
+            "class": "BitmapUtils (CreateJS)",
+            "module": "cloudkid"
+        },
+        {
+            "file": "src/cloudkid/createjs/BitmapUtils.js",
+            "line": 73,
+            "description": "Replaces Bitmaps in the global lib dictionary with a version that pulls the image from a spritesheet.",
+            "itemtype": "method",
+            "name": "replaceWithScaledBitmap",
+            "static": 1,
+            "params": [
+                {
+                    "name": "idOrDict",
+                    "description": "A dictionary of Bitmap ids to replace, or a single id.",
+                    "type": "String|Object"
+                },
+                {
+                    "name": "scale",
+                    "description": "The scale to apply to the image(s).",
+                    "type": "Number",
+                    "optional": true
+                }
+            ],
+            "class": "BitmapUtils (CreateJS)",
+            "module": "cloudkid"
+        },
         {
             "file": "src/cloudkid/createjs/Button.js",
             "line": 65,
@@ -1683,7 +1759,7 @@
         {
             "file": "src/cloudkid/createjs/FunctionUtils.js",
             "line": 17,
-            "description": "Add the bind functionality to the Function prototype\nthis allows passing a reference in the function callback \n\t\n\t\tvar callback = function(){};\n\t\tcloudkid.MediaLoader.instance.load('something.json', callback.bind(this));",
+            "description": "Add the bind functionality to the Function prototype\nthis allows passing a reference in the function callback \n\n\tvar callback = function(){};\n\tcloudkid.MediaLoader.instance.load('something.json', callback.bind(this));",
             "itemtype": "method",
             "name": "bind",
             "static": 1,

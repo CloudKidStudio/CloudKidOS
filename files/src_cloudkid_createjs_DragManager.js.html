@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
     <link rel="shortcut icon" type="image/png" href="../assets/favicon.ico">
     <script src="http://yui.yahooapis.com/3.10.1/build/yui/yui-min.js"></script>
-	<title>CloudKid OS API v1.1.2 API Documentation : src/cloudkid/createjs/DragManager.js</title>  
+	<title>CloudKid OS API v1.1.3 API Documentation : src/cloudkid/createjs/DragManager.js</title>  
 </head>
 <body class="yui3-skin-sam">
 
@@ -19,7 +19,7 @@
             
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Documentation for: 1.1.2</em>
+            <em>API Documentation for: 1.1.3</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -42,6 +42,8 @@
                 <li><a href="../classes/Application.html">Application</a></li>
             
                 <li><a href="../classes/AssetManager (PIXI).html">AssetManager (PIXI)</a></li>
+            
+                <li><a href="../classes/BitmapUtils (CreateJS).html">BitmapUtils (CreateJS)</a></li>
             
                 <li><a href="../classes/Button (CreateJS).html">Button (CreateJS)</a></li>
             
@@ -353,8 +355,8 @@
 			this.mouseDownStagePos.x = ev.stageX;
 			this.mouseDownStagePos.y = ev.stageY;
 			this._mouseDownEvent = ev;
-			this._mouseDownEvent.addEventListener(&quot;mousemove&quot;, this._triggerHeldDragCallback);
-			this._mouseDownEvent.addEventListener(&quot;mouseup&quot;, this._triggerStickyClickCallback);
+			ev.target.addEventListener(&quot;pressmove&quot;, this._triggerHeldDragCallback);
+			ev.target.addEventListener(&quot;pressup&quot;, this._triggerStickyClickCallback);
 		}
 	};
 	
@@ -366,7 +368,7 @@
 	p._triggerStickyClick = function()
 	{
 		this.isStickyClick = true;
-		this._mouseDownEvent.removeAllEventListeners();
+		this._mouseDownEvent.target.removeAllEventListeners();
 		this._mouseDownEvent = null;
 		this._startDrag();
 	};
@@ -384,7 +386,7 @@
 		if(xDiff * xDiff + yDiff * yDiff &gt;= this.dragStartThreshold * this.dragStartThreshold)
 		{
 			this.isHeldDrag = true;
-			this._mouseDownEvent.removeAllEventListeners();
+			this._mouseDownEvent.target.removeAllEventListeners();
 			this._mouseDownEvent = null;
 			this._startDrag();
 		}
@@ -427,7 +429,7 @@
 	{
 		if(this._mouseDownEvent !== null)
 		{
-			this._mouseDownEvent.removeAllEventListeners();
+			this._mouseDownEvent.target.removeAllEventListeners();
 			this._mouseDownEvent = null;
 		}
 		this._theStage.removeEventListener(&quot;stagemousemove&quot;, this._updateCallback);
@@ -544,7 +546,7 @@
 		if(this.draggedObj !== null)
 		{
 			//clean up dragged obj
-			this._mouseDownEvent.removeAllEventListeners();
+			this._mouseDownEvent.target.removeAllEventListeners();
 			this._mouseDownEvent = null;
 			this._theStage.removeEventListener(&quot;stagemousemove&quot;, this._updateCallback);
 			this.draggedObj = null;

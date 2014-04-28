@@ -3,6 +3,7 @@ YUI.add("yuidoc-meta", function(Y) {
     "classes": [
         "Application",
         "AssetManager (PIXI)",
+        "BitmapUtils (CreateJS)",
         "Button (CreateJS)",
         "Button (PIXI)",
         "CacheManager",
