@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
     <link rel="shortcut icon" type="image/png" href="../assets/favicon.ico">
     <script src="http://yui.yahooapis.com/3.10.1/build/yui/yui-min.js"></script>
-	<title>CloudKid OS API v1.1.3 API Documentation : FunctionUtils (CreateJS)</title>  
+	<title>CloudKid OS API v1.1.3 API Documentation : GLOBAL</title>  
 </head>
 <body class="yui3-skin-sam">
 
@@ -124,7 +124,7 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1>FunctionUtils (CreateJS) Class</h1>
+                        <h1>GLOBAL Class</h1>
 <div class="box meta">
     
 
@@ -132,7 +132,7 @@
 
     
         <div class="foundat">
-            Defined in: <a href="../files/src_cloudkid_createjs_FunctionUtils.js.html#l8"><code>FunctionUtils (CreateJS):8</code></a>
+            Defined in: <a href="../files/src_cloudkid_CKWorker.js.html#l22"><code>GLOBAL:22</code></a>
         </div>
     
 
@@ -148,7 +148,7 @@
 
 
 <div class="box intro">
-    <p>[CreateJS only] Designed to provide utility related to functions and polyfills</p>
+    <p>global functions</p>
 
 </div>
 
@@ -177,28 +177,8 @@
                     <ul class="index-list methods">
                         
                             <li class="index-item method">
-                                <a href="#method_bind">bind</a>
+                                <a href="#method_createWorker">createWorker</a>
 
-                                
-                                    <span class="flag static">static</span>
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item method">
-                                <a href="#method_cancelAnimationFrame">cancelAnimationFrame</a>
-
-                                
-                                    <span class="flag static">static</span>
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item method">
-                                <a href="#method_requestAnimationFrame">requestAnimationFrame</a>
-
-                                
-                                    <span class="flag static">static</span>
                                 
                                 
                             </li>
@@ -219,8 +199,8 @@
                 <h2 class="off-left">Methods</h2>
 
                 
-                    <div id="method_bind" class="method item">
-    <h3 class="name"><code>bind</code></h3>
+                    <div id="method_createWorker" class="method item">
+    <h3 class="name"><code>createWorker</code></h3>
 
     
         <div class="args">
@@ -228,7 +208,7 @@
             
                 <li class="arg">
                     
-                        <code>that</code>
+                        <code>codeString</code>
                     
                 </li>
             
@@ -238,7 +218,7 @@
 
     
         <span class="returns-inline">
-            <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Function" class="crosslink external" target="_blank">Function</a></span>
+            <span class="type"></span>
         </span>
     
 
@@ -248,8 +228,6 @@
 
     
 
-    
-        <span class="flag static">static</span>
     
 
     
@@ -267,7 +245,7 @@
             
         
         
-        <a href="../files/src_cloudkid_createjs_FunctionUtils.js.html#l17"><code>bind:17</code></a>
+        <a href="../files/src_cloudkid_CKWorker.js.html#l28"><code>createWorker:28</code></a>
         
         </p>
 
@@ -278,10 +256,7 @@
     </div>
 
     <div class="description">
-        <p>Add the bind functionality to the Function prototype
-this allows passing a reference in the function callback </p>
-<pre class="code prettyprint"><code>var callback = function(){};
-cloudkid.MediaLoader.instance.load(&#39;something.json&#39;, callback.bind(this));</code></pre>
+        <p>Creates a Worker or a fallback with the same API.</p>
 
     </div>
 
@@ -293,14 +268,14 @@ cloudkid.MediaLoader.instance.load(&#39;something.json&#39;, callback.bind(this)
             
                 <li class="param">
                     
-                        <code class="param-name">that</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Function" class="crosslink external" target="_blank">Function</a></span>
+                        <code class="param-name">codeString</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
                     
 
                     
 
                     <div class="param-description">
-                        <p>The reference to the function</p>
+                        <p>The code in string form to make the worker from. As a string, fallback support is easier.</p>
 
                     </div>
 
@@ -318,128 +293,11 @@ cloudkid.MediaLoader.instance.load(&#39;something.json&#39;, callback.bind(this)
             <div class="returns-description">
                 
                     
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Function" class="crosslink external" target="_blank">Function</a></span>:
-                    
-                    <p>The bound function</p>
+                    <p>Either a Worker or a fallback with the same API to use.</p>
 
                 
             </div>
         </div>
-    
-
-    
-</div>
-
-                
-                    <div id="method_cancelAnimationFrame" class="method item">
-    <h3 class="name"><code>cancelAnimationFrame</code></h3>
-
-    
-        <span class="paren">()</span>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-        <span class="flag static">static</span>
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/src_cloudkid_createjs_FunctionUtils.js.html#l108"><code>cancelAnimationFrame:108</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>A polyfill for cancelAnimationFrame, this also gets assigned to the window if it doesn&#39;t exist</p>
-
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="method_requestAnimationFrame" class="method item">
-    <h3 class="name"><code>requestAnimationFrame</code></h3>
-
-    
-        <span class="paren">()</span>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-        <span class="flag static">static</span>
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/src_cloudkid_createjs_FunctionUtils.js.html#l99"><code>requestAnimationFrame:99</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>A polyfill for requestAnimationFrame, this also gets assigned to the window if it doesn&#39;t exist
-also window.requestAnimFrame is a redundant and short way to access this property</p>
-
-    </div>
-
-    
-
     
 
     

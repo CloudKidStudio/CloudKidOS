@@ -51,11 +51,17 @@
             
                 <li><a href="../classes/CacheManager.html">CacheManager</a></li>
             
+                <li><a href="../classes/CombinedCallback.html">CombinedCallback</a></li>
+            
                 <li><a href="../classes/DragManager (CreateJS).html">DragManager (CreateJS)</a></li>
             
                 <li><a href="../classes/DragManager (PIXI).html">DragManager (PIXI)</a></li>
             
+                <li><a href="../classes/FallbackWorker.html">FallbackWorker</a></li>
+            
                 <li><a href="../classes/FunctionUtils (CreateJS).html">FunctionUtils (CreateJS)</a></li>
+            
+                <li><a href="../classes/GLOBAL.html">GLOBAL</a></li>
             
                 <li><a href="../classes/LoaderQueueItem.html">LoaderQueueItem</a></li>
             
@@ -70,6 +76,8 @@
                 <li><a href="../classes/SavedData.html">SavedData</a></li>
             
                 <li><a href="../classes/ScreenSettings.html">ScreenSettings</a></li>
+            
+                <li><a href="../classes/SubWorker.html">SubWorker</a></li>
             
                 <li><a href="../classes/UIElement.html">UIElement</a></li>
             
@@ -130,6 +138,24 @@
 	
 	&quot;use strict&quot;;
 
+	/**
+	*  A function that is used as a normal callback, but checks an object for a property in order to combine two
+	*  callbacks into one. For example usage:
+	*
+	*  var voPlayer = new cloudkid.VOPlayer();
+	*  var callback = cloudkid.CombinedCallback.create(myFunc.bind(this), voPlayer, &quot;playing&quot;, &quot;_callback&quot;);
+	*  Animator.play(myClip, &quot;myAnim&quot;, callback);
+	*  
+	*  In this example, when Animator calls &#x27;callback&#x27;, if voPlayer[&quot;playing&quot;] is false, &#x27;myFunc&#x27; is called immediately.
+	*  If voPlayer[&quot;playing&quot;] is true, then voPlayer[&quot;_callback&quot;] is set to &#x27;myFunc&#x27; so that it will be called when voPlayer completes.
+	*  
+	*  @class CombinedCallback
+	*  @constructor
+	*  @param {function} call The callback to call when everything is complete.
+	*  @param {*} obj The object to check as an additional completion dependency.
+	*  @param {String} prop The property to check on obj. If obj[prop] is false, then it is considered complete.
+	*  @param {String} callProp The property to set on obj if obj[prop] is true when the CombinedCallback is called.
+	*/
 	var CombinedCallback = function(call, obj, prop, callProp)
 	{
 		if(!obj[prop])//accept anything that resolves to false: eg voPlayer.playing == false
@@ -138,6 +164,16 @@
 			obj[callProp] = call;
 	};
 
+	/**
+	*  Creates a CombinedCallback for use.
+	*  
+	*  @method create
+	*  @static
+	*  @param {function} call The callback to call when everything is complete.
+	*  @param {*} obj The object to check as an additional completion dependency.
+	*  @param {String} prop The property to check on obj. If obj[prop] is false, then it is considered complete.
+	*  @param {String} callProp The property to set on obj if obj[prop] is true when the CombinedCallback is called.
+	*/
 	CombinedCallback.create = function(call, obj, prop, callProp)
 	{
 		return CombinedCallback.bind(this, call, obj, prop, callProp);

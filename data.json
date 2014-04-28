@@ -164,14 +164,20 @@
         "src/cloudkid/CKWorker.js": {
             "name": "src/cloudkid/CKWorker.js",
             "modules": {},
-            "classes": {},
+            "classes": {
+                "GLOBAL": 1,
+                "SubWorker": 1,
+                "FallbackWorker": 1
+            },
             "fors": {},
             "namespaces": {}
         },
         "src/cloudkid/CombinedCallback.js": {
             "name": "src/cloudkid/CombinedCallback.js",
             "modules": {},
-            "classes": {},
+            "classes": {
+                "CombinedCallback": 1
+            },
             "fors": {},
             "namespaces": {}
         },
@@ -216,6 +222,10 @@
                 "UIElementSettings": 1,
                 "UIScaler": 1,
                 "Application": 1,
+                "GLOBAL": 1,
+                "SubWorker": 1,
+                "FallbackWorker": 1,
+                "CombinedCallback": 1,
                 "OS": 1,
                 "SavedData": 1
             },
@@ -815,6 +825,106 @@
             "file": "src/cloudkid/Application.js",
             "line": 8,
             "description": "An application is an abstract class which extends `createjs.Container`\nand is managed by the `cloudkid.OS`"
+        },
+        "GLOBAL": {
+            "name": "GLOBAL",
+            "shortname": "GLOBAL",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "cloudkid",
+            "namespace": "",
+            "file": "src/cloudkid/CKWorker.js",
+            "line": 22,
+            "description": "global functions"
+        },
+        "SubWorker": {
+            "name": "SubWorker",
+            "shortname": "SubWorker",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "cloudkid",
+            "namespace": "",
+            "file": "src/cloudkid/CKWorker.js",
+            "line": 73,
+            "description": "Internal class that pretends to be a Web Worker's context.",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "codeString",
+                    "description": "A string to evaluate into worker code.",
+                    "type": "String"
+                },
+                {
+                    "name": "parent",
+                    "description": "The FallbackWorker that owns this SubWorker.",
+                    "type": "FallbackWorker"
+                }
+            ]
+        },
+        "FallbackWorker": {
+            "name": "FallbackWorker",
+            "shortname": "FallbackWorker",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "cloudkid",
+            "namespace": "",
+            "file": "src/cloudkid/CKWorker.js",
+            "line": 111,
+            "description": "An internal class that duplicates the Worker API as a fallback when WebWorkers are not supported.",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "codeString",
+                    "description": "A string to evaluate into worker code.",
+                    "type": "String"
+                }
+            ]
+        },
+        "CombinedCallback": {
+            "name": "CombinedCallback",
+            "shortname": "CombinedCallback",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "cloudkid",
+            "namespace": "",
+            "file": "src/cloudkid/CombinedCallback.js",
+            "line": 8,
+            "description": "A function that is used as a normal callback, but checks an object for a property in order to combine two\ncallbacks into one. For example usage:\n\nvar voPlayer = new cloudkid.VOPlayer();\nvar callback = cloudkid.CombinedCallback.create(myFunc.bind(this), voPlayer, \"playing\", \"_callback\");\nAnimator.play(myClip, \"myAnim\", callback);\n\nIn this example, when Animator calls 'callback', if voPlayer[\"playing\"] is false, 'myFunc' is called immediately.\nIf voPlayer[\"playing\"] is true, then voPlayer[\"_callback\"] is set to 'myFunc' so that it will be called when voPlayer completes.",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "call",
+                    "description": "The callback to call when everything is complete.",
+                    "type": "Function"
+                },
+                {
+                    "name": "obj",
+                    "description": "The object to check as an additional completion dependency.",
+                    "type": "*"
+                },
+                {
+                    "name": "prop",
+                    "description": "The property to check on obj. If obj[prop] is false, then it is considered complete.",
+                    "type": "String"
+                },
+                {
+                    "name": "callProp",
+                    "description": "The property to set on obj if obj[prop] is true when the CombinedCallback is called.",
+                    "type": "String"
+                }
+            ]
         },
         "OS": {
             "name": "OS",
@@ -4094,14 +4204,137 @@
         },
         {
             "file": "src/cloudkid/CKWorker.js",
-            "line": 21,
+            "line": 28,
+            "description": "Creates a Worker or a fallback with the same API.",
+            "itemtype": "method",
+            "name": "createWorker",
             "params": [
                 {
                     "name": "codeString",
                     "description": "The code in string form to make the worker from. As a string, fallback support is easier."
                 }
             ],
-            "class": "OS",
+            "return": {
+                "description": "Either a Worker or a fallback with the same API to use."
+            },
+            "class": "GLOBAL",
+            "module": "cloudkid"
+        },
+        {
+            "file": "src/cloudkid/CKWorker.js",
+            "line": 88,
+            "description": "see https://developer.mozilla.org/en-US/docs/Web/API/Worker.onmessage",
+            "itemtype": "property",
+            "name": "onmessage",
+            "type": "Function",
+            "class": "SubWorker",
+            "module": "cloudkid"
+        },
+        {
+            "file": "src/cloudkid/CKWorker.js",
+            "line": 93,
+            "description": "The FallbackWorker that is controlls by this SubWorker.",
+            "itemtype": "property",
+            "name": "_wParent",
+            "type": "FallbackWorker",
+            "access": "private",
+            "tagname": "",
+            "class": "SubWorker",
+            "module": "cloudkid"
+        },
+        {
+            "file": "src/cloudkid/CKWorker.js",
+            "line": 100,
+            "description": "See https://developer.mozilla.org/en-US/docs/Web/API/Worker.postMessage",
+            "itemtype": "method",
+            "name": "postMessage",
+            "params": [
+                {
+                    "name": "data",
+                    "description": "The data to send.",
+                    "type": "*"
+                }
+            ],
+            "class": "SubWorker",
+            "module": "cloudkid"
+        },
+        {
+            "file": "src/cloudkid/CKWorker.js",
+            "line": 124,
+            "description": "See https://developer.mozilla.org/en-US/docs/Web/API/Worker.postMessage",
+            "itemtype": "method",
+            "name": "postMessage",
+            "params": [
+                {
+                    "name": "data",
+                    "description": "The data to send.",
+                    "type": "*"
+                }
+            ],
+            "class": "FallbackWorker",
+            "module": "cloudkid"
+        },
+        {
+            "file": "src/cloudkid/CKWorker.js",
+            "line": 135,
+            "description": "see https://developer.mozilla.org/en-US/docs/Web/API/Worker.terminate",
+            "itemtype": "method",
+            "name": "terminate",
+            "class": "FallbackWorker",
+            "module": "cloudkid"
+        },
+        {
+            "file": "src/cloudkid/CKWorker.js",
+            "line": 148,
+            "description": "see https://developer.mozilla.org/en-US/docs/Web/API/Worker.onmessage",
+            "itemtype": "property",
+            "name": "onmessage",
+            "type": "Function",
+            "class": "FallbackWorker",
+            "module": "cloudkid"
+        },
+        {
+            "file": "src/cloudkid/CKWorker.js",
+            "line": 153,
+            "description": "The SubWorker that is controlled by this FallbackWorker.",
+            "itemtype": "property",
+            "name": "_wChild",
+            "type": "SubWorker",
+            "access": "private",
+            "tagname": "",
+            "class": "FallbackWorker",
+            "module": "cloudkid"
+        },
+        {
+            "file": "src/cloudkid/CombinedCallback.js",
+            "line": 34,
+            "description": "Creates a CombinedCallback for use.",
+            "itemtype": "method",
+            "name": "create",
+            "static": 1,
+            "params": [
+                {
+                    "name": "call",
+                    "description": "The callback to call when everything is complete.",
+                    "type": "Function"
+                },
+                {
+                    "name": "obj",
+                    "description": "The object to check as an additional completion dependency.",
+                    "type": "*"
+                },
+                {
+                    "name": "prop",
+                    "description": "The property to check on obj. If obj[prop] is false, then it is considered complete.",
+                    "type": "String"
+                },
+                {
+                    "name": "callProp",
+                    "description": "The property to set on obj if obj[prop] is true when the CombinedCallback is called.",
+                    "type": "String"
+                }
+            ],
+            "class": "CombinedCallback",
             "module": "cloudkid"
         },
         {
@@ -4917,10 +5150,6 @@
         {
             "message": "Missing item type",
             "line": " src/cloudkid/pixi/DragManager.js:450"
-        },
-        {
-            "message": "Missing item type",
-            "line": " src/cloudkid/CKWorker.js:21"
         },
         {
             "message": "Missing item type",

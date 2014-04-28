@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
     <link rel="shortcut icon" type="image/png" href="../assets/favicon.ico">
     <script src="http://yui.yahooapis.com/3.10.1/build/yui/yui-min.js"></script>
-	<title>CloudKid OS API v1.1.3 API Documentation : Positioner</title>  
+	<title>CloudKid OS API v1.1.3 API Documentation : CombinedCallback</title>  
 </head>
 <body class="yui3-skin-sam">
 
@@ -124,7 +124,7 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1>Positioner Class</h1>
+                        <h1>CombinedCallback Class</h1>
 <div class="box meta">
     
 
@@ -132,7 +132,7 @@
 
     
         <div class="foundat">
-            Defined in: <a href="../files/src_cloudkid_scaling_Positioner.js.html#l5"><code>Positioner:5</code></a>
+            Defined in: <a href="../files/src_cloudkid_CombinedCallback.js.html#l8"><code>CombinedCallback:8</code></a>
         </div>
     
 
@@ -148,10 +148,173 @@
 
 
 <div class="box intro">
-    <p>Initially layouts all interface elements</p>
+    <p>A function that is used as a normal callback, but checks an object for a property in order to combine two
+callbacks into one. For example usage:</p>
+<p>var voPlayer = new cloudkid.VOPlayer();
+var callback = cloudkid.CombinedCallback.create(myFunc.bind(this), voPlayer, "playing", "_callback");
+Animator.play(myClip, "myAnim", callback);</p>
+<p>In this example, when Animator calls &#39;callback&#39;, if voPlayer["playing"] is false, &#39;myFunc&#39; is called immediately.
+If voPlayer["playing"] is true, then voPlayer["_callback"] is set to &#39;myFunc&#39; so that it will be called when voPlayer completes.</p>
 
 </div>
 
+
+    <div class="constructor">
+        <h2>Constructor</h2>
+        <div id="method_CombinedCallback" class="method item">
+    <h3 class="name"><code>CombinedCallback</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>call</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>obj</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>prop</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>callProp</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_cloudkid_CombinedCallback.js.html#l8"><code>CombinedCallback:8</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">call</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Function" class="crosslink external" target="_blank">Function</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The callback to call when everything is complete.</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">obj</code>
+                        <span class="type"></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The object to check as an additional completion dependency.</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">prop</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The property to check on obj. If obj[prop] is false, then it is considered complete.</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">callProp</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The property to set on obj if obj[prop] is true when the CombinedCallback is called.</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+    </div>
 
 
 <div id="classdocs" class="tabview">
@@ -177,16 +340,7 @@
                     <ul class="index-list methods">
                         
                             <li class="index-item method">
-                                <a href="#method_generateHitArea">generateHitArea</a>
-
-                                
-                                    <span class="flag static">static</span>
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item method">
-                                <a href="#method_positionItems">positionItems</a>
+                                <a href="#method_create">create</a>
 
                                 
                                     <span class="flag static">static</span>
@@ -210,8 +364,8 @@
                 <h2 class="off-left">Methods</h2>
 
                 
-                    <div id="method_generateHitArea" class="method item">
-    <h3 class="name"><code>generateHitArea</code></h3>
+                    <div id="method_create" class="method item">
+    <h3 class="name"><code>create</code></h3>
 
     
         <div class="args">
@@ -219,13 +373,25 @@
             
                 <li class="arg">
                     
-                        <code>hitArea</code>
+                        <code>call</code>
                     
                 </li>
             
                 <li class="arg">
                     
-                        <code>scale</code>
+                        <code>obj</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>prop</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>callProp</code>
                     
                 </li>
             
@@ -260,7 +426,7 @@
             
         
         
-        <a href="../files/src_cloudkid_scaling_Positioner.js.html#l95"><code>generateHitArea:95</code></a>
+        <a href="../files/src_cloudkid_CombinedCallback.js.html#l34"><code>create:34</code></a>
         
         </p>
 
@@ -271,7 +437,7 @@
     </div>
 
     <div class="description">
-        <p>[PIXI-only] Create the polygon hit area for interface elements</p>
+        <p>Creates a CombinedCallback for use.</p>
 
     </div>
 
@@ -283,14 +449,14 @@
             
                 <li class="param">
                     
-                        <code class="param-name">hitArea</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a> | <a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array" class="crosslink external" target="_blank">Array</a></span>
+                        <code class="param-name">call</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Function" class="crosslink external" target="_blank">Function</a></span>
                     
 
                     
 
                     <div class="param-description">
-                        <p>A collection of points of polygon or an object describing rectangle, ellipse or circle</p>
+                        <p>The callback to call when everything is complete.</p>
 
                     </div>
 
@@ -299,111 +465,15 @@
             
                 <li class="param">
                     
-                        <code class="param-name">scale</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                        <code class="param-name">obj</code>
+                        <span class="type"></span>
                     
 
                     
 
                     <div class="param-description">
-                        <p>The size to scale hitArea by</p>
+                        <p>The object to check as an additional completion dependency.</p>
 
-                    </div>
-
-                    
-                </li>
-            
-            </ul>
-        </div>
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="method_positionItems" class="method item">
-    <h3 class="name"><code>positionItems</code></h3>
-
-    
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-            
-                <li class="arg">
-                    
-                        <code>parent</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>itemSettings</code>
-                    
-                </li>
-            
-            </ul><span class="paren">)</span>
-        </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-        <span class="flag static">static</span>
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/src_cloudkid_scaling_Positioner.js.html#l15"><code>positionItems:15</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>Initial position of all layout items</p>
-
-    </div>
-
-    
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-            
-                <li class="param">
-                    
-                        <code class="param-name">parent</code>
-                        <span class="type">createjs.DisplayObject | PIXI.DisplayObject</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                         
                     </div>
 
                     
@@ -411,14 +481,30 @@
             
                 <li class="param">
                     
-                        <code class="param-name">itemSettings</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                        <code class="param-name">prop</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
                     
 
                     
 
                     <div class="param-description">
-                        <p>JSON format with position information</p>
+                        <p>The property to check on obj. If obj[prop] is false, then it is considered complete.</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">callProp</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The property to set on obj if obj[prop] is true when the CombinedCallback is called.</p>
 
                     </div>
 
