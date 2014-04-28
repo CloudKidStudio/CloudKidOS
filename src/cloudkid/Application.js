@@ -1,11 +1,15 @@
-
+/**
+*  @module cloudkid
+*/
 (function(){
 	
+	"use strict";
+
 	/**
 	*  An application is an abstract class which extends `createjs.Container`
 	*  and is managed by the `cloudkid.OS`
 	*
-	*  @class cloudkid.Application
+	*  @class Application
 	*/
 	var Application = function()
 	{

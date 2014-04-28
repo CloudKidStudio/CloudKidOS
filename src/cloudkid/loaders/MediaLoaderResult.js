@@ -1,8 +1,13 @@
+/**
+*  @module cloudkid
+*/
 (function(){
 	
+	"use strict";
+
 	/**
 	*  The return result of the MediaLoader load
-	*  @class cloudkid.MediaLoaderResult
+	*  @class MediaLoaderResult
 	*  @constructor
 	*  @param {*} content The dynamic content loaded
 	*  @param {string} string

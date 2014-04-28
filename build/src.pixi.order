@@ -7,11 +7,11 @@ cloudkid/loaders/LoaderQueueItem.js
 cloudkid/loaders/MediaLoader.js
 cloudkid/loaders/MediaLoaderResult.js
 cloudkid/loaders/CacheManager.js
-cloudkid/PixiButton.js
-cloudkid/PixiDragManager.js
+cloudkid/pixi/Button.js
+cloudkid/pixi/DragManager.js
 cloudkid/scaling/Positioner.js
 cloudkid/scaling/ScreenSettings.js
 cloudkid/scaling/UIElement.js
 cloudkid/scaling/UIElementSettings.js
 cloudkid/scaling/UIScaler.js
-cloudkid/AssetManager.js
+cloudkid/pixi/AssetManager.js

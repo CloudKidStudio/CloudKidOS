@@ -1,9 +1,18 @@
+/**
+*  @module cloudkid
+*/
 (function() {
 	
+	"use strict";
+	
 	/**
-	*  [CreateJS only] Drag manager is responsible for handling the dragging of stage elements
-	*  supports click-n-stick and click-n-drag functionality
-	*  @class cloudkid.DragManager
+	*  [PIXI only] Drag manager is responsible for handling the dragging of stage elements
+	*  supports click-n-stick and click-n-drag functionality.
+	*
+	*  @class DragManager (PIXI)
+	*  @constructor
+	*  @param {function} startCallback The callback when when starting
+	*  @param {function} endCallback The callback when ending
 	*/
 	var DragManager = function(startCallback, endCallback)
 	{
@@ -96,7 +105,7 @@
 	/**
 	* Reference to the stage
 	* @private
-	* @property {createjsStage} _theStage
+	* @property {PIXI.Stage} _theStage
 	*/
 	p._theStage = null;
 	
@@ -150,7 +159,6 @@
 	/** 
 	* Constructor 
 	* @method initialize
-	* @constructor
 	* @param {function} startCallback The callback when when starting
 	* @param {function} endCallback The callback when ending
 	*/
@@ -285,7 +293,7 @@
 	* Internal stop dragging on the stage
 	* @method _stopDrag
 	* @private 
-	* @param {createjs.MouseEvent} ev Mouse up event
+	* @param {Event} ev Mouse up event
 	* @param {Bool} doCallback If we should do the callback
 	*/
 	p._stopDrag = function(origMouseEv, doCallback)
@@ -359,8 +367,8 @@
 	* these will override any existing properties of the same name
 	* @method addObject
 	* @public
-	* @param {createjs.DisplayObject} obj The display object
-	* @param {createjs.Rectangle} bound The rectangle bounds
+	* @param {PIXI.DisplayObject} obj The display object
+	* @param {PIXI.Rectangle} bound The rectangle bounds
 	*/
 	p.addObject = function(obj, bounds)
 	{
@@ -389,7 +397,7 @@
 	* Removes properties and functions added by addObject().
 	* @public
 	* @method removeObject
-	* @param {createjs.DisplayObject} obj The display object
+	* @param {PIXI.DisplayObject} obj The display object
 	*/
 	p.removeObject = function(obj)
 	{

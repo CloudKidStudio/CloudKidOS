@@ -1,8 +1,14 @@
+/**
+*  @module cloudkid
+*/
 (function(){
 	
+	"use strict";
+
 	/**
 	*  Represents a single item in the loader queue 
-	*  @class cloudkid.LoaderQueueItem
+	*
+	*  @class LoaderQueueItem
 	*/
 	var LoaderQueueItem = function(){};
 	

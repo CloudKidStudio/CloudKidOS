@@ -1,9 +1,16 @@
+/**
+*  @module cloudkid
+*/
 (function(){
+	
 	"use strict";
 	
-	/** The SavedData functions use localStorage and sessionStorage, with a cookie fallback. */
-	// Create a class object
-	var SavedData = function(){},
+	/** 
+	*  The SavedData functions use localStorage and sessionStorage, with a cookie fallback. 
+	*
+	*  @class SavedData
+	*/
+	var SavedData = {},
 	
 	/** A constant to determine if we can use localStorage and sessionStorage */
 	WEB_STORAGE_SUPPORT = typeof(window.Storage) !== "undefined",
@@ -27,7 +34,9 @@
 	
 	/** 
 	*  Remove a saved variable by name.
-	*  @param name The name of the value to remove
+	*  @method remove
+	*  @static
+	*  @param {String} name The name of the value to remove
 	*/
 	SavedData.remove = function(name)
 	{
@@ -42,11 +51,13 @@
 	
 	/**
 	*  Save a variable.
-	*  @param name The name of the value to save
-	*  @param value The value to save. This will be run through JSON.stringify().
-	*  @param tempOnly If the value should be saved only in the current browser session.
+	*  @method write
+	*  @static
+	*  @param {String} name The name of the value to save
+	*  @param {mixed} value The value to save. This will be run through JSON.stringify().
+	*  @param {Boolean} [tempOnly=false] If the value should be saved only in the current browser session.
 	*/
-	SavedData.write = function(name,value,tempOnly)
+	SavedData.write = function(name, value, tempOnly)
 	{
 		if(WEB_STORAGE_SUPPORT)
 		{
@@ -74,8 +85,10 @@
 	
 	/**
 	*  Read the value of a saved variable
-	*  @param name The name of the variable
-	*  @return The value (run through JSON.parse()) or null if it doesn't exist
+	*  @method read
+	*  @static
+	*  @param {String} name The name of the variable
+	*  @return {mixed} The value (run through `JSON.parse()`) or null if it doesn't exist
 	*/
 	SavedData.read = function(name)
 	{

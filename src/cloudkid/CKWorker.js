@@ -1,5 +1,10 @@
+/**
+*  @module cloudkid
+*/
 (function(){
 	
+	"use strict";
+
 	//Example worker code:
 	/*var workerCode = "this.initialVariable = 10;" +
 	"this.onmessage = function(event)" +
@@ -11,6 +16,7 @@
 	
 	window.URL = window.URL || window.webkitURL;
 	window.BlobBuilder = window.BlobBuilder || window.WebKitBlobBuilder || window.MozBlobBuilder;
+
 	//assign the function to the namespace
 	/** Creates a Worker or a fallback with the same API.
 	*	@param codeString The code in string form to make the worker from. As a string, fallback support is easier.
@@ -95,4 +101,5 @@
 
 	p.onmessage = null;
 	p._wChild = null;
+	
 }());

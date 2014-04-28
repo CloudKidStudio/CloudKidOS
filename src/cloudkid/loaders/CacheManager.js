@@ -1,12 +1,17 @@
+/**
+*  @module cloudkid
+*/
 (function(undefined){
+	
+	"use strict";
 	
 	/**
 	*  Used for managing the browser cache of loading external elements
 	*  can easily load version manifest and apply it to the media loader
 	*  supports cache busting all media load requests
 	*  uses the query string to bust browser versions.
-	*  
-	*  @class cloudkid.CacheManager
+	* 
+	*  @class CacheManager
 	*/
 	var CacheManager = function()
 	{

@@ -1,9 +1,15 @@
 /**
-*  [CreateJS only] Designed to provide utility related to functions, the
-*  most important of which is the `bind` method, used to properly scope callbacks.
-*  @class bind
+*  @module cloudkid
 */
-(function(){
+(function(window){
+	
+	"use strict";
+
+	/**
+	*  [CreateJS only] Designed to provide utility related to functions and polyfills
+	*  @class FunctionUtils (CreateJS)
+	*/
+	var FunctionUtils = {};
 	
 	// If there's already a bind, ignore
 	if (!Function.prototype.bind)
@@ -15,11 +21,12 @@
 		var callback = function(){};
 		cloudkid.MediaLoader.instance.load('something.json', callback.bind(this));
 	
-		*  @constructor
 		*  @method bind
+		*  @static
 		*  @param {function} that The reference to the function
+		*  @return {function} The bound function
 		*/
-		Function.prototype.bind = function bind(that) 
+		FunctionUtils.bind = Function.prototype.bind = function bind(that) 
 		{
 			var target = this;
 
@@ -58,26 +65,21 @@
 	// http://my.opera.com/emoller/blog/2011/12/20/requestanimationframe-for-smart-er-animating
 	// requestAnimationFrame polyfill by Erik Möller. fixes from Paul Irish and Tino Zijdel
 	// MIT license
-	/**
-	 * A polyfill for requestAnimationFrame
-	 *
-	 * @method requestAnimationFrame
-	 */
-	/**
-	 * A polyfill for cancelAnimationFrame
-	 *
-	 * @method cancelAnimationFrame
-	 */
+
 	var lastTime = 0;
 	var vendors = ['ms', 'moz', 'webkit', 'o'];
-	for(var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
+	for(var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x)
+	{
 		window.requestAnimationFrame = window[vendors[x]+'RequestAnimationFrame'];
 		window.cancelAnimationFrame = window[vendors[x]+'CancelAnimationFrame'] || window[vendors[x]+'CancelRequestAnimationFrame'];
 	}
 
+	// Check for the animation frame
 	if (!window.requestAnimationFrame)
 	{
-		window.requestAnimationFrame = function(callback) {
+		// Create the polyfill
+		window.requestAnimationFrame = function(callback)
+		{
 			var currTime = new Date().getTime();
 			var timeToCall = Math.max(0, 16 - (currTime - lastTime));
 			var id = window.setTimeout(function() { callback(currTime + timeToCall); }, timeToCall);
@@ -85,7 +87,8 @@
 			return id;
 		};
 
-		if (!window.cancelAnimationFrame)//only set this up if the corresponding requestAnimationFrame was set up
+		// Only set this up if the corresponding requestAnimationFrame was set up
+		if (!window.cancelAnimationFrame)
 		{
 			window.cancelAnimationFrame = function(id) {
 				clearTimeout(id);
@@ -93,6 +96,23 @@
 		}
 	}
 
+	/**
+	*  A polyfill for requestAnimationFrame, this also gets assigned to the window if it doesn't exist
+	*  also window.requestAnimFrame is a redundant and short way to access this property
+	*  @static
+	*  @method requestAnimationFrame
+	*/
+	FunctionUtils.requestAnimationFrame = window.requestAnimationFrame;
 	window.requestAnimFrame = window.requestAnimationFrame;
+
+	/**
+	*  A polyfill for cancelAnimationFrame, this also gets assigned to the window if it doesn't exist
+	*  @static
+	*  @method cancelAnimationFrame
+	*/
+	FunctionUtils.cancelAnimationFrame = window.cancelAnimationFrame;	
+
+	// Assign to namespace
+	namespace('cloudkid').FunctionUtils = FunctionUtils;
 	
-}());
+}(window));

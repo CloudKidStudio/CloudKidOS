@@ -1,3 +1,6 @@
+/**
+*  @module cloudkid
+*/
 (function(undefined){
 	
 	/**
@@ -5,7 +8,8 @@
 	*  Provides a staging framework for other things to load
 	*  handles the stage query string parameters, provides debug tools,
 	*  as well as browser cache-busting.
-	*  @class cloudkid.OS
+	*
+	*  @class OS
 	*  @extends createjs.Container|PIXI.DisplayObjectContainer
 	*/
 	var OS = function(){},
@@ -80,7 +84,7 @@
 	/**
 	* Reference to the private instance object
 	* 
-	* @property {cloudkid.OS} _instance
+	* @property {OS} _instance
 	* @static
 	* @protected
 	*/
@@ -163,7 +167,7 @@
 	/**
 	* Reference to the current application
 	* @protected
-	* @property {cloudkid.Application} _app
+	* @property {Application} _app
 	*/
 	p._app = null;
 	
@@ -631,7 +635,7 @@
 	*  @public
 	*  @method removeApp
 	*  @param {Boolean} destroying If the OS is being destroyed and shouldn't bother running any resetting code.
-	*  @return {Boolean} If an `cloudkid.Application` was successfully removed
+	*  @return {Boolean} If an `Application` was successfully removed
 	*/
 	p.removeApp = function(destroying)
 	{
@@ -684,7 +688,7 @@
 	*  Add an app to this display list
 	*  @public 
 	*  @method addApp
-	*  @param {cloudkid.Application} app The application to add
+	*  @param {Application} app The application to add
 	*/
 	p.addApp = function(app)
 	{
@@ -706,7 +710,7 @@
 	*  Get the current application
 	*  @method getApp
 	*  @public
-	*  @return {cloudkid.Application} The current Application, null if no application
+	*  @return {Application} The current Application, null if no application
 	*/
 	p.getApp = function()
 	{
@@ -853,7 +857,7 @@
 	*  @readOnly
 	*  @public
 	*  @attribute instance
-	*  @type cloudkid.OS
+	*  @type OS
 	*/
 	Object.defineProperty(OS, "instance", {
 		get:function()

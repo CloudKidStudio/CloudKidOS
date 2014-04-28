@@ -133,8 +133,10 @@
             return _instance;
         }
     }), namespace("cloudkid").OS = OS;
-}(), function() {
-    Function.prototype.bind || (Function.prototype.bind = function(that) {
+}(), function(window) {
+    "use strict";
+    var FunctionUtils = {};
+    Function.prototype.bind || (FunctionUtils.bind = Function.prototype.bind = function(that) {
         var target = this;
         if ("function" != typeof target) throw new TypeError();
         var args = Array.prototype.slice.call(arguments, 1), bound = function() {
@@ -157,10 +159,11 @@
         return lastTime = currTime + timeToCall, id;
     }, window.cancelAnimationFrame || (window.cancelAnimationFrame = function(id) {
         clearTimeout(id);
-    })), window.requestAnimFrame = window.requestAnimationFrame;
-}(), function() {
+    })), FunctionUtils.requestAnimationFrame = window.requestAnimationFrame, window.requestAnimFrame = window.requestAnimationFrame, 
+    FunctionUtils.cancelAnimationFrame = window.cancelAnimationFrame, namespace("cloudkid").FunctionUtils = FunctionUtils;
+}(window), function() {
     "use strict";
-    var SavedData = function() {}, WEB_STORAGE_SUPPORT = "undefined" != typeof window.Storage, ERASE_COOKIE = -1;
+    var SavedData = {}, WEB_STORAGE_SUPPORT = "undefined" != typeof window.Storage, ERASE_COOKIE = -1;
     if (WEB_STORAGE_SUPPORT) try {
         localStorage.setItem("LS_TEST", "test"), localStorage.removeItem("LS_TEST");
     } catch (e) {
@@ -187,6 +190,7 @@
         return null;
     }, namespace("cloudkid").SavedData = SavedData;
 }(), function() {
+    "use strict";
     window.URL = window.URL || window.webkitURL, window.BlobBuilder = window.BlobBuilder || window.WebKitBlobBuilder || window.MozBlobBuilder, 
     namespace("cloudkid").createWorker = function(codeString) {
         if (!window.URL || !window.Worker) return new FallbackWorker(codeString);
@@ -234,6 +238,7 @@
         child._wParent = null, child.onmessage = null, this._wChild = null;
     }, p.onmessage = null, p._wChild = null;
 }(), function() {
+    "use strict";
     var CombinedCallback = function(call, obj, prop, callProp) {
         obj[prop] ? obj[callProp] = call : call();
     };
@@ -241,12 +246,14 @@
         return CombinedCallback.bind(this, call, obj, prop, callProp);
     }, namespace("cloudkid").CombinedCallback = CombinedCallback;
 }(), function() {
+    "use strict";
     var p, Application = function() {
         this.initialize();
     };
     p = Application.prototype = new createjs.Container(), p.init = function() {}, p.update = function() {}, 
     p.destroy = function() {}, p.resize = function() {}, namespace("cloudkid").Application = Application;
 }(), function() {
+    "use strict";
     var LoaderQueueItem = function() {}, p = LoaderQueueItem.prototype;
     LoaderQueueItem.PRIORITY_HIGH = 1, LoaderQueueItem.PRIORITY_NORMAL = 0, LoaderQueueItem.PRIORITY_LOW = -1, 
     p.url = null, p.data = null, p.callback = null, p.priority = 0, p.progress = 0, 
@@ -258,6 +265,7 @@
         this._boundProgress = null, this._boundComplete = null;
     }, namespace("cloudkid").LoaderQueueItem = LoaderQueueItem;
 }(), function() {
+    "use strict";
     var MediaLoader = function() {}, p = MediaLoader.prototype;
     MediaLoader._instance = null;
     var queue = null, queueItems = null, loaders = null, qiPool = null, loaderPool = null, resultPool = null, numLoads = 0, retries = null;
@@ -351,6 +359,7 @@
         result.content = result.url = result.loader = result.id = null, resultPool.push(result);
     }, namespace("cloudkid").MediaLoader = MediaLoader;
 }(), function() {
+    "use strict";
     var MediaLoaderResult = function(content, url, loader) {
         this.content = content, this.url = url, this.loader = loader;
     }, p = MediaLoaderResult.prototype;
@@ -360,6 +369,7 @@
         this.callback = null, this.url = null, this.content = null;
     }, namespace("cloudkid").MediaLoaderResult = MediaLoaderResult;
 }(), function(undefined) {
+    "use strict";
     var CacheManager = function() {
         this.initialize();
     }, p = CacheManager.prototype = {};
@@ -403,6 +413,7 @@
         return url;
     }, namespace("cloudkid").CacheManager = CacheManager;
 }(), function(undefined) {
+    "use strict";
     var Button = function(imageSettings, label, enabled) {
         imageSettings && this.initialize(imageSettings, label, enabled);
     }, p = Button.prototype = new createjs.Container(), s = createjs.Container.prototype;
@@ -504,6 +515,7 @@
         this._downEvent = null), this.back = null, this.label = null;
     }, namespace("cloudkid").Button = Button;
 }(), function() {
+    "use strict";
     var DragManager = function(startCallback, endCallback) {
         this.initialize(startCallback, endCallback);
     }, p = DragManager.prototype = {};
@@ -601,6 +613,7 @@
         this._draggableObjects = null;
     }, namespace("cloudkid").DragManager = DragManager;
 }(), function() {
+    "use strict";
     var Positioner = function() {};
     Positioner.prototype = {}, Positioner.positionItems = function(parent, itemSettings) {
         var rot, pt;
@@ -619,22 +632,23 @@
     };
     namespace("cloudkid").Positioner = Positioner;
 }(), function() {
-    var ScreenSettings = function(w, h, p) {
-        this.width = w, this.height = h, this.ppi = p;
+    "use strict";
+    var ScreenSettings = function(width, height, ppi) {
+        this.width = width, this.height = height, this.ppi = ppi;
     };
     ScreenSettings.prototype = {}, namespace("cloudkid").ScreenSettings = ScreenSettings;
 }(), function() {
-    var UIElement = function(item, settings, designedScreen) {
-        this._item = item, this._settings = settings, this._designedScreen = designedScreen, 
-        this.origScaleX = item.scaleX, this.origScaleY = item.scaleY, this.origWidth = item.width, 
-        this.origBounds = {
+    "use strict";
+    var UIScaler, UIElement = function(item, settings, designedScreen) {
+        switch (UIScaler = cloudkid.UIScaler, this._item = item, this._settings = settings, 
+        this._designedScreen = designedScreen, this.origScaleX = item.scaleX, this.origScaleY = item.scaleY, 
+        this.origWidth = item.width, this.origBounds = {
             x: 0,
             y: 0,
             width: item.width,
             height: item.height
-        }, this.origBounds.right = this.origBounds.x + this.origBounds.width, this.origBounds.bottom = this.origBounds.y + this.origBounds.height;
-        var UIScaler = cloudkid.UIScaler;
-        switch (settings.vertAlign) {
+        }, this.origBounds.right = this.origBounds.x + this.origBounds.width, this.origBounds.bottom = this.origBounds.y + this.origBounds.height, 
+        settings.vertAlign) {
           case UIScaler.ALIGN_TOP:
             this.origMarginVert = item.y + this.origBounds.y;
             break;
@@ -666,9 +680,7 @@
         this._settings.minScale && itemScale < this._settings.minScale ? itemScale = this._settings.minScale : this._settings.maxScale && itemScale > this._settings.maxScale && (itemScale = this._settings.maxScale), 
         itemScale *= ppiScale, this._item.scaleX = this.origScaleX * itemScale, this._item.scaleY = this.origScaleY * itemScale;
         var m;
-        m = this.origMarginVert * overallScale;
-        var UIScaler = cloudkid.UIScaler;
-        switch (this._settings.vertAlign) {
+        switch (m = this.origMarginVert * overallScale, this._settings.vertAlign) {
           case UIScaler.ALIGN_TOP:
             this._item.y = m - this.origBounds.y * itemScale;
             break;
@@ -693,17 +705,18 @@
             this._item.x = this._settings.titleSafe ? newScreen.width - letterBoxWidth - m - this.origBounds.right * itemScale : newScreen.width - m - this.origBounds.right * itemScale;
         }
     }, p.destroy = function() {
-        this._item = null, this._settings = null, this._designedScreen = null;
+        this.origBounds = null, this._item = null, this._settings = null, this._designedScreen = null;
     }, namespace("cloudkid").UIElement = UIElement;
 }(), function() {
+    "use strict";
     var UIElementSettings = function() {}, p = UIElementSettings.prototype = {};
     p.vertAlign = null, p.horiAlign = null, p.titleSafe = !1, p.maxScale = 1, p.minScale = 1, 
     p.centeredHorizontally = !1, namespace("cloudkid").UIElementSettings = UIElementSettings;
 }(), function() {
-    var UIScaler = function(parent, designedWidth, designedHeight, designedPPI) {
-        this._parent = parent, this._items = [], this._designedScreen = new cloudkid.ScreenSettings(designedWidth, designedHeight, designedPPI);
-    }, p = UIScaler.prototype = {};
-    UIScaler._currentScreen = new cloudkid.ScreenSettings(0, 0, 0), UIScaler._initialized = !1, 
+    "use strict";
+    var UIElementSettings = cloudkid.UIElementSettings, UIElement = cloudkid.UIElement, ScreenSettings = cloudkid.ScreenSettings, UIScaler = function(parent, designedWidth, designedHeight, designedPPI) {
+        this._parent = parent, this._items = [], this._designedScreen = new ScreenSettings(designedWidth, designedHeight, designedPPI);
+    }, p = UIScaler.prototype = {}, currentScreen = new ScreenSettings(0, 0, 0), initialized = !1;
     p._parent = null, p._designedScreen = null, p._items = null, UIScaler.ALIGN_TOP = "top", 
     UIScaler.ALIGN_BOTTOM = "bottom", UIScaler.ALIGN_LEFT = "left", UIScaler.ALIGN_RIGHT = "right", 
     UIScaler.ALIGN_CENTER = "center", UIScaler.fromJSON = function(parent, jsonSettings, jsonItems, immediateDestroy) {
@@ -714,26 +727,26 @@
         scaler.add(parent[i], vertAlign, horiAlign, item.titleSafe || !1, item.minScale || 0/0, item.maxScale || 0/0, item.centeredHorizontally || !1);
         return scaler.resize(), immediateDestroy && scaler.destroy(), scaler;
     }, UIScaler.init = function(screenWidth, screenHeight, screenPPI) {
-        UIScaler._currentScreen.width = screenWidth, UIScaler._currentScreen.height = screenHeight, 
-        UIScaler._currentScreen.ppi = screenPPI, UIScaler._initialized = !0;
+        currentScreen.width = screenWidth, currentScreen.height = screenHeight, currentScreen.ppi = screenPPI, 
+        initialized = !0;
     }, p.getScale = function() {
-        return UIScaler._currentScreen.height / this._designedScreen.height;
+        return currentScreen.height / this._designedScreen.height;
     }, p.add = function(item, vertAlign, horiAlign, titleSafe, minScale, maxScale, centeredHorizontally) {
-        vertAlign || (vertAlign = UIScaler.ALIGN_CENTER), horiAlign || (horiAlign = UIScaler.ALIGN_CENTER), 
-        "boolean" != typeof titleSafe && (titleSafe = !1), "number" != typeof minScale && (minScale = 0/0), 
-        "number" != typeof maxScale && (maxScale = 0/0);
-        var s = new cloudkid.UIElementSettings();
-        s.vertAlign = vertAlign, s.horiAlign = horiAlign, s.titleSafe = titleSafe, s.maxScale = maxScale, 
-        s.minScale = minScale, s.centeredHorizontally = centeredHorizontally, this._items.push(new cloudkid.UIElement(item, s, this._designedScreen));
-    }, UIScaler.resizeBackground = function(b) {
-        if (UIScaler._initialized) {
-            var h = b.height / b.scale.y, scale = (b.width / b.scale.x, UIScaler._currentScreen.height / h);
-            b.scale.x = b.scale.y = scale, b.position.x = .5 * (UIScaler._currentScreen.width - b.width);
+        var s = new UIElementSettings();
+        s.vertAlign = vertAlign || UIScaler.ALIGN_CENTER, s.horiAlign = horiAlign || UIScaler.ALIGN_CENTER, 
+        s.titleSafe = "boolean" != typeof titleSafe ? !1 : titleSafe, s.maxScale = "number" != typeof maxScale ? 0/0 : maxScale, 
+        s.minScale = "number" != typeof minScale ? 0/0 : minScale, s.centeredHorizontally = centeredHorizontally || !1, 
+        this._items.push(new UIElement(item, s, this._designedScreen));
+    }, UIScaler.resizeBackground = function(bitmap) {
+        if (initialized) {
+            var h = bitmap.height / bitmap.scale.y, scale = (bitmap.width / bitmap.scale.x, 
+            currentScreen.height / h);
+            bitmap.scale.x = bitmap.scale.y = scale, bitmap.position.x = .5 * (currentScreen.width - b.width);
         }
-    }, UIScaler.resizeBackgrounds = function(bs) {
-        for (var i = 0, len = bs.length; len > i; ++i) resizeBackground(bs[i]);
+    }, UIScaler.resizeBackgrounds = function(bitmaps) {
+        for (var i = 0, len = bitmaps.length; len > i; ++i) UIScaler.resizeBackground(bitmaps[i]);
     }, p.resize = function() {
-        if (this._items.length > 0) for (var i = 0, len = this._items.length; len > i; ++i) this._items[i].resize(UIScaler._currentScreen);
+        if (this._items.length > 0) for (var i = 0, len = this._items.length; len > i; ++i) this._items[i].resize(currentScreen);
     }, p.destroy = function() {
         if (this._items.length > 0) for (var i = 0, len = this._items.length; len > i; ++i) this._items[i].destroy();
         this._parent = null, this._designedScreen = null, this._items = null;

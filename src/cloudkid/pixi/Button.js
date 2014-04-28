@@ -1,15 +1,33 @@
+/**
+*  @module cloudkid
+*/
 (function(undefined) {
+
+	"use strict";
+	
 	/**
 	*  A Multipurpose button class. It is designed to have one image, and an optional text label.
 	*  The button can be a normal button or a selectable button.
 	*  The button functions similarly with both CreateJS and PIXI, but slightly differently in
 	*  initialization and callbacks.
-	*
-	*  - Initialization - the parameters for initialization are different. See the documentation for initialize().
-	*  - [PIXI only] Use releaseCallback and overCallback to know about button clicks and mouse overs, respectively.
-	*  - [CreateJS only] Add event listeners for click and mouseover to know about button clicks and mouse overs, respectively.
-	*  @class cloudkid.Button
-	*  @extends createjs.Container|PIXI.DisplayObjectContainer
+	*  Use releaseCallback and overCallback to know about button clicks and mouse overs, respectively.
+	*  
+	*  @class Button (PIXI)
+	*  @extends PIXI.DisplayObjectContainer
+	*  @constructor
+	*  @param {Object} [imageSettings] Information about the art to be used for button states, as well as if the button is selectable or not.
+	*  @param {PIXI.Texture} [imageSettings.up] The texture for the up state of the button.
+	*  @param {PIXI.Texture} [imageSettings.over=null] The texture for the over state of the button. If omitted, uses the up state.
+	*  @param {PIXI.Texture} [imageSettings.down=null] The texture for the down state of the button. If omitted, uses the up state.
+	*  @param {PIXI.Texture} [imageSettings.disabled=null] The texture for the disabled state of the button. If omitted, uses the up state.
+	*  @param {PIXI.Texture} [imageSettings.highlighted=null] The texture for the highlighted state of the button. If omitted, uses the over state.
+	*  @param {PIXI.Texture} [imageSettings.selected=null] The texture for the selected state of the button. If omitted, the button is not a selectable button.
+	*  @param {Number} [imageSettings.scale=1] The scale to use for the textures. This allows smaller art assets than the designed size to be used.
+	*  @param {Object} [label=null] Information about the text label on the button. Omitting this makes the button not use a label.
+	*  @param {String} [label.type] If label.type is "bitmap", then a PIXI.BitmapText text is created, otherwise a PIXI.Text is created for the label.
+	*  @param {String} [label.text] The text to display on the label.
+	*  @param {Object} [label.style] The style of the text field, in the format that PIXI.BitmapText and PIXI.Text expect.
+	*  @param {Boolean} [enabled=true] Whether or not the button is initially enabled.
 	*/
 	var Button = function(imageSettings, label, enabled)
 	{
@@ -25,24 +43,27 @@
 	*  The sprite that is the body of the button.
 	*  The type of this property is dependent on which version of the OS library is used.
 	*  @public
-	*  @property {createjs.Bitmap|PIXI.Sprite} back
+	*  @property {PIXI.Sprite} back
 	*  @readOnly
 	*/
 	p.back = null;
+
 	/*
 	*  The text field of the button. The label is centered by both width and height on the button.
 	*  The type of this property is dependent on which version of the OS library is used.
 	*  @public
-	*  @property {createjs.Text|PIXI.Text|PIXI.BitmapText} label
+	*  @property {PIXI.Text|PIXI.BitmapText} label
 	*  @readOnly
 	*/
 	p.label = null;
+
 	/**
 	*  **[PIXI only]** The function that should be called when the button is released.
 	*  @public
 	*  @property {function} releaseCallback
 	*/
 	p.releaseCallback = null;
+
 	/**
 	*  **[PIXI only]** The function that should be called when the button is moused over.
 	*  @public
@@ -64,30 +85,35 @@
 	* @property {Boolean} _enabled
 	*/
 	p._enabled = false;
+
 	/*
 	* If this button is held down.
 	* @private
 	* @property {Boolean} _isDown
 	*/
 	p._isDown = false;
+
 	/*
 	* If the mouse is over this button
 	* @private
 	* @property {Boolean} _isOver
 	*/
 	p._isOver = false;
+
 	/*
 	* If this button is selected.
 	* @private
 	* @property {Boolean} _isSelected
 	*/
 	p._isSelected = false;
+
 	/*
 	* If this button is a selectable button, and will respond to select being set.
 	* @private
 	* @property {Boolean} _isSelectable
 	*/
 	p._isSelectable = false;
+
 	/*
 	* If this button is highlighted.
 	* @private
@@ -102,24 +128,28 @@
 	* @property {Function} _overCB
 	*/
 	p._overCB = null;
+
 	/*
 	* Callback for mouse out, bound to this button.
 	* @private
 	* @property {Function} _outCB
 	*/
 	p._outCB = null;
+
 	/*
 	* Callback for mouse down, bound to this button.
 	* @private
 	* @property {Function} _downCB
 	*/
 	p._downCB = null;
+
 	/*
 	* Callback for mouse up, bound to this button.
 	* @private
 	* @property {Function} _upCB
 	*/
 	p._upCB = null;
+
 	/**
 	* [PIXI only] Callback for mouse up outside, bound to this button.
 	* @private
@@ -134,30 +164,35 @@
 	* @property {PIXI.Texture} _upTex
 	*/
 	p._upTex = null;
+
 	/**
 	* [PIXI only] The texture for the over state of the button
 	* @private
 	* @property {PIXI.Texture} _overTex
 	*/
 	p._overTex = null;
+
 	/**
 	* [PIXI only] The texture for the down state of the button
 	* @private
 	* @property {PIXI.Texture} _downTex
 	*/
 	p._downTex = null;
+
 	/**
 	* [PIXI only] The texture for the disabled state of the button
 	* @private
 	* @property {PIXI.Texture} _disabledTex
 	*/
 	p._disabledTex = null;
+
 	/**
 	* [PIXI only] The texture for the selected state of the button
 	* @private
 	* @property {PIXI.Texture} _selectedTex
 	*/
 	p._selectedTex = null;
+
 	/**
 	* [PIXI only] The texture for the highlighted state of the button
 	* @private
@@ -180,12 +215,14 @@
 	* @property {PIXI.Texture} _slaveUpTex
 	*/
 	p._slaveUpTex = null;
+
 	/**
 	* [PIXI only] The texture for the over state of the button
 	* @private
 	* @property {PIXI.Texture} _slaveOverTex
 	*/
 	p._slaveOverTex = null;
+
 	/**
 	* [PIXI only] The texture for the down state of the button
 	* @private
@@ -198,12 +235,14 @@
 	* @property {PIXI.Texture} _slaveDisabledTex
 	*/
 	p._slaveDisabledTex = null;
+
 	/**
 	* [PIXI only] The texture for the selected state of the button
 	* @private
 	* @property {PIXI.Texture} _slaveSelectedTex
 	*/
 	p._slaveSelectedTex = null;
+
 	/**
 	* [PIXI only] The texture for the highlighted state of the button
 	* @private
@@ -217,6 +256,7 @@
 	* @property {Number} _width
 	*/
 	p._width = 0;
+
 	/*
 	* The height of the button art, independent of the scaling of the button itself.
 	* @private
@@ -225,22 +265,11 @@
 	p._height = 0;
 	
 	/** 
-	* **[PIXI only]** Constructor for the button when using PIXI.
-	* @method initialize
-	* @constructor
-	* @param  {Object} [imageSettings] Information about the art to be used for button states, as well as if the button is selectable or not.
-	*	@param {PIXI.Texture} [imageSettings.up] The texture for the up state of the button.
-	*	@param {PIXI.Texture} [imageSettings.over=null] The texture for the over state of the button. If omitted, uses the up state.
-	*	@param {PIXI.Texture} [imageSettings.down=null] The texture for the down state of the button. If omitted, uses the up state.
-	*	@param {PIXI.Texture} [imageSettings.disabled=null] The texture for the disabled state of the button. If omitted, uses the up state.
-	*	@param {PIXI.Texture} [imageSettings.highlighted=null] The texture for the highlighted state of the button. If omitted, uses the over state.
-	*	@param {PIXI.Texture} [imageSettings.selected=null] The texture for the selected state of the button. If omitted, the button is not a selectable button.
-	*	@param {Number} [imageSettings.scale=1] The scale to use for the textures. This allows smaller art assets than the designed size to be used.
-	* @param {Object} [label=null] Information about the text label on the button. Omitting this makes the button not use a label.
-	*	@param {String} [label.type] If label.type is "bitmap", then a PIXI.BitmapText text is created, otherwise a PIXI.Text is created for the label.
-	*	@param {String} [label.text] The text to display on the label.
-	*	@param {Object} [label.style] The style of the text field, in the format that PIXI.BitmapText and PIXI.Text expect.
-	* @param {Boolean} [enabled=true] Whether or not the button is initially enabled.
+	*  **[PIXI only]** Constructor for the button when using PIXI.
+	*  @method initialize
+	*  @param  {Object} [imageSettings] Information about the art to be used for button states, as well as if the button is selectable or not.
+	*  @param {Object} [label=null] Information about the text label on the button. Omitting this makes the button not use a label.
+	*  @param {Boolean} [enabled=true] Whether or not the button is initially enabled.
 	*/
 	p.initialize = function(imageSettings, label, enabled)
 	{

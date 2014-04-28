@@ -1,5 +1,5 @@
 cloudkid/OS.js
-cloudkid/FunctionUtils.js
+cloudkid/createjs/FunctionUtils.js
 cloudkid/SavedData.js
 cloudkid/CKWorker.js
 cloudkid/CombinedCallback.js
@@ -8,8 +8,8 @@ cloudkid/loaders/LoaderQueueItem.js
 cloudkid/loaders/MediaLoader.js
 cloudkid/loaders/MediaLoaderResult.js
 cloudkid/loaders/CacheManager.js
-cloudkid/EaselJSButton.js
-cloudkid/EaselJSDragManager.js
+cloudkid/createjs/Button.js
+cloudkid/createjs/DragManager.js
 cloudkid/scaling/Positioner.js
 cloudkid/scaling/ScreenSettings.js
 cloudkid/scaling/UIElement.js

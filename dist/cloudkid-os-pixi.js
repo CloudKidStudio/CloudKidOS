@@ -1,3 +1,6 @@
+/**
+*  @module cloudkid
+*/
 (function(undefined){
 	
 	/**
@@ -5,7 +8,8 @@
 	*  Provides a staging framework for other things to load
 	*  handles the stage query string parameters, provides debug tools,
 	*  as well as browser cache-busting.
-	*  @class cloudkid.OS
+	*
+	*  @class OS
 	*  @extends createjs.Container|PIXI.DisplayObjectContainer
 	*/
 	var OS = function(){},
@@ -80,7 +84,7 @@
 	/**
 	* Reference to the private instance object
 	* 
-	* @property {cloudkid.OS} _instance
+	* @property {OS} _instance
 	* @static
 	* @protected
 	*/
@@ -163,7 +167,7 @@
 	/**
 	* Reference to the current application
 	* @protected
-	* @property {cloudkid.Application} _app
+	* @property {Application} _app
 	*/
 	p._app = null;
 	
@@ -631,7 +635,7 @@
 	*  @public
 	*  @method removeApp
 	*  @param {Boolean} destroying If the OS is being destroyed and shouldn't bother running any resetting code.
-	*  @return {Boolean} If an `cloudkid.Application` was successfully removed
+	*  @return {Boolean} If an `Application` was successfully removed
 	*/
 	p.removeApp = function(destroying)
 	{
@@ -684,7 +688,7 @@
 	*  Add an app to this display list
 	*  @public 
 	*  @method addApp
-	*  @param {cloudkid.Application} app The application to add
+	*  @param {Application} app The application to add
 	*/
 	p.addApp = function(app)
 	{
@@ -706,7 +710,7 @@
 	*  Get the current application
 	*  @method getApp
 	*  @public
-	*  @return {cloudkid.Application} The current Application, null if no application
+	*  @return {Application} The current Application, null if no application
 	*/
 	p.getApp = function()
 	{
@@ -853,7 +857,7 @@
 	*  @readOnly
 	*  @public
 	*  @attribute instance
-	*  @type cloudkid.OS
+	*  @type OS
 	*/
 	Object.defineProperty(OS, "instance", {
 		get:function()
@@ -869,12 +873,19 @@
 	// Add to the name space
 	namespace('cloudkid').OS = OS;
 }());
+/**
+*  @module cloudkid
+*/
 (function(){
+	
 	"use strict";
 	
-	/** The SavedData functions use localStorage and sessionStorage, with a cookie fallback. */
-	// Create a class object
-	var SavedData = function(){},
+	/** 
+	*  The SavedData functions use localStorage and sessionStorage, with a cookie fallback. 
+	*
+	*  @class SavedData
+	*/
+	var SavedData = {},
 	
 	/** A constant to determine if we can use localStorage and sessionStorage */
 	WEB_STORAGE_SUPPORT = typeof(window.Storage) !== "undefined",
@@ -898,7 +909,9 @@
 	
 	/** 
 	*  Remove a saved variable by name.
-	*  @param name The name of the value to remove
+	*  @method remove
+	*  @static
+	*  @param {String} name The name of the value to remove
 	*/
 	SavedData.remove = function(name)
 	{
@@ -913,11 +926,13 @@
 	
 	/**
 	*  Save a variable.
-	*  @param name The name of the value to save
-	*  @param value The value to save. This will be run through JSON.stringify().
-	*  @param tempOnly If the value should be saved only in the current browser session.
+	*  @method write
+	*  @static
+	*  @param {String} name The name of the value to save
+	*  @param {mixed} value The value to save. This will be run through JSON.stringify().
+	*  @param {Boolean} [tempOnly=false] If the value should be saved only in the current browser session.
 	*/
-	SavedData.write = function(name,value,tempOnly)
+	SavedData.write = function(name, value, tempOnly)
 	{
 		if(WEB_STORAGE_SUPPORT)
 		{
@@ -945,8 +960,10 @@
 	
 	/**
 	*  Read the value of a saved variable
-	*  @param name The name of the variable
-	*  @return The value (run through JSON.parse()) or null if it doesn't exist
+	*  @method read
+	*  @static
+	*  @param {String} name The name of the variable
+	*  @return {mixed} The value (run through `JSON.parse()`) or null if it doesn't exist
 	*/
 	SavedData.read = function(name)
 	{
@@ -978,8 +995,13 @@
 	namespace('cloudkid').SavedData = SavedData;
 	
 }());
+/**
+*  @module cloudkid
+*/
 (function(){
 	
+	"use strict";
+
 	//Example worker code:
 	/*var workerCode = "this.initialVariable = 10;" +
 	"this.onmessage = function(event)" +
@@ -991,6 +1013,7 @@
 	
 	window.URL = window.URL || window.webkitURL;
 	window.BlobBuilder = window.BlobBuilder || window.WebKitBlobBuilder || window.MozBlobBuilder;
+
 	//assign the function to the namespace
 	/** Creates a Worker or a fallback with the same API.
 	*	@param codeString The code in string form to make the worker from. As a string, fallback support is easier.
@@ -1075,8 +1098,15 @@
 
 	p.onmessage = null;
 	p._wChild = null;
+	
 }());
+/**
+*  @module cloudkid
+*/
 (function() {
+	
+	"use strict";
+
 	var CombinedCallback = function(call, obj, prop, callProp)
 	{
 		if(!obj[prop])//accept anything that resolves to false: eg voPlayer.playing == false
@@ -1092,14 +1122,18 @@
 
 	namespace('cloudkid').CombinedCallback = CombinedCallback;
 }());
-
+/**
+*  @module cloudkid
+*/
 (function(){
 	
+	"use strict";
+
 	/**
 	*  An application is an abstract class which extends `createjs.Container`
 	*  and is managed by the `cloudkid.OS`
 	*
-	*  @class cloudkid.Application
+	*  @class Application
 	*/
 	var Application = function()
 	{
@@ -1163,11 +1197,17 @@
 	
 	namespace('cloudkid').Application = Application;
 }());
+/**
+*  @module cloudkid
+*/
 (function(){
 	
+	"use strict";
+
 	/**
 	*  Represents a single item in the loader queue 
-	*  @class cloudkid.LoaderQueueItem
+	*
+	*  @class LoaderQueueItem
 	*/
 	var LoaderQueueItem = function(){};
 	
@@ -1277,14 +1317,19 @@
 	// Assign to the name space
 	namespace('cloudkid').LoaderQueueItem = LoaderQueueItem;
 }());
+/**
+*  @module cloudkid
+*/
 (function(){
+	
+	"use strict";
 	
 	/**
 	*  The Medialoader is the singleton loader for loading all assets
 	*  including images, data, code and sounds. MediaLoader supports cache-busting
 	*  in the browser using dynamic query string parameters.
 	* 
-	*  @class cloudkid.MediaLoader
+	*  @class MediaLoader
 	*/
 	var MediaLoader = function(){};
 	
@@ -1699,11 +1744,16 @@
 	
 	namespace('cloudkid').MediaLoader = MediaLoader;
 }());
+/**
+*  @module cloudkid
+*/
 (function(){
 	
+	"use strict";
+
 	/**
 	*  The return result of the MediaLoader load
-	*  @class cloudkid.MediaLoaderResult
+	*  @class MediaLoaderResult
 	*  @constructor
 	*  @param {*} content The dynamic content loaded
 	*  @param {string} string
@@ -1766,15 +1816,20 @@
 	// Assign to the name space
 	namespace('cloudkid').MediaLoaderResult = MediaLoaderResult;
 }());
+/**
+*  @module cloudkid
+*/
 (function(undefined){
+	
+	"use strict";
 	
 	/**
 	*  Used for managing the browser cache of loading external elements
 	*  can easily load version manifest and apply it to the media loader
 	*  supports cache busting all media load requests
 	*  uses the query string to bust browser versions.
-	*  
-	*  @class cloudkid.CacheManager
+	* 
+	*  @class CacheManager
 	*/
 	var CacheManager = function()
 	{
@@ -1958,18 +2013,36 @@
 	namespace('cloudkid').CacheManager = CacheManager;
 	
 }());
+/**
+*  @module cloudkid
+*/
 (function(undefined) {
+
+	"use strict";
+	
 	/**
 	*  A Multipurpose button class. It is designed to have one image, and an optional text label.
 	*  The button can be a normal button or a selectable button.
 	*  The button functions similarly with both CreateJS and PIXI, but slightly differently in
 	*  initialization and callbacks.
-	*
-	*  - Initialization - the parameters for initialization are different. See the documentation for initialize().
-	*  - [PIXI only] Use releaseCallback and overCallback to know about button clicks and mouse overs, respectively.
-	*  - [CreateJS only] Add event listeners for click and mouseover to know about button clicks and mouse overs, respectively.
-	*  @class cloudkid.Button
-	*  @extends createjs.Container|PIXI.DisplayObjectContainer
+	*  Use releaseCallback and overCallback to know about button clicks and mouse overs, respectively.
+	*  
+	*  @class Button (PIXI)
+	*  @extends PIXI.DisplayObjectContainer
+	*  @constructor
+	*  @param {Object} [imageSettings] Information about the art to be used for button states, as well as if the button is selectable or not.
+	*  @param {PIXI.Texture} [imageSettings.up] The texture for the up state of the button.
+	*  @param {PIXI.Texture} [imageSettings.over=null] The texture for the over state of the button. If omitted, uses the up state.
+	*  @param {PIXI.Texture} [imageSettings.down=null] The texture for the down state of the button. If omitted, uses the up state.
+	*  @param {PIXI.Texture} [imageSettings.disabled=null] The texture for the disabled state of the button. If omitted, uses the up state.
+	*  @param {PIXI.Texture} [imageSettings.highlighted=null] The texture for the highlighted state of the button. If omitted, uses the over state.
+	*  @param {PIXI.Texture} [imageSettings.selected=null] The texture for the selected state of the button. If omitted, the button is not a selectable button.
+	*  @param {Number} [imageSettings.scale=1] The scale to use for the textures. This allows smaller art assets than the designed size to be used.
+	*  @param {Object} [label=null] Information about the text label on the button. Omitting this makes the button not use a label.
+	*  @param {String} [label.type] If label.type is "bitmap", then a PIXI.BitmapText text is created, otherwise a PIXI.Text is created for the label.
+	*  @param {String} [label.text] The text to display on the label.
+	*  @param {Object} [label.style] The style of the text field, in the format that PIXI.BitmapText and PIXI.Text expect.
+	*  @param {Boolean} [enabled=true] Whether or not the button is initially enabled.
 	*/
 	var Button = function(imageSettings, label, enabled)
 	{
@@ -1985,24 +2058,27 @@
 	*  The sprite that is the body of the button.
 	*  The type of this property is dependent on which version of the OS library is used.
 	*  @public
-	*  @property {createjs.Bitmap|PIXI.Sprite} back
+	*  @property {PIXI.Sprite} back
 	*  @readOnly
 	*/
 	p.back = null;
+
 	/*
 	*  The text field of the button. The label is centered by both width and height on the button.
 	*  The type of this property is dependent on which version of the OS library is used.
 	*  @public
-	*  @property {createjs.Text|PIXI.Text|PIXI.BitmapText} label
+	*  @property {PIXI.Text|PIXI.BitmapText} label
 	*  @readOnly
 	*/
 	p.label = null;
+
 	/**
 	*  **[PIXI only]** The function that should be called when the button is released.
 	*  @public
 	*  @property {function} releaseCallback
 	*/
 	p.releaseCallback = null;
+
 	/**
 	*  **[PIXI only]** The function that should be called when the button is moused over.
 	*  @public
@@ -2024,30 +2100,35 @@
 	* @property {Boolean} _enabled
 	*/
 	p._enabled = false;
+
 	/*
 	* If this button is held down.
 	* @private
 	* @property {Boolean} _isDown
 	*/
 	p._isDown = false;
+
 	/*
 	* If the mouse is over this button
 	* @private
 	* @property {Boolean} _isOver
 	*/
 	p._isOver = false;
+
 	/*
 	* If this button is selected.
 	* @private
 	* @property {Boolean} _isSelected
 	*/
 	p._isSelected = false;
+
 	/*
 	* If this button is a selectable button, and will respond to select being set.
 	* @private
 	* @property {Boolean} _isSelectable
 	*/
 	p._isSelectable = false;
+
 	/*
 	* If this button is highlighted.
 	* @private
@@ -2062,24 +2143,28 @@
 	* @property {Function} _overCB
 	*/
 	p._overCB = null;
+
 	/*
 	* Callback for mouse out, bound to this button.
 	* @private
 	* @property {Function} _outCB
 	*/
 	p._outCB = null;
+
 	/*
 	* Callback for mouse down, bound to this button.
 	* @private
 	* @property {Function} _downCB
 	*/
 	p._downCB = null;
+
 	/*
 	* Callback for mouse up, bound to this button.
 	* @private
 	* @property {Function} _upCB
 	*/
 	p._upCB = null;
+
 	/**
 	* [PIXI only] Callback for mouse up outside, bound to this button.
 	* @private
@@ -2094,30 +2179,35 @@
 	* @property {PIXI.Texture} _upTex
 	*/
 	p._upTex = null;
+
 	/**
 	* [PIXI only] The texture for the over state of the button
 	* @private
 	* @property {PIXI.Texture} _overTex
 	*/
 	p._overTex = null;
+
 	/**
 	* [PIXI only] The texture for the down state of the button
 	* @private
 	* @property {PIXI.Texture} _downTex
 	*/
 	p._downTex = null;
+
 	/**
 	* [PIXI only] The texture for the disabled state of the button
 	* @private
 	* @property {PIXI.Texture} _disabledTex
 	*/
 	p._disabledTex = null;
+
 	/**
 	* [PIXI only] The texture for the selected state of the button
 	* @private
 	* @property {PIXI.Texture} _selectedTex
 	*/
 	p._selectedTex = null;
+
 	/**
 	* [PIXI only] The texture for the highlighted state of the button
 	* @private
@@ -2140,12 +2230,14 @@
 	* @property {PIXI.Texture} _slaveUpTex
 	*/
 	p._slaveUpTex = null;
+
 	/**
 	* [PIXI only] The texture for the over state of the button
 	* @private
 	* @property {PIXI.Texture} _slaveOverTex
 	*/
 	p._slaveOverTex = null;
+
 	/**
 	* [PIXI only] The texture for the down state of the button
 	* @private
@@ -2158,12 +2250,14 @@
 	* @property {PIXI.Texture} _slaveDisabledTex
 	*/
 	p._slaveDisabledTex = null;
+
 	/**
 	* [PIXI only] The texture for the selected state of the button
 	* @private
 	* @property {PIXI.Texture} _slaveSelectedTex
 	*/
 	p._slaveSelectedTex = null;
+
 	/**
 	* [PIXI only] The texture for the highlighted state of the button
 	* @private
@@ -2177,6 +2271,7 @@
 	* @property {Number} _width
 	*/
 	p._width = 0;
+
 	/*
 	* The height of the button art, independent of the scaling of the button itself.
 	* @private
@@ -2185,22 +2280,11 @@
 	p._height = 0;
 	
 	/** 
-	* **[PIXI only]** Constructor for the button when using PIXI.
-	* @method initialize
-	* @constructor
-	* @param  {Object} [imageSettings] Information about the art to be used for button states, as well as if the button is selectable or not.
-	*	@param {PIXI.Texture} [imageSettings.up] The texture for the up state of the button.
-	*	@param {PIXI.Texture} [imageSettings.over=null] The texture for the over state of the button. If omitted, uses the up state.
-	*	@param {PIXI.Texture} [imageSettings.down=null] The texture for the down state of the button. If omitted, uses the up state.
-	*	@param {PIXI.Texture} [imageSettings.disabled=null] The texture for the disabled state of the button. If omitted, uses the up state.
-	*	@param {PIXI.Texture} [imageSettings.highlighted=null] The texture for the highlighted state of the button. If omitted, uses the over state.
-	*	@param {PIXI.Texture} [imageSettings.selected=null] The texture for the selected state of the button. If omitted, the button is not a selectable button.
-	*	@param {Number} [imageSettings.scale=1] The scale to use for the textures. This allows smaller art assets than the designed size to be used.
-	* @param {Object} [label=null] Information about the text label on the button. Omitting this makes the button not use a label.
-	*	@param {String} [label.type] If label.type is "bitmap", then a PIXI.BitmapText text is created, otherwise a PIXI.Text is created for the label.
-	*	@param {String} [label.text] The text to display on the label.
-	*	@param {Object} [label.style] The style of the text field, in the format that PIXI.BitmapText and PIXI.Text expect.
-	* @param {Boolean} [enabled=true] Whether or not the button is initially enabled.
+	*  **[PIXI only]** Constructor for the button when using PIXI.
+	*  @method initialize
+	*  @param  {Object} [imageSettings] Information about the art to be used for button states, as well as if the button is selectable or not.
+	*  @param {Object} [label=null] Information about the text label on the button. Omitting this makes the button not use a label.
+	*  @param {Boolean} [enabled=true] Whether or not the button is initially enabled.
 	*/
 	p.initialize = function(imageSettings, label, enabled)
 	{
@@ -2508,12 +2592,21 @@
 	
 	namespace('cloudkid').Button = Button;
 }());
+/**
+*  @module cloudkid
+*/
 (function() {
 	
+	"use strict";
+	
 	/**
-	*  [CreateJS only] Drag manager is responsible for handling the dragging of stage elements
-	*  supports click-n-stick and click-n-drag functionality
-	*  @class cloudkid.DragManager
+	*  [PIXI only] Drag manager is responsible for handling the dragging of stage elements
+	*  supports click-n-stick and click-n-drag functionality.
+	*
+	*  @class DragManager (PIXI)
+	*  @constructor
+	*  @param {function} startCallback The callback when when starting
+	*  @param {function} endCallback The callback when ending
 	*/
 	var DragManager = function(startCallback, endCallback)
 	{
@@ -2606,7 +2699,7 @@
 	/**
 	* Reference to the stage
 	* @private
-	* @property {createjsStage} _theStage
+	* @property {PIXI.Stage} _theStage
 	*/
 	p._theStage = null;
 	
@@ -2660,7 +2753,6 @@
 	/** 
 	* Constructor 
 	* @method initialize
-	* @constructor
 	* @param {function} startCallback The callback when when starting
 	* @param {function} endCallback The callback when ending
 	*/
@@ -2795,7 +2887,7 @@
 	* Internal stop dragging on the stage
 	* @method _stopDrag
 	* @private 
-	* @param {createjs.MouseEvent} ev Mouse up event
+	* @param {Event} ev Mouse up event
 	* @param {Bool} doCallback If we should do the callback
 	*/
 	p._stopDrag = function(origMouseEv, doCallback)
@@ -2869,8 +2961,8 @@
 	* these will override any existing properties of the same name
 	* @method addObject
 	* @public
-	* @param {createjs.DisplayObject} obj The display object
-	* @param {createjs.Rectangle} bound The rectangle bounds
+	* @param {PIXI.DisplayObject} obj The display object
+	* @param {PIXI.Rectangle} bound The rectangle bounds
 	*/
 	p.addObject = function(obj, bounds)
 	{
@@ -2899,7 +2991,7 @@
 	* Removes properties and functions added by addObject().
 	* @public
 	* @method removeObject
-	* @param {createjs.DisplayObject} obj The display object
+	* @param {PIXI.DisplayObject} obj The display object
 	*/
 	p.removeObject = function(obj)
 	{
@@ -2954,12 +3046,25 @@
 }());
 (function() {
 	
-	var Positioner = function()
-	{
-	};
+	"use strict";
 	
+	/**
+	*  Initially layouts all interface elements
+	*  @module cloudkid
+	*  @class Positioner
+	*/
+	var Positioner = function(){};
+	
+	// Set the protype
 	Positioner.prototype = {};
 	
+	/**
+	*  Initial position of all layout items
+	*  @method positionItems
+	*  @static
+	*  @param {createjs.DisplayObject|PIXI.DisplayObject} parent
+	*  @param {Object} itemSettings JSON format with position information
+	*/
 	Positioner.positionItems = function(parent, itemSettings)
 	{
 		var rot, pt, degToRad;
@@ -3033,6 +3138,13 @@
 	
 	if(true)
 	{
+		/**
+		*  [PIXI-only] Create the polygon hit area for interface elements
+		*  @static
+		*  @method generateHitArea
+		*  @param {Object|Array} hitArea A collection of points of polygon or an object describing rectangle, ellipse or circle
+		*  @param {Number} scale The size to scale hitArea by
+		*/
 		Positioner.generateHitArea = function(hitArea, scale)
 		{
 			if(!scale)
@@ -3070,42 +3182,72 @@
 }());
 (function() {
 	
+	"use strict";
+
 	/**
 	*   Object that contains the screen settings to help scaling
-	*   @param The screen width in pixels
-	*   @param The screen height in pixels
-	*   @param The screen pixel density (PPI)
+	*   @module cloudkid
+	*   @class ScreenSettings
+	*   @constructor
+	*   @param {Number} width The screen width in pixels
+	*   @param {Number} height The screen height in pixels
+	*   @param {Number} ppi The screen pixel density (PPI)
 	*/
-	var ScreenSettings = function(w, h, p)
+	var ScreenSettings = function(width, height, ppi)
 	{
-		this.width = w;
-		this.height = h;
-		this.ppi = p;
+		/**
+		*  The screen width in pixels
+		*  @property {Number} width 
+		*/
+		this.width = width;
+
+		/**
+		*  The screen height in pixels
+		*  @property {Number} width 
+		*/
+		this.height = height;
+
+		/**
+		*  The screen pixel density (PPI)
+		*  @property {Number} ppi
+		*/
+		this.ppi = ppi;
 	};
 	
+	// Set the prototype
 	ScreenSettings.prototype = {};
 	
+	// Assign to namespace
 	namespace('cloudkid').ScreenSettings = ScreenSettings;
+
 }());
 (function() {
+
+	"use strict";
+
+	// Class imports
+	var UIScaler;
+
 	/**
-	*  A single UI item that needs to be resized
-	*/
-	/**
-	*   Create the UI Item
-	*	@param The item to affect  
-	*   @param The scale settings
-	*	@param The original screen the item was designed for
+	*   A single UI item that needs to be resized	
+	*
+	*   @module cloudkid
+	*   @class UIElement
+	*	@param {createjs.DisplayObject|PIXI.DisplayObject} item The item to affect  
+	*   @param {UIElementSettings} settings The scale settings
+	*	@param {ScreenSettings} designedScreen The original screen the item was designed for
 	*/
 	var UIElement = function(item, settings, designedScreen)
 	{
+		UIScaler = cloudkid.UIScaler;
+		
 		this._item = item;			
 		this._settings = settings;
 		this._designedScreen = designedScreen;
 		
 		if(true)
 		{
-			this.origScaleX = item.scale.x;
+			this.origScaleX = item.scale.x;	
 			this.origScaleY = item.scale.y;
 		}
 		else
@@ -3113,14 +3255,13 @@
 			this.origScaleX = item.scaleX;
 			this.origScaleY = item.scaleY;
 		}
+
 		this.origWidth = item.width;
 
-		//this.origBounds = item.getBounds(item);
 		this.origBounds = {x:0, y:0, width:item.width, height:item.height};
 		this.origBounds.right = this.origBounds.x + this.origBounds.width;
 		this.origBounds.bottom = this.origBounds.y + this.origBounds.height;
 		
-		var UIScaler = cloudkid.UIScaler;
 		switch(settings.vertAlign)
 		{
 			case UIScaler.ALIGN_TOP:
@@ -3176,43 +3317,77 @@
 				break;
 			}
 		}
-		
-		//Debug.log("setup for " + item.name + ": " + item.position.x + ", " + item.position.y + "; margin: " + this.origMarginHori + ", " + this.origMarginVert);
-		//Debug.log("bottom: " + this.origBounds.bottom + ", height: " + this.origBounds.height);
 	};
 	
 	var p = UIElement.prototype = {};
-		
-	/** Original horizontal margin in pixels */
+
+	/**
+	*  Original horizontal margin in pixels
+	*  @property {Number} origMarginHori
+	*  @default 0
+	*/
 	p.origMarginHori = 0;
 
-	/** Original vertical margin in pixels */
+	/**
+	*  Original vertical margin in pixels
+	*  @property {Number} origMarginVert
+	*  @default 0
+	*/
 	p.origMarginVert = 0;
 
-	/** Original width in pixels */
+	/** 
+	*  Original width in pixels 
+	*  @property {Number} origWidth
+	*  @default 0
+	*/
 	p.origWidth = 0;
 
-	/** The original scale of the item. */
+	/**
+	*  Original X scale of the item
+	*  @property {Number} origScaleX
+	*  @default 0
+	*/
 	p.origScaleX = 0;
 
-	/** The original scale of the item. */
+	/**
+	*  The original Y scale of the item
+	*  @property {Number} origScaleY
+	*  @default 0
+	*/
 	p.origScaleY = 0;
 
-	/** Used to determine the distance to each edge of the item from its origin */
+	/**
+	*  The original bounds of the item with x, y, right, bottom, width, height properties.
+	*  Used to determine the distance to each edge of the item from its origin
+	*  @property {Object} origBounds
+	*/
 	p.origBounds = null;
 
-	/** The UI Item settings */
+	/**
+	*  The reference to the scale settings
+	*  @private
+	*  @property {UIElementSettings} _settings
+	*/	
 	p._settings = null;
 	
-	/** The UI Item */
+	/**
+	*  The reference to the interface item we're scaling
+	*  @private
+	*  @property {createjs.DisplayObject|PIXI.DisplayObject} _item
+	*/
 	p._item = null;
 	
-	/** The screen that the UI element was designed for */
+	/**
+	*  The original screen the item was designed for
+	*  @private
+	*  @property {ScreenSettings} _designedScreen
+	*/
 	p._designedScreen = null;
 	
 	/**
-	*   Adjust the item scale and position, to reflect new screen
-	*   @param The current screen settings
+	*  Adjust the item scale and position, to reflect new screen
+	*  @method resize
+	*  @param {ScreenSettings} newScreen The current screen settings
 	*/
 	p.resize = function(newScreen)
 	{
@@ -3253,7 +3428,7 @@
 		// vertical move
 		m = this.origMarginVert * overallScale;
 		
-		var UIScaler = cloudkid.UIScaler;
+		
 		switch(this._settings.vertAlign)
 		{
 			case UIScaler.ALIGN_TOP:
@@ -3345,10 +3520,12 @@
 	};
 	
 	/**
-	*   Destroy this item, don't use after this
+	*  Destroy this item, don't use after this
+	*  @method destroy
 	*/
 	p.destroy = function()
 	{
+		this.origBounds = null;
 		this._item = null;
 		this._settings = null;
 		this._designedScreen = null;
@@ -3358,86 +3535,192 @@
 }());
 (function() {
 	
+	"use strict";
+
 	/**
-	*  The UI Item Settings
+	*  The UI Item Settings which is the positioning settings used to adjust each element
+	*  @module cloudkid
+	*  @class UIElementSettings
 	*/
 	var UIElementSettings = function(){};
 	
+	// Reference to the prototype
 	var p = UIElementSettings.prototype = {};
 	
-	/** What vertical screen location the item should be aligned to */
+	/** 
+	*  What vertical screen location the item should be aligned to: "top", "center", "bottom"
+	*  @property {String} vertAlign
+	*/
 	p.vertAlign = null;
-	/** What horizontal screen location the item should be aligned to */
+
+	/** 
+	*  What horizontal screen location the item should be aligned to: "left", "center", "right"
+	*  @property {String} horiAlign
+	*/
 	p.horiAlign = null;
-	/** If this element should be aligned to the title safe area, not the actual screen */
+
+	/** 
+	*  If this element should be aligned to the title safe area, not the actual screen 
+	*  @property {Boolean} titleSafe
+	*  @default false
+	*/
 	p.titleSafe = false;
-	/** Maximum scale allowed in physical size */
+
+	/** 
+	*  Maximum scale allowed in physical size 
+	*  @property {Number} maxScale
+	*  @default 1
+	*/
 	p.maxScale = 1;
-	/** Minimum scale allowed in physical size */
+
+	/** 
+	*  Minimum scale allowed in physical size 
+	*  @property {Number} minScale
+	*  @default 1
+	*/
 	p.minScale = 1;
 	
+	/**
+	*  If the UI element is centered horizontally
+	*  @property {Boolean} centeredHorizontally
+	*  @default false
+	*/
 	p.centeredHorizontally = false;
 	
 	namespace('cloudkid').UIElementSettings = UIElementSettings;
 }());
 (function() {
 	
+	"use strict";
+
+	// Class imports
+	var UIElementSettings = cloudkid.UIElementSettings,
+		UIElement = cloudkid.UIElement,
+		ScreenSettings = cloudkid.ScreenSettings;
+
 	/**
 	*   The UI scale is responsible for scaling UI components
 	*   to help easy the burden of different device aspect ratios
-	*   @author Andrew Start <andrewstart@cloudkid.com>
-	*   @author Matt Moore <matt@cloudkid.com>
-	*/
-	
-	/**
-	*  Create the scaler
-	*  @param The UI display container
-	*  @param The designed width of the UI
-	*  @param The designed height of the UI
-	*  @param The designed PPI of the UI
+	*
+	*  @module cloudkid
+	*  @class UIScaler
+	*  @constructor
+	*  @param {createjs.DisplayObject|PIXI.DisplayObject} parent The UI display container
+	*  @param {Number} designedWidth The designed width of the UI
+	*  @param {Number} designedHeight The designed height of the UI
+	*  @param {Number} designedPPI The designed PPI of the UI
 	*/
 	var UIScaler = function(parent, designedWidth, designedHeight, designedPPI)
 	{
 		this._parent = parent;
 		this._items = [];
-		this._designedScreen = new cloudkid.ScreenSettings(designedWidth, designedHeight, designedPPI);
+		this._designedScreen = new ScreenSettings(designedWidth, designedHeight, designedPPI);
 	};
 	
+	// Reference to the prototype
 	var p = UIScaler.prototype = {};
 				
-	/** The current screen settings */
-	UIScaler._currentScreen = new cloudkid.ScreenSettings(0, 0, 0);
+	/** 
+	*  The current screen settings 
+	*  @property {ScreenSettings} currentScreen
+	*  @static
+	*  @private
+	*/
+	var currentScreen = new ScreenSettings(0, 0, 0);
 	
-	/** if the screensize has been set */
-	UIScaler._initialized = false;
+	/** 
+	*  If the screensize has been set 
+	*  @property {Boolean} initialized
+	*  @static
+	*  @private
+	*/
+	var initialized = false;
 	
-	/** The UI display object to update */
+	/** 
+	*  The UI display object to update 
+	*  @property {createjs.DisplayObject|PIXI.DisplayObject} _parent
+	*  @private
+	*/
 	p._parent = null;
 	
-	/** The screen settings object, contains information about designed size */
+	/** 
+	*  The screen settings object, contains information about designed size 
+	*  @property {ScreenSettings} _designedScreen
+	*  @private
+	*/
 	p._designedScreen = null;
 	
-	/** The configuration for each items */
+	/** 
+	*  The configuration for each items
+	*  @property {Array} _items
+	*  @private
+	*/
 	p._items = null;
 	
-	/** Different scale alignments */
+	/**
+	*  Vertically align to the top
+	*  @property {String} ALIGN_TOP
+	*  @static
+	*  @final
+	*  @readOnly
+	*  @default "top"
+	*/
 	UIScaler.ALIGN_TOP = "top";
+
+	/**
+	*  Vertically align to the bottom
+	*  @property {String} ALIGN_BOTTOM
+	*  @static
+	*  @final
+	*  @readOnly
+	*  @default "bottom"
+	*/
 	UIScaler.ALIGN_BOTTOM = "bottom";
+
+	/**
+	*  Horizontally align to the left
+	*  @property {String} ALIGN_LEFT
+	*  @static
+	*  @final
+	*  @readOnly
+	*  @default "left"
+	*/
 	UIScaler.ALIGN_LEFT = "left";
+
+	/**
+	*  Horizontally align to the right
+	*  @property {String} ALIGN_RIGHT
+	*  @static
+	*  @final
+	*  @readOnly
+	*  @default "right"
+	*/
 	UIScaler.ALIGN_RIGHT = "right";
+
+	/**
+	*  Vertically or horizontally align to the center
+	*  @property {String} ALIGN_CENTER
+	*  @static
+	*  @final
+	*  @readOnly
+	*  @default "center"
+	*/
 	UIScaler.ALIGN_CENTER = "center";
 	
 	/**
 	*  Create the scaler from JSON data
-	*  @param The UI display container
-	*  @param The json of the designed settings (designedWidth, designedHeight, designedPPI keys)
-	*  @param The json items object
-	*  @param If we should immediately cleanup the UIScaler after scaling items (default is true)
-	*  @param Return the UIScaler object
+	*  @method fromJSON
+	*  @static
+	*  @param {createjs.DisplayObject|PIXI.DisplayObject} parent The UI display container
+	*  @param {Object} jsonSettings The json of the designed settings {designedWidth:800, designedHeight:600, designedPPI:72}
+	*  @param {Object} jsonItems The json items object where the keys are the name of the property on the parent and the value
+	*         is an object with keys of "titleSafe", "minScale", "maxScale", "centerHorizontally", "align"
+	*  @param {Boolean} [immediateDestroy=true] If we should immediately cleanup the UIScaler after scaling items
+	*  @return {UIScaler} The scaler object that can be reused
 	*/
 	UIScaler.fromJSON = function(parent, jsonSettings, jsonItems, immediateDestroy)
 	{
-		if(typeof immediateDestroy != "boolean") immediateDestroy = true;
+		if (typeof immediateDestroy != "boolean") immediateDestroy = true;
 			
 		var scaler = new UIScaler(
 			parent, 
@@ -3488,89 +3771,95 @@
 	};
 	
 	/**
-	*   Set the current screen settings. If the stagesize changes at all, re-call this function
-	*   @param The fullscreen width
-	*   @param The fullscreen height
-	*   @param The screen resolution density
+	*   Set the current screen settings. If the stage size changes at all, re-call this function
+	*   @method init
+	*   @static
+	*   @param {Number} screenWidth The fullscreen width
+	*   @param {Number} screenHeight The fullscreen height
+	*   @param {Number} screenPPI The screen resolution density
 	*/
 	UIScaler.init = function(screenWidth, screenHeight, screenPPI)
 	{
-		UIScaler._currentScreen.width = screenWidth;
-		UIScaler._currentScreen.height = screenHeight;
-		UIScaler._currentScreen.ppi = screenPPI;
-		UIScaler._initialized = true;
+		currentScreen.width = screenWidth;
+		currentScreen.height = screenHeight;
+		currentScreen.ppi = screenPPI;
+		initialized = true;
 	};
 
+	/**
+	*  Get the current scale of the screen
+	*  @method getScale
+	*  @return {Number} The current stage scale
+	*/
 	p.getScale = function()
 	{
-		return UIScaler._currentScreen.height / this._designedScreen.height;
+		return currentScreen.height / this._designedScreen.height;
 	};
 	
 	/**
 	*   Manually add an item 
-	*   @param The display object item to add
-	*   @param The vertical align of the item (cefault is center)
-	*   @param The horizontal align of the item (default is center)
-	*   @param If the item needs to be in the title safe area (default is false)
-	*   @param The minimum scale amount (default, scales the same size as the stage)
-	*   @param The maximum scale amount (default, scales the same size as the stage)
+	*   @method add
+	*   @param {createjs.DisplayObject|PIXI.DisplayObject} item The display object item to add
+	*   @param {String} [vertAlign="center"] The vertical align of the item (cefault is center)
+	*   @param {String} [horiAlign="center"] The horizontal align of the item (default is center)
+	*   @param {Boolean} [titleSafe=false] If the item needs to be in the title safe area (default is false)
+	*   @param {Number} [minScale=1] The minimum scale amount (default, scales the same size as the stage)
+	*   @param {Number} [maxScale=1] The maximum scale amount (default, scales the same size as the stage)
+	*   @param {Boolean} [centeredHorizontally=false] Makes sure that the center of the object was at the center of the screen, assuming an origin at the top left of the object
 	*/
 	p.add = function(item, vertAlign, horiAlign, titleSafe, minScale, maxScale, centeredHorizontally)
 	{
-		if(!vertAlign)
-			vertAlign = UIScaler.ALIGN_CENTER;
-		if(!horiAlign)
-			horiAlign = UIScaler.ALIGN_CENTER;
-		if(typeof titleSafe != "boolean")
-			titleSafe = false;
-		if(typeof minScale != "number")
-			minScale = NaN;
-		if(typeof maxScale != "number")
-			maxScale = NaN;
 		// Create the item settings
-		var s = new cloudkid.UIElementSettings();
-			s.vertAlign = vertAlign;
-			s.horiAlign = horiAlign;
-			s.titleSafe = titleSafe;
-			s.maxScale = maxScale;
-			s.minScale = minScale;
-			s.centeredHorizontally = centeredHorizontally;
+		var s = new UIElementSettings();
+		
+		s.vertAlign = vertAlign || UIScaler.ALIGN_CENTER;
+		s.horiAlign = horiAlign || UIScaler.ALIGN_CENTER;
+		s.titleSafe = (typeof titleSafe != "boolean") ? false : titleSafe;
+		s.maxScale = (typeof maxScale != "number") ? NaN : maxScale;
+		s.minScale = (typeof minScale != "number") ? NaN : minScale;
+		s.centeredHorizontally = centeredHorizontally || false;
 				
-		this._items.push(new cloudkid.UIElement(item, s, this._designedScreen));
+		this._items.push(new UIElement(item, s, this._designedScreen));
 	};
 	
 	/**
 	*   Scale a single background image according to the UIScaler.width and height
-	*   @param The bitmap to scale
+	*   @method resizeBackground
+	*   @static
+	*   @param {createjs.Bitmap|PIXI.Bitmap} The bitmap to scale
 	*/
-	UIScaler.resizeBackground = function(b)
+	UIScaler.resizeBackground = function(bitmap)
 	{
-		if(!UIScaler._initialized) return;
+		if (!initialized) return;
 		
-		var h = b.height / b.scale.y;
-		var w = b.width / b.scale.x;
+		var h = bitmap.height / bitmap.scale.y;
+		var w = bitmap.width / bitmap.scale.x;
+
 		//scale the background
-		var scale = UIScaler._currentScreen.height / h;
-		b.scale.x = b.scale.y = scale;
+		var scale = currentScreen.height / h;
+		bitmap.scale.x = bitmap.scale.y = scale;
 		
 		//center the background
-		b.position.x = (UIScaler._currentScreen.width - b.width) * 0.5;
+		bitmap.position.x = (currentScreen.width - b.width) * 0.5;
 	};
 	
 	/**
-	*   Convenience function to scale a collection of backgrounds
-	*   @param The vector of bitmap images
+	*  Convenience function to scale a collection of backgrounds
+	*  @method resizeBackgrounds
+	*  @static
+	*  @param {Array} bitmaps The collection of bitmap images
 	*/
-	UIScaler.resizeBackgrounds = function(bs)
+	UIScaler.resizeBackgrounds = function(bitmaps)
 	{
-		for(var i = 0, len = bs.length; i < len; ++i)
+		for(var i = 0, len = bitmaps.length; i < len; ++i)
 		{
-			resizeBackground(bs[i]);
+			UIScaler.resizeBackground(bitmaps[i]);
 		}
 	};
 	
 	/**
-	*   Scale the UI items that have been registered
+	*  Scale the UI items that have been registered to the current screen
+	*  @method resize
 	*/
 	p.resize = function()
 	{
@@ -3578,13 +3867,14 @@
 		{
 			for(var i = 0, len = this._items.length; i < len; ++i)
 			{
-				this._items[i].resize(UIScaler._currentScreen);
+				this._items[i].resize(currentScreen);
 			}
 		}
 	};
 	
 	/**
-	*   Destroy the scaler object
+	*  Destroy the scaler object
+	*  @method destroy
 	*/
 	p.destroy = function()
 	{
@@ -3603,97 +3893,195 @@
 	
 	namespace('cloudkid').UIScaler = UIScaler;
 }());
+/**
+*  @module cloudkid
+*/
 (function() {
 	
+	"use strict";
+
 	/**
-	*  The UI Item Settings
+	*  [PIXI-only] Asset Manager is responsible for managing different resolutions of assets and spritesheets
+	*  based on the resolution of the stage. This is a helpful optimization for PIXI which some low-hardware
+	*  devices have a problem keeping up with.
+	*
+	*  @class AssetManager (PIXI)
 	*/
-	var AssetManager = function(){};
+	var AssetManager = {};
 	
-	var p = AssetManager.prototype = {};
-	
-	/** Dictionary of assets by asset id */
-	AssetManager._assets = null;
-	AssetManager._assetUrlCache = null;
-	/** Dictionary of scales by asset id */
+	/** 
+	*  Dictionary of scales by asset id 
+	*  @property {Object} scales
+	*  @final
+	*  @static
+	*/
 	AssetManager.scales = null;
-	AssetManager._sizes = null;
-	/** The scaling value for each asset size id */
-	AssetManager._scales = null;
-	AssetManager._paths = null;
-	AssetManager._sizeOrder = null;
+
+	/**
+	*  The available size definitions, e.g., {"maxSize":400, "order": ["tiny", "sd"]}
+	*  @property {Array} sizes
+	*  @private
+	*  @static
+	*/
+	var sizes = null;
+
+	/** 
+	*  Dictionary of assets by asset id 
+	*  @property {Object} assets
+	*  @private
+	*  @static
+	*/
+	var assets = null;
+
+	/** 
+	*  The cache of asset url paths
+	*  @property {Object} assetUrlCache
+	*  @private
+	*  @static
+	*/
+	var assetUrlCache = null;
+
+	/** 
+	*  The scaling value for each asset size id, e.g., {"sd" : 1, "tiny" : 2}
+	*  @property {Object} scales
+	*  @private
+	*  @static
+	*/
+	var scales = null;
+
+	/**
+	*  The paths to each resolution folder, e.g., {"sd":"images/sd/", "tiny":"images/tiny/"}
+	*  @property {Object} paths
+	*  @private
+	*  @static
+	*/
+	var paths = null;
+
+	/**
+	*  The collection of perferred size to load
+	*  @property {Array} sizeOrder
+	*  @private
+	*  @static
+	*/
+	var sizeOrder = null;
+
+	/**
+	*  If we should use low hardware, if we know we're on a slow device
+	*  @property {Boolean} lowHW
+	*  @static
+	*/
 	AssetManager.lowHW = false;
 	
+	/**
+	*  Initialize the asset manager
+	*  @method init
+	*  @static
+	*  @param {Object} config The configuration file which contains keys for "path", "scale", "sizing", "assets"
+	*  @param {Number} width The stage width
+	*  @param {Number} height The stage height
+	*/
 	AssetManager.init = function(config, width, height)
 	{
 		AssetManager.scales = {};
-		AssetManager._assets = config.assets;
-		AssetManager._assetUrlCache = {};
-		AssetManager._paths = config.path;
-		AssetManager._sizes = config.sizing;
-		AssetManager._scales = config.scale;
-		AssetManager._pickScale(width, height);
+		assets = config.assets;
+		assetUrlCache = {};
+		paths = config.path;
+		sizes = config.sizing;
+		scales = config.scale;
+		pickScale(width, height);
 	};
 	
+	/**
+	*  Get the alias of the preferred size to use
+	*  @method getPreferredSize
+	*  @static
+	*  @return {String} The alias for the preferred size
+	*/
 	AssetManager.getPreferredSize = function()
 	{
-		return AssetManager._sizeOrder[0];
+		return sizeOrder[0];
 	};
 	
+	/**
+	*  Get the preferred scale amount
+	*  @method getPreferredScale
+	*  @static
+	*  @return {Number} The scale amount associated with the preferred size
+	*/
 	AssetManager.getPreferredScale = function()
 	{
-		return AssetManager._scales[AssetManager._sizeOrder[0]];
+		return scales[sizeOrder[0]];
 	};
 	
-	AssetManager._pickScale = function(width, height)
+	/**
+	*  Pick the preferred scale based on the screen resolution
+	*  @method pickScale
+	*  @private
+	*  @static
+	*  @param {Number} width The stage width
+	*  @param {Number} height The stage height
+	*/
+	var pickScale = function(width, height)
 	{
 		var minSize = width < height ? width : height;
 		var s;
-		for(var i = AssetManager._sizes.length - 1; i >= 0; --i)
+		for(var i = sizes.length - 1; i >= 0; --i)
 		{
-			if(AssetManager._sizes[i].maxSize > minSize)
-				s = AssetManager._sizes[i];
+			if(sizes[i].maxSize > minSize)
+				s = sizes[i];
 			else	
 				break;
 		}
-		AssetManager._sizeOrder = s.order;
+		sizeOrder = s.order;
 	};
 	
+	/**
+	*  Get a asset url by asset id
+	*  @method getUrl
+	*  @static
+	*  @param {String} assetId The unique asset kdy
+	*/
 	AssetManager.getUrl = function(assetId)
 	{
-		var a = AssetManager._assets[assetId];
+		var a = assets[assetId];
 		if(!a) return null;
 		
-		if(AssetManager._assetUrlCache[assetId])
-			return AssetManager._assetUrlCache[assetId];
+		if(assetUrlCache[assetId])
+			return assetUrlCache[assetId];
 		
 		var url;
 		if(a.anim)
 		{
-			url = AssetManager._assetUrlCache[assetId] = AssetManager._paths.anim + a.src;
+			url = assetUrlCache[assetId] = paths.anim + a.src;
 			return url;
 		}
 
 		if(AssetManager.lowHW && a.lowHW)
 		{
-			AssetManager.scales[assetId] = AssetManager._scales[a.lowHW];
-			url = AssetManager._assetUrlCache[assetId] = AssetManager._paths[a.lowHW] + a.src;
+			AssetManager.scales[assetId] = scales[a.lowHW];
+			url = assetUrlCache[assetId] = paths[a.lowHW] + a.src;
 			return url;
 		}
 		
-		for(var i = 0; i < AssetManager._sizeOrder.length; ++i)
+		for(var i = 0; i < sizeOrder.length; ++i)
 		{
-			var typeId = AssetManager._sizeOrder[i];
+			var typeId = sizeOrder[i];
 			if(a[typeId])
 			{
-				AssetManager.scales[assetId] = AssetManager._scales[typeId];
-				url = AssetManager._assetUrlCache[assetId] = AssetManager._paths[typeId] + a.src;
+				AssetManager.scales[assetId] = scales[typeId];
+				url = assetUrlCache[assetId] = paths[typeId] + a.src;
 				return url;
 			}
 		}
 		return null;
 	};
 	
+	/**
+	*  Unload an asset
+	*  @method unload
+	*  @static
+	*  @param {Array|String} assetOrAsset The collection of assets or single asset id
+	*/
 	AssetManager.unload = function(assetOrAssets)
 	{
 		var a;
@@ -3711,10 +4099,17 @@
 		}
 	};
 
-	function unloadAsset(asset)
+	/**
+	*  Unload an asset
+	*  @method unloadAsset
+	*  @static
+	*  @private
+	*  @param {String} asset The asset id to unload
+	*/
+	var unloadAsset = function(asset)
 	{
-		if(!AssetManager._assetUrlCache[asset]) return;//if this doesn't exist, then it wasn't loaded
-		a = AssetManager._assets[asset];
+		if(!assetUrlCache[asset]) return;//if this doesn't exist, then it wasn't loaded
+		a = assets[asset];
 		if(!a) return;//asset never existed in the master list
 		if(a.anim) return;//don't unload these, they are pretty small
 		if(a.isFont)
@@ -3723,11 +4118,20 @@
 				delete PIXI.BitmapText.fonts[asset];
 		}
 		//anything else is a texture
-		PIXI.Texture.destroyTexture(AssetManager._assetUrlCache[asset]);
+		PIXI.Texture.destroyTexture(assetUrlCache[asset]);
 		delete AssetManager.scales[asset];
-		delete AssetManager._assetUrlCache[asset];
-	}
+		delete assetUrlCache[asset];
+	};
 
+	/**
+	*  Get the collection of assets that are also animations
+	*  @method getAnims
+	*  @static
+	*  @param {Object} anims The dictionary of animation assets
+	*  @param {int} [maxDigits=4] Maximum number of digits, like 4 for an animation exported as anim_0001.png
+	*  @param {Object} [outObj] If already using an return object
+	*  @return {Object} An collection of PIXI.Textures for each animation id suitable for use in PIXI.MovieClip
+	*/
 	AssetManager.getAnims = function(anims, maxDigits, outObj)
 	{
 		if(maxDigits === undefined)
@@ -3786,5 +4190,6 @@
 		return rtnDict;
 	};
 	
+	// Assign to the namespace
 	namespace('cloudkid').AssetManager = AssetManager;
 }());

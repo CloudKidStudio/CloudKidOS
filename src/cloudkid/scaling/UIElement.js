@@ -1,22 +1,30 @@
 (function() {
+
+	"use strict";
+
+	// Class imports
+	var UIScaler;
+
 	/**
-	*  A single UI item that needs to be resized
-	*/
-	/**
-	*   Create the UI Item
-	*	@param The item to affect  
-	*   @param The scale settings
-	*	@param The original screen the item was designed for
+	*   A single UI item that needs to be resized	
+	*
+	*   @module cloudkid
+	*   @class UIElement
+	*	@param {createjs.DisplayObject|PIXI.DisplayObject} item The item to affect  
+	*   @param {UIElementSettings} settings The scale settings
+	*	@param {ScreenSettings} designedScreen The original screen the item was designed for
 	*/
 	var UIElement = function(item, settings, designedScreen)
 	{
+		UIScaler = cloudkid.UIScaler;
+		
 		this._item = item;			
 		this._settings = settings;
 		this._designedScreen = designedScreen;
 		
 		if(CONFIG_PIXI)
 		{
-			this.origScaleX = item.scale.x;
+			this.origScaleX = item.scale.x;	
 			this.origScaleY = item.scale.y;
 		}
 		else
@@ -24,14 +32,13 @@
 			this.origScaleX = item.scaleX;
 			this.origScaleY = item.scaleY;
 		}
+
 		this.origWidth = item.width;
 
-		//this.origBounds = item.getBounds(item);
 		this.origBounds = {x:0, y:0, width:item.width, height:item.height};
 		this.origBounds.right = this.origBounds.x + this.origBounds.width;
 		this.origBounds.bottom = this.origBounds.y + this.origBounds.height;
 		
-		var UIScaler = cloudkid.UIScaler;
 		switch(settings.vertAlign)
 		{
 			case UIScaler.ALIGN_TOP:
@@ -87,43 +94,77 @@
 				break;
 			}
 		}
-		
-		//Debug.log("setup for " + item.name + ": " + item.position.x + ", " + item.position.y + "; margin: " + this.origMarginHori + ", " + this.origMarginVert);
-		//Debug.log("bottom: " + this.origBounds.bottom + ", height: " + this.origBounds.height);
 	};
 	
 	var p = UIElement.prototype = {};
-		
-	/** Original horizontal margin in pixels */
+
+	/**
+	*  Original horizontal margin in pixels
+	*  @property {Number} origMarginHori
+	*  @default 0
+	*/
 	p.origMarginHori = 0;
 
-	/** Original vertical margin in pixels */
+	/**
+	*  Original vertical margin in pixels
+	*  @property {Number} origMarginVert
+	*  @default 0
+	*/
 	p.origMarginVert = 0;
 
-	/** Original width in pixels */
+	/** 
+	*  Original width in pixels 
+	*  @property {Number} origWidth
+	*  @default 0
+	*/
 	p.origWidth = 0;
 
-	/** The original scale of the item. */
+	/**
+	*  Original X scale of the item
+	*  @property {Number} origScaleX
+	*  @default 0
+	*/
 	p.origScaleX = 0;
 
-	/** The original scale of the item. */
+	/**
+	*  The original Y scale of the item
+	*  @property {Number} origScaleY
+	*  @default 0
+	*/
 	p.origScaleY = 0;
 
-	/** Used to determine the distance to each edge of the item from its origin */
+	/**
+	*  The original bounds of the item with x, y, right, bottom, width, height properties.
+	*  Used to determine the distance to each edge of the item from its origin
+	*  @property {Object} origBounds
+	*/
 	p.origBounds = null;
 
-	/** The UI Item settings */
+	/**
+	*  The reference to the scale settings
+	*  @private
+	*  @property {UIElementSettings} _settings
+	*/	
 	p._settings = null;
 	
-	/** The UI Item */
+	/**
+	*  The reference to the interface item we're scaling
+	*  @private
+	*  @property {createjs.DisplayObject|PIXI.DisplayObject} _item
+	*/
 	p._item = null;
 	
-	/** The screen that the UI element was designed for */
+	/**
+	*  The original screen the item was designed for
+	*  @private
+	*  @property {ScreenSettings} _designedScreen
+	*/
 	p._designedScreen = null;
 	
 	/**
-	*   Adjust the item scale and position, to reflect new screen
-	*   @param The current screen settings
+	*  Adjust the item scale and position, to reflect new screen
+	*  @method resize
+	*  @param {ScreenSettings} newScreen The current screen settings
 	*/
 	p.resize = function(newScreen)
 	{
@@ -164,7 +205,7 @@
 		// vertical move
 		m = this.origMarginVert * overallScale;
 		
-		var UIScaler = cloudkid.UIScaler;
+		
 		switch(this._settings.vertAlign)
 		{
 			case UIScaler.ALIGN_TOP:
@@ -256,10 +297,12 @@
 	};
 	
 	/**
-	*   Destroy this item, don't use after this
+	*  Destroy this item, don't use after this
+	*  @method destroy
 	*/
 	p.destroy = function()
 	{
+		this.origBounds = null;
 		this._item = null;
 		this._settings = null;
 		this._designedScreen = null;

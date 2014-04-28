@@ -1,11 +1,24 @@
 (function() {
 	
-	var Positioner = function()
-	{
-	};
+	"use strict";
 	
+	/**
+	*  Initially layouts all interface elements
+	*  @module cloudkid
+	*  @class Positioner
+	*/
+	var Positioner = function(){};
+	
+	// Set the protype
 	Positioner.prototype = {};
 	
+	/**
+	*  Initial position of all layout items
+	*  @method positionItems
+	*  @static
+	*  @param {createjs.DisplayObject|PIXI.DisplayObject} parent
+	*  @param {Object} itemSettings JSON format with position information
+	*/
 	Positioner.positionItems = function(parent, itemSettings)
 	{
 		var rot, pt, degToRad;
@@ -79,6 +92,13 @@
 	
 	if(CONFIG_PIXI)
 	{
+		/**
+		*  [PIXI-only] Create the polygon hit area for interface elements
+		*  @static
+		*  @method generateHitArea
+		*  @param {Object|Array} hitArea A collection of points of polygon or an object describing rectangle, ellipse or circle
+		*  @param {Number} scale The size to scale hitArea by
+		*/
 		Positioner.generateHitArea = function(hitArea, scale)
 		{
 			if(!scale)
