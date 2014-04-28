@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
     <link rel="shortcut icon" type="image/png" href="../assets/favicon.ico">
     <script src="http://yui.yahooapis.com/3.10.1/build/yui/yui-min.js"></script>
-	<title>CloudKid OS API v1.1.2 API Documentation : src/cloudkid/scaling/ScreenSettings.js</title>  
+	<title>CloudKid OS API v1.1.2 API Documentation : src/cloudkid/CombinedCallback.js</title>  
 </head>
 <body class="yui3-skin-sam">
 
@@ -115,52 +115,33 @@
                 <div id="docs-main">
                     <div class="content">
                         <script>
-	var name = src/cloudkid/scaling/ScreenSettings.js      
+	var name = src/cloudkid/CombinedCallback.js      
 </script>
-<h1 class="file-heading">File:ScreenSettings.js</h1>
+<h1 class="file-heading">File:CombinedCallback.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
+/**
+*  @module cloudkid
+*/
 (function() {
 	
 	&quot;use strict&quot;;
 
-	/**
-	*   Object that contains the screen settings to help scaling
-	*   @module cloudkid
-	*   @class ScreenSettings
-	*   @constructor
-	*   @param {Number} width The screen width in pixels
-	*   @param {Number} height The screen height in pixels
-	*   @param {Number} ppi The screen pixel density (PPI)
-	*/
-	var ScreenSettings = function(width, height, ppi)
+	var CombinedCallback = function(call, obj, prop, callProp)
 	{
-		/**
-		*  The screen width in pixels
-		*  @property {Number} width 
-		*/
-		this.width = width;
-
-		/**
-		*  The screen height in pixels
-		*  @property {Number} width 
-		*/
-		this.height = height;
-
-		/**
-		*  The screen pixel density (PPI)
-		*  @property {Number} ppi
-		*/
-		this.ppi = ppi;
+		if(!obj[prop])//accept anything that resolves to false: eg voPlayer.playing == false
+			call();
+		else
+			obj[callProp] = call;
 	};
-	
-	// Set the prototype
-	ScreenSettings.prototype = {};
-	
-	// Assign to namespace
-	namespace(&#x27;cloudkid&#x27;).ScreenSettings = ScreenSettings;
 
+	CombinedCallback.create = function(call, obj, prop, callProp)
+	{
+		return CombinedCallback.bind(this, call, obj, prop, callProp);
+	};
+
+	namespace(&#x27;cloudkid&#x27;).CombinedCallback = CombinedCallback;
 }());
     </pre>
 </div>

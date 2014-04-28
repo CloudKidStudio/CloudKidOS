@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
     <link rel="shortcut icon" type="image/png" href="../assets/favicon.ico">
     <script src="http://yui.yahooapis.com/3.10.1/build/yui/yui-min.js"></script>
-	<title>CloudKid OS API v1.1.2 API Documentation : src/cloudkid/PixiDragManager.js</title>  
+	<title>CloudKid OS API v1.1.2 API Documentation : src/cloudkid/createjs/DragManager.js</title>  
 </head>
 <body class="yui3-skin-sam">
 
@@ -39,27 +39,47 @@
         <div id="api-tabview-panel">
             <ul id="api-classes" class="apis classes">
             
-                <li><a href="../classes/bind.html">bind</a></li>
+                <li><a href="../classes/Application.html">Application</a></li>
             
-                <li><a href="../classes/cloudkid.Application.html">cloudkid.Application</a></li>
+                <li><a href="../classes/AssetManager (PIXI).html">AssetManager (PIXI)</a></li>
             
-                <li><a href="../classes/cloudkid.Button.html">cloudkid.Button</a></li>
+                <li><a href="../classes/Button (CreateJS).html">Button (CreateJS)</a></li>
             
-                <li><a href="../classes/cloudkid.CacheManager.html">cloudkid.CacheManager</a></li>
+                <li><a href="../classes/Button (PIXI).html">Button (PIXI)</a></li>
             
-                <li><a href="../classes/cloudkid.DragManager.html">cloudkid.DragManager</a></li>
+                <li><a href="../classes/CacheManager.html">CacheManager</a></li>
             
-                <li><a href="../classes/cloudkid.LoaderQueueItem.html">cloudkid.LoaderQueueItem</a></li>
+                <li><a href="../classes/DragManager (CreateJS).html">DragManager (CreateJS)</a></li>
             
-                <li><a href="../classes/cloudkid.MediaLoader.html">cloudkid.MediaLoader</a></li>
+                <li><a href="../classes/DragManager (PIXI).html">DragManager (PIXI)</a></li>
             
-                <li><a href="../classes/cloudkid.MediaLoaderResult.html">cloudkid.MediaLoaderResult</a></li>
+                <li><a href="../classes/FunctionUtils (CreateJS).html">FunctionUtils (CreateJS)</a></li>
             
-                <li><a href="../classes/cloudkid.OS.html">cloudkid.OS</a></li>
+                <li><a href="../classes/LoaderQueueItem.html">LoaderQueueItem</a></li>
+            
+                <li><a href="../classes/MediaLoader.html">MediaLoader</a></li>
+            
+                <li><a href="../classes/MediaLoaderResult.html">MediaLoaderResult</a></li>
+            
+                <li><a href="../classes/OS.html">OS</a></li>
+            
+                <li><a href="../classes/Positioner.html">Positioner</a></li>
+            
+                <li><a href="../classes/SavedData.html">SavedData</a></li>
+            
+                <li><a href="../classes/ScreenSettings.html">ScreenSettings</a></li>
+            
+                <li><a href="../classes/UIElement.html">UIElement</a></li>
+            
+                <li><a href="../classes/UIElementSettings.html">UIElementSettings</a></li>
+            
+                <li><a href="../classes/UIScaler.html">UIScaler</a></li>
             
             </ul>
 
             <ul id="api-modules" class="apis modules">
+            
+                <li><a href="../modules/cloudkid.html">cloudkid</a></li>
             
             </ul>
         </div>
@@ -95,18 +115,27 @@
                 <div id="docs-main">
                     <div class="content">
                         <script>
-	var name = src/cloudkid/PixiDragManager.js      
+	var name = src/cloudkid/createjs/DragManager.js      
 </script>
-<h1 class="file-heading">File:PixiDragManager.js</h1>
+<h1 class="file-heading">File:DragManager.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
+/**
+*  @module cloudkid
+*/
 (function() {
+	
+	&quot;use strict&quot;;
 	
 	/**
 	*  [CreateJS only] Drag manager is responsible for handling the dragging of stage elements
-	*  supports click-n-stick and click-n-drag functionality
-	*  @class cloudkid.DragManager
+	*  supports click-n-stick and click-n-drag functionality.
+	*  
+	*  @class DragManager (CreateJS)
+	*  @constructor
+	*  @param {function} startCallback The callback when when starting
+	*  @param {function} endCallback The callback when ending
 	*/
 	var DragManager = function(startCallback, endCallback)
 	{
@@ -124,17 +153,24 @@
 	p._updateCallback = null;
 	
 	/**
+	* The moust down event while draggin
+	* @private
+	* @property {createjs.MouseEvent} _mouseDownEvent 
+	*/
+	p._mouseDownEvent = null;
+	
+	/**
 	* The object that&#x27;s being dragged
 	* @public
 	* @readOnly
-	* @property {PIXI.DisplayObject} draggedObj
+	* @property {createjs.DisplayObject} draggedObj
 	*/
 	p.draggedObj = null;
 	
 	/**
 	* The local to global position of the drag
 	* @private
-	* @property {PIXI.Point} _dragOffset
+	* @property {createjs.Point} _dragOffset
 	*/
 	p._dragOffset = null;
 	
@@ -149,14 +185,14 @@
 	/**
 	* The position x, y of the mouse down on the stage
 	* @private
-	* @property {PIXI.Point} mouseDownStagePos
+	* @property {object} mouseDownStagePos
 	*/
 	p.mouseDownStagePos = null;
 
 	/**
 	* The position x, y of the object when interaction with it started.
 	* @private
-	* @property {PIXI.Point} mouseDownObjPos
+	* @property {object} mouseDownObjPos
 	*/
 	p.mouseDownObjPos = null;
 	
@@ -186,15 +222,6 @@
 	* @default false
 	*/
 	p.isStickyClick = false;
-	
-	/**
-	* If sticky click dragging is allowed.
-	* @public
-	* @readOnly
-	* @property {Bool} allowStickyClick
-	* @default true
-	*/
-	p.allowStickyClick = true;
 	
 	/**
 	* Reference to the stage
@@ -245,11 +272,6 @@
 	*/
 	p._draggableObjects = null;
 	
-	var helperPoint = null;
-	
-	var TYPE_MOUSE = 0;
-	var TYPE_TOUCH = 1;
-	
 	/** 
 	* Constructor 
 	* @method initialize
@@ -267,9 +289,8 @@
 		this._dragStartCallback = startCallback;
 		this._dragEndCallback = endCallback;
 		this._draggableObjects = [];
-		this.mouseDownStagePos = new PIXI.Point(0, 0);
-		this.mouseDownObjPos = new PIXI.Point(0, 0);
-		helperPoint = new PIXI.Point(0, 0);
+		this.mouseDownStagePos = {x:0, y:0};
+		this.mouseDownObjPos = {x:0, y:0};
 	};
 	
 	/**
@@ -277,22 +298,22 @@
 	*   defaults to a held drag, that ends as soon as the mouse is released.
 	*  @method startDrag
 	*  @public
-	*  @param {PIXI.DisplayObject} object The object that should be dragged.
-	*  @param {PIXI.InteractionData} interactionData The interaction data about the input event that triggered this.
+	*  @param {createjs.DisplayObject} object The object that should be dragged.
+	*  @param {createjs.MouseEvent} ev A mouse down event to listen to to determine what type of drag should be used.
 	*/
-	p.startDrag = function(object, interactionData)
+	p.startDrag = function(object, ev)
 	{
-		this._objMouseDown(TYPE_MOUSE, object, interactionData);
+		this._objMouseDown(ev, object);
 	};
 	
 	/**
 	* Mouse down on an obmect
 	*  @method _objMouseDown
 	*  @private
-	*  @param {int} type The type of input that triggered this call - either TYPE_MOUSE or TYPE_TOUCH.
-	*  @param {PIXI.DisplayObject} object The object that should be dragged.
+	*  @param {createjs.MouseEvent} ev A mouse down event to listen to to determine what type of drag should be used.
+	*  @param {createjs.DisplayObject} object The object that should be dragged.
 	*/
-	p._objMouseDown = function(type, obj, interactionData)
+	p._objMouseDown = function(ev, obj)
 	{
 		// if we are dragging something, then ignore any mouse downs
 		// until we release the currently dragged stuff
@@ -300,30 +321,40 @@
 
 		this.draggedObj = obj;
 		createjs.Tween.removeTweens(this.draggedObj);
-		createjs.Tween.removeTweens(this.draggedObj.position);
 		
-		//get the mouse position and convert it to object parent space
-		this._dragOffset = interactionData.getLocalPosition(this.draggedObj.parent);
+		//get the mouse postion in object space
+		this._dragOffset = this.draggedObj.globalToLocal(ev.stageX, ev.stageY);
+		
+		//get that object space position and convert it to parent space
+		this._dragOffset = this.draggedObj.localToLocal(this._dragOffset.x, this._dragOffset.y, this.draggedObj.parent);
 		
 		//move the offset to respect the object&#x27;s current position
-		this._dragOffset.x -= this.draggedObj.position.x;
-		this._dragOffset.y -= this.draggedObj.position.y;
+		this._dragOffset.x -= this.draggedObj.x;
+		this._dragOffset.y -= this.draggedObj.y;
 
-		this.mouseDownObjPos.x = this.draggedObj.position.x;
-		this.mouseDownObjPos.y = this.draggedObj.position.y;
+		this.mouseDownObjPos.x = this.draggedObj.x;
+		this.mouseDownObjPos.y = this.draggedObj.y;
 		
-		this.mouseDownStagePos.x = interactionData.global.x;
-		this.mouseDownStagePos.y = interactionData.global.y;
-		if(!this.allowStickyClick || type == TYPE_TOUCH)//if it is a touch event, force it to be the held drag type
+		if(!ev)//if we don&#x27;t get an event (manual call neglected to pass one) then default to a held drag
 		{
-			this.isTouchMove = type == TYPE_TOUCH;
+			this.isHeldDrag = true;
+			this._startDrag();
+		}
+		else if(ev.nativeEvent.type == &#x27;touchstart&#x27;)//if it is a touch event, force it to be the held drag type
+		{
+			this.mouseDownStagePos.x = ev.stageX;
+			this.mouseDownStagePos.y = ev.stageY;
+			this.isTouchMove = true;
 			this.isHeldDrag = true;
 			this._startDrag();
 		}
 		else//otherwise, wait for a movement or a mouse up in order to do a held drag or a sticky click drag
 		{
-			this.draggedObj.mousemove = this._triggerHeldDragCallback;
-			this._theStage.interactionManager.stageUp = this._triggerStickyClickCallback;
+			this.mouseDownStagePos.x = ev.stageX;
+			this.mouseDownStagePos.y = ev.stageY;
+			this._mouseDownEvent = ev;
+			this._mouseDownEvent.addEventListener(&quot;mousemove&quot;, this._triggerHeldDragCallback);
+			this._mouseDownEvent.addEventListener(&quot;mouseup&quot;, this._triggerStickyClickCallback);
 		}
 	};
 	
@@ -335,8 +366,8 @@
 	p._triggerStickyClick = function()
 	{
 		this.isStickyClick = true;
-		this.draggedObj.mousemove = null;
-		this._theStage.interactionManager.stageUp = null;
+		this._mouseDownEvent.removeAllEventListeners();
+		this._mouseDownEvent = null;
 		this._startDrag();
 	};
 
@@ -344,17 +375,17 @@
 	* Start hold dragging
 	* @method _triggerHeldDrag
 	* @private
-	* @param {PIXI.InteractionData} interactionData The ineraction data about the moved mouse
+	* @param {createjs.MouseEvent} ev The mouse down event
 	*/
-	p._triggerHeldDrag = function(interactionData)
+	p._triggerHeldDrag = function(ev)
 	{
-		var xDiff = interactionData.global.x - this.mouseDownStagePos.x;
-		var yDiff = interactionData.global.y - this.mouseDownStagePos.y;
+		var xDiff = ev.stageX - this.mouseDownStagePos.x;
+		var yDiff = ev.stageY - this.mouseDownStagePos.y;
 		if(xDiff * xDiff + yDiff * yDiff &gt;= this.dragStartThreshold * this.dragStartThreshold)
 		{
 			this.isHeldDrag = true;
-			this.draggedObj.mousemove = null;
-			this._theStage.interactionManager.stageUp = null;
+			this._mouseDownEvent.removeAllEventListeners();
+			this._mouseDownEvent = null;
 			this._startDrag();
 		}
 	};
@@ -366,9 +397,10 @@
 	*/
 	p._startDrag = function()
 	{
-		var im = this._theStage.interactionManager;
-		im.stageUp = this._stageMouseUpCallback;
-		this.draggedObj.mousemove = this.draggedObj.touchmove = this._updateCallback;
+		this._theStage.removeEventListener(&quot;stagemousemove&quot;, this._updateCallback);
+		this._theStage.addEventListener(&quot;stagemousemove&quot;, this._updateCallback);
+		this._theStage.removeEventListener(&quot;stagemouseup&quot;, this._stageMouseUpCallback);
+		this._theStage.addEventListener(&quot;stagemouseup&quot;, this._stageMouseUpCallback);
 		
 		this._dragStartCallback(this.draggedObj);
 	};
@@ -391,12 +423,15 @@
 	* @param {createjs.MouseEvent} ev Mouse up event
 	* @param {Bool} doCallback If we should do the callback
 	*/
-	p._stopDrag = function(origMouseEv, doCallback)
+	p._stopDrag = function(ev, doCallback)
 	{
-		if(this.draggedObj)
-			this.draggedObj.touchmove = this.draggedObj.mousemove = null;
-		var im = this._theStage.interactionManager;
-		im.stageUp = null;
+		if(this._mouseDownEvent !== null)
+		{
+			this._mouseDownEvent.removeAllEventListeners();
+			this._mouseDownEvent = null;
+		}
+		this._theStage.removeEventListener(&quot;stagemousemove&quot;, this._updateCallback);
+		this._theStage.removeEventListener(&quot;stagemouseup&quot;, this._stageMouseUpCallback);
 		var obj = this.draggedObj;
 		this.draggedObj = null;
 		this.isTouchMove = false;
@@ -411,21 +446,16 @@
 	* Update the object position based on the mouse
 	* @method _updateObjPosition
 	* @private
-	* @param {PIXI.InteractionData} interactionData Mouse move event
+	* @param {createjs.MouseEvent} e Mouse move event
 	*/
-	p._updateObjPosition = function(interactionData)
+	p._updateObjPosition = function(e)
 	{
-		if(!this.isTouchMove &amp;&amp; !this._theStage.interactionManager.mouseInStage) return;
-		if(!this.draggedObj || !this.draggedObj.parent)//not quite sure what chain of events would lead to this, but we&#x27;ll stop dragging to be safe
-		{
-			this._stopDrag(null, false);
-			return;
-		}
+		if(!this.isTouchMove &amp;&amp; !this._theStage.mouseInBounds) return;
 		
-		var mousePos = interactionData.getLocalPosition(this.draggedObj.parent, helperPoint);
+		var mousePos = this.draggedObj.parent.globalToLocal(e.stageX, e.stageY);
 		var bounds = this.draggedObj._dragBounds;
-		this.draggedObj.position.x = clamp(mousePos.x - this._dragOffset.x, bounds.x, bounds.right);
-		this.draggedObj.position.y = clamp(mousePos.y - this._dragOffset.y, bounds.y, bounds.bottom);
+		this.draggedObj.x = clamp(mousePos.x - this._dragOffset.x, bounds.x, bounds.right);
+		this.draggedObj.y = clamp(mousePos.y - this._dragOffset.y, bounds.y, bounds.bottom);
 	};
 	
 	/**
@@ -439,20 +469,19 @@
 	//=== Giving functions and properties to draggable objects objects
 	var enableDrag = function()
 	{
-		this.mousedown = this._onMouseDownListener;
-		this.touchstart = this._onTouchStartListener;
-		this.buttonMode = this.interactive = true;
+		this.addEventListener(&quot;mousedown&quot;, this._onMouseDownListener);
+		this.cursor = &quot;pointer&quot;;
 	};
 	
 	var disableDrag = function()
 	{
-		this.mousedown = this.touchstart = null;
-		this.buttonMode = this.interactive = false;
+		this.removeEventListener(&quot;mousedown&quot;, this._onMouseDownListener);
+		this.cursor = null;
 	};
 	
-	var _onMouseDown = function(type, mouseData)
+	var _onMouseDown = function(ev)
 	{
-		this._dragMan._objMouseDown(type, this, mouseData);
+		this._dragMan._objMouseDown(ev, this);
 	};
 	
 	/** 
@@ -469,8 +498,7 @@
 	{
 		if(!bounds)
 		{
-			var canvas = cloudkid.OS.instance._renderer.view;
-			bounds = {x:0, y:0, width:canvas.width, height:canvas.height};
+			bounds = {x:0, y:0, width:this._theStage.canvas.width, height:this._theStage.canvas.height};
 		}
 		bounds.right = bounds.x + bounds.width;
 		bounds.bottom = bounds.y + bounds.height;
@@ -482,8 +510,7 @@
 		}
 		obj.enableDrag = enableDrag;
 		obj.disableDrag = disableDrag;
-		obj._onMouseDownListener = _onMouseDown.bind(obj, TYPE_MOUSE);
-		obj._onTouchStartListener = _onMouseDown.bind(obj, TYPE_TOUCH);
+		obj._onMouseDownListener = _onMouseDown.bind(obj);
 		obj._dragMan = this;
 		this._draggableObjects.push(obj);
 	};
@@ -496,18 +523,15 @@
 	*/
 	p.removeObject = function(obj)
 	{
+		obj.disableDrag();
+		delete obj.enableDrag;
+		delete obj.disableDrag;
+		delete obj._onMouseDownListener;
+		delete obj._dragMan;
+		delete obj._dragBounds;
 		var index = this._draggableObjects.indexOf(obj);
 		if(index &gt;= 0)
-		{
-			obj.disableDrag();
-			delete obj.enableDrag;
-			delete obj.disableDrag;
-			delete obj._onMouseDownListener;
-			delete obj._onTouchStartListener;
-			delete obj._dragMan;
-			delete obj._dragBounds;
 			this._draggableObjects.splice(index, 1);
-		}
 	};
 	
 	/**
@@ -520,7 +544,10 @@
 		if(this.draggedObj !== null)
 		{
 			//clean up dragged obj
-			this._stopDrag(null, false);
+			this._mouseDownEvent.removeAllEventListeners();
+			this._mouseDownEvent = null;
+			this._theStage.removeEventListener(&quot;stagemousemove&quot;, this._updateCallback);
+			this.draggedObj = null;
 		}
 		this._updateCallback = null;
 		this._dragStartCallback = null;

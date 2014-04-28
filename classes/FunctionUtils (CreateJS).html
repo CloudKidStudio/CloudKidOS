@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
     <link rel="shortcut icon" type="image/png" href="../assets/favicon.ico">
     <script src="http://yui.yahooapis.com/3.10.1/build/yui/yui-min.js"></script>
-	<title>CloudKid OS API v1.1.2 API Documentation : bind</title>  
+	<title>CloudKid OS API v1.1.2 API Documentation : FunctionUtils (CreateJS)</title>  
 </head>
 <body class="yui3-skin-sam">
 
@@ -39,27 +39,47 @@
         <div id="api-tabview-panel">
             <ul id="api-classes" class="apis classes">
             
-                <li><a href="../classes/bind.html">bind</a></li>
+                <li><a href="../classes/Application.html">Application</a></li>
             
-                <li><a href="../classes/cloudkid.Application.html">cloudkid.Application</a></li>
+                <li><a href="../classes/AssetManager (PIXI).html">AssetManager (PIXI)</a></li>
             
-                <li><a href="../classes/cloudkid.Button.html">cloudkid.Button</a></li>
+                <li><a href="../classes/Button (CreateJS).html">Button (CreateJS)</a></li>
             
-                <li><a href="../classes/cloudkid.CacheManager.html">cloudkid.CacheManager</a></li>
+                <li><a href="../classes/Button (PIXI).html">Button (PIXI)</a></li>
             
-                <li><a href="../classes/cloudkid.DragManager.html">cloudkid.DragManager</a></li>
+                <li><a href="../classes/CacheManager.html">CacheManager</a></li>
             
-                <li><a href="../classes/cloudkid.LoaderQueueItem.html">cloudkid.LoaderQueueItem</a></li>
+                <li><a href="../classes/DragManager (CreateJS).html">DragManager (CreateJS)</a></li>
             
-                <li><a href="../classes/cloudkid.MediaLoader.html">cloudkid.MediaLoader</a></li>
+                <li><a href="../classes/DragManager (PIXI).html">DragManager (PIXI)</a></li>
             
-                <li><a href="../classes/cloudkid.MediaLoaderResult.html">cloudkid.MediaLoaderResult</a></li>
+                <li><a href="../classes/FunctionUtils (CreateJS).html">FunctionUtils (CreateJS)</a></li>
             
-                <li><a href="../classes/cloudkid.OS.html">cloudkid.OS</a></li>
+                <li><a href="../classes/LoaderQueueItem.html">LoaderQueueItem</a></li>
+            
+                <li><a href="../classes/MediaLoader.html">MediaLoader</a></li>
+            
+                <li><a href="../classes/MediaLoaderResult.html">MediaLoaderResult</a></li>
+            
+                <li><a href="../classes/OS.html">OS</a></li>
+            
+                <li><a href="../classes/Positioner.html">Positioner</a></li>
+            
+                <li><a href="../classes/SavedData.html">SavedData</a></li>
+            
+                <li><a href="../classes/ScreenSettings.html">ScreenSettings</a></li>
+            
+                <li><a href="../classes/UIElement.html">UIElement</a></li>
+            
+                <li><a href="../classes/UIElementSettings.html">UIElementSettings</a></li>
+            
+                <li><a href="../classes/UIScaler.html">UIScaler</a></li>
             
             </ul>
 
             <ul id="api-modules" class="apis modules">
+            
+                <li><a href="../modules/cloudkid.html">cloudkid</a></li>
             
             </ul>
         </div>
@@ -94,7 +114,7 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1>bind Class</h1>
+                        <h1>FunctionUtils (CreateJS) Class</h1>
 <div class="box meta">
     
 
@@ -102,10 +122,14 @@
 
     
         <div class="foundat">
-            Defined in: <a href="../files/src_cloudkid_FunctionUtils.js.html#l1"><code>bind:1</code></a>
+            Defined in: <a href="../files/src_cloudkid_createjs_FunctionUtils.js.html#l8"><code>FunctionUtils (CreateJS):8</code></a>
         </div>
     
 
+    
+        
+            Namespace: <a href="../modules/cloudkid.html">cloudkid</a>
+        
     
 
     
@@ -114,8 +138,7 @@
 
 
 <div class="box intro">
-    <p>[CreateJS only] Designed to provide utility related to functions, the
-most important of which is the <code>bind</code> method, used to properly scope callbacks.</p>
+    <p>[CreateJS only] Designed to provide utility related to functions and polyfills</p>
 
 </div>
 
@@ -147,6 +170,8 @@ most important of which is the <code>bind</code> method, used to properly scope 
                                 <a href="#method_bind">bind</a>
 
                                 
+                                    <span class="flag static">static</span>
+                                
                                 
                             </li>
                         
@@ -154,12 +179,16 @@ most important of which is the <code>bind</code> method, used to properly scope 
                                 <a href="#method_cancelAnimationFrame">cancelAnimationFrame</a>
 
                                 
+                                    <span class="flag static">static</span>
+                                
                                 
                             </li>
                         
                             <li class="index-item method">
                                 <a href="#method_requestAnimationFrame">requestAnimationFrame</a>
 
+                                
+                                    <span class="flag static">static</span>
                                 
                                 
                             </li>
@@ -198,13 +227,19 @@ most important of which is the <code>bind</code> method, used to properly scope 
     
 
     
-
+        <span class="returns-inline">
+            <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Function" class="crosslink external" target="_blank">Function</a></span>
+        </span>
     
 
     
 
     
 
+    
+
+    
+        <span class="flag static">static</span>
     
 
     
@@ -222,7 +257,7 @@ most important of which is the <code>bind</code> method, used to properly scope 
             
         
         
-        <a href="../files/src_cloudkid_FunctionUtils.js.html#l11"><code>bind:11</code></a>
+        <a href="../files/src_cloudkid_createjs_FunctionUtils.js.html#l17"><code>bind:17</code></a>
         
         </p>
 
@@ -267,6 +302,20 @@ this allows passing a reference in the function callback </p>
     
 
     
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Function" class="crosslink external" target="_blank">Function</a></span>:
+                    
+                    <p>The bound function</p>
+
+                
+            </div>
+        </div>
+    
 
     
 </div>
@@ -288,6 +337,8 @@ this allows passing a reference in the function callback </p>
     
 
     
+        <span class="flag static">static</span>
+    
 
     
 
@@ -304,7 +355,7 @@ this allows passing a reference in the function callback </p>
             
         
         
-        <a href="../files/src_cloudkid_FunctionUtils.js.html#l66"><code>cancelAnimationFrame:66</code></a>
+        <a href="../files/src_cloudkid_createjs_FunctionUtils.js.html#l108"><code>cancelAnimationFrame:108</code></a>
         
         </p>
 
@@ -315,7 +366,7 @@ this allows passing a reference in the function callback </p>
     </div>
 
     <div class="description">
-        <p>A polyfill for cancelAnimationFrame</p>
+        <p>A polyfill for cancelAnimationFrame, this also gets assigned to the window if it doesn&#39;t exist</p>
 
     </div>
 
@@ -343,6 +394,8 @@ this allows passing a reference in the function callback </p>
     
 
     
+        <span class="flag static">static</span>
+    
 
     
 
@@ -359,7 +412,7 @@ this allows passing a reference in the function callback </p>
             
         
         
-        <a href="../files/src_cloudkid_FunctionUtils.js.html#l61"><code>requestAnimationFrame:61</code></a>
+        <a href="../files/src_cloudkid_createjs_FunctionUtils.js.html#l99"><code>requestAnimationFrame:99</code></a>
         
         </p>
 
@@ -370,7 +423,8 @@ this allows passing a reference in the function callback </p>
     </div>
 
     <div class="description">
-        <p>A polyfill for requestAnimationFrame</p>
+        <p>A polyfill for requestAnimationFrame, this also gets assigned to the window if it doesn&#39;t exist
+also window.requestAnimFrame is a redundant and short way to access this property</p>
 
     </div>
 

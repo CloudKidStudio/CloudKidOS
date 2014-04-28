@@ -1,17 +1,33 @@
 YUI.add("yuidoc-meta", function(Y) {
    Y.YUIDoc = { meta: {
     "classes": [
-        "bind",
-        "cloudkid.Application",
-        "cloudkid.Button",
-        "cloudkid.CacheManager",
-        "cloudkid.DragManager",
-        "cloudkid.LoaderQueueItem",
-        "cloudkid.MediaLoader",
-        "cloudkid.MediaLoaderResult",
-        "cloudkid.OS"
+        "Application",
+        "AssetManager (PIXI)",
+        "Button (CreateJS)",
+        "Button (PIXI)",
+        "CacheManager",
+        "DragManager (CreateJS)",
+        "DragManager (PIXI)",
+        "FunctionUtils (CreateJS)",
+        "LoaderQueueItem",
+        "MediaLoader",
+        "MediaLoaderResult",
+        "OS",
+        "Positioner",
+        "SavedData",
+        "ScreenSettings",
+        "UIElement",
+        "UIElementSettings",
+        "UIScaler"
     ],
-    "modules": [],
-    "allModules": []
+    "modules": [
+        "cloudkid"
+    ],
+    "allModules": [
+        {
+            "displayName": "cloudkid",
+            "name": "cloudkid"
+        }
+    ]
 } };
 });

@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
     <link rel="shortcut icon" type="image/png" href="../assets/favicon.ico">
     <script src="http://yui.yahooapis.com/3.10.1/build/yui/yui-min.js"></script>
-	<title>CloudKid OS API v1.1.2 API Documentation : src/cloudkid/FunctionUtils.js</title>  
+	<title>CloudKid OS API v1.1.2 API Documentation : src/cloudkid/createjs/FunctionUtils.js</title>  
 </head>
 <body class="yui3-skin-sam">
 
@@ -39,27 +39,47 @@
         <div id="api-tabview-panel">
             <ul id="api-classes" class="apis classes">
             
-                <li><a href="../classes/bind.html">bind</a></li>
+                <li><a href="../classes/Application.html">Application</a></li>
             
-                <li><a href="../classes/cloudkid.Application.html">cloudkid.Application</a></li>
+                <li><a href="../classes/AssetManager (PIXI).html">AssetManager (PIXI)</a></li>
             
-                <li><a href="../classes/cloudkid.Button.html">cloudkid.Button</a></li>
+                <li><a href="../classes/Button (CreateJS).html">Button (CreateJS)</a></li>
             
-                <li><a href="../classes/cloudkid.CacheManager.html">cloudkid.CacheManager</a></li>
+                <li><a href="../classes/Button (PIXI).html">Button (PIXI)</a></li>
             
-                <li><a href="../classes/cloudkid.DragManager.html">cloudkid.DragManager</a></li>
+                <li><a href="../classes/CacheManager.html">CacheManager</a></li>
             
-                <li><a href="../classes/cloudkid.LoaderQueueItem.html">cloudkid.LoaderQueueItem</a></li>
+                <li><a href="../classes/DragManager (CreateJS).html">DragManager (CreateJS)</a></li>
             
-                <li><a href="../classes/cloudkid.MediaLoader.html">cloudkid.MediaLoader</a></li>
+                <li><a href="../classes/DragManager (PIXI).html">DragManager (PIXI)</a></li>
             
-                <li><a href="../classes/cloudkid.MediaLoaderResult.html">cloudkid.MediaLoaderResult</a></li>
+                <li><a href="../classes/FunctionUtils (CreateJS).html">FunctionUtils (CreateJS)</a></li>
             
-                <li><a href="../classes/cloudkid.OS.html">cloudkid.OS</a></li>
+                <li><a href="../classes/LoaderQueueItem.html">LoaderQueueItem</a></li>
+            
+                <li><a href="../classes/MediaLoader.html">MediaLoader</a></li>
+            
+                <li><a href="../classes/MediaLoaderResult.html">MediaLoaderResult</a></li>
+            
+                <li><a href="../classes/OS.html">OS</a></li>
+            
+                <li><a href="../classes/Positioner.html">Positioner</a></li>
+            
+                <li><a href="../classes/SavedData.html">SavedData</a></li>
+            
+                <li><a href="../classes/ScreenSettings.html">ScreenSettings</a></li>
+            
+                <li><a href="../classes/UIElement.html">UIElement</a></li>
+            
+                <li><a href="../classes/UIElementSettings.html">UIElementSettings</a></li>
+            
+                <li><a href="../classes/UIScaler.html">UIScaler</a></li>
             
             </ul>
 
             <ul id="api-modules" class="apis modules">
+            
+                <li><a href="../modules/cloudkid.html">cloudkid</a></li>
             
             </ul>
         </div>
@@ -95,18 +115,24 @@
                 <div id="docs-main">
                     <div class="content">
                         <script>
-	var name = src/cloudkid/FunctionUtils.js      
+	var name = src/cloudkid/createjs/FunctionUtils.js      
 </script>
 <h1 class="file-heading">File:FunctionUtils.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
 /**
-*  [CreateJS only] Designed to provide utility related to functions, the
-*  most important of which is the &#x60;bind&#x60; method, used to properly scope callbacks.
-*  @class bind
+*  @module cloudkid
 */
-(function(){
+(function(window){
+	
+	&quot;use strict&quot;;
+
+	/**
+	*  [CreateJS only] Designed to provide utility related to functions and polyfills
+	*  @class FunctionUtils (CreateJS)
+	*/
+	var FunctionUtils = {};
 	
 	// If there&#x27;s already a bind, ignore
 	if (!Function.prototype.bind)
@@ -118,11 +144,12 @@
 		var callback = function(){};
 		cloudkid.MediaLoader.instance.load(&#x27;something.json&#x27;, callback.bind(this));
 	
-		*  @constructor
 		*  @method bind
+		*  @static
 		*  @param {function} that The reference to the function
+		*  @return {function} The bound function
 		*/
-		Function.prototype.bind = function bind(that) 
+		FunctionUtils.bind = Function.prototype.bind = function bind(that) 
 		{
 			var target = this;
 
@@ -161,26 +188,21 @@
 	// http://my.opera.com/emoller/blog/2011/12/20/requestanimationframe-for-smart-er-animating
 	// requestAnimationFrame polyfill by Erik Möller. fixes from Paul Irish and Tino Zijdel
 	// MIT license
-	/**
-	 * A polyfill for requestAnimationFrame
-	 *
-	 * @method requestAnimationFrame
-	 */
-	/**
-	 * A polyfill for cancelAnimationFrame
-	 *
-	 * @method cancelAnimationFrame
-	 */
+
 	var lastTime = 0;
 	var vendors = [&#x27;ms&#x27;, &#x27;moz&#x27;, &#x27;webkit&#x27;, &#x27;o&#x27;];
-	for(var x = 0; x &lt; vendors.length &amp;&amp; !window.requestAnimationFrame; ++x) {
+	for(var x = 0; x &lt; vendors.length &amp;&amp; !window.requestAnimationFrame; ++x)
+	{
 		window.requestAnimationFrame = window[vendors[x]+&#x27;RequestAnimationFrame&#x27;];
 		window.cancelAnimationFrame = window[vendors[x]+&#x27;CancelAnimationFrame&#x27;] || window[vendors[x]+&#x27;CancelRequestAnimationFrame&#x27;];
 	}
 
+	// Check for the animation frame
 	if (!window.requestAnimationFrame)
 	{
-		window.requestAnimationFrame = function(callback) {
+		// Create the polyfill
+		window.requestAnimationFrame = function(callback)
+		{
 			var currTime = new Date().getTime();
 			var timeToCall = Math.max(0, 16 - (currTime - lastTime));
 			var id = window.setTimeout(function() { callback(currTime + timeToCall); }, timeToCall);
@@ -188,7 +210,8 @@
 			return id;
 		};
 
-		if (!window.cancelAnimationFrame)//only set this up if the corresponding requestAnimationFrame was set up
+		// Only set this up if the corresponding requestAnimationFrame was set up
+		if (!window.cancelAnimationFrame)
 		{
 			window.cancelAnimationFrame = function(id) {
 				clearTimeout(id);
@@ -196,9 +219,26 @@
 		}
 	}
 
+	/**
+	*  A polyfill for requestAnimationFrame, this also gets assigned to the window if it doesn&#x27;t exist
+	*  also window.requestAnimFrame is a redundant and short way to access this property
+	*  @static
+	*  @method requestAnimationFrame
+	*/
+	FunctionUtils.requestAnimationFrame = window.requestAnimationFrame;
 	window.requestAnimFrame = window.requestAnimationFrame;
+
+	/**
+	*  A polyfill for cancelAnimationFrame, this also gets assigned to the window if it doesn&#x27;t exist
+	*  @static
+	*  @method cancelAnimationFrame
+	*/
+	FunctionUtils.cancelAnimationFrame = window.cancelAnimationFrame;	
+
+	// Assign to namespace
+	namespace(&#x27;cloudkid&#x27;).FunctionUtils = FunctionUtils;
 	
-}());
+}(window));
     </pre>
 </div>
 

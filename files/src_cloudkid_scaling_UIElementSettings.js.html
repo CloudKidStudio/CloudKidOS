@@ -39,27 +39,47 @@
         <div id="api-tabview-panel">
             <ul id="api-classes" class="apis classes">
             
-                <li><a href="../classes/bind.html">bind</a></li>
+                <li><a href="../classes/Application.html">Application</a></li>
             
-                <li><a href="../classes/cloudkid.Application.html">cloudkid.Application</a></li>
+                <li><a href="../classes/AssetManager (PIXI).html">AssetManager (PIXI)</a></li>
             
-                <li><a href="../classes/cloudkid.Button.html">cloudkid.Button</a></li>
+                <li><a href="../classes/Button (CreateJS).html">Button (CreateJS)</a></li>
             
-                <li><a href="../classes/cloudkid.CacheManager.html">cloudkid.CacheManager</a></li>
+                <li><a href="../classes/Button (PIXI).html">Button (PIXI)</a></li>
             
-                <li><a href="../classes/cloudkid.DragManager.html">cloudkid.DragManager</a></li>
+                <li><a href="../classes/CacheManager.html">CacheManager</a></li>
             
-                <li><a href="../classes/cloudkid.LoaderQueueItem.html">cloudkid.LoaderQueueItem</a></li>
+                <li><a href="../classes/DragManager (CreateJS).html">DragManager (CreateJS)</a></li>
             
-                <li><a href="../classes/cloudkid.MediaLoader.html">cloudkid.MediaLoader</a></li>
+                <li><a href="../classes/DragManager (PIXI).html">DragManager (PIXI)</a></li>
             
-                <li><a href="../classes/cloudkid.MediaLoaderResult.html">cloudkid.MediaLoaderResult</a></li>
+                <li><a href="../classes/FunctionUtils (CreateJS).html">FunctionUtils (CreateJS)</a></li>
             
-                <li><a href="../classes/cloudkid.OS.html">cloudkid.OS</a></li>
+                <li><a href="../classes/LoaderQueueItem.html">LoaderQueueItem</a></li>
+            
+                <li><a href="../classes/MediaLoader.html">MediaLoader</a></li>
+            
+                <li><a href="../classes/MediaLoaderResult.html">MediaLoaderResult</a></li>
+            
+                <li><a href="../classes/OS.html">OS</a></li>
+            
+                <li><a href="../classes/Positioner.html">Positioner</a></li>
+            
+                <li><a href="../classes/SavedData.html">SavedData</a></li>
+            
+                <li><a href="../classes/ScreenSettings.html">ScreenSettings</a></li>
+            
+                <li><a href="../classes/UIElement.html">UIElement</a></li>
+            
+                <li><a href="../classes/UIElementSettings.html">UIElementSettings</a></li>
+            
+                <li><a href="../classes/UIScaler.html">UIScaler</a></li>
             
             </ul>
 
             <ul id="api-modules" class="apis modules">
+            
+                <li><a href="../modules/cloudkid.html">cloudkid</a></li>
             
             </ul>
         </div>
@@ -103,24 +123,56 @@
     <pre class="code prettyprint linenums">
 (function() {
 	
+	&quot;use strict&quot;;
+
 	/**
-	*  The UI Item Settings
+	*  The UI Item Settings which is the positioning settings used to adjust each element
+	*  @module cloudkid
+	*  @class UIElementSettings
 	*/
 	var UIElementSettings = function(){};
 	
+	// Reference to the prototype
 	var p = UIElementSettings.prototype = {};
 	
-	/** What vertical screen location the item should be aligned to */
+	/** 
+	*  What vertical screen location the item should be aligned to: &quot;top&quot;, &quot;center&quot;, &quot;bottom&quot;
+	*  @property {String} vertAlign
+	*/
 	p.vertAlign = null;
-	/** What horizontal screen location the item should be aligned to */
+
+	/** 
+	*  What horizontal screen location the item should be aligned to: &quot;left&quot;, &quot;center&quot;, &quot;right&quot;
+	*  @property {String} horiAlign
+	*/
 	p.horiAlign = null;
-	/** If this element should be aligned to the title safe area, not the actual screen */
+
+	/** 
+	*  If this element should be aligned to the title safe area, not the actual screen 
+	*  @property {Boolean} titleSafe
+	*  @default false
+	*/
 	p.titleSafe = false;
-	/** Maximum scale allowed in physical size */
+
+	/** 
+	*  Maximum scale allowed in physical size 
+	*  @property {Number} maxScale
+	*  @default 1
+	*/
 	p.maxScale = 1;
-	/** Minimum scale allowed in physical size */
+
+	/** 
+	*  Minimum scale allowed in physical size 
+	*  @property {Number} minScale
+	*  @default 1
+	*/
 	p.minScale = 1;
 	
+	/**
+	*  If the UI element is centered horizontally
+	*  @property {Boolean} centeredHorizontally
+	*  @default false
+	*/
 	p.centeredHorizontally = false;
 	
 	namespace(&#x27;cloudkid&#x27;).UIElementSettings = UIElementSettings;

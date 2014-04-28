@@ -39,27 +39,47 @@
         <div id="api-tabview-panel">
             <ul id="api-classes" class="apis classes">
             
-                <li><a href="../classes/bind.html">bind</a></li>
+                <li><a href="../classes/Application.html">Application</a></li>
             
-                <li><a href="../classes/cloudkid.Application.html">cloudkid.Application</a></li>
+                <li><a href="../classes/AssetManager (PIXI).html">AssetManager (PIXI)</a></li>
             
-                <li><a href="../classes/cloudkid.Button.html">cloudkid.Button</a></li>
+                <li><a href="../classes/Button (CreateJS).html">Button (CreateJS)</a></li>
             
-                <li><a href="../classes/cloudkid.CacheManager.html">cloudkid.CacheManager</a></li>
+                <li><a href="../classes/Button (PIXI).html">Button (PIXI)</a></li>
             
-                <li><a href="../classes/cloudkid.DragManager.html">cloudkid.DragManager</a></li>
+                <li><a href="../classes/CacheManager.html">CacheManager</a></li>
             
-                <li><a href="../classes/cloudkid.LoaderQueueItem.html">cloudkid.LoaderQueueItem</a></li>
+                <li><a href="../classes/DragManager (CreateJS).html">DragManager (CreateJS)</a></li>
             
-                <li><a href="../classes/cloudkid.MediaLoader.html">cloudkid.MediaLoader</a></li>
+                <li><a href="../classes/DragManager (PIXI).html">DragManager (PIXI)</a></li>
             
-                <li><a href="../classes/cloudkid.MediaLoaderResult.html">cloudkid.MediaLoaderResult</a></li>
+                <li><a href="../classes/FunctionUtils (CreateJS).html">FunctionUtils (CreateJS)</a></li>
             
-                <li><a href="../classes/cloudkid.OS.html">cloudkid.OS</a></li>
+                <li><a href="../classes/LoaderQueueItem.html">LoaderQueueItem</a></li>
+            
+                <li><a href="../classes/MediaLoader.html">MediaLoader</a></li>
+            
+                <li><a href="../classes/MediaLoaderResult.html">MediaLoaderResult</a></li>
+            
+                <li><a href="../classes/OS.html">OS</a></li>
+            
+                <li><a href="../classes/Positioner.html">Positioner</a></li>
+            
+                <li><a href="../classes/SavedData.html">SavedData</a></li>
+            
+                <li><a href="../classes/ScreenSettings.html">ScreenSettings</a></li>
+            
+                <li><a href="../classes/UIElement.html">UIElement</a></li>
+            
+                <li><a href="../classes/UIElementSettings.html">UIElementSettings</a></li>
+            
+                <li><a href="../classes/UIScaler.html">UIScaler</a></li>
             
             </ul>
 
             <ul id="api-modules" class="apis modules">
+            
+                <li><a href="../modules/cloudkid.html">cloudkid</a></li>
             
             </ul>
         </div>
@@ -101,14 +121,19 @@
 
 <div class="file">
     <pre class="code prettyprint linenums">
+/**
+*  @module cloudkid
+*/
 (function(){
+	
+	&quot;use strict&quot;;
 	
 	/**
 	*  The Medialoader is the singleton loader for loading all assets
 	*  including images, data, code and sounds. MediaLoader supports cache-busting
 	*  in the browser using dynamic query string parameters.
 	* 
-	*  @class cloudkid.MediaLoader
+	*  @class MediaLoader
 	*/
 	var MediaLoader = function(){};
 	

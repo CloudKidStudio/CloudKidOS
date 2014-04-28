@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
     <link rel="shortcut icon" type="image/png" href="../assets/favicon.ico">
     <script src="http://yui.yahooapis.com/3.10.1/build/yui/yui-min.js"></script>
-	<title>CloudKid OS API v1.1.2 API Documentation : src/cloudkid/scaling/ScreenSettings.js</title>  
+	<title>CloudKid OS API v1.1.2 API Documentation : src/cloudkid/scaling/Positioner.js</title>  
 </head>
 <body class="yui3-skin-sam">
 
@@ -115,52 +115,147 @@
                 <div id="docs-main">
                     <div class="content">
                         <script>
-	var name = src/cloudkid/scaling/ScreenSettings.js      
+	var name = src/cloudkid/scaling/Positioner.js      
 </script>
-<h1 class="file-heading">File:ScreenSettings.js</h1>
+<h1 class="file-heading">File:Positioner.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
 (function() {
 	
 	&quot;use strict&quot;;
-
+	
 	/**
-	*   Object that contains the screen settings to help scaling
-	*   @module cloudkid
-	*   @class ScreenSettings
-	*   @constructor
-	*   @param {Number} width The screen width in pixels
-	*   @param {Number} height The screen height in pixels
-	*   @param {Number} ppi The screen pixel density (PPI)
+	*  Initially layouts all interface elements
+	*  @module cloudkid
+	*  @class Positioner
 	*/
-	var ScreenSettings = function(width, height, ppi)
+	var Positioner = function(){};
+	
+	// Set the protype
+	Positioner.prototype = {};
+	
+	/**
+	*  Initial position of all layout items
+	*  @method positionItems
+	*  @static
+	*  @param {createjs.DisplayObject|PIXI.DisplayObject} parent
+	*  @param {Object} itemSettings JSON format with position information
+	*/
+	Positioner.positionItems = function(parent, itemSettings)
 	{
-		/**
-		*  The screen width in pixels
-		*  @property {Number} width 
-		*/
-		this.width = width;
-
-		/**
-		*  The screen height in pixels
-		*  @property {Number} width 
-		*/
-		this.height = height;
-
-		/**
-		*  The screen pixel density (PPI)
-		*  @property {Number} ppi
-		*/
-		this.ppi = ppi;
+		var rot, pt, degToRad;
+		if(CONFIG_PIXI)
+			degToRad = Math.PI / 180;
+		for(var iName in itemSettings)
+		{
+			var item = parent[iName];
+			if(!item)
+			{
+				Debug.error(&quot;could not find object &#x27;&quot; +  iName + &quot;&#x27;&quot;);
+				continue;
+			}
+			var setting = itemSettings[iName];
+			if(CONFIG_PIXI)
+			{
+				item.position.x = setting.x;
+				item.position.y = setting.y;
+				pt = setting.scale;
+				if(pt)
+				{
+					item.scale.x *= pt.x;
+					item.scale.y *= pt.y;
+				}
+				pt = setting.pivot;
+				if(pt)
+				{
+					item.pivot.x = pt.x;
+					item.pivot.y = pt.y;
+				}
+				rot = setting.rotation;
+				if(rot)
+					item.rotation = rot * degToRad;
+			}
+			else
+			{
+				item.x = setting.x;
+				item.y = setting.y;
+				pt = setting.scale;
+				if(pt)
+				{
+					item.scaleX *= pt.x;
+					item.scaleY *= pt.y;
+				}
+				pt = setting.pivot;
+				if(pt)
+				{
+					item.regX = pt.x;
+					item.regY = pt.y;
+				}
+				rot = setting.rotation;
+				if(rot)
+					item.rotation = rot;
+			}
+			//item.name = iName;
+			if(setting.hitArea)
+			{
+				var hitArea = setting.hitArea;
+				if(CONFIG_PIXI)
+				{
+					item.hitArea = Positioner.generateHitArea(hitArea);
+				}
+				else
+				{
+					if(hitArea.type == &quot;rect&quot;)
+						item.hitRect = new createjs.Rectangle(hitArea.x, hitArea.y, hitArea.w, hitArea.h);
+				}
+			}
+		}
 	};
 	
-	// Set the prototype
-	ScreenSettings.prototype = {};
-	
-	// Assign to namespace
-	namespace(&#x27;cloudkid&#x27;).ScreenSettings = ScreenSettings;
+	if(CONFIG_PIXI)
+	{
+		/**
+		*  [PIXI-only] Create the polygon hit area for interface elements
+		*  @static
+		*  @method generateHitArea
+		*  @param {Object|Array} hitArea A collection of points of polygon or an object describing rectangle, ellipse or circle
+		*  @param {Number} scale The size to scale hitArea by
+		*/
+		Positioner.generateHitArea = function(hitArea, scale)
+		{
+			if(!scale)
+				scale = 1;
+			if(isArray(hitArea))
+			{
+				if(scale == 1)
+					return new PIXI.Polygon(hitArea);
+				else
+				{
+					var temp = [];
+					for(var i = 0, len = hitArea.length; i &lt; len; ++i)
+					{
+						temp.push(new PIXI.Point(hitArea[i].x * scale, hitArea[i].y * scale));
+					}
+					return new PIXI.Polygon(temp);
+				}
+			}
+			else if(hitArea.type == &quot;rect&quot; || !hitArea.type)
+				return new PIXI.Rectangle(hitArea.x * scale, hitArea.y * scale, hitArea.w * scale, hitArea.h * scale);
+			else if(hitArea.type == &quot;ellipse&quot;)
+				return new PIXI.Ellipse((hitArea.x - hitArea.w * 0.5) * scale, (hitArea.y - hitArea.h * 0.5) * scale, hitArea.w * scale, hitArea.h * scale);//convert center to upper left corner
+			else if(hitArea.type == &quot;circle&quot;)
+				return new PIXI.Circle(hitArea.x * scale, hitArea.y * scale, hitArea.r * scale);//x &amp; y are center, pixi documentation lies
+			return null;
+		};
+	}
 
+	var isArray = function(o)
+	{
+		return Object.prototype.toString.call(o) === &#x27;[object Array]&#x27;;
+	};
+	
+	namespace(&#x27;cloudkid&#x27;).Positioner = Positioner;
 }());
     </pre>
 </div>
