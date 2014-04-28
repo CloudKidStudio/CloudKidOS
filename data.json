@@ -2,8 +2,8 @@
     "project": {
         "name": "CloudKid OS API",
         "description": "CloudKid OS API: A framework for HTML5 content built on top of createjs",
-        "version": "1.1.1",
-        "logo": "cloudkid.png"
+        "version": "1.1.2",
+        "logo": ""
     },
     "files": {
         "src/cloudkid/loaders/CacheManager.js": {
@@ -1313,7 +1313,7 @@
         },
         {
             "file": "src/cloudkid/EaselJSButton.js",
-            "line": 24,
+            "line": 25,
             "description": "The sprite that is the body of the button.\nThe type of this property is dependent on which version of the OS library is used.",
             "access": "public",
             "tagname": "",
@@ -1325,7 +1325,7 @@
         },
         {
             "file": "src/cloudkid/EaselJSButton.js",
-            "line": 32,
+            "line": 33,
             "description": "The text field of the button. The label is centered by both width and height on the button.\nThe type of this property is dependent on which version of the OS library is used.",
             "access": "public",
             "tagname": "",
@@ -1337,7 +1337,7 @@
         },
         {
             "file": "src/cloudkid/EaselJSButton.js",
-            "line": 42,
+            "line": 43,
             "description": "Callback for mouse over, bound to this button.",
             "access": "private",
             "tagname": "",
@@ -1348,7 +1348,7 @@
         },
         {
             "file": "src/cloudkid/EaselJSButton.js",
-            "line": 48,
+            "line": 49,
             "description": "Callback for mouse out, bound to this button.",
             "access": "private",
             "tagname": "",
@@ -1359,7 +1359,7 @@
         },
         {
             "file": "src/cloudkid/EaselJSButton.js",
-            "line": 54,
+            "line": 55,
             "description": "Callback for mouse down, bound to this button.",
             "access": "private",
             "tagname": "",
@@ -1370,7 +1370,7 @@
         },
         {
             "file": "src/cloudkid/EaselJSButton.js",
-            "line": 60,
+            "line": 61,
             "description": "Callback for mouse up, bound to this button.",
             "access": "private",
             "tagname": "",
@@ -1381,7 +1381,7 @@
         },
         {
             "file": "src/cloudkid/EaselJSButton.js",
-            "line": 66,
+            "line": 67,
             "description": "A reference to the mouse down event that was triggered on this button.",
             "access": "private",
             "tagname": "",
@@ -1392,7 +1392,7 @@
         },
         {
             "file": "src/cloudkid/EaselJSButton.js",
-            "line": 74,
+            "line": 75,
             "description": "If this button is enabled.",
             "access": "private",
             "tagname": "",
@@ -1403,7 +1403,7 @@
         },
         {
             "file": "src/cloudkid/EaselJSButton.js",
-            "line": 80,
+            "line": 81,
             "description": "If this button is held down.",
             "access": "private",
             "tagname": "",
@@ -1414,7 +1414,7 @@
         },
         {
             "file": "src/cloudkid/EaselJSButton.js",
-            "line": 86,
+            "line": 87,
             "description": "If the mouse is over this button",
             "access": "private",
             "tagname": "",
@@ -1425,7 +1425,7 @@
         },
         {
             "file": "src/cloudkid/EaselJSButton.js",
-            "line": 92,
+            "line": 93,
             "description": "If this button is selected.",
             "access": "private",
             "tagname": "",
@@ -1436,7 +1436,7 @@
         },
         {
             "file": "src/cloudkid/EaselJSButton.js",
-            "line": 98,
+            "line": 99,
             "description": "If this button is a selectable button, and will respond to select being set.",
             "access": "private",
             "tagname": "",
@@ -1447,7 +1447,7 @@
         },
         {
             "file": "src/cloudkid/EaselJSButton.js",
-            "line": 104,
+            "line": 105,
             "description": "If this button is highlighted.",
             "access": "private",
             "tagname": "",
@@ -1458,7 +1458,7 @@
         },
         {
             "file": "src/cloudkid/EaselJSButton.js",
-            "line": 112,
+            "line": 113,
             "description": "[CreateJS only] An object noting the rectangles for the button up state. This should have a src property\n\tand an optional trim property, both createjs.Rectangles.",
             "access": "private",
             "tagname": "",
@@ -1469,7 +1469,7 @@
         },
         {
             "file": "src/cloudkid/EaselJSButton.js",
-            "line": 119,
+            "line": 120,
             "description": "[CreateJS only] An object noting the rectangles for the button over state. This should have a src property\n\tand an optional trim property, both createjs.Rectangles.",
             "access": "private",
             "tagname": "",
@@ -1480,7 +1480,7 @@
         },
         {
             "file": "src/cloudkid/EaselJSButton.js",
-            "line": 126,
+            "line": 127,
             "description": "[CreateJS only] An object noting the rectangles for the button down state. This should have a src property\n\tand an optional trim property, both createjs.Rectangles.",
             "access": "private",
             "tagname": "",
@@ -1491,7 +1491,7 @@
         },
         {
             "file": "src/cloudkid/EaselJSButton.js",
-            "line": 133,
+            "line": 134,
             "description": "[CreateJS only] An object noting the rectangles for the button disabled state. This should have a src property\n\tand an optional trim property, both createjs.Rectangles.",
             "access": "private",
             "tagname": "",
@@ -1502,7 +1502,7 @@
         },
         {
             "file": "src/cloudkid/EaselJSButton.js",
-            "line": 140,
+            "line": 141,
             "description": "[CreateJS only] An object noting the rectangles for the button selected state. This should have a src property\n\tand an optional trim property, both createjs.Rectangles.",
             "access": "private",
             "tagname": "",
@@ -1513,7 +1513,7 @@
         },
         {
             "file": "src/cloudkid/EaselJSButton.js",
-            "line": 147,
+            "line": 148,
             "description": "[CreateJS only] An object noting the rectangles for the button highlighted state. This should have a src property\n\tand an optional trim property, both createjs.Rectangles.",
             "access": "private",
             "tagname": "",
@@ -1524,7 +1524,7 @@
         },
         {
             "file": "src/cloudkid/EaselJSButton.js",
-            "line": 155,
+            "line": 156,
             "description": "The width of the button art, independent of the scaling of the button itself.",
             "access": "private",
             "tagname": "",
@@ -1535,7 +1535,7 @@
         },
         {
             "file": "src/cloudkid/EaselJSButton.js",
-            "line": 161,
+            "line": 162,
             "description": "The height of the button art, independent of the scaling of the button itself.",
             "access": "private",
             "tagname": "",
@@ -1546,7 +1546,7 @@
         },
         {
             "file": "src/cloudkid/EaselJSButton.js",
-            "line": 168,
+            "line": 169,
             "description": "**[CreateJS only]** Constructor for the button when using CreateJS.",
             "itemtype": "method",
             "name": "initialize",
@@ -1748,7 +1748,7 @@
         },
         {
             "file": "src/cloudkid/EaselJSButton.js",
-            "line": 275,
+            "line": 276,
             "description": "The width of the button, based on the width of back. This value is affected by scale.",
             "access": "public",
             "tagname": "",
@@ -1759,7 +1759,7 @@
         },
         {
             "file": "src/cloudkid/EaselJSButton.js",
-            "line": 286,
+            "line": 287,
             "description": "The height of the button, based on the height of back. This value is affected by scale.",
             "access": "public",
             "tagname": "",
@@ -1770,7 +1770,7 @@
         },
         {
             "file": "src/cloudkid/EaselJSButton.js",
-            "line": 298,
+            "line": 299,
             "description": "Sets the text of the label. This does nothing if the button was not initialized with a label.",
             "access": "public",
             "tagname": "",
@@ -1787,7 +1787,7 @@
         },
         {
             "file": "src/cloudkid/EaselJSButton.js",
-            "line": 315,
+            "line": 316,
             "description": "Whether or not the button is enabled.",
             "access": "public",
             "tagname": "",
@@ -1799,7 +1799,7 @@
         },
         {
             "file": "src/cloudkid/EaselJSButton.js",
-            "line": 347,
+            "line": 348,
             "description": "Whether or not the button is selected. Setting this only works if the button was given selected state when initialized.",
             "access": "public",
             "tagname": "",
@@ -1811,7 +1811,7 @@
         },
         {
             "file": "src/cloudkid/EaselJSButton.js",
-            "line": 365,
+            "line": 366,
             "description": "Whether or not the button is highlighted. The default highlighted state is the over state, but a specific texture can be supplied.",
             "access": "public",
             "tagname": "",
@@ -1823,7 +1823,7 @@
         },
         {
             "file": "src/cloudkid/EaselJSButton.js",
-            "line": 380,
+            "line": 381,
             "description": "Updates back based on the current button state.",
             "access": "private",
             "tagname": "",
@@ -1833,7 +1833,7 @@
         },
         {
             "file": "src/cloudkid/EaselJSButton.js",
-            "line": 413,
+            "line": 414,
             "description": "[CreateJS only] The callback for when the button receives a mouse down event.",
             "access": "private",
             "tagname": "",
@@ -1843,7 +1843,7 @@
         },
         {
             "file": "src/cloudkid/EaselJSButton.js",
-            "line": 426,
+            "line": 427,
             "description": "The callback for when the button for when the mouse/touch is released on the button\n- only when the button was held down initially.",
             "access": "private",
             "tagname": "",
@@ -1853,7 +1853,7 @@
         },
         {
             "file": "src/cloudkid/EaselJSButton.js",
-            "line": 440,
+            "line": 441,
             "description": "[CreateJS only] The callback for when the button is moused over.",
             "access": "private",
             "tagname": "",
@@ -1863,7 +1863,7 @@
         },
         {
             "file": "src/cloudkid/EaselJSButton.js",
-            "line": 452,
+            "line": 453,
             "description": "[CreateJS only] The callback for when the mouse leaves the button area.",
             "access": "private",
             "tagname": "",
@@ -1873,7 +1873,7 @@
         },
         {
             "file": "src/cloudkid/EaselJSButton.js",
-            "line": 463,
+            "line": 464,
             "description": "Destroys the button.",
             "access": "public",
             "tagname": "",
@@ -2646,13 +2646,13 @@
                         },
                         {
                             "name": "backgroundColor",
-                            "description": "(PIXI only) The background color of the stage",
+                            "description": "(PIXI only) The background color of the stage as a uint, e.g. 0xFFFFFF for white.",
                             "type": "Int",
                             "optional": true
                         },
                         {
                             "name": "preMultAlpha",
-                            "description": "(PIXI only) If the renderer is to use pre multiplied alpha for all images (options.forceContext needs to be set to \"webgl\")",
+                            "description": "(PIXI only) If the renderer is to use pre multiplied alpha for all images. This only affects the WebGL renderer.",
                             "type": "Boolean",
                             "optional": true
                         },
@@ -2676,7 +2676,7 @@
                         },
                         {
                             "name": "forceContext",
-                            "description": "(PIXI only) The stage renderer, options are \"canvas2d\", \"webgl\" or null",
+                            "description": "(PIXI only) The stage renderer, options are \"canvas2d\", \"webgl\" or null. Omitting this (or null) uses WebGL if available, and Canvas2D otherwise.",
                             "type": "String",
                             "optional": true,
                             "optdefault": "null"
@@ -2710,7 +2710,7 @@
                         {
                             "name": "cacheBust",
                             "description": "If all file requests with the MediaLoader should be cacheBusted (e.g., \"file.mp3?cb=123123\")",
-                            "type": "String",
+                            "type": "Boolean",
                             "optional": true,
                             "optdefault": "false"
                         }
@@ -2961,7 +2961,7 @@
         },
         {
             "file": "src/cloudkid/PixiButton.js",
-            "line": 39,
+            "line": 40,
             "description": "**[PIXI only]** The function that should be called when the button is released.",
             "access": "public",
             "tagname": "",
@@ -2972,7 +2972,7 @@
         },
         {
             "file": "src/cloudkid/PixiButton.js",
-            "line": 45,
+            "line": 46,
             "description": "**[PIXI only]** The function that should be called when the button is moused over.",
             "access": "public",
             "tagname": "",
@@ -2983,7 +2983,7 @@
         },
         {
             "file": "src/cloudkid/PixiButton.js",
-            "line": 52,
+            "line": 53,
             "description": "**[PIXI only]** The function that should be called when mouse leaves the button.",
             "access": "public",
             "tagname": "",
@@ -2994,7 +2994,7 @@
         },
         {
             "file": "src/cloudkid/PixiButton.js",
-            "line": 122,
+            "line": 123,
             "description": "[PIXI only] Callback for mouse up outside, bound to this button.",
             "access": "private",
             "tagname": "",
@@ -3005,7 +3005,7 @@
         },
         {
             "file": "src/cloudkid/PixiButton.js",
-            "line": 130,
+            "line": 131,
             "description": "[PIXI only] The texture for the up state of the button",
             "access": "private",
             "tagname": "",
@@ -3016,7 +3016,7 @@
         },
         {
             "file": "src/cloudkid/PixiButton.js",
-            "line": 136,
+            "line": 137,
             "description": "[PIXI only] The texture for the over state of the button",
             "access": "private",
             "tagname": "",
@@ -3027,7 +3027,7 @@
         },
         {
             "file": "src/cloudkid/PixiButton.js",
-            "line": 142,
+            "line": 143,
             "description": "[PIXI only] The texture for the down state of the button",
             "access": "private",
             "tagname": "",
@@ -3038,7 +3038,7 @@
         },
         {
             "file": "src/cloudkid/PixiButton.js",
-            "line": 148,
+            "line": 149,
             "description": "[PIXI only] The texture for the disabled state of the button",
             "access": "private",
             "tagname": "",
@@ -3049,7 +3049,7 @@
         },
         {
             "file": "src/cloudkid/PixiButton.js",
-            "line": 154,
+            "line": 155,
             "description": "[PIXI only] The texture for the selected state of the button",
             "access": "private",
             "tagname": "",
@@ -3060,7 +3060,7 @@
         },
         {
             "file": "src/cloudkid/PixiButton.js",
-            "line": 160,
+            "line": 161,
             "description": "[PIXI only] The texture for the highlighted state of the button",
             "access": "private",
             "tagname": "",
@@ -3071,7 +3071,7 @@
         },
         {
             "file": "src/cloudkid/PixiButton.js",
-            "line": 176,
+            "line": 177,
             "description": "[PIXI only] The texture for the up state of the button",
             "access": "private",
             "tagname": "",
@@ -3082,7 +3082,7 @@
         },
         {
             "file": "src/cloudkid/PixiButton.js",
-            "line": 182,
+            "line": 183,
             "description": "[PIXI only] The texture for the over state of the button",
             "access": "private",
             "tagname": "",
@@ -3093,7 +3093,7 @@
         },
         {
             "file": "src/cloudkid/PixiButton.js",
-            "line": 188,
+            "line": 189,
             "description": "[PIXI only] The texture for the down state of the button",
             "access": "private",
             "tagname": "",
@@ -3104,7 +3104,7 @@
         },
         {
             "file": "src/cloudkid/PixiButton.js",
-            "line": 194,
+            "line": 195,
             "description": "[PIXI only] The texture for the disabled state of the button",
             "access": "private",
             "tagname": "",
@@ -3115,7 +3115,7 @@
         },
         {
             "file": "src/cloudkid/PixiButton.js",
-            "line": 200,
+            "line": 201,
             "description": "[PIXI only] The texture for the selected state of the button",
             "access": "private",
             "tagname": "",
@@ -3126,7 +3126,7 @@
         },
         {
             "file": "src/cloudkid/PixiButton.js",
-            "line": 206,
+            "line": 207,
             "description": "[PIXI only] The texture for the highlighted state of the button",
             "access": "private",
             "tagname": "",
@@ -3137,7 +3137,7 @@
         },
         {
             "file": "src/cloudkid/PixiButton.js",
-            "line": 226,
+            "line": 227,
             "description": "**[PIXI only]** Constructor for the button when using PIXI.",
             "itemtype": "method",
             "name": "initialize",
@@ -3238,7 +3238,7 @@
         },
         {
             "file": "src/cloudkid/PixiButton.js",
-            "line": 445,
+            "line": 446,
             "description": "[PIXI only] The callback for when the button is moused over.",
             "access": "private",
             "tagname": "",
@@ -3248,7 +3248,7 @@
         },
         {
             "file": "src/cloudkid/PixiButton.js",
-            "line": 458,
+            "line": 459,
             "description": "[PIXI only] The callback for when the mouse leaves the button area.",
             "access": "private",
             "tagname": "",
@@ -3258,7 +3258,7 @@
         },
         {
             "file": "src/cloudkid/PixiButton.js",
-            "line": 471,
+            "line": 472,
             "description": "[PIXI only] The callback for when the button receives a mouse down event.",
             "access": "private",
             "tagname": "",
@@ -3268,7 +3268,7 @@
         },
         {
             "file": "src/cloudkid/PixiButton.js",
-            "line": 486,
+            "line": 487,
             "description": "[PIXI only] The callback for when the button for when the mouse/touch is released on the button\n- only when the button was held down initially.",
             "access": "private",
             "tagname": "",
@@ -3278,7 +3278,7 @@
         },
         {
             "file": "src/cloudkid/PixiButton.js",
-            "line": 504,
+            "line": 505,
             "description": "[PIXI only] The callback for when the mouse/touch is released outside the button when the button was held down.",
             "access": "private",
             "tagname": "",
