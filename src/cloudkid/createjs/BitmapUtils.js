@@ -24,7 +24,14 @@
 	*/
 	BitmapUtils.loadSpriteSheet = function(frameDict, spritesheetImage, scale)
 	{
-		if(!(scale > 0)) scale = 1;//scale should default to 1
+		if(scale > 0) 
+		{
+			// Do nothing
+		}
+		else
+		{
+			scale = 1;//scale should default to 1
+		}
 
 		for(var key in frameDict)
 		{
@@ -32,6 +39,7 @@
 			if(bitmap)
 			{
 				var frame = frameDict[key];
+				/* jshint ignore:start */
 				var newBitmap = lib[key] = function()
 				{
 					var child = new createjs.Bitmap(this._image);
@@ -41,7 +49,8 @@
 					child.x = this._frameOffsetX * s;
 					child.y = this._frameOffsetY * s;
 					child.setTransform(0, 0, s, s);
-				}
+				};
+				/* jshint ignore:end */
 				var p = newBitmap.prototype = new createjs.Container();
 				p._image = spritesheetImage;//give it a reference to the spritesheet
 				p._scale = scale;//tell it what scale to use on the Bitmap to bring it to normal size
@@ -72,7 +81,15 @@
 	BitmapUtils.replaceWithScaledBitmap = function(idOrDict, scale)
 	{
 		//scale is required, but it doesn't hurt to check - also, don't bother for a scale of 1
-		if(scale == 1 || !(scale > 0)) return;
+		if(scale != 1 && scale > 0) 
+		{
+			// Do nothing
+		}
+		else
+		{
+			return;
+		}
+
 		var key, bitmap, newBitmap, p;
 		if(typeof idOrDict == "string")
 		{
@@ -80,12 +97,14 @@
 			bitmap = lib[key];
 			if(bitmap)
 			{
+				/* jshint ignore:start */
 				newBitmap = lib[key] = function()
 				{
 					var child = new this._oldBM();
 					this.addChild(child);
 					child.setTransform(0, 0, this._scale, this._scale);
-				}
+				};
+				/* jshint ignore:end */
 				p = newBitmap.prototype = new createjs.Container();
 				p._oldBM = bitmap;//give it a reference to the Bitmap
 				p._scale = scale;//tell it what scale to use on the Bitmap to bring it to normal size
@@ -99,12 +118,14 @@
 				bitmap = lib[key];
 				if(bitmap)
 				{
+					/* jshint ignore:start */
 					newBitmap = lib[key] = function()
 					{
 						var child = new this._oldBM();
 						this.addChild(child);
 						child.setTransform(0, 0, this._scale, this._scale);
-					}
+					};
+					/* jshint ignore:end */
 					p = newBitmap.prototype = new createjs.Container();
 					p._oldBM = bitmap;//give it a reference to the Bitmap
 					p._scale = scale;//tell it what scale to use on the Bitmap to bring it to normal size

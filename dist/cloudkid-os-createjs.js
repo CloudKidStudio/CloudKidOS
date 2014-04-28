@@ -892,10 +892,10 @@
 		/**
 		*  Add the bind functionality to the Function prototype
 		*  this allows passing a reference in the function callback 
-	
-		var callback = function(){};
-		cloudkid.MediaLoader.instance.load('something.json', callback.bind(this));
-	
+		*
+		*	var callback = function(){};
+		*	cloudkid.MediaLoader.instance.load('something.json', callback.bind(this));
+		*
 		*  @method bind
 		*  @static
 		*  @param {function} that The reference to the function
@@ -991,6 +991,145 @@
 	namespace('cloudkid').FunctionUtils = FunctionUtils;
 	
 }(window));
+/**
+*  @module cloudkid
+*/
+(function() {
+
+	"use strict";
+
+	/**
+	*  [CreateJS only] Designed to provide utility related to Bitmaps.
+	*  @class BitmapUtils (CreateJS)
+	*/
+	var BitmapUtils = {};
+
+	/**
+	*	Replaces Bitmaps in the global lib dictionary with a version that pulls the image from a spritesheet.
+	*
+	*	@method loadSpriteSheet
+	*	@static
+	*	@param {Object} frameDict A dictionary of frame information, with frame, trimmed, 
+	*		and spriteSourceSize properties (like the JSON hash output from TexturePacker).
+	*	@param {Image|HTMLCanvasElement} spritesheetImage The spritesheet image that contains all of the frames.
+	*	@param {Number} [scale=1] The scale to apply to all sprites from the spritesheet. 
+	*		For example, a half sized spritesheet should have a scale of 2.
+	*/
+	BitmapUtils.loadSpriteSheet = function(frameDict, spritesheetImage, scale)
+	{
+		if(scale > 0) 
+		{
+			// Do nothing
+		}
+		else
+		{
+			scale = 1;//scale should default to 1
+		}
+
+		for(var key in frameDict)
+		{
+			var bitmap = lib[key];
+			if(bitmap)
+			{
+				var frame = frameDict[key];
+				/* jshint ignore:start */
+				var newBitmap = lib[key] = function()
+				{
+					var child = new createjs.Bitmap(this._image);
+					this.addChild(child);
+					child.sourceRect = this._frameRect;
+					var s = this._scale;
+					child.x = this._frameOffsetX * s;
+					child.y = this._frameOffsetY * s;
+					child.setTransform(0, 0, s, s);
+				};
+				/* jshint ignore:end */
+				var p = newBitmap.prototype = new createjs.Container();
+				p._image = spritesheetImage;//give it a reference to the spritesheet
+				p._scale = scale;//tell it what scale to use on the Bitmap to bring it to normal size
+				var frameRect = frame.frame;
+				//save the source rectangle of the sprite
+				p._frameRect = new createjs.Rectangle(frameRect.x, frameRect.y, frameRect.width, frameRect.height);
+				//if the sprite is trimmed, then save the amount that was trimmed off the left and top sides
+				if(frame.trimmed)
+				{
+					p._frameOffsetX = frame.spriteSourceSize.x;
+					p._frameOffsetY = frame.spriteSourceSize.y;
+				}
+				else
+					p._frameOffsetX = p._frameOffsetY = 0;
+				p.nominalBounds = bitmap.nominalBounds;//keep the nominal bounds
+			}
+		}
+	};
+
+	/**
+	*	Replaces Bitmaps in the global lib dictionary with a version that pulls the image from a spritesheet.
+	*
+	*	@method replaceWithScaledBitmap
+	*	@static
+	*	@param {String|Object} idOrDict A dictionary of Bitmap ids to replace, or a single id.
+	*	@param {Number} [scale] The scale to apply to the image(s).
+	*/
+	BitmapUtils.replaceWithScaledBitmap = function(idOrDict, scale)
+	{
+		//scale is required, but it doesn't hurt to check - also, don't bother for a scale of 1
+		if(scale != 1 && scale > 0) 
+		{
+			// Do nothing
+		}
+		else
+		{
+			return;
+		}
+
+		var key, bitmap, newBitmap, p;
+		if(typeof idOrDict == "string")
+		{
+			key = idOrDict;
+			bitmap = lib[key];
+			if(bitmap)
+			{
+				/* jshint ignore:start */
+				newBitmap = lib[key] = function()
+				{
+					var child = new this._oldBM();
+					this.addChild(child);
+					child.setTransform(0, 0, this._scale, this._scale);
+				};
+				/* jshint ignore:end */
+				p = newBitmap.prototype = new createjs.Container();
+				p._oldBM = bitmap;//give it a reference to the Bitmap
+				p._scale = scale;//tell it what scale to use on the Bitmap to bring it to normal size
+				p.nominalBounds = bitmap.nominalBounds;//keep the nominal bounds
+			}
+		}
+		else
+		{
+			for(key in idOrDict)
+			{
+				bitmap = lib[key];
+				if(bitmap)
+				{
+					/* jshint ignore:start */
+					newBitmap = lib[key] = function()
+					{
+						var child = new this._oldBM();
+						this.addChild(child);
+						child.setTransform(0, 0, this._scale, this._scale);
+					};
+					/* jshint ignore:end */
+					p = newBitmap.prototype = new createjs.Container();
+					p._oldBM = bitmap;//give it a reference to the Bitmap
+					p._scale = scale;//tell it what scale to use on the Bitmap to bring it to normal size
+					p.nominalBounds = bitmap.nominalBounds;//keep the nominal bounds
+				}
+			}
+		}
+	};
+
+	namespace('cloudkid').BitmapUtils = BitmapUtils;
+}());
 /**
 *  @module cloudkid
 */
@@ -2572,7 +2711,7 @@
 	p._onMouseDown = function(e)
 	{
 		this._downEvent = e;
-		this._downEvent.currentTarget.addEventListener('pressup', this._upCB);
+		this._downEvent.target.addEventListener('pressup', this._upCB);
 		this._isDown = true;
 		this._updateState();
 	};
@@ -2585,7 +2724,7 @@
 	*/
 	p._onMouseUp = function(e)
 	{
-		this._downEvent.currentTarget.removeEventListener('pressup', this._upCB);
+		this._downEvent.target.removeEventListener('pressup', this._upCB);
 		this._downEvent = null;
 		this._isDown = false;
 		this._updateState();
@@ -2635,7 +2774,7 @@
 		this._outCB = null;
 		if(this._downEvent)
 		{
-			this._downEvent.currentTarget.removeEventListener('mouseup', this._upCB);
+			this._downEvent.target.removeEventListener('mouseup', this._upCB);
 			this._downEvent = null;
 		}
 		this.back = null;
@@ -2876,8 +3015,8 @@
 			this.mouseDownStagePos.x = ev.stageX;
 			this.mouseDownStagePos.y = ev.stageY;
 			this._mouseDownEvent = ev;
-			ev.currentTarget.addEventListener("pressmove", this._triggerHeldDragCallback);
-			ev.currentTarget.addEventListener("pressup", this._triggerStickyClickCallback);
+			ev.target.addEventListener("pressmove", this._triggerHeldDragCallback);
+			ev.target.addEventListener("pressup", this._triggerStickyClickCallback);
 		}
 	};
 	
@@ -2889,7 +3028,7 @@
 	p._triggerStickyClick = function()
 	{
 		this.isStickyClick = true;
-		this._mouseDownEvent.currentTarget.removeAllEventListeners();
+		this._mouseDownEvent.target.removeAllEventListeners();
 		this._mouseDownEvent = null;
 		this._startDrag();
 	};
@@ -2907,7 +3046,7 @@
 		if(xDiff * xDiff + yDiff * yDiff >= this.dragStartThreshold * this.dragStartThreshold)
 		{
 			this.isHeldDrag = true;
-			this._mouseDownEvent.currentTarget.removeAllEventListeners();
+			this._mouseDownEvent.target.removeAllEventListeners();
 			this._mouseDownEvent = null;
 			this._startDrag();
 		}
@@ -2950,7 +3089,7 @@
 	{
 		if(this._mouseDownEvent !== null)
 		{
-			this._mouseDownEvent.currentTarget.removeAllEventListeners();
+			this._mouseDownEvent.target.removeAllEventListeners();
 			this._mouseDownEvent = null;
 		}
 		this._theStage.removeEventListener("stagemousemove", this._updateCallback);
@@ -3067,7 +3206,7 @@
 		if(this.draggedObj !== null)
 		{
 			//clean up dragged obj
-			this._mouseDownEvent.currentTarget.removeAllEventListeners();
+			this._mouseDownEvent.target.removeAllEventListeners();
 			this._mouseDownEvent = null;
 			this._theStage.removeEventListener("stagemousemove", this._updateCallback);
 			this.draggedObj = null;

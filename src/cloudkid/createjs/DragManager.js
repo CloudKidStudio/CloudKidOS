@@ -230,8 +230,8 @@
 			this.mouseDownStagePos.x = ev.stageX;
 			this.mouseDownStagePos.y = ev.stageY;
 			this._mouseDownEvent = ev;
-			ev.currentTarget.addEventListener("pressmove", this._triggerHeldDragCallback);
-			ev.currentTarget.addEventListener("pressup", this._triggerStickyClickCallback);
+			ev.target.addEventListener("pressmove", this._triggerHeldDragCallback);
+			ev.target.addEventListener("pressup", this._triggerStickyClickCallback);
 		}
 	};
 	
@@ -243,7 +243,7 @@
 	p._triggerStickyClick = function()
 	{
 		this.isStickyClick = true;
-		this._mouseDownEvent.currentTarget.removeAllEventListeners();
+		this._mouseDownEvent.target.removeAllEventListeners();
 		this._mouseDownEvent = null;
 		this._startDrag();
 	};
@@ -261,7 +261,7 @@
 		if(xDiff * xDiff + yDiff * yDiff >= this.dragStartThreshold * this.dragStartThreshold)
 		{
 			this.isHeldDrag = true;
-			this._mouseDownEvent.currentTarget.removeAllEventListeners();
+			this._mouseDownEvent.target.removeAllEventListeners();
 			this._mouseDownEvent = null;
 			this._startDrag();
 		}
@@ -304,7 +304,7 @@
 	{
 		if(this._mouseDownEvent !== null)
 		{
-			this._mouseDownEvent.currentTarget.removeAllEventListeners();
+			this._mouseDownEvent.target.removeAllEventListeners();
 			this._mouseDownEvent = null;
 		}
 		this._theStage.removeEventListener("stagemousemove", this._updateCallback);
@@ -421,7 +421,7 @@
 		if(this.draggedObj !== null)
 		{
 			//clean up dragged obj
-			this._mouseDownEvent.currentTarget.removeAllEventListeners();
+			this._mouseDownEvent.target.removeAllEventListeners();
 			this._mouseDownEvent = null;
 			this._theStage.removeEventListener("stagemousemove", this._updateCallback);
 			this.draggedObj = null;

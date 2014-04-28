@@ -163,6 +163,42 @@
     FunctionUtils.cancelAnimationFrame = window.cancelAnimationFrame, namespace("cloudkid").FunctionUtils = FunctionUtils;
 }(window), function() {
     "use strict";
+    var BitmapUtils = {};
+    BitmapUtils.loadSpriteSheet = function(frameDict, spritesheetImage, scale) {
+        scale > 0 || (scale = 1);
+        for (var key in frameDict) {
+            var bitmap = lib[key];
+            if (bitmap) {
+                var frame = frameDict[key], newBitmap = lib[key] = function() {
+                    var child = new createjs.Bitmap(this._image);
+                    this.addChild(child), child.sourceRect = this._frameRect;
+                    var s = this._scale;
+                    child.x = this._frameOffsetX * s, child.y = this._frameOffsetY * s, child.setTransform(0, 0, s, s);
+                }, p = newBitmap.prototype = new createjs.Container();
+                p._image = spritesheetImage, p._scale = scale;
+                var frameRect = frame.frame;
+                p._frameRect = new createjs.Rectangle(frameRect.x, frameRect.y, frameRect.width, frameRect.height), 
+                frame.trimmed ? (p._frameOffsetX = frame.spriteSourceSize.x, p._frameOffsetY = frame.spriteSourceSize.y) : p._frameOffsetX = p._frameOffsetY = 0, 
+                p.nominalBounds = bitmap.nominalBounds;
+            }
+        }
+    }, BitmapUtils.replaceWithScaledBitmap = function(idOrDict, scale) {
+        if (1 != scale && scale > 0) {
+            var key, bitmap, newBitmap, p;
+            if ("string" == typeof idOrDict) key = idOrDict, bitmap = lib[key], bitmap && (newBitmap = lib[key] = function() {
+                var child = new this._oldBM();
+                this.addChild(child), child.setTransform(0, 0, this._scale, this._scale);
+            }, p = newBitmap.prototype = new createjs.Container(), p._oldBM = bitmap, p._scale = scale, 
+            p.nominalBounds = bitmap.nominalBounds); else for (key in idOrDict) bitmap = lib[key], 
+            bitmap && (newBitmap = lib[key] = function() {
+                var child = new this._oldBM();
+                this.addChild(child), child.setTransform(0, 0, this._scale, this._scale);
+            }, p = newBitmap.prototype = new createjs.Container(), p._oldBM = bitmap, p._scale = scale, 
+            p.nominalBounds = bitmap.nominalBounds);
+        }
+    }, namespace("cloudkid").BitmapUtils = BitmapUtils;
+}(), function() {
+    "use strict";
     var SavedData = {}, WEB_STORAGE_SUPPORT = "undefined" != typeof window.Storage, ERASE_COOKIE = -1;
     if (WEB_STORAGE_SUPPORT) try {
         localStorage.setItem("LS_TEST", "test"), localStorage.removeItem("LS_TEST");
@@ -497,10 +533,10 @@
             this.back.sourceRect = data.src, data.trim ? (this.back.x = data.trim.x, this.back.y = data.trim.y) : this.back.x = this.back.y = 0;
         }
     }, p._onMouseDown = function(e) {
-        this._downEvent = e, this._downEvent.currentTarget.addEventListener("pressup", this._upCB), 
+        this._downEvent = e, this._downEvent.target.addEventListener("pressup", this._upCB), 
         this._isDown = !0, this._updateState();
     }, p._onMouseUp = function() {
-        this._downEvent.currentTarget.removeEventListener("pressup", this._upCB), this._downEvent = null, 
+        this._downEvent.target.removeEventListener("pressup", this._upCB), this._downEvent = null, 
         this._isDown = !1, this._updateState();
     }, p._onMouseOver = function() {
         this._downEvent && "mousedown" != this._downEvent.nativeEvent.type || (this._isOver = !0, 
@@ -511,7 +547,7 @@
         this.removeAllChildren(), this.removeAllEventListeners(), this._upRects = null, 
         this._overRects = null, this._downRects = null, this._disabledRects = null, this._selectedRects = null, 
         this._highlightedRects = null, this._downCB = null, this._upCB = null, this._overCB = null, 
-        this._outCB = null, this._downEvent && (this._downEvent.currentTarget.removeEventListener("mouseup", this._upCB), 
+        this._outCB = null, this._downEvent && (this._downEvent.target.removeEventListener("mouseup", this._upCB), 
         this._downEvent = null), this.back = null, this.label = null;
     }, namespace("cloudkid").Button = Button;
 }(), function() {
@@ -545,16 +581,16 @@
         ev ? "touchstart" == ev.nativeEvent.type ? (this.mouseDownStagePos.x = ev.stageX, 
         this.mouseDownStagePos.y = ev.stageY, this.isTouchMove = !0, this.isHeldDrag = !0, 
         this._startDrag()) : (this.mouseDownStagePos.x = ev.stageX, this.mouseDownStagePos.y = ev.stageY, 
-        this._mouseDownEvent = ev, ev.currentTarget.addEventListener("pressmove", this._triggerHeldDragCallback), 
-        ev.currentTarget.addEventListener("pressup", this._triggerStickyClickCallback)) : (this.isHeldDrag = !0, 
+        this._mouseDownEvent = ev, ev.target.addEventListener("pressmove", this._triggerHeldDragCallback), 
+        ev.target.addEventListener("pressup", this._triggerStickyClickCallback)) : (this.isHeldDrag = !0, 
         this._startDrag()));
     }, p._triggerStickyClick = function() {
-        this.isStickyClick = !0, this._mouseDownEvent.currentTarget.removeAllEventListeners(), 
+        this.isStickyClick = !0, this._mouseDownEvent.target.removeAllEventListeners(), 
         this._mouseDownEvent = null, this._startDrag();
     }, p._triggerHeldDrag = function(ev) {
         var xDiff = ev.stageX - this.mouseDownStagePos.x, yDiff = ev.stageY - this.mouseDownStagePos.y;
         xDiff * xDiff + yDiff * yDiff >= this.dragStartThreshold * this.dragStartThreshold && (this.isHeldDrag = !0, 
-        this._mouseDownEvent.currentTarget.removeAllEventListeners(), this._mouseDownEvent = null, 
+        this._mouseDownEvent.target.removeAllEventListeners(), this._mouseDownEvent = null, 
         this._startDrag());
     }, p._startDrag = function() {
         this._theStage.removeEventListener("stagemousemove", this._updateCallback), this._theStage.addEventListener("stagemousemove", this._updateCallback), 
@@ -563,7 +599,7 @@
     }, p.stopDrag = function(doCallback) {
         this._stopDrag(null, doCallback === !0);
     }, p._stopDrag = function(ev, doCallback) {
-        null !== this._mouseDownEvent && (this._mouseDownEvent.currentTarget.removeAllEventListeners(), 
+        null !== this._mouseDownEvent && (this._mouseDownEvent.target.removeAllEventListeners(), 
         this._mouseDownEvent = null), this._theStage.removeEventListener("stagemousemove", this._updateCallback), 
         this._theStage.removeEventListener("stagemouseup", this._stageMouseUpCallback);
         var obj = this.draggedObj;
@@ -601,7 +637,7 @@
         var index = this._draggableObjects.indexOf(obj);
         index >= 0 && this._draggableObjects.splice(index, 1);
     }, p.destroy = function() {
-        null !== this.draggedObj && (this._mouseDownEvent.currentTarget.removeAllEventListeners(), 
+        null !== this.draggedObj && (this._mouseDownEvent.target.removeAllEventListeners(), 
         this._mouseDownEvent = null, this._theStage.removeEventListener("stagemousemove", this._updateCallback), 
         this.draggedObj = null), this._updateCallback = null, this._dragStartCallback = null, 
         this._dragEndCallback = null, this._triggerHeldDragCallback = null, this._triggerStickyClickCallback = null, 
