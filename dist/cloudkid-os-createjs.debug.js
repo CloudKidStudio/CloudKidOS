@@ -497,10 +497,10 @@
             this.back.sourceRect = data.src, data.trim ? (this.back.x = data.trim.x, this.back.y = data.trim.y) : this.back.x = this.back.y = 0;
         }
     }, p._onMouseDown = function(e) {
-        this._downEvent = e, this._downEvent.addEventListener("mouseup", this._upCB), this._isDown = !0, 
-        this._updateState();
+        this._downEvent = e, this._downEvent.currentTarget.addEventListener("pressup", this._upCB), 
+        this._isDown = !0, this._updateState();
     }, p._onMouseUp = function() {
-        this._downEvent.removeEventListener("mouseup", this._upCB), this._downEvent = null, 
+        this._downEvent.currentTarget.removeEventListener("pressup", this._upCB), this._downEvent = null, 
         this._isDown = !1, this._updateState();
     }, p._onMouseOver = function() {
         this._downEvent && "mousedown" != this._downEvent.nativeEvent.type || (this._isOver = !0, 
@@ -511,7 +511,7 @@
         this.removeAllChildren(), this.removeAllEventListeners(), this._upRects = null, 
         this._overRects = null, this._downRects = null, this._disabledRects = null, this._selectedRects = null, 
         this._highlightedRects = null, this._downCB = null, this._upCB = null, this._overCB = null, 
-        this._outCB = null, this._downEvent && (this._downEvent.removeEventListener("mouseup", this._upCB), 
+        this._outCB = null, this._downEvent && (this._downEvent.currentTarget.removeEventListener("mouseup", this._upCB), 
         this._downEvent = null), this.back = null, this.label = null;
     }, namespace("cloudkid").Button = Button;
 }(), function() {
@@ -545,16 +545,17 @@
         ev ? "touchstart" == ev.nativeEvent.type ? (this.mouseDownStagePos.x = ev.stageX, 
         this.mouseDownStagePos.y = ev.stageY, this.isTouchMove = !0, this.isHeldDrag = !0, 
         this._startDrag()) : (this.mouseDownStagePos.x = ev.stageX, this.mouseDownStagePos.y = ev.stageY, 
-        this._mouseDownEvent = ev, this._mouseDownEvent.addEventListener("mousemove", this._triggerHeldDragCallback), 
-        this._mouseDownEvent.addEventListener("mouseup", this._triggerStickyClickCallback)) : (this.isHeldDrag = !0, 
+        this._mouseDownEvent = ev, ev.currentTarget.addEventListener("pressmove", this._triggerHeldDragCallback), 
+        ev.currentTarget.addEventListener("pressup", this._triggerStickyClickCallback)) : (this.isHeldDrag = !0, 
         this._startDrag()));
     }, p._triggerStickyClick = function() {
-        this.isStickyClick = !0, this._mouseDownEvent.removeAllEventListeners(), this._mouseDownEvent = null, 
-        this._startDrag();
+        this.isStickyClick = !0, this._mouseDownEvent.currentTarget.removeAllEventListeners(), 
+        this._mouseDownEvent = null, this._startDrag();
     }, p._triggerHeldDrag = function(ev) {
         var xDiff = ev.stageX - this.mouseDownStagePos.x, yDiff = ev.stageY - this.mouseDownStagePos.y;
         xDiff * xDiff + yDiff * yDiff >= this.dragStartThreshold * this.dragStartThreshold && (this.isHeldDrag = !0, 
-        this._mouseDownEvent.removeAllEventListeners(), this._mouseDownEvent = null, this._startDrag());
+        this._mouseDownEvent.currentTarget.removeAllEventListeners(), this._mouseDownEvent = null, 
+        this._startDrag());
     }, p._startDrag = function() {
         this._theStage.removeEventListener("stagemousemove", this._updateCallback), this._theStage.addEventListener("stagemousemove", this._updateCallback), 
         this._theStage.removeEventListener("stagemouseup", this._stageMouseUpCallback), 
@@ -562,7 +563,7 @@
     }, p.stopDrag = function(doCallback) {
         this._stopDrag(null, doCallback === !0);
     }, p._stopDrag = function(ev, doCallback) {
-        null !== this._mouseDownEvent && (this._mouseDownEvent.removeAllEventListeners(), 
+        null !== this._mouseDownEvent && (this._mouseDownEvent.currentTarget.removeAllEventListeners(), 
         this._mouseDownEvent = null), this._theStage.removeEventListener("stagemousemove", this._updateCallback), 
         this._theStage.removeEventListener("stagemouseup", this._stageMouseUpCallback);
         var obj = this.draggedObj;
@@ -600,11 +601,11 @@
         var index = this._draggableObjects.indexOf(obj);
         index >= 0 && this._draggableObjects.splice(index, 1);
     }, p.destroy = function() {
-        null !== this.draggedObj && (this._mouseDownEvent.removeAllEventListeners(), this._mouseDownEvent = null, 
-        this._theStage.removeEventListener("stagemousemove", this._updateCallback), this.draggedObj = null), 
-        this._updateCallback = null, this._dragStartCallback = null, this._dragEndCallback = null, 
-        this._triggerHeldDragCallback = null, this._triggerStickyClickCallback = null, this._stageMouseUpCallback = null, 
-        this._theStage = null;
+        null !== this.draggedObj && (this._mouseDownEvent.currentTarget.removeAllEventListeners(), 
+        this._mouseDownEvent = null, this._theStage.removeEventListener("stagemousemove", this._updateCallback), 
+        this.draggedObj = null), this._updateCallback = null, this._dragStartCallback = null, 
+        this._dragEndCallback = null, this._triggerHeldDragCallback = null, this._triggerStickyClickCallback = null, 
+        this._stageMouseUpCallback = null, this._theStage = null;
         for (var i = this._draggableObjects.length - 1; i >= 0; --i) {
             var obj = this._draggableObjects[i];
             obj.disableDrag(), delete obj.enableDrag, delete obj.disableDrag, delete obj._onMouseDownListener, 

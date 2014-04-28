@@ -2572,7 +2572,7 @@
 	p._onMouseDown = function(e)
 	{
 		this._downEvent = e;
-		this._downEvent.addEventListener('mouseup', this._upCB);
+		this._downEvent.currentTarget.addEventListener('pressup', this._upCB);
 		this._isDown = true;
 		this._updateState();
 	};
@@ -2585,7 +2585,7 @@
 	*/
 	p._onMouseUp = function(e)
 	{
-		this._downEvent.removeEventListener('mouseup', this._upCB);
+		this._downEvent.currentTarget.removeEventListener('pressup', this._upCB);
 		this._downEvent = null;
 		this._isDown = false;
 		this._updateState();
@@ -2635,7 +2635,7 @@
 		this._outCB = null;
 		if(this._downEvent)
 		{
-			this._downEvent.removeEventListener('mouseup', this._upCB);
+			this._downEvent.currentTarget.removeEventListener('mouseup', this._upCB);
 			this._downEvent = null;
 		}
 		this.back = null;
@@ -2876,8 +2876,8 @@
 			this.mouseDownStagePos.x = ev.stageX;
 			this.mouseDownStagePos.y = ev.stageY;
 			this._mouseDownEvent = ev;
-			this._mouseDownEvent.addEventListener("mousemove", this._triggerHeldDragCallback);
-			this._mouseDownEvent.addEventListener("mouseup", this._triggerStickyClickCallback);
+			ev.currentTarget.addEventListener("pressmove", this._triggerHeldDragCallback);
+			ev.currentTarget.addEventListener("pressup", this._triggerStickyClickCallback);
 		}
 	};
 	
@@ -2889,7 +2889,7 @@
 	p._triggerStickyClick = function()
 	{
 		this.isStickyClick = true;
-		this._mouseDownEvent.removeAllEventListeners();
+		this._mouseDownEvent.currentTarget.removeAllEventListeners();
 		this._mouseDownEvent = null;
 		this._startDrag();
 	};
@@ -2907,7 +2907,7 @@
 		if(xDiff * xDiff + yDiff * yDiff >= this.dragStartThreshold * this.dragStartThreshold)
 		{
 			this.isHeldDrag = true;
-			this._mouseDownEvent.removeAllEventListeners();
+			this._mouseDownEvent.currentTarget.removeAllEventListeners();
 			this._mouseDownEvent = null;
 			this._startDrag();
 		}
@@ -2950,7 +2950,7 @@
 	{
 		if(this._mouseDownEvent !== null)
 		{
-			this._mouseDownEvent.removeAllEventListeners();
+			this._mouseDownEvent.currentTarget.removeAllEventListeners();
 			this._mouseDownEvent = null;
 		}
 		this._theStage.removeEventListener("stagemousemove", this._updateCallback);
@@ -3067,7 +3067,7 @@
 		if(this.draggedObj !== null)
 		{
 			//clean up dragged obj
-			this._mouseDownEvent.removeAllEventListeners();
+			this._mouseDownEvent.currentTarget.removeAllEventListeners();
 			this._mouseDownEvent = null;
 			this._theStage.removeEventListener("stagemousemove", this._updateCallback);
 			this.draggedObj = null;

@@ -439,7 +439,7 @@
 	p._onMouseDown = function(e)
 	{
 		this._downEvent = e;
-		this._downEvent.addEventListener('mouseup', this._upCB);
+		this._downEvent.currentTarget.addEventListener('pressup', this._upCB);
 		this._isDown = true;
 		this._updateState();
 	};
@@ -452,7 +452,7 @@
 	*/
 	p._onMouseUp = function(e)
 	{
-		this._downEvent.removeEventListener('mouseup', this._upCB);
+		this._downEvent.currentTarget.removeEventListener('pressup', this._upCB);
 		this._downEvent = null;
 		this._isDown = false;
 		this._updateState();
@@ -502,7 +502,7 @@
 		this._outCB = null;
 		if(this._downEvent)
 		{
-			this._downEvent.removeEventListener('mouseup', this._upCB);
+			this._downEvent.currentTarget.removeEventListener('mouseup', this._upCB);
 			this._downEvent = null;
 		}
 		this.back = null;
