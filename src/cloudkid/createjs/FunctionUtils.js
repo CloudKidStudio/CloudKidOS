@@ -17,10 +17,10 @@
 		/**
 		*  Add the bind functionality to the Function prototype
 		*  this allows passing a reference in the function callback 
-	
-		var callback = function(){};
-		cloudkid.MediaLoader.instance.load('something.json', callback.bind(this));
-	
+		*
+		*	var callback = function(){};
+		*	cloudkid.MediaLoader.instance.load('something.json', callback.bind(this));
+		*
 		*  @method bind
 		*  @static
 		*  @param {function} that The reference to the function

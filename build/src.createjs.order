@@ -1,5 +1,6 @@
 cloudkid/OS.js
 cloudkid/createjs/FunctionUtils.js
+cloudkid/createjs/BitmapUtils.js
 cloudkid/SavedData.js
 cloudkid/CKWorker.js
 cloudkid/CombinedCallback.js
