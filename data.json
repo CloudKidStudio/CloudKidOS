@@ -2,7 +2,7 @@
     "project": {
         "name": "CloudKid OS API",
         "description": "CloudKid OS API: A framework for HTML5 content built on top of createjs",
-        "version": "1.1.3",
+        "version": "1.1.5",
         "logo": ""
     },
     "files": {
@@ -3591,15 +3591,15 @@
         },
         {
             "file": "src/cloudkid/scaling/Positioner.js",
-            "line": 95,
-            "description": "[PIXI-only] Create the polygon hit area for interface elements",
+            "line": 92,
+            "description": "Create the polygon hit area for interface elements",
             "static": 1,
             "itemtype": "method",
             "name": "generateHitArea",
             "params": [
                 {
                     "name": "hitArea",
-                    "description": "A collection of points of polygon or an object describing rectangle, ellipse or circle",
+                    "description": "One of the following: <br/>\n* An array of points for a polygon, e.g. \n\n\t\t[{x:0, y:0}, {x:0, y:20}, {x:20, y:0}]\n\n* An object describing a rectangle, e.g.\n\n\t\t{type:\"rect\", x:0, y:0, w:10, h:30}\n\n* An object describing an ellipse, where x and y are the center, e.g. \n\n\t\t{type:\"ellipse\", x:0, y:0, w:10, h:30}\n\n* An object describing a circle, where x and y are the center, e.g.\n\n\t\t{type:\"circle\", x:0, y:0, r:20}",
                     "type": "Object|Array"
                 },
                 {

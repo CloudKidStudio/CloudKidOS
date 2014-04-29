@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
     <link rel="shortcut icon" type="image/png" href="../assets/favicon.ico">
     <script src="http://yui.yahooapis.com/3.10.1/build/yui/yui-min.js"></script>
-	<title>CloudKid OS API v1.1.3 API Documentation : src/cloudkid/OS.js</title>  
+	<title>CloudKid OS API v1.1.5 API Documentation : src/cloudkid/OS.js</title>  
 </head>
 <body class="yui3-skin-sam">
 
@@ -19,7 +19,7 @@
             
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Documentation for: 1.1.3</em>
+            <em>API Documentation for: 1.1.5</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -645,7 +645,7 @@
 		vars = pound &lt; 0 ? vars : vars.substring(0, pound);
 		var splitFlashVars = vars.split(&quot;&amp;&quot;);
 		var myVar;
-		for( var i in splitFlashVars )
+		for (var i = 0; i &lt; splitFlashVars.length; i++)
 		{
 			myVar = splitFlashVars[i].split(&quot;=&quot;);
 			if (DEBUG)
