@@ -1,6 +1,6 @@
 !function(undefined) {
     var OS = function() {}, p = OS.prototype = new createjs.Container(), _paused = !1, _isReady = !1, _framerate = null, _lastFrameTime = 0, _lastFPSUpdateTime = 0, _framerateValue = null, _frameCount = 0, _tickCallback = null, _instance = null, _tickId = -1, _useRAF = !1, _fps = 0, _msPerFrame = 0;
-    OS.VERSION = "1.1.5", p.Container_initialize = p.initialize, p.stage = null, 
+    OS.VERSION = "1.1.6", p.Container_initialize = p.initialize, p.stage = null, 
     p._app = null, p.options = null, p._updateFunctions = {}, OS.init = function(stageName, options) {
         return _instance || (Debug.log("Creating the singleton instance of OS"), _instance = new OS(), 
         _instance.initialize(stageName, options)), _instance;
@@ -166,20 +166,19 @@
     BitmapUtils.loadSpriteSheet = function(frameDict, spritesheetImage, scale) {
         scale > 0 || (scale = 1);
         for (var key in frameDict) {
-            var bitmap = lib[key];
-            if (bitmap) {
-                var frame = frameDict[key], newBitmap = lib[key] = function() {
-                    var child = new createjs.Bitmap(this._image);
-                    this.addChild(child), child.sourceRect = this._frameRect;
-                    var s = this._scale;
-                    child.x = this._frameOffsetX * s, child.y = this._frameOffsetY * s, child.setTransform(0, 0, s, s);
-                }, p = newBitmap.prototype = new createjs.Container();
-                p._image = spritesheetImage, p._scale = scale;
-                var frameRect = frame.frame;
-                p._frameRect = new createjs.Rectangle(frameRect.x, frameRect.y, frameRect.width, frameRect.height), 
-                frame.trimmed ? (p._frameOffsetX = frame.spriteSourceSize.x, p._frameOffsetY = frame.spriteSourceSize.y) : p._frameOffsetX = p._frameOffsetY = 0, 
-                p.nominalBounds = bitmap.nominalBounds;
-            }
+            var index = key.indexOf(".");
+            index > 0 && (key = key.substring(0, index));
+            var bitmap = lib[key], frame = frameDict[key], newBitmap = lib[key] = function() {
+                var child = new createjs.Bitmap(this._image);
+                this.addChild(child), child.sourceRect = this._frameRect;
+                var s = this._scale;
+                child.x = this._frameOffsetX * s, child.y = this._frameOffsetY * s, child.setTransform(0, 0, s, s);
+            }, p = newBitmap.prototype = new createjs.Container();
+            p._image = spritesheetImage, p._scale = scale;
+            var frameRect = frame.frame;
+            p._frameRect = new createjs.Rectangle(frameRect.x, frameRect.y, frameRect.w, frameRect.h), 
+            frame.trimmed ? (p._frameOffsetX = frame.spriteSourceSize.x, p._frameOffsetY = frame.spriteSourceSize.y) : p._frameOffsetX = p._frameOffsetY = 0, 
+            p.nominalBounds = bitmap ? bitmap.nominalBounds : new createjs.Rectangle(0, 0, frame.sourceSize.w, frame.sourceSize.h);
         }
     }, BitmapUtils.replaceWithScaledBitmap = function(idOrDict, scale) {
         if (1 != scale && scale > 0) {

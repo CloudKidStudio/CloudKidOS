@@ -1028,38 +1028,41 @@
 
 		for(var key in frameDict)
 		{
+			var index = key.indexOf(".");
+			if(index > 0)
+				key = key.substring(0, index);
 			var bitmap = lib[key];
-			if(bitmap)
+			var frame = frameDict[key];
+			/* jshint ignore:start */
+			var newBitmap = lib[key] = function()
 			{
-				var frame = frameDict[key];
-				/* jshint ignore:start */
-				var newBitmap = lib[key] = function()
-				{
-					var child = new createjs.Bitmap(this._image);
-					this.addChild(child);
-					child.sourceRect = this._frameRect;
-					var s = this._scale;
-					child.x = this._frameOffsetX * s;
-					child.y = this._frameOffsetY * s;
-					child.setTransform(0, 0, s, s);
-				};
-				/* jshint ignore:end */
-				var p = newBitmap.prototype = new createjs.Container();
-				p._image = spritesheetImage;//give it a reference to the spritesheet
-				p._scale = scale;//tell it what scale to use on the Bitmap to bring it to normal size
-				var frameRect = frame.frame;
-				//save the source rectangle of the sprite
-				p._frameRect = new createjs.Rectangle(frameRect.x, frameRect.y, frameRect.width, frameRect.height);
-				//if the sprite is trimmed, then save the amount that was trimmed off the left and top sides
-				if(frame.trimmed)
-				{
-					p._frameOffsetX = frame.spriteSourceSize.x;
-					p._frameOffsetY = frame.spriteSourceSize.y;
-				}
-				else
-					p._frameOffsetX = p._frameOffsetY = 0;
-				p.nominalBounds = bitmap.nominalBounds;//keep the nominal bounds
+				var child = new createjs.Bitmap(this._image);
+				this.addChild(child);
+				child.sourceRect = this._frameRect;
+				var s = this._scale;
+				child.x = this._frameOffsetX * s;
+				child.y = this._frameOffsetY * s;
+				child.setTransform(0, 0, s, s);
+			};
+			/* jshint ignore:end */
+			var p = newBitmap.prototype = new createjs.Container();
+			p._image = spritesheetImage;//give it a reference to the spritesheet
+			p._scale = scale;//tell it what scale to use on the Bitmap to bring it to normal size
+			var frameRect = frame.frame;
+			//save the source rectangle of the sprite
+			p._frameRect = new createjs.Rectangle(frameRect.x, frameRect.y, frameRect.w, frameRect.h);
+			//if the sprite is trimmed, then save the amount that was trimmed off the left and top sides
+			if(frame.trimmed)
+			{
+				p._frameOffsetX = frame.spriteSourceSize.x;
+				p._frameOffsetY = frame.spriteSourceSize.y;
 			}
+			else
+				p._frameOffsetX = p._frameOffsetY = 0;
+			if(bitmap)
+				p.nominalBounds = bitmap.nominalBounds;//keep the nominal bounds from the original bitmap, if it existed
+			else
+				p.nominalBounds = new createjs.Rectangle(0, 0, frame.sourceSize.w, frame.sourceSize.h);
 		}
 	};
 
