@@ -166,9 +166,9 @@
     BitmapUtils.loadSpriteSheet = function(frameDict, spritesheetImage, scale) {
         scale > 0 || (scale = 1);
         for (var key in frameDict) {
-            var index = key.indexOf(".");
+            var frame = frameDict[key], index = key.indexOf(".");
             index > 0 && (key = key.substring(0, index));
-            var bitmap = lib[key], frame = frameDict[key], newBitmap = lib[key] = function() {
+            var bitmap = lib[key], newBitmap = lib[key] = function() {
                 var child = new createjs.Bitmap(this._image);
                 this.addChild(child), child.sourceRect = this._frameRect;
                 var s = this._scale;

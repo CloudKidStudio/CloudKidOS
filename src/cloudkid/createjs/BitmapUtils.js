@@ -35,11 +35,11 @@
 
 		for(var key in frameDict)
 		{
+			var frame = frameDict[key];
 			var index = key.indexOf(".");
 			if(index > 0)
-				key = key.substring(0, index);
+				key = key.substring(0, index);//remove any file extension from the frame id
 			var bitmap = lib[key];
-			var frame = frameDict[key];
 			/* jshint ignore:start */
 			var newBitmap = lib[key] = function()
 			{
