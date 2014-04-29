@@ -512,7 +512,7 @@
 		vars = pound < 0 ? vars : vars.substring(0, pound);
 		var splitFlashVars = vars.split("&");
 		var myVar;
-		for( var i in splitFlashVars )
+		for (var i = 0; i < splitFlashVars.length; i++)
 		{
 			myVar = splitFlashVars[i].split("=");
 			if (DEBUG)

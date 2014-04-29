@@ -1,6 +1,6 @@
 !function(undefined) {
     var OS = function() {}, p = OS.prototype = Object.create(PIXI.DisplayObjectContainer.prototype), _paused = !1, _isReady = !1, _framerate = null, _lastFrameTime = 0, _lastFPSUpdateTime = 0, _framerateValue = null, _frameCount = 0, _tickCallback = null, _instance = null, _tickId = -1, _useRAF = !1, _fps = 0, _msPerFrame = 0;
-    OS.VERSION = "1.1.3", p.stage = null, p._renderer = null, p.canvasContainer = null, 
+    OS.VERSION = "1.1.4", p.stage = null, p._renderer = null, p.canvasContainer = null, 
     p._app = null, p.options = null, p._updateFunctions = {}, OS.init = function(stageName, options) {
         return _instance || (Debug.log("Creating the singleton instance of OS"), _instance = new OS(), 
         _instance.initialize(stageName, options)), _instance;
@@ -60,9 +60,8 @@
         if (-1 == questionMark) return output;
         var vars = 0 > questionMark ? "" : href.substr(questionMark + 1), pound = vars.indexOf("#");
         vars = 0 > pound ? vars : vars.substring(0, pound);
-        var myVar, splitFlashVars = vars.split("&");
-        for (var i in splitFlashVars) myVar = splitFlashVars[i].split("="), Debug.log(myVar[0] + " -> " + myVar[1]), 
-        output[myVar[0]] = myVar[1];
+        for (var myVar, splitFlashVars = vars.split("&"), i = 0; i < splitFlashVars.length; i++) myVar = splitFlashVars[i].split("="), 
+        Debug.log(myVar[0] + " -> " + myVar[1]), output[myVar[0]] = myVar[1];
         return output;
     };
     p.pause = function() {
@@ -194,7 +193,7 @@
     var SubWorker = function(codeString, parent) {
         this._wParent = parent, eval(codeString);
     }, p = SubWorker.prototype;
-    p.onmessage = null, p.postMessage = function(data) {
+    p.onmessage = null, p._wParent = null, p.postMessage = function(data) {
         var parent = this._wParent;
         setTimeout(parent.onmessage.bind(parent, {
             data: data
