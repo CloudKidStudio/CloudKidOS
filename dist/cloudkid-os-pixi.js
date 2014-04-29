@@ -3180,7 +3180,7 @@
 				}
 				rot = setting.rotation;
 				if(rot)
-					item.rotation = rot * degToRad;
+					item.rotation = rot * degToRad;//Pixi rotations are in radians
 			}
 			else
 			{
@@ -3212,49 +3212,61 @@
 				}
 				else
 				{
-					if(hitArea.type == "rect")
-						item.hitRect = new createjs.Rectangle(hitArea.x, hitArea.y, hitArea.w, hitArea.h);
+					item.hitShape = Positioner.generateHitArea(hitArea);
 				}
 			}
 		}
 	};
 	
-	if(true)
+	/**
+	*  Create the polygon hit area for interface elements
+	*  @static
+	*  @method generateHitArea
+	*  @param {Object|Array} hitArea One of the following: <br/>
+	*  * An array of points for a polygon, e.g. 
+	*
+	*		[{x:0, y:0}, {x:0, y:20}, {x:20, y:0}]
+	*
+	*  * An object describing a rectangle, e.g.
+	*
+	*		{type:"rect", x:0, y:0, w:10, h:30}
+	*
+	*  * An object describing an ellipse, where x and y are the center, e.g. 
+	*
+	*		{type:"ellipse", x:0, y:0, w:10, h:30}
+	*
+	*  * An object describing a circle, where x and y are the center, e.g.
+	*
+	*		{type:"circle", x:0, y:0, r:20}
+	*  @param {Number} scale The size to scale hitArea by
+	*/
+	Positioner.generateHitArea = function(hitArea, scale)
 	{
-		/**
-		*  [PIXI-only] Create the polygon hit area for interface elements
-		*  @static
-		*  @method generateHitArea
-		*  @param {Object|Array} hitArea A collection of points of polygon or an object describing rectangle, ellipse or circle
-		*  @param {Number} scale The size to scale hitArea by
-		*/
-		Positioner.generateHitArea = function(hitArea, scale)
+		if(!scale)
+			scale = 1;
+		var library = CONFIG_PIXI ? window.PIXI : window.createjs;
+		if(isArray(hitArea))
 		{
-			if(!scale)
-				scale = 1;
-			if(isArray(hitArea))
+			if(scale == 1)
+				return new library.Polygon(hitArea);
+			else
 			{
-				if(scale == 1)
-					return new PIXI.Polygon(hitArea);
-				else
+				var temp = [];
+				for(var i = 0, len = hitArea.length; i < len; ++i)
 				{
-					var temp = [];
-					for(var i = 0, len = hitArea.length; i < len; ++i)
-					{
-						temp.push(new PIXI.Point(hitArea[i].x * scale, hitArea[i].y * scale));
-					}
-					return new PIXI.Polygon(temp);
+					temp.push(new library.Point(hitArea[i].x * scale, hitArea[i].y * scale));
 				}
+				return new library.Polygon(temp);
 			}
-			else if(hitArea.type == "rect" || !hitArea.type)
-				return new PIXI.Rectangle(hitArea.x * scale, hitArea.y * scale, hitArea.w * scale, hitArea.h * scale);
-			else if(hitArea.type == "ellipse")
-				return new PIXI.Ellipse((hitArea.x - hitArea.w * 0.5) * scale, (hitArea.y - hitArea.h * 0.5) * scale, hitArea.w * scale, hitArea.h * scale);//convert center to upper left corner
-			else if(hitArea.type == "circle")
-				return new PIXI.Circle(hitArea.x * scale, hitArea.y * scale, hitArea.r * scale);//x & y are center, pixi documentation lies
-			return null;
-		};
-	}
+		}
+		else if(hitArea.type == "rect" || !hitArea.type)
+			return new library.Rectangle(hitArea.x * scale, hitArea.y * scale, hitArea.w * scale, hitArea.h * scale);
+		else if(hitArea.type == "ellipse")
+			return new library.Ellipse((hitArea.x - hitArea.w * 0.5) * scale, (hitArea.y - hitArea.h * 0.5) * scale, hitArea.w * scale, hitArea.h * scale);//convert center to upper left corner
+		else if(hitArea.type == "circle")
+			return new library.Circle(hitArea.x * scale, hitArea.y * scale, hitArea.r * scale);//x & y are center, pixi documentation lies
+		return null;
+	};
 
 	var isArray = function(o)
 	{

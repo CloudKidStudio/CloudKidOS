@@ -1,6 +1,6 @@
 !function(undefined) {
     var OS = function() {}, p = OS.prototype = new createjs.Container(), _paused = !1, _isReady = !1, _framerate = null, _lastFrameTime = 0, _lastFPSUpdateTime = 0, _framerateValue = null, _frameCount = 0, _tickCallback = null, _instance = null, _tickId = -1, _useRAF = !1, _fps = 0, _msPerFrame = 0;
-    OS.VERSION = "1.1.4", p.Container_initialize = p.initialize, p.stage = null, 
+    OS.VERSION = "1.1.5", p.Container_initialize = p.initialize, p.stage = null, 
     p._app = null, p.options = null, p._updateFunctions = {}, OS.init = function(stageName, options) {
         return _instance || (Debug.log("Creating the singleton instance of OS"), _instance = new OS(), 
         _instance.initialize(stageName, options)), _instance;
@@ -661,10 +661,22 @@
                 item.scaleY *= pt.y), pt = setting.pivot, pt && (item.regX = pt.x, item.regY = pt.y), 
                 rot = setting.rotation, rot && (item.rotation = rot), setting.hitArea) {
                     var hitArea = setting.hitArea;
-                    "rect" == hitArea.type && (item.hitRect = new createjs.Rectangle(hitArea.x, hitArea.y, hitArea.w, hitArea.h));
+                    item.hitShape = Positioner.generateHitArea(hitArea);
                 }
             } else Debug.error("could not find object '" + iName + "'");
         }
+    }, Positioner.generateHitArea = function(hitArea, scale) {
+        scale || (scale = 1);
+        var library = window.createjs;
+        if (isArray(hitArea)) {
+            if (1 == scale) return new library.Polygon(hitArea);
+            for (var temp = [], i = 0, len = hitArea.length; len > i; ++i) temp.push(new library.Point(hitArea[i].x * scale, hitArea[i].y * scale));
+            return new library.Polygon(temp);
+        }
+        return "rect" != hitArea.type && hitArea.type ? "ellipse" == hitArea.type ? new library.Ellipse((hitArea.x - .5 * hitArea.w) * scale, (hitArea.y - .5 * hitArea.h) * scale, hitArea.w * scale, hitArea.h * scale) : "circle" == hitArea.type ? new library.Circle(hitArea.x * scale, hitArea.y * scale, hitArea.r * scale) : null : new library.Rectangle(hitArea.x * scale, hitArea.y * scale, hitArea.w * scale, hitArea.h * scale);
+    };
+    var isArray = function(o) {
+        return "[object Array]" === Object.prototype.toString.call(o);
     };
     namespace("cloudkid").Positioner = Positioner;
 }(), function() {
