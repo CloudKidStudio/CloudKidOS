@@ -115,7 +115,11 @@
 	{
 		if(!scale)
 			scale = 1;
-		var library = CONFIG_PIXI ? window.PIXI : window.createjs;
+		var library;
+		if(CONFIG_PIXI)
+			library = window.PIXI;
+		else
+			library = window.createjs;
 		if(isArray(hitArea))
 		{
 			if(scale == 1)

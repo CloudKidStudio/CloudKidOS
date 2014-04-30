@@ -1,6 +1,6 @@
 !function(undefined) {
     var OS = function() {}, p = OS.prototype = new createjs.Container(), _paused = !1, _isReady = !1, _framerate = null, _lastFrameTime = 0, _lastFPSUpdateTime = 0, _framerateValue = null, _frameCount = 0, _tickCallback = null, _instance = null, _tickId = -1, _useRAF = !1, _fps = 0, _msPerFrame = 0;
-    OS.VERSION = "1.1.6", p.Container_initialize = p.initialize, p.stage = null, 
+    OS.VERSION = "1.1.7", p.Container_initialize = p.initialize, p.stage = null, 
     p._app = null, p.options = null, p._updateFunctions = {}, OS.init = function(stageName, options) {
         return _instance || (Debug.log("Creating the singleton instance of OS"), _instance = new OS(), 
         _instance.initialize(stageName, options)), _instance;
@@ -666,8 +666,8 @@
         }
     }, Positioner.generateHitArea = function(hitArea, scale) {
         scale || (scale = 1);
-        var library = window.createjs;
-        if (isArray(hitArea)) {
+        var library;
+        if (library = window.createjs, isArray(hitArea)) {
             if (1 == scale) return new library.Polygon(hitArea);
             for (var temp = [], i = 0, len = hitArea.length; len > i; ++i) temp.push(new library.Point(hitArea[i].x * scale, hitArea[i].y * scale));
             return new library.Polygon(temp);
