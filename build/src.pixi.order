@@ -1,6 +1,6 @@
 cloudkid/OS.js
 cloudkid/SavedData.js
-cloudkid/CKWorker.js
+cloudkid/Worker.js
 cloudkid/CombinedCallback.js
 cloudkid/Application.js
 cloudkid/loaders/LoaderQueueItem.js

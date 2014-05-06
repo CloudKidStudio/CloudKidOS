@@ -1,6 +1,6 @@
 {
     "name": "cloudkid-os",
-    "version": "1.1.7",
+    "version": "1.1.8",
     "dependencies": {
         "easeljs" : "https://github.com/CloudKidStudio/EaselJS.git",
         "preloadjs" : "https://github.com/CloudKidStudio/PreloadJS.git",
