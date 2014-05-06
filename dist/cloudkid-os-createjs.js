@@ -1261,34 +1261,49 @@
 (function(){
 	
 	"use strict";
-
-	//Example worker code:
-	/*var workerCode = "this.initialVariable = 10;" +
-	"this.onmessage = function(event)" +
-	"{" +
-		"var data = event.data;" +
-		"var returnVal = this.initialVariable + data.addValue;" +
-		"this.postMessage(returnVal);" +
-	"};"*/
 	
-	//combine prefixed URL for createObjectURL from blobs.
+	// Combine prefixed URL for createObjectURL from blobs.
 	window.URL = window.URL || window.webkitURL;
-	//combine prefixed blob builder
+
+	// Combine prefixed blob builder
 	window.BlobBuilder = window.BlobBuilder || window.WebKitBlobBuilder || window.MozBlobBuilder;
 
 	/**
-	* global functions
-	* @class GLOBAL
+	*  The Web Workers specification defines an API for spawning background scripts in your web 
+	*  application. Web Workers allow you to do things like fire up long-running scripts to 
+	*  handle computationally intensive tasks, but without blocking the UI or other scripts 
+	*  to handle user interactions. Because Workers aren't available on all browsers, we provide
+	*  a helpful polyfill for backward compatibility.
+	*
+	*	var workerCode = "this.initialVariable = 10;" +
+	*	"this.onmessage = function(event)" +
+	*	"{" +
+	*		"var data = event.data;" +
+	*		"var returnVal = this.initialVariable + data.addValue;" +
+	*		"this.postMessage(returnVal);" +
+	*	"};";
+	*
+	*	// Create the worker
+	*	var worker = cloudkid.Worker.init(workerCode);
+	*	worker.onmessage = function(e) {
+	*		// e.data is the returnVal
+	*	};
+	*	
+	*	// Start the worker.
+	*	worker.postMessage(); 
+	*
+	*  @class Worker
 	*/
+	var Worker = {};
 
-	//assign the function to the namespace
 	/**
-	*	Creates a Worker or a fallback with the same API.
-	*	@method createWorker
-	*	@param codeString The code in string form to make the worker from. As a string, fallback support is easier.
-	*	@return Either a Worker or a fallback with the same API to use.
+	*  Initialize the worker, this is how you create a Worker or FallbackWorker object.
+	*  @method init
+	*  @static
+	*  @param {String} codeString The code in string form to make the worker from. As a string, fallback support is easier.
+	*  @return {FallbackWorker|window.Worker} Either a Web Worker or a fallback with the same API to use.
 	*/
-	namespace("cloudkid").createWorker = function(codeString)
+	Worker.init = function(codeString)
 	{
 		if(!window.URL || !window.Worker) return new FallbackWorker(codeString);
 
@@ -1326,6 +1341,12 @@
 			return new FallbackWorker(codeString);
 		}
 	};
+
+	// Deprecated implementation
+	namespace("cloudkid").createWorker = Worker.init;
+
+	// Assign to namespace
+	namespace("cloudkid").Worker = Worker;
 	
 	/**
 	*	Internal class that pretends to be a Web Worker's context.
@@ -1347,6 +1368,7 @@
 	*	@property {Function} onmessage
 	*/
 	p.onmessage = null;
+
 	/**
 	*	The FallbackWorker that is controlls by this SubWorker.
 	*	@property {FallbackWorker} _wParent
@@ -1390,7 +1412,7 @@
 	};
 
 	/**
-	*	see https://developer.mozilla.org/en-US/docs/Web/API/Worker.terminate
+	*	See https://developer.mozilla.org/en-US/docs/Web/API/Worker.terminate
 	*	@method terminate
 	*/
 	p.terminate = function()
@@ -1403,10 +1425,11 @@
 	};
 
 	/**
-	*	see https://developer.mozilla.org/en-US/docs/Web/API/Worker.onmessage
+	*	See https://developer.mozilla.org/en-US/docs/Web/API/Worker.onmessage
 	*	@property {Function} onmessage
 	*/
 	p.onmessage = null;
+	
 	/**
 	*	The SubWorker that is controlled by this FallbackWorker.
 	*	@property {SubWorker} _wChild

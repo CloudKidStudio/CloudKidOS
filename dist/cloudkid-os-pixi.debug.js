@@ -1,6 +1,6 @@
 !function(undefined) {
     var OS = function() {}, p = OS.prototype = Object.create(PIXI.DisplayObjectContainer.prototype), _paused = !1, _isReady = !1, _framerate = null, _lastFrameTime = 0, _lastFPSUpdateTime = 0, _framerateValue = null, _frameCount = 0, _tickCallback = null, _instance = null, _tickId = -1, _useRAF = !1, _fps = 0, _msPerFrame = 0;
-    OS.VERSION = "1.1.7", p.stage = null, p._renderer = null, p.canvasContainer = null, 
+    OS.VERSION = "1.1.8", p.stage = null, p._renderer = null, p.canvasContainer = null, 
     p._app = null, p.options = null, p._updateFunctions = {}, OS.init = function(stageName, options) {
         return _instance || (Debug.log("Creating the singleton instance of OS"), _instance = new OS(), 
         _instance.initialize(stageName, options)), _instance;
@@ -166,8 +166,9 @@
     }, namespace("cloudkid").SavedData = SavedData;
 }(), function() {
     "use strict";
-    window.URL = window.URL || window.webkitURL, window.BlobBuilder = window.BlobBuilder || window.WebKitBlobBuilder || window.MozBlobBuilder, 
-    namespace("cloudkid").createWorker = function(codeString) {
+    window.URL = window.URL || window.webkitURL, window.BlobBuilder = window.BlobBuilder || window.WebKitBlobBuilder || window.MozBlobBuilder;
+    var Worker = {};
+    Worker.init = function(codeString) {
         if (!window.URL || !window.Worker) return new FallbackWorker(codeString);
         var blob;
         try {
@@ -189,7 +190,7 @@
         } catch (e) {
             return new FallbackWorker(codeString);
         }
-    };
+    }, namespace("cloudkid").createWorker = Worker.init, namespace("cloudkid").Worker = Worker;
     var SubWorker = function(codeString, parent) {
         this._wParent = parent, eval(codeString);
     }, p = SubWorker.prototype;
