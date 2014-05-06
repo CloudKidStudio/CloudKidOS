@@ -12,7 +12,6 @@ YUI.add("yuidoc-meta", function(Y) {
         "DragManager (PIXI)",
         "FallbackWorker",
         "FunctionUtils (CreateJS)",
-        "GLOBAL",
         "LoaderQueueItem",
         "MediaLoader",
         "MediaLoaderResult",
@@ -23,7 +22,8 @@ YUI.add("yuidoc-meta", function(Y) {
         "SubWorker",
         "UIElement",
         "UIElementSettings",
-        "UIScaler"
+        "UIScaler",
+        "Worker"
     ],
     "modules": [
         "cloudkid"

@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
     <link rel="shortcut icon" type="image/png" href="../assets/favicon.ico">
     <script src="http://yui.yahooapis.com/3.10.1/build/yui/yui-min.js"></script>
-	<title>CloudKid OS API v1.1.5 API Documentation : GLOBAL</title>  
+	<title>CloudKid OS API v1.1.8 API Documentation : Worker</title>  
 </head>
 <body class="yui3-skin-sam">
 
@@ -19,7 +19,7 @@
             
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Documentation for: 1.1.5</em>
+            <em>API Documentation for: 1.1.8</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -61,8 +61,6 @@
             
                 <li><a href="../classes/FunctionUtils (CreateJS).html">FunctionUtils (CreateJS)</a></li>
             
-                <li><a href="../classes/GLOBAL.html">GLOBAL</a></li>
-            
                 <li><a href="../classes/LoaderQueueItem.html">LoaderQueueItem</a></li>
             
                 <li><a href="../classes/MediaLoader.html">MediaLoader</a></li>
@@ -84,6 +82,8 @@
                 <li><a href="../classes/UIElementSettings.html">UIElementSettings</a></li>
             
                 <li><a href="../classes/UIScaler.html">UIScaler</a></li>
+            
+                <li><a href="../classes/Worker.html">Worker</a></li>
             
             </ul>
 
@@ -124,7 +124,7 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1>GLOBAL Class</h1>
+                        <h1>Worker Class</h1>
 <div class="box meta">
     
 
@@ -132,7 +132,7 @@
 
     
         <div class="foundat">
-            Defined in: <a href="../files/src_cloudkid_CKWorker.js.html#l22"><code>GLOBAL:22</code></a>
+            Defined in: <a href="../files/src_cloudkid_Worker.js.html#l14"><code>Worker:14</code></a>
         </div>
     
 
@@ -148,7 +148,27 @@
 
 
 <div class="box intro">
-    <p>global functions</p>
+    <p>The Web Workers specification defines an API for spawning background scripts in your web 
+application. Web Workers allow you to do things like fire up long-running scripts to 
+handle computationally intensive tasks, but without blocking the UI or other scripts 
+to handle user interactions. Because Workers aren&#39;t available on all browsers, we provide
+a helpful polyfill for backward compatibility.</p>
+<pre class="code prettyprint"><code>var workerCode = "this.initialVariable = 10;" +
+"this.onmessage = function(event)" +
+"{" +
+    "var data = event.data;" +
+    "var returnVal = this.initialVariable + data.addValue;" +
+    "this.postMessage(returnVal);" +
+"};";
+
+// Create the worker
+var worker = cloudkid.Worker.init(workerCode);
+worker.onmessage = function(e) {
+    // e.data is the returnVal
+};
+
+// Start the worker.
+worker.postMessage();</code></pre>
 
 </div>
 
@@ -177,8 +197,10 @@
                     <ul class="index-list methods">
                         
                             <li class="index-item method">
-                                <a href="#method_createWorker">createWorker</a>
+                                <a href="#method_init">init</a>
 
+                                
+                                    <span class="flag static">static</span>
                                 
                                 
                             </li>
@@ -199,8 +221,8 @@
                 <h2 class="off-left">Methods</h2>
 
                 
-                    <div id="method_createWorker" class="method item">
-    <h3 class="name"><code>createWorker</code></h3>
+                    <div id="method_init" class="method item">
+    <h3 class="name"><code>init</code></h3>
 
     
         <div class="args">
@@ -218,7 +240,7 @@
 
     
         <span class="returns-inline">
-            <span class="type"></span>
+            <span class="type"><a href="../classes/FallbackWorker.html" class="crosslink">FallbackWorker</a> | window.Worker</span>
         </span>
     
 
@@ -228,6 +250,8 @@
 
     
 
+    
+        <span class="flag static">static</span>
     
 
     
@@ -245,7 +269,7 @@
             
         
         
-        <a href="../files/src_cloudkid_CKWorker.js.html#l28"><code>createWorker:28</code></a>
+        <a href="../files/src_cloudkid_Worker.js.html#l42"><code>init:42</code></a>
         
         </p>
 
@@ -256,7 +280,7 @@
     </div>
 
     <div class="description">
-        <p>Creates a Worker or a fallback with the same API.</p>
+        <p>Initialize the worker, this is how you create a Worker or FallbackWorker object.</p>
 
     </div>
 
@@ -269,7 +293,7 @@
                 <li class="param">
                     
                         <code class="param-name">codeString</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
                     
 
                     
@@ -293,7 +317,9 @@
             <div class="returns-description">
                 
                     
-                    <p>Either a Worker or a fallback with the same API to use.</p>
+                        <span class="type"><a href="../classes/FallbackWorker.html" class="crosslink">FallbackWorker</a> | window.Worker</span>:
+                    
+                    <p>Either a Web Worker or a fallback with the same API to use.</p>
 
                 
             </div>

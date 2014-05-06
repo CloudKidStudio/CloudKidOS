@@ -2,7 +2,7 @@
     "project": {
         "name": "CloudKid OS API",
         "description": "CloudKid OS API: A framework for HTML5 content built on top of createjs",
-        "version": "1.1.5",
+        "version": "1.1.8",
         "logo": ""
     },
     "files": {
@@ -161,17 +161,6 @@
             "fors": {},
             "namespaces": {}
         },
-        "src/cloudkid/CKWorker.js": {
-            "name": "src/cloudkid/CKWorker.js",
-            "modules": {},
-            "classes": {
-                "GLOBAL": 1,
-                "SubWorker": 1,
-                "FallbackWorker": 1
-            },
-            "fors": {},
-            "namespaces": {}
-        },
         "src/cloudkid/CombinedCallback.js": {
             "name": "src/cloudkid/CombinedCallback.js",
             "modules": {},
@@ -195,6 +184,17 @@
             "modules": {},
             "classes": {
                 "SavedData": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/cloudkid/Worker.js": {
+            "name": "src/cloudkid/Worker.js",
+            "modules": {},
+            "classes": {
+                "Worker": 1,
+                "SubWorker": 1,
+                "FallbackWorker": 1
             },
             "fors": {},
             "namespaces": {}
@@ -222,18 +222,18 @@
                 "UIElementSettings": 1,
                 "UIScaler": 1,
                 "Application": 1,
-                "GLOBAL": 1,
-                "SubWorker": 1,
-                "FallbackWorker": 1,
                 "CombinedCallback": 1,
                 "OS": 1,
-                "SavedData": 1
+                "SavedData": 1,
+                "Worker": 1,
+                "SubWorker": 1,
+                "FallbackWorker": 1
             },
             "fors": {},
             "namespaces": {},
             "tag": "module",
-            "file": "src/cloudkid/SavedData.js",
-            "line": 8,
+            "file": "src/cloudkid/Worker.js",
+            "line": 133,
             "is_constructor": 1,
             "params": [
                 {
@@ -826,69 +826,6 @@
             "line": 8,
             "description": "An application is an abstract class which extends `createjs.Container`\nand is managed by the `cloudkid.OS`"
         },
-        "GLOBAL": {
-            "name": "GLOBAL",
-            "shortname": "GLOBAL",
-            "classitems": [],
-            "plugins": [],
-            "extensions": [],
-            "plugin_for": [],
-            "extension_for": [],
-            "module": "cloudkid",
-            "namespace": "",
-            "file": "src/cloudkid/CKWorker.js",
-            "line": 22,
-            "description": "global functions"
-        },
-        "SubWorker": {
-            "name": "SubWorker",
-            "shortname": "SubWorker",
-            "classitems": [],
-            "plugins": [],
-            "extensions": [],
-            "plugin_for": [],
-            "extension_for": [],
-            "module": "cloudkid",
-            "namespace": "",
-            "file": "src/cloudkid/CKWorker.js",
-            "line": 73,
-            "description": "Internal class that pretends to be a Web Worker's context.",
-            "is_constructor": 1,
-            "params": [
-                {
-                    "name": "codeString",
-                    "description": "A string to evaluate into worker code.",
-                    "type": "String"
-                },
-                {
-                    "name": "parent",
-                    "description": "The FallbackWorker that owns this SubWorker.",
-                    "type": "FallbackWorker"
-                }
-            ]
-        },
-        "FallbackWorker": {
-            "name": "FallbackWorker",
-            "shortname": "FallbackWorker",
-            "classitems": [],
-            "plugins": [],
-            "extensions": [],
-            "plugin_for": [],
-            "extension_for": [],
-            "module": "cloudkid",
-            "namespace": "",
-            "file": "src/cloudkid/CKWorker.js",
-            "line": 111,
-            "description": "An internal class that duplicates the Worker API as a fallback when WebWorkers are not supported.",
-            "is_constructor": 1,
-            "params": [
-                {
-                    "name": "codeString",
-                    "description": "A string to evaluate into worker code.",
-                    "type": "String"
-                }
-            ]
-        },
         "CombinedCallback": {
             "name": "CombinedCallback",
             "shortname": "CombinedCallback",
@@ -954,6 +891,69 @@
             "file": "src/cloudkid/SavedData.js",
             "line": 8,
             "description": "The SavedData functions use localStorage and sessionStorage, with a cookie fallback."
+        },
+        "Worker": {
+            "name": "Worker",
+            "shortname": "Worker",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "cloudkid",
+            "namespace": "",
+            "file": "src/cloudkid/Worker.js",
+            "line": 14,
+            "description": "The Web Workers specification defines an API for spawning background scripts in your web \napplication. Web Workers allow you to do things like fire up long-running scripts to \nhandle computationally intensive tasks, but without blocking the UI or other scripts \nto handle user interactions. Because Workers aren't available on all browsers, we provide\na helpful polyfill for backward compatibility.\n\n\tvar workerCode = \"this.initialVariable = 10;\" +\n\t\"this.onmessage = function(event)\" +\n\t\"{\" +\n\t\t\"var data = event.data;\" +\n\t\t\"var returnVal = this.initialVariable + data.addValue;\" +\n\t\t\"this.postMessage(returnVal);\" +\n\t\"};\";\n\n\t// Create the worker\n\tvar worker = cloudkid.Worker.init(workerCode);\n\tworker.onmessage = function(e) {\n\t\t// e.data is the returnVal\n\t};\n\t\n\t// Start the worker.\n\tworker.postMessage();"
+        },
+        "SubWorker": {
+            "name": "SubWorker",
+            "shortname": "SubWorker",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "cloudkid",
+            "namespace": "",
+            "file": "src/cloudkid/Worker.js",
+            "line": 94,
+            "description": "Internal class that pretends to be a Web Worker's context.",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "codeString",
+                    "description": "A string to evaluate into worker code.",
+                    "type": "String"
+                },
+                {
+                    "name": "parent",
+                    "description": "The FallbackWorker that owns this SubWorker.",
+                    "type": "FallbackWorker"
+                }
+            ]
+        },
+        "FallbackWorker": {
+            "name": "FallbackWorker",
+            "shortname": "FallbackWorker",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "cloudkid",
+            "namespace": "",
+            "file": "src/cloudkid/Worker.js",
+            "line": 133,
+            "description": "An internal class that duplicates the Worker API as a fallback when WebWorkers are not supported.",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "codeString",
+                    "description": "A string to evaluate into worker code.",
+                    "type": "String"
+                }
+            ]
         }
     },
     "classitems": [
@@ -988,7 +988,7 @@
         },
         {
             "file": "src/cloudkid/createjs/BitmapUtils.js",
-            "line": 73,
+            "line": 76,
             "description": "Replaces Bitmaps in the global lib dictionary with a version that pulls the image from a spritesheet.",
             "itemtype": "method",
             "name": "replaceWithScaledBitmap",
@@ -4203,109 +4203,6 @@
             "module": "cloudkid"
         },
         {
-            "file": "src/cloudkid/CKWorker.js",
-            "line": 28,
-            "description": "Creates a Worker or a fallback with the same API.",
-            "itemtype": "method",
-            "name": "createWorker",
-            "params": [
-                {
-                    "name": "codeString",
-                    "description": "The code in string form to make the worker from. As a string, fallback support is easier."
-                }
-            ],
-            "return": {
-                "description": "Either a Worker or a fallback with the same API to use."
-            },
-            "class": "GLOBAL",
-            "module": "cloudkid"
-        },
-        {
-            "file": "src/cloudkid/CKWorker.js",
-            "line": 88,
-            "description": "see https://developer.mozilla.org/en-US/docs/Web/API/Worker.onmessage",
-            "itemtype": "property",
-            "name": "onmessage",
-            "type": "Function",
-            "class": "SubWorker",
-            "module": "cloudkid"
-        },
-        {
-            "file": "src/cloudkid/CKWorker.js",
-            "line": 93,
-            "description": "The FallbackWorker that is controlls by this SubWorker.",
-            "itemtype": "property",
-            "name": "_wParent",
-            "type": "FallbackWorker",
-            "access": "private",
-            "tagname": "",
-            "class": "SubWorker",
-            "module": "cloudkid"
-        },
-        {
-            "file": "src/cloudkid/CKWorker.js",
-            "line": 100,
-            "description": "See https://developer.mozilla.org/en-US/docs/Web/API/Worker.postMessage",
-            "itemtype": "method",
-            "name": "postMessage",
-            "params": [
-                {
-                    "name": "data",
-                    "description": "The data to send.",
-                    "type": "*"
-                }
-            ],
-            "class": "SubWorker",
-            "module": "cloudkid"
-        },
-        {
-            "file": "src/cloudkid/CKWorker.js",
-            "line": 124,
-            "description": "See https://developer.mozilla.org/en-US/docs/Web/API/Worker.postMessage",
-            "itemtype": "method",
-            "name": "postMessage",
-            "params": [
-                {
-                    "name": "data",
-                    "description": "The data to send.",
-                    "type": "*"
-                }
-            ],
-            "class": "FallbackWorker",
-            "module": "cloudkid"
-        },
-        {
-            "file": "src/cloudkid/CKWorker.js",
-            "line": 135,
-            "description": "see https://developer.mozilla.org/en-US/docs/Web/API/Worker.terminate",
-            "itemtype": "method",
-            "name": "terminate",
-            "class": "FallbackWorker",
-            "module": "cloudkid"
-        },
-        {
-            "file": "src/cloudkid/CKWorker.js",
-            "line": 148,
-            "description": "see https://developer.mozilla.org/en-US/docs/Web/API/Worker.onmessage",
-            "itemtype": "property",
-            "name": "onmessage",
-            "type": "Function",
-            "class": "FallbackWorker",
-            "module": "cloudkid"
-        },
-        {
-            "file": "src/cloudkid/CKWorker.js",
-            "line": 153,
-            "description": "The SubWorker that is controlled by this FallbackWorker.",
-            "itemtype": "property",
-            "name": "_wChild",
-            "type": "SubWorker",
-            "access": "private",
-            "tagname": "",
-            "class": "FallbackWorker",
-            "module": "cloudkid"
-        },
-        {
             "file": "src/cloudkid/CombinedCallback.js",
             "line": 34,
             "description": "Creates a CombinedCallback for use.",
@@ -5083,6 +4980,112 @@
                 "type": "Mixed"
             },
             "class": "SavedData",
+            "module": "cloudkid"
+        },
+        {
+            "file": "src/cloudkid/Worker.js",
+            "line": 42,
+            "description": "Initialize the worker, this is how you create a Worker or FallbackWorker object.",
+            "itemtype": "method",
+            "name": "init",
+            "static": 1,
+            "params": [
+                {
+                    "name": "codeString",
+                    "description": "The code in string form to make the worker from. As a string, fallback support is easier.",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "Either a Web Worker or a fallback with the same API to use.",
+                "type": "FallbackWorker|window.Worker"
+            },
+            "class": "Worker",
+            "module": "cloudkid"
+        },
+        {
+            "file": "src/cloudkid/Worker.js",
+            "line": 109,
+            "description": "see https://developer.mozilla.org/en-US/docs/Web/API/Worker.onmessage",
+            "itemtype": "property",
+            "name": "onmessage",
+            "type": "Function",
+            "class": "SubWorker",
+            "module": "cloudkid"
+        },
+        {
+            "file": "src/cloudkid/Worker.js",
+            "line": 115,
+            "description": "The FallbackWorker that is controlls by this SubWorker.",
+            "itemtype": "property",
+            "name": "_wParent",
+            "type": "FallbackWorker",
+            "access": "private",
+            "tagname": "",
+            "class": "SubWorker",
+            "module": "cloudkid"
+        },
+        {
+            "file": "src/cloudkid/Worker.js",
+            "line": 122,
+            "description": "See https://developer.mozilla.org/en-US/docs/Web/API/Worker.postMessage",
+            "itemtype": "method",
+            "name": "postMessage",
+            "params": [
+                {
+                    "name": "data",
+                    "description": "The data to send.",
+                    "type": "*"
+                }
+            ],
+            "class": "SubWorker",
+            "module": "cloudkid"
+        },
+        {
+            "file": "src/cloudkid/Worker.js",
+            "line": 146,
+            "description": "See https://developer.mozilla.org/en-US/docs/Web/API/Worker.postMessage",
+            "itemtype": "method",
+            "name": "postMessage",
+            "params": [
+                {
+                    "name": "data",
+                    "description": "The data to send.",
+                    "type": "*"
+                }
+            ],
+            "class": "FallbackWorker",
+            "module": "cloudkid"
+        },
+        {
+            "file": "src/cloudkid/Worker.js",
+            "line": 157,
+            "description": "See https://developer.mozilla.org/en-US/docs/Web/API/Worker.terminate",
+            "itemtype": "method",
+            "name": "terminate",
+            "class": "FallbackWorker",
+            "module": "cloudkid"
+        },
+        {
+            "file": "src/cloudkid/Worker.js",
+            "line": 170,
+            "description": "See https://developer.mozilla.org/en-US/docs/Web/API/Worker.onmessage",
+            "itemtype": "property",
+            "name": "onmessage",
+            "type": "Function",
+            "class": "FallbackWorker",
+            "module": "cloudkid"
+        },
+        {
+            "file": "src/cloudkid/Worker.js",
+            "line": 176,
+            "description": "The SubWorker that is controlled by this FallbackWorker.",
+            "itemtype": "property",
+            "name": "_wChild",
+            "type": "SubWorker",
+            "access": "private",
+            "tagname": "",
+            "class": "FallbackWorker",
             "module": "cloudkid"
         }
     ],
