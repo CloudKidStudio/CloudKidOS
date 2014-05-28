@@ -1,6 +1,6 @@
 !function(undefined) {
     var OS = function() {}, p = OS.prototype = new createjs.Container(), _paused = !1, _isReady = !1, _framerate = null, _lastFrameTime = 0, _lastFPSUpdateTime = 0, _framerateValue = null, _frameCount = 0, _tickCallback = null, _instance = null, _tickId = -1, _useRAF = !1, _fps = 0, _msPerFrame = 0;
-    OS.VERSION = "1.1.8", p.Container_initialize = p.initialize, p.stage = null, 
+    OS.VERSION = "1.1.9", p.Container_initialize = p.initialize, p.stage = null, 
     p._app = null, p.options = null, p._updateFunctions = {}, OS.init = function(stageName, options) {
         return _instance || (Debug.log("Creating the singleton instance of OS"), _instance = new OS(), 
         _instance.initialize(stageName, options)), _instance;
@@ -178,7 +178,7 @@
             var frameRect = frame.frame;
             p._frameRect = new createjs.Rectangle(frameRect.x, frameRect.y, frameRect.w, frameRect.h), 
             frame.trimmed ? (p._frameOffsetX = frame.spriteSourceSize.x, p._frameOffsetY = frame.spriteSourceSize.y) : p._frameOffsetX = p._frameOffsetY = 0, 
-            p.nominalBounds = bitmap ? bitmap.nominalBounds : new createjs.Rectangle(0, 0, frame.sourceSize.w, frame.sourceSize.h);
+            p.nominalBounds = bitmap && bitmap.prototype.nominalBounds ? bitmap.prototype.nominalBounds : new createjs.Rectangle(0, 0, frame.sourceSize.w, frame.sourceSize.h);
         }
     }, BitmapUtils.replaceWithScaledBitmap = function(idOrDict, scale) {
         if (1 != scale && scale > 0) {
@@ -187,12 +187,12 @@
                 var child = new this._oldBM();
                 this.addChild(child), child.setTransform(0, 0, this._scale, this._scale);
             }, p = newBitmap.prototype = new createjs.Container(), p._oldBM = bitmap, p._scale = scale, 
-            p.nominalBounds = bitmap.nominalBounds); else for (key in idOrDict) bitmap = lib[key], 
+            p.nominalBounds = bitmap.prototype.nominalBounds); else for (key in idOrDict) bitmap = lib[key], 
             bitmap && (newBitmap = lib[key] = function() {
                 var child = new this._oldBM();
                 this.addChild(child), child.setTransform(0, 0, this._scale, this._scale);
             }, p = newBitmap.prototype = new createjs.Container(), p._oldBM = bitmap, p._scale = scale, 
-            p.nominalBounds = bitmap.nominalBounds);
+            p.nominalBounds = bitmap.prototype.nominalBounds);
         }
     }, namespace("cloudkid").BitmapUtils = BitmapUtils;
 }(), function() {

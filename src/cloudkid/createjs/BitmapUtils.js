@@ -66,15 +66,16 @@
 			}
 			else
 				p._frameOffsetX = p._frameOffsetY = 0;
-			if(bitmap)
-				p.nominalBounds = bitmap.nominalBounds;//keep the nominal bounds from the original bitmap, if it existed
+			if(bitmap && bitmap.prototype.nominalBounds)
+				p.nominalBounds = bitmap.prototype.nominalBounds;//keep the nominal bounds from the original bitmap, if it existed
 			else
 				p.nominalBounds = new createjs.Rectangle(0, 0, frame.sourceSize.w, frame.sourceSize.h);
 		}
 	};
 
 	/**
-	*	Replaces Bitmaps in the global lib dictionary with a version that pulls the image from a spritesheet.
+	*	Replaces Bitmaps in the global lib dictionary with a version that uses a scaled bitmap, so you can load up
+	*	smaller bitmaps behind the scenes that are scaled back up to normal size.
 	*
 	*	@method replaceWithScaledBitmap
 	*	@static
@@ -111,7 +112,7 @@
 				p = newBitmap.prototype = new createjs.Container();
 				p._oldBM = bitmap;//give it a reference to the Bitmap
 				p._scale = scale;//tell it what scale to use on the Bitmap to bring it to normal size
-				p.nominalBounds = bitmap.nominalBounds;//keep the nominal bounds
+				p.nominalBounds = bitmap.prototype.nominalBounds;//keep the nominal bounds
 			}
 		}
 		else
@@ -132,7 +133,7 @@
 					p = newBitmap.prototype = new createjs.Container();
 					p._oldBM = bitmap;//give it a reference to the Bitmap
 					p._scale = scale;//tell it what scale to use on the Bitmap to bring it to normal size
-					p.nominalBounds = bitmap.nominalBounds;//keep the nominal bounds
+					p.nominalBounds = bitmap.prototype.nominalBounds;//keep the nominal bounds
 				}
 			}
 		}
