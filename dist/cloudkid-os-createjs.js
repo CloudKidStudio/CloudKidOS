@@ -1036,6 +1036,7 @@
 			/* jshint ignore:start */
 			var newBitmap = lib[key] = function()
 			{
+				createjs.Container.call(this);
 				var child = new createjs.Bitmap(this._image);
 				this.addChild(child);
 				child.sourceRect = this._frameRect;
@@ -1095,6 +1096,7 @@
 				/* jshint ignore:start */
 				newBitmap = lib[key] = function()
 				{
+					createjs.Container.call(this);
 					var child = new this._oldBM();
 					this.addChild(child);
 					child.setTransform(0, 0, this._scale, this._scale);
@@ -1116,6 +1118,7 @@
 					/* jshint ignore:start */
 					newBitmap = lib[key] = function()
 					{
+						createjs.Container.call(this);
 						var child = new this._oldBM();
 						this.addChild(child);
 						child.setTransform(0, 0, this._scale, this._scale);
@@ -2488,13 +2491,6 @@
 	* @property {Function} _upCB
 	*/
 	p._upCB = null;
-
-	/**
-	* A reference to the mouse down event that was triggered on this button.
-	* @private
-	* @property {createjs.MouseEvent} _downEvent
-	*/
-	p._downEvent = null;
 	
 	//===button state variables
 	/**
@@ -2818,8 +2814,7 @@
 	*/
 	p._onMouseDown = function(e)
 	{
-		this._downEvent = e;
-		this._downEvent.target.addEventListener('pressup', this._upCB);
+		this.addEventListener('pressup', this._upCB);
 		this._isDown = true;
 		this._updateState();
 	};
@@ -2832,8 +2827,7 @@
 	*/
 	p._onMouseUp = function(e)
 	{
-		this._downEvent.target.removeEventListener('pressup', this._upCB);
-		this._downEvent = null;
+		this.removeEventListener('pressup', this._upCB);
 		this._isDown = false;
 		this._updateState();
 	};
@@ -2845,7 +2839,6 @@
 	*/
 	p._onMouseOver = function(e)
 	{
-		if(this._downEvent && this._downEvent.nativeEvent.type != 'mousedown') return;
 		this._isOver = true;
 		this._updateState();
 	};
@@ -2880,11 +2873,6 @@
 		this._upCB = null;
 		this._overCB = null;
 		this._outCB = null;
-		if(this._downEvent)
-		{
-			this._downEvent.target.removeEventListener('mouseup', this._upCB);
-			this._downEvent = null;
-		}
 		this.back = null;
 		this.label = null;
 	};
@@ -2921,13 +2909,6 @@
 	* @property {function} _updateCallback 
 	*/
 	p._updateCallback = null;
-	
-	/**
-	* The moust down event while draggin
-	* @private
-	* @property {createjs.MouseEvent} _mouseDownEvent 
-	*/
-	p._mouseDownEvent = null;
 	
 	/**
 	* The object that's being dragged
@@ -3090,41 +3071,45 @@
 		if(this.draggedObj !== null) return;
 
 		this.draggedObj = obj;
-		createjs.Tween.removeTweens(this.draggedObj);
+		//stop any active tweens on the object, in case it is moving around or something
+		createjs.Tween.removeTweens(obj);
 		
-		//get the mouse postion in object space
-		this._dragOffset = this.draggedObj.globalToLocal(ev.stageX, ev.stageY);
-		
-		//get that object space position and convert it to parent space
-		this._dragOffset = this.draggedObj.localToLocal(this._dragOffset.x, this._dragOffset.y, this.draggedObj.parent);
+		//get the mouse position in global space and convert it to parent space
+		this._dragOffset = this.draggedObj.parent.globalToLocal(ev ? ev.stageX : 0, ev ? ev.stageY : 0);
 		
 		//move the offset to respect the object's current position
-		this._dragOffset.x -= this.draggedObj.x;
-		this._dragOffset.y -= this.draggedObj.y;
+		this._dragOffset.x -= obj.x;
+		this._dragOffset.y -= obj.y;
 
-		this.mouseDownObjPos.x = this.draggedObj.x;
-		this.mouseDownObjPos.y = this.draggedObj.y;
+		//save the position of the object before dragging began, for easy restoration, if desired
+		this.mouseDownObjPos.x = obj.x;
+		this.mouseDownObjPos.y = obj.y;
 		
 		if(!ev)//if we don't get an event (manual call neglected to pass one) then default to a held drag
 		{
 			this.isHeldDrag = true;
 			this._startDrag();
 		}
-		else if(ev.nativeEvent.type == 'touchstart')//if it is a touch event, force it to be the held drag type
+		else
 		{
-			this.mouseDownStagePos.x = ev.stageX;
-			this.mouseDownStagePos.y = ev.stageY;
-			this.isTouchMove = true;
-			this.isHeldDrag = true;
-			this._startDrag();
-		}
-		else//otherwise, wait for a movement or a mouse up in order to do a held drag or a sticky click drag
-		{
-			this.mouseDownStagePos.x = ev.stageX;
-			this.mouseDownStagePos.y = ev.stageY;
-			this._mouseDownEvent = ev;
-			ev.target.addEventListener("pressmove", this._triggerHeldDragCallback);
-			ev.target.addEventListener("pressup", this._triggerStickyClickCallback);
+			//override the target for the mousedown/touchstart event to be this object, in case we are dragging a cloned object
+			this._theStage._getPointerData(ev.pointerID).target = obj;
+
+			if(ev.nativeEvent.type == 'touchstart')//if it is a touch event, force it to be the held drag type
+			{
+				this.mouseDownStagePos.x = ev.stageX;
+				this.mouseDownStagePos.y = ev.stageY;
+				this.isTouchMove = true;
+				this.isHeldDrag = true;
+				this._startDrag();
+			}
+			else//otherwise, wait for a movement or a mouse up in order to do a held drag or a sticky click drag
+			{
+				this.mouseDownStagePos.x = ev.stageX;
+				this.mouseDownStagePos.y = ev.stageY;
+				obj.addEventListener("pressmove", this._triggerHeldDragCallback);
+				obj.addEventListener("pressup", this._triggerStickyClickCallback);
+			}
 		}
 	};
 	
@@ -3136,8 +3121,8 @@
 	p._triggerStickyClick = function()
 	{
 		this.isStickyClick = true;
-		this._mouseDownEvent.target.removeAllEventListeners();
-		this._mouseDownEvent = null;
+		this.draggedObj.removeEventListener("pressmove", this._triggerHeldDragCallback);
+		this.draggedObj.removeEventListener("pressup", this._triggerStickyClickCallback);
 		this._startDrag();
 	};
 
@@ -3154,8 +3139,8 @@
 		if(xDiff * xDiff + yDiff * yDiff >= this.dragStartThreshold * this.dragStartThreshold)
 		{
 			this.isHeldDrag = true;
-			this._mouseDownEvent.target.removeAllEventListeners();
-			this._mouseDownEvent = null;
+			this.draggedObj.removeEventListener("pressmove", this._triggerHeldDragCallback);
+			this.draggedObj.removeEventListener("pressup", this._triggerStickyClickCallback);
 			this._startDrag();
 		}
 	};
@@ -3167,10 +3152,11 @@
 	*/
 	p._startDrag = function()
 	{
-		this._theStage.removeEventListener("stagemousemove", this._updateCallback);
-		this._theStage.addEventListener("stagemousemove", this._updateCallback);
-		this._theStage.removeEventListener("stagemouseup", this._stageMouseUpCallback);
-		this._theStage.addEventListener("stagemouseup", this._stageMouseUpCallback);
+		var stage = this._theStage;
+		stage.removeEventListener("stagemousemove", this._updateCallback);
+		stage.addEventListener("stagemousemove", this._updateCallback);
+		stage.removeEventListener("stagemouseup", this._stageMouseUpCallback);
+		stage.addEventListener("stagemouseup", this._stageMouseUpCallback);
 		
 		this._dragStartCallback(this.draggedObj);
 	};
@@ -3195,14 +3181,11 @@
 	*/
 	p._stopDrag = function(ev, doCallback)
 	{
-		if(this._mouseDownEvent !== null)
-		{
-			this._mouseDownEvent.target.removeAllEventListeners();
-			this._mouseDownEvent = null;
-		}
+		var obj = this.draggedObj;
+		obj.removeEventListener("pressmove", this._triggerHeldDragCallback);
+		obj.removeEventListener("pressup", this._triggerStickyClickCallback);
 		this._theStage.removeEventListener("stagemousemove", this._updateCallback);
 		this._theStage.removeEventListener("stagemouseup", this._stageMouseUpCallback);
-		var obj = this.draggedObj;
 		this.draggedObj = null;
 		this.isTouchMove = false;
 		this.isStickyClick = false;
@@ -3314,8 +3297,8 @@
 		if(this.draggedObj !== null)
 		{
 			//clean up dragged obj
-			this._mouseDownEvent.target.removeAllEventListeners();
-			this._mouseDownEvent = null;
+			this.draggedObj.removeEventListener("pressmove", this._triggerHeldDragCallback);
+			this.draggedObj.removeEventListener("pressup", this._triggerStickyClickCallback);
 			this._theStage.removeEventListener("stagemousemove", this._updateCallback);
 			this.draggedObj = null;
 		}

@@ -108,13 +108,6 @@
 	* @property {Function} _upCB
 	*/
 	p._upCB = null;
-
-	/**
-	* A reference to the mouse down event that was triggered on this button.
-	* @private
-	* @property {createjs.MouseEvent} _downEvent
-	*/
-	p._downEvent = null;
 	
 	//===button state variables
 	/**
@@ -438,8 +431,7 @@
 	*/
 	p._onMouseDown = function(e)
 	{
-		this._downEvent = e;
-		this._downEvent.target.addEventListener('pressup', this._upCB);
+		this.addEventListener('pressup', this._upCB);
 		this._isDown = true;
 		this._updateState();
 	};
@@ -452,8 +444,7 @@
 	*/
 	p._onMouseUp = function(e)
 	{
-		this._downEvent.target.removeEventListener('pressup', this._upCB);
-		this._downEvent = null;
+		this.removeEventListener('pressup', this._upCB);
 		this._isDown = false;
 		this._updateState();
 	};
@@ -465,7 +456,6 @@
 	*/
 	p._onMouseOver = function(e)
 	{
-		if(this._downEvent && this._downEvent.nativeEvent.type != 'mousedown') return;
 		this._isOver = true;
 		this._updateState();
 	};
@@ -500,11 +490,6 @@
 		this._upCB = null;
 		this._overCB = null;
 		this._outCB = null;
-		if(this._downEvent)
-		{
-			this._downEvent.target.removeEventListener('mouseup', this._upCB);
-			this._downEvent = null;
-		}
 		this.back = null;
 		this.label = null;
 	};

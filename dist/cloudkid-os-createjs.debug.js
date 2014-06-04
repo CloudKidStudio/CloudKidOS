@@ -1,6 +1,6 @@
 !function(undefined) {
     var OS = function() {}, p = OS.prototype = new createjs.Container(), _paused = !1, _isReady = !1, _framerate = null, _lastFrameTime = 0, _lastFPSUpdateTime = 0, _framerateValue = null, _frameCount = 0, _tickCallback = null, _instance = null, _tickId = -1, _useRAF = !1, _fps = 0, _msPerFrame = 0;
-    OS.VERSION = "1.1.10", p.Container_initialize = p.initialize, p.stage = null, 
+    OS.VERSION = "1.1.11", p.Container_initialize = p.initialize, p.stage = null, 
     p._app = null, p.options = null, p._updateFunctions = {}, OS.init = function(stageName, options) {
         return _instance || (Debug.log("Creating the singleton instance of OS"), _instance = new OS(), 
         _instance.initialize(stageName, options)), _instance;
@@ -169,6 +169,7 @@
             var frame = frameDict[key], index = key.indexOf(".");
             index > 0 && (key = key.substring(0, index));
             var bitmap = lib[key], newBitmap = lib[key] = function() {
+                createjs.Container.call(this);
                 var child = new createjs.Bitmap(this._image);
                 this.addChild(child), child.sourceRect = this._frameRect;
                 var s = this._scale;
@@ -184,11 +185,13 @@
         if (1 != scale && scale > 0) {
             var key, bitmap, newBitmap, p;
             if ("string" == typeof idOrDict) key = idOrDict, bitmap = lib[key], bitmap && (newBitmap = lib[key] = function() {
+                createjs.Container.call(this);
                 var child = new this._oldBM();
                 this.addChild(child), child.setTransform(0, 0, this._scale, this._scale);
             }, p = newBitmap.prototype = new createjs.Container(), p._oldBM = bitmap, p._scale = scale, 
             p.nominalBounds = bitmap.prototype.nominalBounds); else for (key in idOrDict) bitmap = lib[key], 
             bitmap && (newBitmap = lib[key] = function() {
+                createjs.Container.call(this);
                 var child = new this._oldBM();
                 this.addChild(child), child.setTransform(0, 0, this._scale, this._scale);
             }, p = newBitmap.prototype = new createjs.Container(), p._oldBM = bitmap, p._scale = scale, 
@@ -453,10 +456,10 @@
         imageSettings && this.initialize(imageSettings, label, enabled);
     }, p = Button.prototype = new createjs.Container(), s = createjs.Container.prototype;
     p.back = null, p.label = null, p._overCB = null, p._outCB = null, p._downCB = null, 
-    p._upCB = null, p._downEvent = null, p._enabled = !1, p._isDown = !1, p._isOver = !1, 
-    p._isSelected = !1, p._isSelectable = !1, p._isHighlighted = !1, p._upRects = null, 
-    p._overRects = null, p._downRects = null, p._disabledRects = null, p._selectedRects = null, 
-    p._highlightedRects = null, p._width = 0, p._height = 0, p.initialize = function(imageSettings, label, enabled) {
+    p._upCB = null, p._enabled = !1, p._isDown = !1, p._isOver = !1, p._isSelected = !1, 
+    p._isSelectable = !1, p._isHighlighted = !1, p._upRects = null, p._overRects = null, 
+    p._downRects = null, p._disabledRects = null, p._selectedRects = null, p._highlightedRects = null, 
+    p._width = 0, p._height = 0, p.initialize = function(imageSettings, label, enabled) {
         s.initialize.call(this), this._downCB = this._onMouseDown.bind(this), this._upCB = this._onMouseUp.bind(this), 
         this._overCB = this._onMouseOver.bind(this), this._outCB = this._onMouseOut.bind(this);
         var image, width, height;
@@ -531,35 +534,30 @@
             data = this._isHighlighted ? this._highlightedRects : this._enabled ? this._isDown ? this._downRects : this._isOver ? this._overRects : this._isSelected ? this._selectedRects : this._upRects : this._disabledRects, 
             this.back.sourceRect = data.src, data.trim ? (this.back.x = data.trim.x, this.back.y = data.trim.y) : this.back.x = this.back.y = 0;
         }
-    }, p._onMouseDown = function(e) {
-        this._downEvent = e, this._downEvent.target.addEventListener("pressup", this._upCB), 
-        this._isDown = !0, this._updateState();
+    }, p._onMouseDown = function() {
+        this.addEventListener("pressup", this._upCB), this._isDown = !0, this._updateState();
     }, p._onMouseUp = function() {
-        this._downEvent.target.removeEventListener("pressup", this._upCB), this._downEvent = null, 
-        this._isDown = !1, this._updateState();
+        this.removeEventListener("pressup", this._upCB), this._isDown = !1, this._updateState();
     }, p._onMouseOver = function() {
-        this._downEvent && "mousedown" != this._downEvent.nativeEvent.type || (this._isOver = !0, 
-        this._updateState());
+        this._isOver = !0, this._updateState();
     }, p._onMouseOut = function() {
         this._isOver = !1, this._updateState();
     }, p.destroy = function() {
         this.removeAllChildren(), this.removeAllEventListeners(), this._upRects = null, 
         this._overRects = null, this._downRects = null, this._disabledRects = null, this._selectedRects = null, 
         this._highlightedRects = null, this._downCB = null, this._upCB = null, this._overCB = null, 
-        this._outCB = null, this._downEvent && (this._downEvent.target.removeEventListener("mouseup", this._upCB), 
-        this._downEvent = null), this.back = null, this.label = null;
+        this._outCB = null, this.back = null, this.label = null;
     }, namespace("cloudkid").Button = Button;
 }(), function() {
     "use strict";
     var DragManager = function(startCallback, endCallback) {
         this.initialize(startCallback, endCallback);
     }, p = DragManager.prototype = {};
-    p._updateCallback = null, p._mouseDownEvent = null, p.draggedObj = null, p._dragOffset = null, 
-    p.dragStartThreshold = 20, p.mouseDownStagePos = null, p.mouseDownObjPos = null, 
-    p.isTouchMove = !1, p.isHeldDrag = !1, p.isStickyClick = !1, p._theStage = null, 
-    p._dragStartCallback = null, p._dragEndCallback = null, p._triggerHeldDragCallback = null, 
-    p._triggerStickyClickCallback = null, p._stageMouseUpCallback = null, p._draggableObjects = null, 
-    p.initialize = function(startCallback, endCallback) {
+    p._updateCallback = null, p.draggedObj = null, p._dragOffset = null, p.dragStartThreshold = 20, 
+    p.mouseDownStagePos = null, p.mouseDownObjPos = null, p.isTouchMove = !1, p.isHeldDrag = !1, 
+    p.isStickyClick = !1, p._theStage = null, p._dragStartCallback = null, p._dragEndCallback = null, 
+    p._triggerHeldDragCallback = null, p._triggerStickyClickCallback = null, p._stageMouseUpCallback = null, 
+    p._draggableObjects = null, p.initialize = function(startCallback, endCallback) {
         this._updateCallback = this._updateObjPosition.bind(this), this._triggerHeldDragCallback = this._triggerHeldDrag.bind(this), 
         this._triggerStickyClickCallback = this._triggerStickyClick.bind(this), this._stageMouseUpCallback = this._stopDrag.bind(this), 
         this._theStage = cloudkid.OS.instance.stage, this._dragStartCallback = startCallback, 
@@ -573,35 +571,36 @@
     }, p.startDrag = function(object, ev) {
         this._objMouseDown(ev, object);
     }, p._objMouseDown = function(ev, obj) {
-        null === this.draggedObj && (this.draggedObj = obj, createjs.Tween.removeTweens(this.draggedObj), 
-        this._dragOffset = this.draggedObj.globalToLocal(ev.stageX, ev.stageY), this._dragOffset = this.draggedObj.localToLocal(this._dragOffset.x, this._dragOffset.y, this.draggedObj.parent), 
-        this._dragOffset.x -= this.draggedObj.x, this._dragOffset.y -= this.draggedObj.y, 
-        this.mouseDownObjPos.x = this.draggedObj.x, this.mouseDownObjPos.y = this.draggedObj.y, 
-        ev ? "touchstart" == ev.nativeEvent.type ? (this.mouseDownStagePos.x = ev.stageX, 
-        this.mouseDownStagePos.y = ev.stageY, this.isTouchMove = !0, this.isHeldDrag = !0, 
-        this._startDrag()) : (this.mouseDownStagePos.x = ev.stageX, this.mouseDownStagePos.y = ev.stageY, 
-        this._mouseDownEvent = ev, ev.target.addEventListener("pressmove", this._triggerHeldDragCallback), 
-        ev.target.addEventListener("pressup", this._triggerStickyClickCallback)) : (this.isHeldDrag = !0, 
+        null === this.draggedObj && (this.draggedObj = obj, createjs.Tween.removeTweens(obj), 
+        this._dragOffset = this.draggedObj.parent.globalToLocal(ev ? ev.stageX : 0, ev ? ev.stageY : 0), 
+        this._dragOffset.x -= obj.x, this._dragOffset.y -= obj.y, this.mouseDownObjPos.x = obj.x, 
+        this.mouseDownObjPos.y = obj.y, ev ? (this._theStage._getPointerData(ev.pointerID).target = obj, 
+        "touchstart" == ev.nativeEvent.type ? (this.mouseDownStagePos.x = ev.stageX, this.mouseDownStagePos.y = ev.stageY, 
+        this.isTouchMove = !0, this.isHeldDrag = !0, this._startDrag()) : (this.mouseDownStagePos.x = ev.stageX, 
+        this.mouseDownStagePos.y = ev.stageY, obj.addEventListener("pressmove", this._triggerHeldDragCallback), 
+        obj.addEventListener("pressup", this._triggerStickyClickCallback))) : (this.isHeldDrag = !0, 
         this._startDrag()));
     }, p._triggerStickyClick = function() {
-        this.isStickyClick = !0, this._mouseDownEvent.target.removeAllEventListeners(), 
-        this._mouseDownEvent = null, this._startDrag();
+        this.isStickyClick = !0, this.draggedObj.removeEventListener("pressmove", this._triggerHeldDragCallback), 
+        this.draggedObj.removeEventListener("pressup", this._triggerStickyClickCallback), 
+        this._startDrag();
     }, p._triggerHeldDrag = function(ev) {
         var xDiff = ev.stageX - this.mouseDownStagePos.x, yDiff = ev.stageY - this.mouseDownStagePos.y;
         xDiff * xDiff + yDiff * yDiff >= this.dragStartThreshold * this.dragStartThreshold && (this.isHeldDrag = !0, 
-        this._mouseDownEvent.target.removeAllEventListeners(), this._mouseDownEvent = null, 
+        this.draggedObj.removeEventListener("pressmove", this._triggerHeldDragCallback), 
+        this.draggedObj.removeEventListener("pressup", this._triggerStickyClickCallback), 
         this._startDrag());
     }, p._startDrag = function() {
-        this._theStage.removeEventListener("stagemousemove", this._updateCallback), this._theStage.addEventListener("stagemousemove", this._updateCallback), 
-        this._theStage.removeEventListener("stagemouseup", this._stageMouseUpCallback), 
-        this._theStage.addEventListener("stagemouseup", this._stageMouseUpCallback), this._dragStartCallback(this.draggedObj);
+        var stage = this._theStage;
+        stage.removeEventListener("stagemousemove", this._updateCallback), stage.addEventListener("stagemousemove", this._updateCallback), 
+        stage.removeEventListener("stagemouseup", this._stageMouseUpCallback), stage.addEventListener("stagemouseup", this._stageMouseUpCallback), 
+        this._dragStartCallback(this.draggedObj);
     }, p.stopDrag = function(doCallback) {
         this._stopDrag(null, doCallback === !0);
     }, p._stopDrag = function(ev, doCallback) {
-        null !== this._mouseDownEvent && (this._mouseDownEvent.target.removeAllEventListeners(), 
-        this._mouseDownEvent = null), this._theStage.removeEventListener("stagemousemove", this._updateCallback), 
-        this._theStage.removeEventListener("stagemouseup", this._stageMouseUpCallback);
         var obj = this.draggedObj;
+        obj.removeEventListener("pressmove", this._triggerHeldDragCallback), obj.removeEventListener("pressup", this._triggerStickyClickCallback), 
+        this._theStage.removeEventListener("stagemousemove", this._updateCallback), this._theStage.removeEventListener("stagemouseup", this._stageMouseUpCallback), 
         this.draggedObj = null, this.isTouchMove = !1, this.isStickyClick = !1, this.isHeldMove = !1, 
         doCallback !== !1 && this._dragEndCallback(obj);
     }, p._updateObjPosition = function(e) {
@@ -636,11 +635,12 @@
         var index = this._draggableObjects.indexOf(obj);
         index >= 0 && this._draggableObjects.splice(index, 1);
     }, p.destroy = function() {
-        null !== this.draggedObj && (this._mouseDownEvent.target.removeAllEventListeners(), 
-        this._mouseDownEvent = null, this._theStage.removeEventListener("stagemousemove", this._updateCallback), 
-        this.draggedObj = null), this._updateCallback = null, this._dragStartCallback = null, 
-        this._dragEndCallback = null, this._triggerHeldDragCallback = null, this._triggerStickyClickCallback = null, 
-        this._stageMouseUpCallback = null, this._theStage = null;
+        null !== this.draggedObj && (this.draggedObj.removeEventListener("pressmove", this._triggerHeldDragCallback), 
+        this.draggedObj.removeEventListener("pressup", this._triggerStickyClickCallback), 
+        this._theStage.removeEventListener("stagemousemove", this._updateCallback), this.draggedObj = null), 
+        this._updateCallback = null, this._dragStartCallback = null, this._dragEndCallback = null, 
+        this._triggerHeldDragCallback = null, this._triggerStickyClickCallback = null, this._stageMouseUpCallback = null, 
+        this._theStage = null;
         for (var i = this._draggableObjects.length - 1; i >= 0; --i) {
             var obj = this._draggableObjects[i];
             obj.disableDrag(), delete obj.enableDrag, delete obj.disableDrag, delete obj._onMouseDownListener, 

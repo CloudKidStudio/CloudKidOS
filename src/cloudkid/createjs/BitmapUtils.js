@@ -43,6 +43,7 @@
 			/* jshint ignore:start */
 			var newBitmap = lib[key] = function()
 			{
+				createjs.Container.call(this);
 				var child = new createjs.Bitmap(this._image);
 				this.addChild(child);
 				child.sourceRect = this._frameRect;
@@ -102,6 +103,7 @@
 				/* jshint ignore:start */
 				newBitmap = lib[key] = function()
 				{
+					createjs.Container.call(this);
 					var child = new this._oldBM();
 					this.addChild(child);
 					child.setTransform(0, 0, this._scale, this._scale);
@@ -123,6 +125,7 @@
 					/* jshint ignore:start */
 					newBitmap = lib[key] = function()
 					{
+						createjs.Container.call(this);
 						var child = new this._oldBM();
 						this.addChild(child);
 						child.setTransform(0, 0, this._scale, this._scale);
