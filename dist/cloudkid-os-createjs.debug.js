@@ -1,6 +1,6 @@
 !function(undefined) {
     var OS = function() {}, p = OS.prototype = new createjs.Container(), _paused = !1, _isReady = !1, _framerate = null, _lastFrameTime = 0, _lastFPSUpdateTime = 0, _framerateValue = null, _frameCount = 0, _tickCallback = null, _instance = null, _tickId = -1, _useRAF = !1, _fps = 0, _msPerFrame = 0;
-    OS.VERSION = "1.1.9", p.Container_initialize = p.initialize, p.stage = null, 
+    OS.VERSION = "1.1.10", p.Container_initialize = p.initialize, p.stage = null, 
     p._app = null, p.options = null, p._updateFunctions = {}, OS.init = function(stageName, options) {
         return _instance || (Debug.log("Creating the singleton instance of OS"), _instance = new OS(), 
         _instance.initialize(stageName, options)), _instance;
@@ -172,7 +172,7 @@
                 var child = new createjs.Bitmap(this._image);
                 this.addChild(child), child.sourceRect = this._frameRect;
                 var s = this._scale;
-                child.x = this._frameOffsetX * s, child.y = this._frameOffsetY * s, child.setTransform(0, 0, s, s);
+                child.setTransform(this._frameOffsetX * s, this._frameOffsetY * s, s, s);
             }, p = newBitmap.prototype = new createjs.Container();
             p._image = spritesheetImage, p._scale = scale;
             var frameRect = frame.frame;

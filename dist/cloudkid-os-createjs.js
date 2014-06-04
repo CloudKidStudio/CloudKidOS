@@ -1040,9 +1040,7 @@
 				this.addChild(child);
 				child.sourceRect = this._frameRect;
 				var s = this._scale;
-				child.x = this._frameOffsetX * s;
-				child.y = this._frameOffsetY * s;
-				child.setTransform(0, 0, s, s);
+				child.setTransform(this._frameOffsetX * s, this._frameOffsetY * s, s, s);
 			};
 			/* jshint ignore:end */
 			var p = newBitmap.prototype = new createjs.Container();
