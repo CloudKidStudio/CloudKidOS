@@ -2,7 +2,7 @@
     "project": {
         "name": "CloudKid OS API",
         "description": "CloudKid OS API: A framework for HTML5 content built on top of createjs",
-        "version": "1.1.8",
+        "version": "1.1.11",
         "logo": ""
     },
     "files": {
@@ -988,8 +988,8 @@
         },
         {
             "file": "src/cloudkid/createjs/BitmapUtils.js",
-            "line": 76,
-            "description": "Replaces Bitmaps in the global lib dictionary with a version that pulls the image from a spritesheet.",
+            "line": 75,
+            "description": "Replaces Bitmaps in the global lib dictionary with a version that uses a scaled bitmap, so you can load up\nsmaller bitmaps behind the scenes that are scaled back up to normal size.",
             "itemtype": "method",
             "name": "replaceWithScaledBitmap",
             "static": 1,
@@ -1085,19 +1085,7 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 112,
-            "description": "A reference to the mouse down event that was triggered on this button.",
-            "access": "private",
-            "tagname": "",
-            "itemtype": "property",
-            "name": "_downEvent",
-            "type": "createjs.MouseEvent",
-            "class": "Button (CreateJS)",
-            "module": "cloudkid"
-        },
-        {
-            "file": "src/cloudkid/createjs/Button.js",
-            "line": 120,
+            "line": 113,
             "description": "If this button is enabled.",
             "access": "private",
             "tagname": "",
@@ -1109,7 +1097,7 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 127,
+            "line": 120,
             "description": "If this button is held down.",
             "access": "private",
             "tagname": "",
@@ -1121,7 +1109,7 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 134,
+            "line": 127,
             "description": "If the mouse is over this button",
             "access": "private",
             "tagname": "",
@@ -1133,7 +1121,7 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 141,
+            "line": 134,
             "description": "If this button is selected.",
             "access": "private",
             "tagname": "",
@@ -1145,7 +1133,7 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 148,
+            "line": 141,
             "description": "If this button is a selectable button, and will respond to select being set.",
             "access": "private",
             "tagname": "",
@@ -1157,7 +1145,7 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 155,
+            "line": 148,
             "description": "If this button is highlighted.",
             "access": "private",
             "tagname": "",
@@ -1169,7 +1157,7 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 164,
+            "line": 157,
             "description": "[CreateJS only] An object noting the rectangles for the button up state. This should have a src property\n\tand an optional trim property, both createjs.Rectangles.",
             "access": "private",
             "tagname": "",
@@ -1181,7 +1169,7 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 172,
+            "line": 165,
             "description": "[CreateJS only] An object noting the rectangles for the button over state. This should have a src property\n\tand an optional trim property, both createjs.Rectangles.",
             "access": "private",
             "tagname": "",
@@ -1193,7 +1181,7 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 180,
+            "line": 173,
             "description": "[CreateJS only] An object noting the rectangles for the button down state. This should have a src property\n\tand an optional trim property, both createjs.Rectangles.",
             "access": "private",
             "tagname": "",
@@ -1205,7 +1193,7 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 188,
+            "line": 181,
             "description": "[CreateJS only] An object noting the rectangles for the button disabled state. This should have a src property\n\tand an optional trim property, both createjs.Rectangles.",
             "access": "private",
             "tagname": "",
@@ -1217,7 +1205,7 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 196,
+            "line": 189,
             "description": "[CreateJS only] An object noting the rectangles for the button selected state. This should have a src property\n\tand an optional trim property, both createjs.Rectangles.",
             "access": "private",
             "tagname": "",
@@ -1229,7 +1217,7 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 204,
+            "line": 197,
             "description": "[CreateJS only] An object noting the rectangles for the button highlighted state. This should have a src property\n\tand an optional trim property, both createjs.Rectangles.",
             "access": "private",
             "tagname": "",
@@ -1241,7 +1229,7 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 212,
+            "line": 205,
             "description": "The width of the button art, independent of the scaling of the button itself.",
             "access": "private",
             "tagname": "",
@@ -1253,7 +1241,7 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 219,
+            "line": 212,
             "description": "The height of the button art, independent of the scaling of the button itself.",
             "access": "private",
             "tagname": "",
@@ -1265,7 +1253,7 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 226,
+            "line": 219,
             "description": "[CreateJS only] Constructor for the button when using CreateJS.",
             "itemtype": "method",
             "name": "initialize",
@@ -1282,7 +1270,7 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 300,
+            "line": 293,
             "description": "The width of the button, based on the width of back. This value is affected by scale.",
             "itemtype": "property",
             "name": "width",
@@ -1292,7 +1280,7 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 311,
+            "line": 304,
             "description": "The height of the button, based on the height of back. This value is affected by scale.",
             "itemtype": "property",
             "name": "height",
@@ -1302,7 +1290,7 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 322,
+            "line": 315,
             "description": "Sets the text of the label. This does nothing if the button was not initialized with a label.",
             "access": "public",
             "tagname": "",
@@ -1320,7 +1308,7 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 339,
+            "line": 332,
             "description": "Whether or not the button is enabled.",
             "itemtype": "property",
             "name": "enabled",
@@ -1331,7 +1319,7 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 370,
+            "line": 363,
             "description": "Whether or not the button is selected. Setting this only works if the button was given selected state when initialized.",
             "itemtype": "property",
             "name": "selected",
@@ -1342,7 +1330,7 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 387,
+            "line": 380,
             "description": "Whether or not the button is highlighted. The default highlighted state is the over state, but a specific texture can be supplied.",
             "itemtype": "property",
             "name": "highlighted",
@@ -1353,7 +1341,7 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 401,
+            "line": 394,
             "description": "Updates back based on the current button state.",
             "access": "private",
             "tagname": "",
@@ -1364,7 +1352,7 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 434,
+            "line": 427,
             "description": "[CreateJS only] The callback for when the button receives a mouse down event.",
             "access": "private",
             "tagname": "",
@@ -1375,7 +1363,7 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 447,
+            "line": 439,
             "description": "The callback for when the button for when the mouse/touch is released on the button\n- only when the button was held down initially.",
             "access": "private",
             "tagname": "",
@@ -1386,7 +1374,7 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 461,
+            "line": 452,
             "description": "[CreateJS only] The callback for when the button is moused over.",
             "access": "private",
             "tagname": "",
@@ -1397,7 +1385,7 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 473,
+            "line": 463,
             "description": "[CreateJS only] The callback for when the mouse leaves the button area.",
             "access": "private",
             "tagname": "",
@@ -1408,7 +1396,7 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 484,
+            "line": 474,
             "description": "Destroys the button.",
             "access": "public",
             "tagname": "",
@@ -1438,18 +1426,6 @@
         {
             "file": "src/cloudkid/createjs/DragManager.js",
             "line": 32,
-            "description": "The moust down event while draggin",
-            "access": "private",
-            "tagname": "",
-            "itemtype": "property",
-            "name": "_mouseDownEvent",
-            "type": "createjs.MouseEvent",
-            "class": "DragManager (CreateJS)",
-            "module": "cloudkid"
-        },
-        {
-            "file": "src/cloudkid/createjs/DragManager.js",
-            "line": 39,
             "description": "The object that's being dragged",
             "access": "public",
             "tagname": "",
@@ -1462,7 +1438,7 @@
         },
         {
             "file": "src/cloudkid/createjs/DragManager.js",
-            "line": 47,
+            "line": 40,
             "description": "The local to global position of the drag",
             "access": "private",
             "tagname": "",
@@ -1474,7 +1450,7 @@
         },
         {
             "file": "src/cloudkid/createjs/DragManager.js",
-            "line": 54,
+            "line": 47,
             "description": "The radius in pixel to allow for dragging, or else does sticky click",
             "access": "public",
             "tagname": "",
@@ -1486,7 +1462,7 @@
         },
         {
             "file": "src/cloudkid/createjs/DragManager.js",
-            "line": 62,
+            "line": 55,
             "description": "The position x, y of the mouse down on the stage",
             "access": "private",
             "tagname": "",
@@ -1498,7 +1474,7 @@
         },
         {
             "file": "src/cloudkid/createjs/DragManager.js",
-            "line": 69,
+            "line": 62,
             "description": "The position x, y of the object when interaction with it started.",
             "access": "private",
             "tagname": "",
@@ -1510,7 +1486,7 @@
         },
         {
             "file": "src/cloudkid/createjs/DragManager.js",
-            "line": 76,
+            "line": 69,
             "description": "Is the move touch based",
             "access": "public",
             "tagname": "",
@@ -1524,7 +1500,7 @@
         },
         {
             "file": "src/cloudkid/createjs/DragManager.js",
-            "line": 85,
+            "line": 78,
             "description": "Is the drag being held on mouse down (not sticky clicking)",
             "access": "public",
             "tagname": "",
@@ -1538,7 +1514,7 @@
         },
         {
             "file": "src/cloudkid/createjs/DragManager.js",
-            "line": 94,
+            "line": 87,
             "description": "Is the drag a sticky clicking (click on a item, then mouse the mouse)",
             "access": "public",
             "tagname": "",
@@ -1552,7 +1528,7 @@
         },
         {
             "file": "src/cloudkid/createjs/DragManager.js",
-            "line": 103,
+            "line": 96,
             "description": "Reference to the stage",
             "access": "private",
             "tagname": "",
@@ -1564,7 +1540,7 @@
         },
         {
             "file": "src/cloudkid/createjs/DragManager.js",
-            "line": 110,
+            "line": 103,
             "description": "Callback when we start dragging",
             "access": "private",
             "tagname": "",
@@ -1576,7 +1552,7 @@
         },
         {
             "file": "src/cloudkid/createjs/DragManager.js",
-            "line": 117,
+            "line": 110,
             "description": "Callback when we are done dragging",
             "access": "private",
             "tagname": "",
@@ -1588,7 +1564,7 @@
         },
         {
             "file": "src/cloudkid/createjs/DragManager.js",
-            "line": 124,
+            "line": 117,
             "description": "Callback when we are done dragging holding drag",
             "access": "private",
             "tagname": "",
@@ -1600,7 +1576,7 @@
         },
         {
             "file": "src/cloudkid/createjs/DragManager.js",
-            "line": 131,
+            "line": 124,
             "description": "Callback when we are done width sticky clicking",
             "access": "private",
             "tagname": "",
@@ -1612,7 +1588,7 @@
         },
         {
             "file": "src/cloudkid/createjs/DragManager.js",
-            "line": 138,
+            "line": 131,
             "description": "Callback when we are done width sticky clicking",
             "access": "private",
             "tagname": "",
@@ -1624,7 +1600,7 @@
         },
         {
             "file": "src/cloudkid/createjs/DragManager.js",
-            "line": 145,
+            "line": 138,
             "description": "The collection of draggable objects",
             "access": "private",
             "tagname": "",
@@ -1636,7 +1612,7 @@
         },
         {
             "file": "src/cloudkid/createjs/DragManager.js",
-            "line": 152,
+            "line": 145,
             "description": "Constructor",
             "itemtype": "method",
             "name": "initialize",
@@ -1658,7 +1634,7 @@
         },
         {
             "file": "src/cloudkid/createjs/DragManager.js",
-            "line": 173,
+            "line": 166,
             "description": "Manually starts dragging an object. If a mouse down event is not supplied as the second argument, it \n   defaults to a held drag, that ends as soon as the mouse is released.",
             "itemtype": "method",
             "name": "startDrag",
@@ -1681,7 +1657,7 @@
         },
         {
             "file": "src/cloudkid/createjs/DragManager.js",
-            "line": 186,
+            "line": 179,
             "description": "Mouse down on an obmect",
             "itemtype": "method",
             "name": "_objMouseDown",
@@ -1704,7 +1680,7 @@
         },
         {
             "file": "src/cloudkid/createjs/DragManager.js",
-            "line": 238,
+            "line": 235,
             "description": "Start the sticky click",
             "itemtype": "method",
             "name": "_triggerStickyClick",
@@ -1715,7 +1691,7 @@
         },
         {
             "file": "src/cloudkid/createjs/DragManager.js",
-            "line": 251,
+            "line": 248,
             "description": "Start hold dragging",
             "itemtype": "method",
             "name": "_triggerHeldDrag",
@@ -1733,7 +1709,7 @@
         },
         {
             "file": "src/cloudkid/createjs/DragManager.js",
-            "line": 270,
+            "line": 267,
             "description": "Internal start dragging on the stage",
             "itemtype": "method",
             "name": "_startDrag",
@@ -1744,7 +1720,7 @@
         },
         {
             "file": "src/cloudkid/createjs/DragManager.js",
-            "line": 285,
+            "line": 283,
             "description": "Stops dragging the currently dragged object.",
             "access": "public",
             "tagname": "",
@@ -1762,7 +1738,7 @@
         },
         {
             "file": "src/cloudkid/createjs/DragManager.js",
-            "line": 296,
+            "line": 294,
             "description": "Internal stop dragging on the stage",
             "itemtype": "method",
             "name": "_stopDrag",
@@ -1785,7 +1761,7 @@
         },
         {
             "file": "src/cloudkid/createjs/DragManager.js",
-            "line": 322,
+            "line": 317,
             "description": "Update the object position based on the mouse",
             "itemtype": "method",
             "name": "_updateObjPosition",
@@ -1803,14 +1779,14 @@
         },
         {
             "file": "src/cloudkid/createjs/DragManager.js",
-            "line": 338,
+            "line": 333,
             "description": "Simple clamp function",
             "class": "DragManager (CreateJS)",
             "module": "cloudkid"
         },
         {
             "file": "src/cloudkid/createjs/DragManager.js",
-            "line": 364,
+            "line": 359,
             "description": "Adds properties and functions to the object - use enableDrag() and disableDrag() on \nobjects to enable/disable them (they start out disabled). Properties added to objects:\n_dragBounds (Rectangle), _onMouseDownListener (Function), _dragMan (cloudkid.DragManager) reference to the DragManager\nthese will override any existing properties of the same name",
             "itemtype": "method",
             "name": "addObject",
@@ -1833,7 +1809,7 @@
         },
         {
             "file": "src/cloudkid/createjs/DragManager.js",
-            "line": 395,
+            "line": 390,
             "description": "Removes properties and functions added by addObject().",
             "access": "public",
             "tagname": "",
@@ -1851,7 +1827,7 @@
         },
         {
             "file": "src/cloudkid/createjs/DragManager.js",
-            "line": 414,
+            "line": 409,
             "description": "Destroy the manager",
             "access": "public",
             "tagname": "",
@@ -1862,7 +1838,7 @@
         },
         {
             "file": "src/cloudkid/createjs/DragManager.js",
-            "line": 449,
+            "line": 444,
             "class": "DragManager (CreateJS)",
             "module": "cloudkid"
         },
@@ -5100,11 +5076,11 @@
         },
         {
             "message": "Missing item type\nSimple clamp function",
-            "line": " src/cloudkid/createjs/DragManager.js:338"
+            "line": " src/cloudkid/createjs/DragManager.js:333"
         },
         {
             "message": "Missing item type",
-            "line": " src/cloudkid/createjs/DragManager.js:449"
+            "line": " src/cloudkid/createjs/DragManager.js:444"
         },
         {
             "message": "Missing item type",
