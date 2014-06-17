@@ -1,6 +1,6 @@
 !function(undefined) {
     var OS = function() {}, p = OS.prototype = Object.create(PIXI.DisplayObjectContainer.prototype), _paused = !1, _isReady = !1, _framerate = null, _lastFrameTime = 0, _lastFPSUpdateTime = 0, _framerateValue = null, _frameCount = 0, _tickCallback = null, _instance = null, _tickId = -1, _useRAF = !1, _fps = 0, _msPerFrame = 0;
-    OS.VERSION = "1.1.12", p.stage = null, p._renderer = null, p.canvasContainer = null, 
+    OS.VERSION = "1.1.13", p.stage = null, p._renderer = null, p.canvasContainer = null, 
     p._app = null, p.options = null, p._updateFunctions = {}, OS.init = function(stageName, options) {
         return _instance || (Debug.log("Creating the singleton instance of OS"), _instance = new OS(), 
         _instance.initialize(stageName, options)), _instance;
@@ -733,8 +733,8 @@
         this._items.push(new UIElement(item, s, this._designedScreen));
     }, UIScaler.resizeBackground = function(bitmap) {
         if (initialized) {
-            var h, scale, h = bitmap.height / bitmap.scale.y, scale = (bitmap.width / bitmap.scale.x, 
-            currentScreen.height / h);
+            var h, w, scale;
+            h = bitmap.height / bitmap.scale.y, w = bitmap.width / bitmap.scale.x, scale = currentScreen.height / h, 
             bitmap.scale.x = bitmap.scale.y = scale, bitmap.position.x = .5 * (currentScreen.width - bitmap.width);
         }
     }, UIScaler.resizeBackgrounds = function(bitmaps) {
@@ -798,7 +798,7 @@
             for (var j = 0; i > j; ++j) s += "0", c *= 10;
             zeros.unshift(s), compares.push(c);
         }
-        var prevTex, compareLength = compares.length, rtnDict = outObj || {}, fromFrame = PIXI.Texture.fromFrame;
+        var prevTex, len, compareLength = compares.length, rtnDict = outObj || {}, fromFrame = PIXI.Texture.fromFrame;
         for (var a in anims) {
             var data = anims[a], list = [];
             for (i = data.numberMin, len = data.numberMax; len >= i; ++i) {

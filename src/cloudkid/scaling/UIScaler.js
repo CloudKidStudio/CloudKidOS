@@ -241,13 +241,14 @@
 	{
 		if (!initialized) return;
 		
+		var h, w, scale;
 		if(CONFIG_PIXI)
 		{
-			var h = bitmap.height / bitmap.scale.y;
-			var w = bitmap.width / bitmap.scale.x;
+			h = bitmap.height / bitmap.scale.y;
+			w = bitmap.width / bitmap.scale.x;
 
 			//scale the background
-			var scale = currentScreen.height / h;
+			scale = currentScreen.height / h;
 			bitmap.scale.x = bitmap.scale.y = scale;
 			
 			//center the background
@@ -255,11 +256,11 @@
 		}
 		else if(CONFIG_CREATEJS)
 		{
-			var h = bitmap.image.height;
-			var w = bitmap.image.width;
+			h = bitmap.image.height;
+			w = bitmap.image.width;
 
 			//scale the background
-			var scale = currentScreen.height / h;
+			scale = currentScreen.height / h;
 			bitmap.scaleX = bitmap.scaleY = scale;
 			
 			//center the background

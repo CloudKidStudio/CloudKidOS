@@ -261,7 +261,7 @@
 		
 		var rtnDict = outObj || {};
 		var fromFrame = PIXI.Texture.fromFrame;
-		var prevTex;
+		var prevTex, len;
 		for(var a in anims)
 		{
 			var data = anims[a];
