@@ -189,7 +189,6 @@
 	*/
 	AssetManager.unload = function(assetOrAssets)
 	{
-		var a;
 		if(assetOrAssets instanceof Array)
 		{
 			for(var i = assetOrAssets.length - 1; i >= 0; --i)
@@ -214,7 +213,7 @@
 	var unloadAsset = function(asset)
 	{
 		if(!assetUrlCache[asset]) return;//if this doesn't exist, then it wasn't loaded
-		a = assets[asset];
+		var a = assets[asset];
 		if(!a) return;//asset never existed in the master list
 		if(a.anim) return;//don't unload these, they are pretty small
 		if(a.isFont)

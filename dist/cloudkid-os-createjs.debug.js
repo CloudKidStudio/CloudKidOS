@@ -1,6 +1,6 @@
 !function(undefined) {
     var OS = function() {}, p = OS.prototype = new createjs.Container(), _paused = !1, _isReady = !1, _framerate = null, _lastFrameTime = 0, _lastFPSUpdateTime = 0, _framerateValue = null, _frameCount = 0, _tickCallback = null, _instance = null, _tickId = -1, _useRAF = !1, _fps = 0, _msPerFrame = 0;
-    OS.VERSION = "1.1.11", p.Container_initialize = p.initialize, p.stage = null, 
+    OS.VERSION = "1.1.12", p.Container_initialize = p.initialize, p.stage = null, 
     p._app = null, p.options = null, p._updateFunctions = {}, OS.init = function(stageName, options) {
         return _instance || (Debug.log("Creating the singleton instance of OS"), _instance = new OS(), 
         _instance.initialize(stageName, options)), _instance;
@@ -787,9 +787,8 @@
         this._items.push(new UIElement(item, s, this._designedScreen));
     }, UIScaler.resizeBackground = function(bitmap) {
         if (initialized) {
-            var h = bitmap.height / bitmap.scale.y, scale = (bitmap.width / bitmap.scale.x, 
-            currentScreen.height / h);
-            bitmap.scale.x = bitmap.scale.y = scale, bitmap.position.x = .5 * (currentScreen.width - b.width);
+            var h, w, scale, h = bitmap.image.height, w = bitmap.image.width, scale = currentScreen.height / h;
+            bitmap.scaleX = bitmap.scaleY = scale, bitmap.x = .5 * (currentScreen.width - w * scale);
         }
     }, UIScaler.resizeBackgrounds = function(bitmaps) {
         for (var i = 0, len = bitmaps.length; len > i; ++i) UIScaler.resizeBackground(bitmaps[i]);

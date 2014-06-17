@@ -1,6 +1,6 @@
 !function(undefined) {
     var OS = function() {}, p = OS.prototype = Object.create(PIXI.DisplayObjectContainer.prototype), _paused = !1, _isReady = !1, _framerate = null, _lastFrameTime = 0, _lastFPSUpdateTime = 0, _framerateValue = null, _frameCount = 0, _tickCallback = null, _instance = null, _tickId = -1, _useRAF = !1, _fps = 0, _msPerFrame = 0;
-    OS.VERSION = "1.1.11", p.stage = null, p._renderer = null, p.canvasContainer = null, 
+    OS.VERSION = "1.1.12", p.stage = null, p._renderer = null, p.canvasContainer = null, 
     p._app = null, p.options = null, p._updateFunctions = {}, OS.init = function(stageName, options) {
         return _instance || (Debug.log("Creating the singleton instance of OS"), _instance = new OS(), 
         _instance.initialize(stageName, options)), _instance;
@@ -733,9 +733,9 @@
         this._items.push(new UIElement(item, s, this._designedScreen));
     }, UIScaler.resizeBackground = function(bitmap) {
         if (initialized) {
-            var h = bitmap.height / bitmap.scale.y, scale = (bitmap.width / bitmap.scale.x, 
+            var h, scale, h = bitmap.height / bitmap.scale.y, scale = (bitmap.width / bitmap.scale.x, 
             currentScreen.height / h);
-            bitmap.scale.x = bitmap.scale.y = scale, bitmap.position.x = .5 * (currentScreen.width - b.width);
+            bitmap.scale.x = bitmap.scale.y = scale, bitmap.position.x = .5 * (currentScreen.width - bitmap.width);
         }
     }, UIScaler.resizeBackgrounds = function(bitmaps) {
         for (var i = 0, len = bitmaps.length; len > i; ++i) UIScaler.resizeBackground(bitmaps[i]);
@@ -782,9 +782,12 @@
         } else unloadAsset(assetOrAssets);
     };
     var unloadAsset = function(asset) {
-        assetUrlCache[asset] && (a = assets[asset], a && (a.anim || (a.isFont && PIXI.BitmapText.fonts[asset] && delete PIXI.BitmapText.fonts[asset], 
-        PIXI.Texture.destroyTexture(assetUrlCache[asset]), delete AssetManager.scales[asset], 
-        delete assetUrlCache[asset])));
+        if (assetUrlCache[asset]) {
+            var a = assets[asset];
+            a && (a.anim || (a.isFont && PIXI.BitmapText.fonts[asset] && delete PIXI.BitmapText.fonts[asset], 
+            PIXI.Texture.destroyTexture(assetUrlCache[asset]), delete AssetManager.scales[asset], 
+            delete assetUrlCache[asset]));
+        }
     };
     AssetManager.getAnims = function(anims, maxDigits, outObj) {
         void 0 === maxDigits && (maxDigits = 4), 0 > maxDigits && (maxDigits = 0);

@@ -4129,15 +4129,30 @@
 	{
 		if (!initialized) return;
 		
-		var h = bitmap.height / bitmap.scale.y;
-		var w = bitmap.width / bitmap.scale.x;
+		if(false)
+		{
+			var h = bitmap.height / bitmap.scale.y;
+			var w = bitmap.width / bitmap.scale.x;
 
-		//scale the background
-		var scale = currentScreen.height / h;
-		bitmap.scale.x = bitmap.scale.y = scale;
-		
-		//center the background
-		bitmap.position.x = (currentScreen.width - b.width) * 0.5;
+			//scale the background
+			var scale = currentScreen.height / h;
+			bitmap.scale.x = bitmap.scale.y = scale;
+			
+			//center the background
+			bitmap.position.x = (currentScreen.width - bitmap.width) * 0.5;
+		}
+		else if(true)
+		{
+			var h = bitmap.image.height;
+			var w = bitmap.image.width;
+
+			//scale the background
+			var scale = currentScreen.height / h;
+			bitmap.scaleX = bitmap.scaleY = scale;
+			
+			//center the background
+			bitmap.x = (currentScreen.width - w * scale) * 0.5;
+		}
 	};
 	
 	/**
