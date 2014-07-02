@@ -2609,6 +2609,8 @@
 	p.initialize = function(imageSettings, label, enabled)
 	{
 		s.initialize.call(this);
+
+		this.mouseChildren = false;//input events should have this button as a target, not the child Bitmap.
 		
 		this._downCB = this._onMouseDown.bind(this);
 		this._upCB = this._onMouseUp.bind(this);

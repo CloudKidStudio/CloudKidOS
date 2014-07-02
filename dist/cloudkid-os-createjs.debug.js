@@ -1,6 +1,6 @@
 !function(undefined) {
     var OS = function() {}, p = OS.prototype = new createjs.Container(), _paused = !1, _isReady = !1, _framerate = null, _lastFrameTime = 0, _lastFPSUpdateTime = 0, _framerateValue = null, _frameCount = 0, _tickCallback = null, _instance = null, _tickId = -1, _useRAF = !1, _fps = 0, _msPerFrame = 0;
-    OS.VERSION = "1.1.13", p.Container_initialize = p.initialize, p.stage = null, 
+    OS.VERSION = "1.1.14", p.Container_initialize = p.initialize, p.stage = null, 
     p._app = null, p.options = null, p._updateFunctions = {}, OS.init = function(stageName, options) {
         return _instance || (Debug.log("Creating the singleton instance of OS"), _instance = new OS(), 
         _instance.initialize(stageName, options)), _instance;
@@ -460,8 +460,9 @@
     p._isSelectable = !1, p._isHighlighted = !1, p._upRects = null, p._overRects = null, 
     p._downRects = null, p._disabledRects = null, p._selectedRects = null, p._highlightedRects = null, 
     p._width = 0, p._height = 0, p.initialize = function(imageSettings, label, enabled) {
-        s.initialize.call(this), this._downCB = this._onMouseDown.bind(this), this._upCB = this._onMouseUp.bind(this), 
-        this._overCB = this._onMouseOver.bind(this), this._outCB = this._onMouseOut.bind(this);
+        s.initialize.call(this), this.mouseChildren = !1, this._downCB = this._onMouseDown.bind(this), 
+        this._upCB = this._onMouseUp.bind(this), this._overCB = this._onMouseOver.bind(this), 
+        this._outCB = this._onMouseOut.bind(this);
         var image, width, height;
         if (imageSettings.image ? (image = imageSettings.image, this._upRects = imageSettings.up, 
         this._upRects.trim ? (this.upTrim = this._upRects.trim, width = this.upTrim.width, 
