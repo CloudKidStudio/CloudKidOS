@@ -1,6 +1,6 @@
 !function(undefined) {
     var OS = function() {}, p = OS.prototype = new createjs.Container(), _paused = !1, _isReady = !1, _framerate = null, _lastFrameTime = 0, _lastFPSUpdateTime = 0, _framerateValue = null, _frameCount = 0, _tickCallback = null, _instance = null, _tickId = -1, _useRAF = !1, _fps = 0, _msPerFrame = 0;
-    OS.VERSION = "1.1.14", p.Container_initialize = p.initialize, p.stage = null, 
+    OS.VERSION = "1.1.15", p.Container_initialize = p.initialize, p.stage = null, 
     p._app = null, p.options = null, p._updateFunctions = {}, OS.init = function(stageName, options) {
         return _instance || (Debug.log("Creating the singleton instance of OS"), _instance = new OS(), 
         _instance.initialize(stageName, options)), _instance;
@@ -548,6 +548,50 @@
         this._overRects = null, this._downRects = null, this._disabledRects = null, this._selectedRects = null, 
         this._highlightedRects = null, this._downCB = null, this._upCB = null, this._overCB = null, 
         this._outCB = null, this.back = null, this.label = null;
+    }, Button.generateDefaultStates = function(image, disabledSettings, highlightSettings) {
+        var buttonWidth = image.width, buttonHeight = image.height / 3, canvas = document.createElement("canvas"), width = buttonWidth, height = image.height;
+        disabledSettings && (height += buttonHeight), highlightSettings && (width += 2 * highlightSettings.size, 
+        height += buttonHeight + 2 * highlightSettings.size), canvas.width = width, canvas.height = height;
+        var context = canvas.getContext("2d");
+        context.drawImage(image, 0, 0);
+        var output = {
+            image: canvas,
+            up: {
+                src: new createjs.Rectangle(0, 0, buttonWidth, buttonHeight)
+            },
+            over: {
+                src: new createjs.Rectangle(0, buttonHeight, buttonWidth, buttonHeight)
+            },
+            down: {
+                src: new createjs.Rectangle(0, 2 * buttonHeight, buttonWidth, buttonHeight)
+            }
+        }, drawingBitmap = new createjs.Bitmap(image);
+        drawingBitmap.sourceRect = output.up;
+        var nextY = image.height;
+        if (disabledSettings) {
+            context.translate(0, nextY);
+            var matrix = new createjs.ColorMatrix().adjustSaturation(100 - disabledSettings.saturation);
+            drawingBitmap.filters = [ new createjs.ColorMatrixFilter(matrix) ], drawingBitmap.cache(0, 0, output.up.src.width, output.up.src.height), 
+            drawingBitmap.draw(context), output.disabled = {
+                src: new createjs.Rectangle(0, nextY, buttonWidth, buttonHeight)
+            }, nextY += buttonHeight;
+        }
+        if (highlightSettings) {
+            var highlightStateWidth = buttonWidth + 2 * highlightSettings.size, highlightStateHeight = buttonHeight + 2 * highlightSettings.size;
+            drawingBitmap.filters = [ new createjs.ColorFilter(0, 0, 0, 1, highlightSettings.red, highlightSettings.green, highlightSettings.blue, 0) ], 
+            drawingBitmap.scaleX = highlightStateWidth / buttonWidth, drawingBitmap.scaleY = highlightStateHeight / buttonHeight, 
+            drawingBitmap.x = 0, drawingBitmap.y = nextY, drawingBitmap.cache(0, 0, highlightStateWidth, highlightStateHeight), 
+            drawingBitmap.updateContext(context), drawingBitmap.draw(context), drawingBitmap.scaleX = drawingBitmap.scaleY = 1, 
+            drawingBitmap.x = highlightSettings.size, drawingBitmap.y = nextY + highlightSettings.size, 
+            drawingBitmap.filters = null, drawingBitmap.uncache(), drawingBitmap.updateContext(context), 
+            drawingBitmap.draw(context);
+            var trim = new createjs.Rectangle(highlightSettings.size, highlightSettings.size, highlightStateWidth, highlightStateHeight);
+            output.up.trim = trim, output.over.trim = trim, output.down.trim = trim, output.disabled && (output.disabled.trim = trim), 
+            output.highlighted = {
+                src: new createjs.Rectangle(0, nextY, highlightStateWidth, highlightStateHeight)
+            };
+        }
+        return output;
     }, namespace("cloudkid").Button = Button;
 }(), function() {
     "use strict";

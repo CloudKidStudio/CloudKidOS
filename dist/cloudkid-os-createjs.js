@@ -2879,6 +2879,115 @@
 		this.label = null;
 	};
 
+	/**
+	*  Generates a desaturated up state as a disabled state, and an update with a solid colored glow for a highlighted state.
+	*  @method generateDefaultStates
+	*  @static
+	*  @param {Image|HTMLCanvasElement} image The image to use for all of the button states, in the standard up/over/down format.
+	*  @param {Object} [disabledSettings] The settings object for the disabled state. If omitted, no disabled state is created.
+	*  @param {Number} [disabledSettings.saturation] The amount of saturation for the disabled state.
+	*  @param {Object} [highlightSettings] The settings object for the highlight state. If omitted, no state is created.
+	*  @param {Number} [highlightSettings.size] How many pixels to make the glow, eg 8 for an 8 pixel increase on each side.
+	*  @param {Number} [highlightSettings.red] The red value for the glow, from 0 to 255.
+	*  @param {Number} [highlightSettings.green] The green value for the glow, from 0 to 255.
+	*  @param {Number} [highlightSettings.blue] The blue value for the glow, from 0 to 255.
+	*/
+	Button.generateDefaultStates = function(image, disabledSettings, highlightSettings)
+	{
+		//figure out the normal button size
+		var buttonWidth = image.width;
+		var buttonHeight = image.height / 3;
+		//create a canvas element and size it
+		var canvas = document.createElement("canvas");
+		var width = buttonWidth;
+		var height = image.height;
+		if(disabledSettings)
+		{
+			height += buttonHeight;
+		}
+		if(highlightSettings)
+		{
+			width += highlightSettings.size * 2;
+			height += buttonHeight + highlightSettings.size * 2;
+		}
+		canvas.width = width;
+		canvas.height = height;
+		//get the drawing context
+		var context = canvas.getContext("2d");
+		//draw the image to it
+		context.drawImage(image, 0, 0);
+		//start setting up the output
+		var output = {
+			image: canvas,
+			up:{ src:new createjs.Rectangle(0, 0, buttonWidth, buttonHeight) },
+			over:{ src:new createjs.Rectangle(0, buttonHeight, buttonWidth, buttonHeight) },
+			down:{ src:new createjs.Rectangle(0, buttonHeight * 2, buttonWidth, buttonHeight) }
+		};
+		//set up a bitmap to draw other states with
+		var drawingBitmap = new createjs.Bitmap(image);
+		drawingBitmap.sourceRect = output.up;
+		//set up a y position for where the next state should go in the canvas
+		var nextY = image.height;
+		if(disabledSettings)
+		{
+			//position the button to draw
+			context.translate(0, nextY);
+			//set up the desaturation matrix
+			var matrix = new createjs.ColorMatrix().adjustSaturation(100 - disabledSettings.saturation);
+			drawingBitmap.filters = [new createjs.ColorMatrixFilter(matrix)];
+			//draw the state
+			drawingBitmap.cache(0, 0, output.up.src.width, output.up.src.height);
+			drawingBitmap.draw(context);
+			//update the output with the state
+			output.disabled = { src: new createjs.Rectangle(0, nextY, buttonWidth, buttonHeight) };
+			nextY += buttonHeight;//set up the next position for the highlight state, if we have it
+		}
+		if(highlightSettings)
+		{
+			//calculate the size of this state
+			var highlightStateWidth = buttonWidth + highlightSettings.size * 2;
+			var highlightStateHeight = buttonHeight + highlightSettings.size * 2;
+			//set up the color changing filter
+			drawingBitmap.filters = [new createjs.ColorFilter(0,0,0,1, 
+				/*r*/highlightSettings.red, /*g*/highlightSettings.green, /*b*/highlightSettings.blue, 0)];
+			//size the colored highlight
+			drawingBitmap.scaleX = (highlightStateWidth) / buttonWidth;
+			drawingBitmap.scaleY = (highlightStateHeight) / buttonHeight;
+			//position it
+			drawingBitmap.x = 0;
+			drawingBitmap.y = nextY;
+			//draw the state
+			drawingBitmap.cache(0, 0, highlightStateWidth, highlightStateHeight);
+			drawingBitmap.updateContext(context);
+			drawingBitmap.draw(context);
+			//size and position it to normal
+			drawingBitmap.scaleX = drawingBitmap.scaleY = 1;
+			drawingBitmap.x = highlightSettings.size;
+			drawingBitmap.y = nextY + highlightSettings.size;
+			drawingBitmap.filters = null;
+			drawingBitmap.uncache();
+			//draw the up state over the highlight state glow
+			drawingBitmap.updateContext(context);
+			drawingBitmap.draw(context);
+			//set up the trim values for the other states
+			var trim = new createjs.Rectangle(
+				highlightSettings.size, 
+				highlightSettings.size, 
+				highlightStateWidth,
+				highlightStateHeight);
+			output.up.trim = trim;
+			output.over.trim = trim;
+			output.down.trim = trim;
+			if(output.disabled)
+				output.disabled.trim = trim;
+			//set up the highlight state for the button
+			output.highlighted = {
+				src:new createjs.Rectangle(0, nextY, highlightStateWidth, highlightStateHeight)
+			};
+		}
+		return output;
+	};
+
 	namespace('cloudkid').Button = Button;
 }());
 /**
