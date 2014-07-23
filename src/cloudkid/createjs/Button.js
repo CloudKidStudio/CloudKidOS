@@ -502,7 +502,7 @@
 	*  @static
 	*  @param {Image|HTMLCanvasElement} image The image to use for all of the button states, in the standard up/over/down format.
 	*  @param {Object} [disabledSettings] The settings object for the disabled state. If omitted, no disabled state is created.
-	*  @param {Number} [disabledSettings.saturation] The amount of saturation for the disabled state.
+	*  @param {Number} [disabledSettings.saturation] The amount of saturation for the disabled state. 100 is full-color, 0 is desaturated
 	*  @param {Object} [highlightSettings] The settings object for the highlight state. If omitted, no state is created.
 	*  @param {Number} [highlightSettings.size] How many pixels to make the glow, eg 8 for an 8 pixel increase on each side.
 	*  @param {Number} [highlightSettings.red] The red value for the glow, from 0 to 255.
@@ -542,11 +542,12 @@
 		};
 		//set up a bitmap to draw other states with
 		var drawingBitmap = new createjs.Bitmap(image);
-		drawingBitmap.sourceRect = output.up;
+		drawingBitmap.sourceRect = output.up.src;
 		//set up a y position for where the next state should go in the canvas
 		var nextY = image.height;
 		if(disabledSettings)
 		{
+			context.save();
 			//position the button to draw
 			context.translate(0, nextY);
 			//set up the desaturation matrix
@@ -558,9 +559,11 @@
 			//update the output with the state
 			output.disabled = { src: new createjs.Rectangle(0, nextY, buttonWidth, buttonHeight) };
 			nextY += buttonHeight;//set up the next position for the highlight state, if we have it
+			context.restore();//reset any transformations
 		}
 		if(highlightSettings)
 		{
+			context.save();
 			//calculate the size of this state
 			var highlightStateWidth = buttonWidth + highlightSettings.size * 2;
 			var highlightStateHeight = buttonHeight + highlightSettings.size * 2;
@@ -577,6 +580,7 @@
 			drawingBitmap.cache(0, 0, highlightStateWidth, highlightStateHeight);
 			drawingBitmap.updateContext(context);
 			drawingBitmap.draw(context);
+			context.restore();//reset any transformations
 			//size and position it to normal
 			drawingBitmap.scaleX = drawingBitmap.scaleY = 1;
 			drawingBitmap.x = highlightSettings.size;
