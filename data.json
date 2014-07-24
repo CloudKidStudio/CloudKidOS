@@ -298,8 +298,15 @@
                             "optional": true
                         },
                         {
+                            "name": "priority",
+                            "description": "The state priority order. If omitted, defaults to [\"disabled\", \"down\", \"over\", \"up\"].\n       Previous versions of Button used a hard coded order: [\"highlighted\", \"disabled\", \"down\", \"over\", \"selected\", \"up\"].",
+                            "type": "Array",
+                            "optional": true,
+                            "optdefault": "null"
+                        },
+                        {
                             "name": "up",
-                            "description": "The rectangle information about the up state.",
+                            "description": "The visual information about the up state.",
                             "type": "Object",
                             "optional": true,
                             "props": [
@@ -313,6 +320,13 @@
                                     "name": "trim",
                                     "description": "Trim data about the state, where x & y are how many pixels were \n       trimmed off the left and right, and height & width are the untrimmed size of the button.",
                                     "type": "createjs.Rectangle",
+                                    "optional": true,
+                                    "optdefault": "null"
+                                },
+                                {
+                                    "name": "label",
+                                    "description": "Label information specific to this state. Properties on this parameter override data \n       in the label parameter for this button state only. All values except \"text\" from the label parameter may be overridden.",
+                                    "type": "Object",
                                     "optional": true,
                                     "optdefault": "null"
                                 }
@@ -320,7 +334,7 @@
                         },
                         {
                             "name": "over",
-                            "description": "The rectangle information about the over state. If omitted, uses the up state.",
+                            "description": "The visual information about the over state. If omitted, uses the up state.",
                             "type": "Object",
                             "optional": true,
                             "optdefault": "null",
@@ -335,6 +349,13 @@
                                     "name": "trim",
                                     "description": "Trim data about the state, where x & y are how many pixels were \n       trimmed off the left and right, and height & width are the untrimmed size of the button.",
                                     "type": "createjs.Rectangle",
+                                    "optional": true,
+                                    "optdefault": "null"
+                                },
+                                {
+                                    "name": "label",
+                                    "description": "Label information specific to this state. Properties on this parameter override data \n       in the label parameter for this button state only. All values except \"text\" from the label parameter may be overridden.",
+                                    "type": "Object",
                                     "optional": true,
                                     "optdefault": "null"
                                 }
@@ -342,7 +363,7 @@
                         },
                         {
                             "name": "down",
-                            "description": "The rectangle information about the down state. If omitted, uses the up state.",
+                            "description": "The visual information about the down state. If omitted, uses the up state.",
                             "type": "Object",
                             "optional": true,
                             "optdefault": "null",
@@ -357,6 +378,13 @@
                                     "name": "trim",
                                     "description": "Trim data about the state, where x & y are how many pixels were \n       trimmed off the left and right, and height & width are the untrimmed size of the button.",
                                     "type": "createjs.Rectangle",
+                                    "optional": true,
+                                    "optdefault": "null"
+                                },
+                                {
+                                    "name": "label",
+                                    "description": "Label information specific to this state. Properties on this parameter override data \n       in the label parameter for this button state only. All values except \"text\" from the label parameter may be overridden.",
+                                    "type": "Object",
                                     "optional": true,
                                     "optdefault": "null"
                                 }
@@ -364,7 +392,7 @@
                         },
                         {
                             "name": "disabled",
-                            "description": "The rectangle information about the disabled state. If omitted, uses the up state.",
+                            "description": "The visual information about the disabled state. If omitted, uses the up state.",
                             "type": "Object",
                             "optional": true,
                             "optdefault": "null",
@@ -383,30 +411,17 @@
                                     "optdefault": "null"
                                 },
                                 {
-                                    "name": "src",
-                                    "description": "The sourceRect for the state within the image.",
-                                    "type": "createjs.Rectangle",
-                                    "optional": true
-                                },
-                                {
-                                    "name": "trim",
-                                    "description": "Trim data about the state, where x & y are how many pixels were \n       trimmed off the left and right, and height & width are the untrimmed size of the button.",
-                                    "type": "createjs.Rectangle",
+                                    "name": "label",
+                                    "description": "Label information specific to this state. Properties on this parameter override \n       data in the label parameter for this button state only. All values except \"text\" from the label parameter may be overridden.",
+                                    "type": "Object",
                                     "optional": true,
                                     "optdefault": "null"
                                 }
                             ]
                         },
                         {
-                            "name": "highlighted",
-                            "description": "The rectangle information about the highlighted state. If omitted, uses the over state.",
-                            "type": "Object",
-                            "optional": true,
-                            "optdefault": "null"
-                        },
-                        {
-                            "name": "selected",
-                            "description": "The rectangle information about the over state. If omitted, the button is not a selectable button.",
+                            "name": "<yourCustomState>",
+                            "description": "The visual information about a custom state found in imageSettings.priority.\n       Any state added this way has a property of the same name added to the button. Examples of previous states that have been\n       moved to this system are \"selected\" and \"highlighted\".",
                             "type": "Object",
                             "optional": true,
                             "optdefault": "null",
@@ -419,8 +434,15 @@
                                 },
                                 {
                                     "name": "trim",
-                                    "description": "Trim data about the state, where x & y are how many pixels were \n       trimmed off the left and right, and height & width are the untrimmed size of the button.",
+                                    "description": "Trim data about the state, where x & y are how many pixels \n       were trimmed off the left and right, and height & width are the untrimmed size of the button.",
                                     "type": "createjs.Rectangle",
+                                    "optional": true,
+                                    "optdefault": "null"
+                                },
+                                {
+                                    "name": "label",
+                                    "description": "Label information specific to this state. Properties on this parameter \n       override data in the label parameter for this button state only. All values except \"text\" from the label parameter may be\n       overridden.",
+                                    "type": "Object",
                                     "optional": true,
                                     "optdefault": "null"
                                 }
@@ -462,8 +484,29 @@
                         },
                         {
                             "name": "stroke",
-                            "description": "The stroke to use for the label text, if desired, as createjs.Text expects.",
-                            "type": "String",
+                            "description": "The stroke to use for the label text, if desired, as createjs.Text (CloudKid fork only) expects.",
+                            "type": "Object",
+                            "optional": true,
+                            "optdefault": "null"
+                        },
+                        {
+                            "name": "shadow",
+                            "description": "A shadow object to apply to the label text.",
+                            "type": "createjs.Shadow",
+                            "optional": true,
+                            "optdefault": "null"
+                        },
+                        {
+                            "name": "x",
+                            "description": "An x position to place the label text at relative to the button. If omitted,\n       \"center\" is used, which attempts to horizontally center the label on the button.",
+                            "type": "String|Number",
+                            "optional": true,
+                            "optdefault": "null"
+                        },
+                        {
+                            "name": "y",
+                            "description": "A y position to place the label text at relative to the button. If omitted,\n       \"center\" is used, which attempts to vertically center the label on the button. This may be unreliable -\n       see documentation for createjs.Text.getMeasuredLineHeight().",
+                            "type": "String|Number",
                             "optional": true,
                             "optdefault": "null"
                         }
@@ -1011,7 +1054,7 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 65,
+            "line": 82,
             "description": "The sprite that is the body of the button.\nThe type of this property is dependent on which version of the OS library is used.",
             "access": "public",
             "tagname": "",
@@ -1024,7 +1067,7 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 74,
+            "line": 91,
             "description": "The text field of the button. The label is centered by both width and height on the button.\nThe type of this property is dependent on which version of the OS library is used.",
             "access": "public",
             "tagname": "",
@@ -1037,7 +1080,7 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 84,
+            "line": 101,
             "description": "Callback for mouse over, bound to this button.",
             "access": "private",
             "tagname": "",
@@ -1049,7 +1092,7 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 91,
+            "line": 108,
             "description": "Callback for mouse out, bound to this button.",
             "access": "private",
             "tagname": "",
@@ -1061,7 +1104,7 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 98,
+            "line": 115,
             "description": "Callback for mouse down, bound to this button.",
             "access": "private",
             "tagname": "",
@@ -1073,7 +1116,7 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 105,
+            "line": 122,
             "description": "Callback for mouse up, bound to this button.",
             "access": "private",
             "tagname": "",
@@ -1085,151 +1128,43 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 113,
-            "description": "If this button is enabled.",
+            "line": 129,
+            "description": "A dictionary of state booleans, keyed by state name.",
             "access": "private",
             "tagname": "",
             "itemtype": "property",
-            "name": "_enabled",
-            "type": "Boolean",
-            "class": "Button (CreateJS)",
-            "module": "cloudkid"
-        },
-        {
-            "file": "src/cloudkid/createjs/Button.js",
-            "line": 120,
-            "description": "If this button is held down.",
-            "access": "private",
-            "tagname": "",
-            "itemtype": "property",
-            "name": "_isDown",
-            "type": "Boolean",
-            "class": "Button (CreateJS)",
-            "module": "cloudkid"
-        },
-        {
-            "file": "src/cloudkid/createjs/Button.js",
-            "line": 127,
-            "description": "If the mouse is over this button",
-            "access": "private",
-            "tagname": "",
-            "itemtype": "property",
-            "name": "_isOver",
-            "type": "Boolean",
-            "class": "Button (CreateJS)",
-            "module": "cloudkid"
-        },
-        {
-            "file": "src/cloudkid/createjs/Button.js",
-            "line": 134,
-            "description": "If this button is selected.",
-            "access": "private",
-            "tagname": "",
-            "itemtype": "property",
-            "name": "_isSelected",
-            "type": "Boolean",
-            "class": "Button (CreateJS)",
-            "module": "cloudkid"
-        },
-        {
-            "file": "src/cloudkid/createjs/Button.js",
-            "line": 141,
-            "description": "If this button is a selectable button, and will respond to select being set.",
-            "access": "private",
-            "tagname": "",
-            "itemtype": "property",
-            "name": "_isSelectable",
-            "type": "Boolean",
-            "class": "Button (CreateJS)",
-            "module": "cloudkid"
-        },
-        {
-            "file": "src/cloudkid/createjs/Button.js",
-            "line": 148,
-            "description": "If this button is highlighted.",
-            "access": "private",
-            "tagname": "",
-            "itemtype": "property",
-            "name": "_isHighlighted",
-            "type": "Boolean",
-            "class": "Button (CreateJS)",
-            "module": "cloudkid"
-        },
-        {
-            "file": "src/cloudkid/createjs/Button.js",
-            "line": 157,
-            "description": "[CreateJS only] An object noting the rectangles for the button up state. This should have a src property\n\tand an optional trim property, both createjs.Rectangles.",
-            "access": "private",
-            "tagname": "",
-            "itemtype": "property",
-            "name": "_upRects",
+            "name": "_stateFlags",
             "type": "Object",
             "class": "Button (CreateJS)",
             "module": "cloudkid"
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 165,
-            "description": "[CreateJS only] An object noting the rectangles for the button over state. This should have a src property\n\tand an optional trim property, both createjs.Rectangles.",
+            "line": 135,
+            "description": "An array of state names (Strings), in their order of priority.\nThe standard order previously was [\"highlighted\", \"disabled\", \"down\", \"over\", \"selected\", \"up\"].",
             "access": "private",
             "tagname": "",
             "itemtype": "property",
-            "name": "_overRects",
+            "name": "_statePriority",
+            "type": "Array",
+            "class": "Button (CreateJS)",
+            "module": "cloudkid"
+        },
+        {
+            "file": "src/cloudkid/createjs/Button.js",
+            "line": 143,
+            "description": "A dictionary of state graphic data, keyed by state name.\nEach object contains the sourceRect (src) and optionally 'trim', another Rectangle.\nAdditionally, each object will contain a 'label' object if the button has a text label.",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "_stateFlags",
             "type": "Object",
             "class": "Button (CreateJS)",
             "module": "cloudkid"
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 173,
-            "description": "[CreateJS only] An object noting the rectangles for the button down state. This should have a src property\n\tand an optional trim property, both createjs.Rectangles.",
-            "access": "private",
-            "tagname": "",
-            "itemtype": "property",
-            "name": "_downRects",
-            "type": "Object",
-            "class": "Button (CreateJS)",
-            "module": "cloudkid"
-        },
-        {
-            "file": "src/cloudkid/createjs/Button.js",
-            "line": 181,
-            "description": "[CreateJS only] An object noting the rectangles for the button disabled state. This should have a src property\n\tand an optional trim property, both createjs.Rectangles.",
-            "access": "private",
-            "tagname": "",
-            "itemtype": "property",
-            "name": "_disabledRects",
-            "type": "Object",
-            "class": "Button (CreateJS)",
-            "module": "cloudkid"
-        },
-        {
-            "file": "src/cloudkid/createjs/Button.js",
-            "line": 189,
-            "description": "[CreateJS only] An object noting the rectangles for the button selected state. This should have a src property\n\tand an optional trim property, both createjs.Rectangles.",
-            "access": "private",
-            "tagname": "",
-            "itemtype": "property",
-            "name": "_selectedRects",
-            "type": "Object",
-            "class": "Button (CreateJS)",
-            "module": "cloudkid"
-        },
-        {
-            "file": "src/cloudkid/createjs/Button.js",
-            "line": 197,
-            "description": "[CreateJS only] An object noting the rectangles for the button highlighted state. This should have a src property\n\tand an optional trim property, both createjs.Rectangles.",
-            "access": "private",
-            "tagname": "",
-            "itemtype": "property",
-            "name": "_highlightedRects",
-            "type": "Object",
-            "class": "Button (CreateJS)",
-            "module": "cloudkid"
-        },
-        {
-            "file": "src/cloudkid/createjs/Button.js",
-            "line": 205,
+            "line": 152,
             "description": "The width of the button art, independent of the scaling of the button itself.",
             "access": "private",
             "tagname": "",
@@ -1241,7 +1176,7 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 212,
+            "line": 159,
             "description": "The height of the button art, independent of the scaling of the button itself.",
             "access": "private",
             "tagname": "",
@@ -1253,16 +1188,43 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 219,
-            "description": "[CreateJS only] Constructor for the button when using CreateJS.",
+            "line": 166,
+            "description": "An event for when the button is pressed (while enabled).",
+            "access": "public",
+            "tagname": "",
+            "static": 1,
+            "itemtype": "property",
+            "name": "BUTTON_PRESS",
+            "type": "String",
+            "class": "Button (CreateJS)",
+            "module": "cloudkid"
+        },
+        {
+            "file": "src/cloudkid/createjs/Button.js",
+            "line": 189,
+            "description": "Constructor for the button when using CreateJS.",
             "itemtype": "method",
             "name": "initialize",
             "params": [
                 {
                     "name": "imageSettings",
-                    "description": "See the constructor for more information\n{Object} [label=null] Information about the text label on the button. Omitting this makes the button not use a label.\n{Boolean} [enabled=true] Whether or not the button is initially enabled.",
+                    "description": "See the constructor for more information",
                     "type": "Object|Image|HTMLCanvasElement",
                     "optional": true
+                },
+                {
+                    "name": "label",
+                    "description": "Information about the text label on the button. Omitting this makes the button not use a label.",
+                    "type": "Object",
+                    "optional": true,
+                    "optdefault": "null"
+                },
+                {
+                    "name": "enabled",
+                    "description": "Whether or not the button is initially enabled.",
+                    "type": "Boolean",
+                    "optional": true,
+                    "optdefault": "true"
                 }
             ],
             "class": "Button (CreateJS)",
@@ -1270,7 +1232,7 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 295,
+            "line": 323,
             "description": "The width of the button, based on the width of back. This value is affected by scale.",
             "itemtype": "property",
             "name": "width",
@@ -1280,7 +1242,7 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 306,
+            "line": 334,
             "description": "The height of the button, based on the height of back. This value is affected by scale.",
             "itemtype": "property",
             "name": "height",
@@ -1290,7 +1252,7 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 317,
+            "line": 345,
             "description": "Sets the text of the label. This does nothing if the button was not initialized with a label.",
             "access": "public",
             "tagname": "",
@@ -1308,7 +1270,7 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 334,
+            "line": 379,
             "description": "Whether or not the button is enabled.",
             "itemtype": "property",
             "name": "enabled",
@@ -1319,29 +1281,25 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 365,
-            "description": "Whether or not the button is selected. Setting this only works if the button was given selected state when initialized.",
-            "itemtype": "property",
-            "name": "selected",
-            "type": "Boolean",
-            "default": "false",
+            "line": 410,
+            "description": "Adds a property to the button. Setting the property sets the value in\n_stateFlags and calls _updateState().",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "method",
+            "name": "_addProperty",
+            "params": [
+                {
+                    "name": "propertyName",
+                    "description": "The property name to add to the button.",
+                    "type": "String"
+                }
+            ],
             "class": "Button (CreateJS)",
             "module": "cloudkid"
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 382,
-            "description": "Whether or not the button is highlighted. The default highlighted state is the over state, but a specific texture can be supplied.",
-            "itemtype": "property",
-            "name": "highlighted",
-            "type": "Boolean",
-            "default": "false",
-            "class": "Button (CreateJS)",
-            "module": "cloudkid"
-        },
-        {
-            "file": "src/cloudkid/createjs/Button.js",
-            "line": 396,
+            "line": 432,
             "description": "Updates back based on the current button state.",
             "access": "private",
             "tagname": "",
@@ -1352,8 +1310,8 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 429,
-            "description": "[CreateJS only] The callback for when the button receives a mouse down event.",
+            "line": 486,
+            "description": "The callback for when the button receives a mouse down event.",
             "access": "private",
             "tagname": "",
             "itemtype": "method",
@@ -1363,7 +1321,7 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 441,
+            "line": 498,
             "description": "The callback for when the button for when the mouse/touch is released on the button\n- only when the button was held down initially.",
             "access": "private",
             "tagname": "",
@@ -1374,8 +1332,8 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 454,
-            "description": "[CreateJS only] The callback for when the button is moused over.",
+            "line": 514,
+            "description": "The callback for when the button is moused over.",
             "access": "private",
             "tagname": "",
             "itemtype": "method",
@@ -1385,8 +1343,8 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 465,
-            "description": "[CreateJS only] The callback for when the mouse leaves the button area.",
+            "line": 525,
+            "description": "The callback for when the mouse leaves the button area.",
             "access": "private",
             "tagname": "",
             "itemtype": "method",
@@ -1396,7 +1354,7 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 476,
+            "line": 536,
             "description": "Destroys the button.",
             "access": "public",
             "tagname": "",
@@ -1407,7 +1365,7 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 499,
+            "line": 553,
             "description": "Generates a desaturated up state as a disabled state, and an update with a solid colored glow for a highlighted state.",
             "itemtype": "method",
             "name": "generateDefaultStates",
@@ -1426,7 +1384,19 @@
                     "props": [
                         {
                             "name": "saturation",
-                            "description": "The amount of saturation for the disabled state. 100 is full-color, 0 is desaturated",
+                            "description": "The saturation adjustment for the disabled state. \n       100 is fully saturated, 0 is unchanged, -100 is desaturated.",
+                            "type": "Number",
+                            "optional": true
+                        },
+                        {
+                            "name": "brightness",
+                            "description": "The brightness adjustment for the disabled state. \n       100 is fully bright, 0 is unchanged, -100 is completely dark.",
+                            "type": "Number",
+                            "optional": true
+                        },
+                        {
+                            "name": "contrast",
+                            "description": "The contrast adjustment for the disabled state. \n       100 is full contrast, 0 is unchanged, -100 is no contrast.",
                             "type": "Number",
                             "optional": true
                         }
@@ -1459,6 +1429,12 @@
                         {
                             "name": "blue",
                             "description": "The blue value for the glow, from 0 to 255.",
+                            "type": "Number",
+                            "optional": true
+                        },
+                        {
+                            "name": "alpha",
+                            "description": "The alpha value for the glow, from 0 to 255, with 0 being transparent and 255 fully opaque.",
                             "type": "Number",
                             "optional": true
                         }
