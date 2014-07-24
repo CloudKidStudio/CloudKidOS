@@ -2437,11 +2437,13 @@
 	*  @param {Object} [imageSettings.<yourCustomState>.label=null] Label information specific to this state. Properties on this parameter 
 	*         override data in the label parameter for this button state only. All values except "text" from the label parameter may be
 	*         overridden.
+	*  @param {createjs.Point} [imageSettings.origin=null] An optional offset for all button graphics, in case you want button 
+	*         positioning to not include a highlight glow, or any other reason you would want to offset the button art and label.
 	*  @param {Object} [label=null] Information about the text label on the button. Omitting this makes the button not use a label.
 	*  @param {String} [label.text] The text to display on the label.
 	*  @param {String} [label.font] The font name and size to use on the label, as createjs.Text expects.
 	*  @param {String} [label.color] The color of the text to use on the label, as createjs.Text expects.
-	*  @param {String} [label.textBaseline=top] The baseline for the label text, as createjs.Text expects.
+	*  @param {String} [label.textBaseline="middle"] The baseline for the label text, as createjs.Text expects.
 	*  @param {Object} [label.stroke=null] The stroke to use for the label text, if desired, as createjs.Text (CloudKid fork only) expects.
 	*  @param {createjs.Shadow} [label.shadow=null] A shadow object to apply to the label text.
 	*  @param {String|Number} [label.x=null] An x position to place the label text at relative to the button. If omitted,
@@ -2545,6 +2547,13 @@
 	* @property {Number} _height
 	*/
 	p._height = 0;
+
+	/**
+	* An offset to button positioning, generally used to adjust for a highlight around the button.
+	* @private
+	* @property {createjs.Point} _offset
+	*/
+	p._offset = null;
 	
 	/**
 	* An event for when the button is pressed (while enabled).
@@ -2589,6 +2598,7 @@
 		
 		var _stateData = this._stateData = {};
 		this._stateFlags = {};
+		this._offset = new createjs.Point();
 		
 		//a clone of the label data to use as a default value, without changing the original
 		var labelData;
@@ -2663,6 +2673,16 @@
 				_stateData.down = _stateData.up;
 			if(!_stateData.disabled)
 				_stateData.disabled = _stateData.up;
+			//set up the offset
+			if(imageSettings.offset)
+			{
+				this._offset.x = imageSettings.offset.x;
+				this._offset.y = imageSettings.offset.y;
+			}
+			else
+			{
+				this._offset.x = this._offset.y = 0;
+			}
 		}
 		else//imageSettings is just an image to use directly - use the old stacked images method
 		{
@@ -2673,6 +2693,7 @@
 			_stateData.disabled = _stateData.up = {src:new createjs.Rectangle(0, 0, width, height)};
 			_stateData.over = {src:new createjs.Rectangle(0, height, width, height)};
 			_stateData.down = {src:new createjs.Rectangle(0, height * 2, width, height)};
+			this._offset.x = this._offset.y = 0;
 		}
 		
 		this.back = new createjs.Bitmap(image);
@@ -2749,13 +2770,13 @@
 				data = this._stateData.up;
 			data = data.label;
 			if(data.x == "center")
-				this.label.x = (width - this.label.getMeasuredWidth()) * 0.5;
+				this.label.x = (width - this.label.getMeasuredWidth()) * 0.5 + this._offset.x;
 			else
-				this.label.x = data.x;
+				this.label.x = data.x + this._offset.x;
 			if(data.y == "center")
-				this.label.y = (height - this.label.getMeasuredLineHeight()) * 0.5;
+				this.label.y = height * 0.5 + this._offset.y;
 			else
-				this.label.y = label.y;
+				this.label.y = label.y + this._offset.y;
 		}
 	};
 	
@@ -2800,7 +2821,7 @@
 	p._addProperty = function(propertyName)
 	{
 		//check to make sure we don't add reserved names
-		if(RESERVED_STATES.indexOf(propertyName >= 0)) return;
+		if(RESERVED_STATES.indexOf(propertyName) >= 0) return;
 		
 		Object.defineProperty(this, propertyName, {
 			get: function() { return this._stateFlags[propertyName]; },
@@ -2837,32 +2858,33 @@
 		//position the button back
 		if(data.trim)
 		{
-			this.back.x = data.trim.x;
-			this.back.y = data.trim.y;
+			this.back.x = data.trim.x + this._offset.x;
+			this.back.y = data.trim.y + this._offset.y;
 		}
 		else
 		{
-			this.back.x = this.back.y = 0;
+			this.back.x = this._offset.x;
+			this.back.y = this._offset.y;
 		}
 		//if we have a label, update that too
 		if(this.label)
 		{
 			data = data.label;
 			//update the text properties
-			this.label.textBaseline = data.textBaseline || "top";//defaults to top in CreateJS
+			this.label.textBaseline = data.textBaseline || "middle";//Middle is easy to center
 			this.label.stroke = data.stroke;
 			this.label.shadow = data.shadow;
 			this.label.font = data.font;
 			this.label.color = data.color || "#000";//default for createjs.Text
 			//position the text
 			if(data.x == "center")
-				this.label.x = (width - this.label.getMeasuredWidth()) * 0.5;
+				this.label.x = (this._width - this.label.getMeasuredWidth()) * 0.5 + this._offset.x;
 			else
-				this.label.x = data.x;
+				this.label.x = data.x + this._offset.x;
 			if(data.y == "center")
-				this.label.y = (height - this.label.getMeasuredLineHeight()) * 0.5;
+				this.label.y = this._height * 0.5 + this._offset.y;
 			else
-				this.label.y = label.y;
+				this.label.y = label.y + this._offset.y;
 		}
 	};
 	
@@ -3059,7 +3081,9 @@
 			};
 			//set up the state priority to include the highlighted state
 			output.priority = DEFAULT_PRIORITY.slice();
-			output.priority.unshift("highlight");
+			output.priority.unshift("highlighted");
+			//add in an offset to the button to account for the highlight glow without affecting button positioning
+			output.offset = {x: -highlightSettings.size, y: -highlightSettings.size};
 		}
 		return output;
 	};

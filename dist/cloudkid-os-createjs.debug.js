@@ -463,14 +463,14 @@
     }, p = Button.prototype = new createjs.Container(), s = createjs.Container.prototype;
     p.back = null, p.label = null, p._overCB = null, p._outCB = null, p._downCB = null, 
     p._upCB = null, p._stateFlags = null, p._statePriority = null, p._stateData = null, 
-    p._width = 0, p._height = 0, Button.BUTTON_PRESS = "buttonPress";
+    p._width = 0, p._height = 0, p._offset = null, Button.BUTTON_PRESS = "buttonPress";
     var RESERVED_STATES = [ "disabled", "enabled", "up", "over", "down" ], DEFAULT_PRIORITY = [ "disabled", "up", "over", "down" ];
     p.initialize = function(imageSettings, label, enabled) {
         s.initialize.call(this), this.mouseChildren = !1, this._downCB = this._onMouseDown.bind(this), 
         this._upCB = this._onMouseUp.bind(this), this._overCB = this._onMouseOver.bind(this), 
         this._outCB = this._onMouseOut.bind(this);
         var _stateData = this._stateData = {};
-        this._stateFlags = {};
+        this._stateFlags = {}, this._offset = new createjs.Point();
         var labelData;
         label && (labelData = clone(label), delete labelData.text, labelData.x === undefined && (labelData.x = "center"), 
         labelData.y === undefined && (labelData.y = "center"));
@@ -495,7 +495,8 @@
             } else width = _stateData.up.src.width, height = _stateData.up.src.height;
             _stateData.up || (Debug.error("Button lacks an up state! This is a serious problem! Input data follows:"), 
             Debug.error(imageSettings)), _stateData.over || (_stateData.over = _stateData.up), 
-            _stateData.down || (_stateData.down = _stateData.up), _stateData.disabled || (_stateData.disabled = _stateData.up);
+            _stateData.down || (_stateData.down = _stateData.up), _stateData.disabled || (_stateData.disabled = _stateData.up), 
+            imageSettings.offset ? (this._offset.x = imageSettings.offset.x, this._offset.y = imageSettings.offset.y) : this._offset.x = this._offset.y = 0;
         } else image = imageSettings, width = image.width, height = image.height / 3, this._statePriority = DEFAULT_PRIORITY, 
         _stateData.disabled = _stateData.up = {
             src: new createjs.Rectangle(0, 0, width, height)
@@ -503,7 +504,7 @@
             src: new createjs.Rectangle(0, height, width, height)
         }, _stateData.down = {
             src: new createjs.Rectangle(0, 2 * height, width, height)
-        };
+        }, this._offset.x = this._offset.y = 0;
         this.back = new createjs.Bitmap(image), this.addChild(this.back), this._width = width, 
         this._height = height, label && (this.label = new createjs.Text(label.text || "", _stateData.up.label.font, _stateData.up.label.color), 
         this.addChild(this.label)), this.enabled = enabled === undefined ? !0 : !!enabled;
@@ -528,8 +529,8 @@
                 data = this._stateData[this._statePriority[i]];
                 break;
             }
-            data || (data = this._stateData.up), data = data.label, this.label.x = "center" == data.x ? .5 * (width - this.label.getMeasuredWidth()) : data.x, 
-            this.label.y = "center" == data.y ? .5 * (height - this.label.getMeasuredLineHeight()) : label.y;
+            data || (data = this._stateData.up), data = data.label, this.label.x = "center" == data.x ? .5 * (width - this.label.getMeasuredWidth()) + this._offset.x : data.x + this._offset.x, 
+            this.label.y = "center" == data.y ? .5 * height + this._offset.y : label.y + this._offset.y;
         }
     }, Object.defineProperty(p, "enabled", {
         get: function() {
@@ -543,7 +544,7 @@
             this._updateState();
         }
     }), p._addProperty = function(propertyName) {
-        RESERVED_STATES.indexOf(propertyName >= 0) || Object.defineProperty(this, propertyName, {
+        RESERVED_STATES.indexOf(propertyName) >= 0 || Object.defineProperty(this, propertyName, {
             get: function() {
                 return this._stateFlags[propertyName];
             },
@@ -557,12 +558,12 @@
                 data = this._stateData[this._statePriority[i]];
                 break;
             }
-            data || (data = this._stateData.up), this.back.sourceRect = data.src, data.trim ? (this.back.x = data.trim.x, 
-            this.back.y = data.trim.y) : this.back.x = this.back.y = 0, this.label && (data = data.label, 
-            this.label.textBaseline = data.textBaseline || "top", this.label.stroke = data.stroke, 
-            this.label.shadow = data.shadow, this.label.font = data.font, this.label.color = data.color || "#000", 
-            this.label.x = "center" == data.x ? .5 * (width - this.label.getMeasuredWidth()) : data.x, 
-            this.label.y = "center" == data.y ? .5 * (height - this.label.getMeasuredLineHeight()) : label.y);
+            data || (data = this._stateData.up), this.back.sourceRect = data.src, data.trim ? (this.back.x = data.trim.x + this._offset.x, 
+            this.back.y = data.trim.y + this._offset.y) : (this.back.x = this._offset.x, this.back.y = this._offset.y), 
+            this.label && (data = data.label, this.label.textBaseline = data.textBaseline || "middle", 
+            this.label.stroke = data.stroke, this.label.shadow = data.shadow, this.label.font = data.font, 
+            this.label.color = data.color || "#000", this.label.x = "center" == data.x ? .5 * (this._width - this.label.getMeasuredWidth()) + this._offset.x : data.x + this._offset.x, 
+            this.label.y = "center" == data.y ? .5 * this._height + this._offset.y : label.y + this._offset.y);
         }
     }, p._onMouseDown = function() {
         this.addEventListener("pressup", this._upCB), this._stateFlags.down = !0, this._updateState();
@@ -621,7 +622,11 @@
             output.up.trim = trim, output.over.trim = trim, output.down.trim = trim, output.disabled && (output.disabled.trim = trim), 
             output.highlighted = {
                 src: new createjs.Rectangle(0, nextY, highlightStateWidth, highlightStateHeight)
-            }, output.priority = DEFAULT_PRIORITY.slice(), output.priority.unshift("highlight");
+            }, output.priority = DEFAULT_PRIORITY.slice(), output.priority.unshift("highlighted"), 
+            output.offset = {
+                x: -highlightSettings.size,
+                y: -highlightSettings.size
+            };
         }
         return output;
     }, namespace("cloudkid").Button = Button;
