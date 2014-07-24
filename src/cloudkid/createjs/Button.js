@@ -19,36 +19,51 @@
 	*         If this is an Image or Canvas element, then the button assumes that the image is full width and 3 images
 	*         tall, in the order (top to bottom) up, over, down. If so, then the properties of imageSettings are ignored.
 	*  @param {Image|HTMLCanvasElement} [imageSettings.image] The image to use for all of the button states.
-	*  @param {Object} [imageSettings.up] The rectangle information about the up state.
+	*  @param {Array} [imageSettings.priority=null] The state priority order. If omitted, defaults to ["disabled", "down", "over", "up"].
+	*         Previous versions of Button used a hard coded order: ["highlighted", "disabled", "down", "over", "selected", "up"].
+	*  @param {Object} [imageSettings.up] The visual information about the up state.
 	*  @param {createjs.Rectangle} [imageSettings.up.src] The sourceRect for the state within the image.
 	*  @param {createjs.Rectangle} [imageSettings.up.trim=null] Trim data about the state, where x & y are how many pixels were 
 	*         trimmed off the left and right, and height & width are the untrimmed size of the button.
-	*  @param {Object} [imageSettings.over=null] The rectangle information about the over state. If omitted, uses the up state.
+	*  @param {Object} [imageSettings.up.label=null] Label information specific to this state. Properties on this parameter override data 
+	*         in the label parameter for this button state only. All values except "text" from the label parameter may be overridden.
+	*  @param {Object} [imageSettings.over=null] The visual information about the over state. If omitted, uses the up state.
 	*  @param {createjs.Rectangle} [imageSettings.over.src] The sourceRect for the state within the image.
 	*  @param {createjs.Rectangle} [imageSettings.over.trim=null] Trim data about the state, where x & y are how many pixels were 
 	*         trimmed off the left and right, and height & width are the untrimmed size of the button.
-	*  @param {Object} [imageSettings.down=null] The rectangle information about the down state. If omitted, uses the up state.
+	*  @param {Object} [imageSettings.over.label=null] Label information specific to this state. Properties on this parameter override data 
+	*         in the label parameter for this button state only. All values except "text" from the label parameter may be overridden.
+	*  @param {Object} [imageSettings.down=null] The visual information about the down state. If omitted, uses the up state.
 	*  @param {createjs.Rectangle} [imageSettings.down.src] The sourceRect for the state within the image.
 	*  @param {createjs.Rectangle} [imageSettings.down.trim=null] Trim data about the state, where x & y are how many pixels were 
 	*         trimmed off the left and right, and height & width are the untrimmed size of the button.
-	*  @param {Object} [imageSettings.disabled=null] The rectangle information about the disabled state. If omitted, uses the up state.
+	*  @param {Object} [imageSettings.down.label=null] Label information specific to this state. Properties on this parameter override data 
+	*         in the label parameter for this button state only. All values except "text" from the label parameter may be overridden.
+	*  @param {Object} [imageSettings.disabled=null] The visual information about the disabled state. If omitted, uses the up state.
 	*  @param {createjs.Rectangle} [imageSettings.disabled.src] The sourceRect for the state within the image.
 	*  @param {createjs.Rectangle} [imageSettings.disabled.trim=null] Trim data about the state, where x & y are how many pixels were 
 	*         trimmed off the left and right, and height & width are the untrimmed size of the button.
-	*  @param {Object} [imageSettings.highlighted=null] The rectangle information about the highlighted state. If omitted, uses the over state.
-	*  @param {createjs.Rectangle} [imageSettings.disabled.src] The sourceRect for the state within the image.
-	*  @param {createjs.Rectangle} [imageSettings.disabled.trim=null] Trim data about the state, where x & y are how many pixels were 
-	*         trimmed off the left and right, and height & width are the untrimmed size of the button.
-	*  @param {Object} [imageSettings.selected=null] The rectangle information about the over state. If omitted, the button is not a selectable button.
-	*  @param {createjs.Rectangle} [imageSettings.selected.src] The sourceRect for the state within the image.
-	*  @param {createjs.Rectangle} [imageSettings.selected.trim=null] Trim data about the state, where x & y are how many pixels were 
-	*         trimmed off the left and right, and height & width are the untrimmed size of the button.
+	*  @param {Object} [imageSettings.disabled.label=null] Label information specific to this state. Properties on this parameter override 
+	*         data in the label parameter for this button state only. All values except "text" from the label parameter may be overridden.
+	*  @param {Object} [imageSettings.<yourCustomState>=null] The visual information about a custom state found in imageSettings.priority.
+	*         Any state added this way has a property of the same name added to the button. Examples of previous states that have been
+	*         moved to this system are "selected" and "highlighted".
+	*  @param {createjs.Rectangle} [imageSettings.<yourCustomState>.src] The sourceRect for the state within the image.
+	*  @param {createjs.Rectangle} [imageSettings.<yourCustomState>.trim=null] Trim data about the state, where x & y are how many pixels 
+	*         were trimmed off the left and right, and height & width are the untrimmed size of the button.
+	*  @param {Object} [imageSettings.<yourCustomState>.label=null] Label information specific to this state. Properties on this parameter 
+	*         override data in the label parameter for this button state only. All values except "text" from the label parameter may be
+	*         overridden.
 	*  @param {Object} [label=null] Information about the text label on the button. Omitting this makes the button not use a label.
 	*  @param {String} [label.text] The text to display on the label.
 	*  @param {String} [label.font] The font name and size to use on the label, as createjs.Text expects.
 	*  @param {String} [label.color] The color of the text to use on the label, as createjs.Text expects.
 	*  @param {String} [label.textBaseline=top] The baseline for the label text, as createjs.Text expects.
 	*  @param {String} [label.stroke=null] The stroke to use for the label text, if desired, as createjs.Text expects.
+	*  @param {String|Number} [label.x=null] An x position to place the label text at relative to the button. If omitted,
+	*         "center" is used, which attempts to horizontally center the label on the button.
+	*  @param {String|Number} [label.y=null] A y position to place the label text at relative to the button. If omitted,
+	*         "center" is used, which attempts to vertically center the label on the button.
 	*  @param {Boolean} [enabled=true] Whether or not the button is initially enabled.
 	*/
 	var Button = function(imageSettings, label, enabled)
@@ -109,98 +124,28 @@
 	*/
 	p._upCB = null;
 	
-	//===button state variables
 	/**
-	* If this button is enabled.
+	* A dictionary of state booleans, keyed by state name.
 	* @private
-	* @property {Boolean} _enabled
+	* @property {Object} _stateFlags
 	*/
-	p._enabled = false;
-
+	p._stateFlags = null;
 	/**
-	* If this button is held down.
+	* An array of state names (Strings), in their order of priority.
+	* The standard order previously was ["highlighted", "disabled", "down", "over", "selected", "up"].
 	* @private
-	* @property {Boolean} _isDown
+	* @property {Array} _statePriority
 	*/
-	p._isDown = false;
-
-	/**
-	* If the mouse is over this button
-	* @private
-	* @property {Boolean} _isOver
-	*/
-	p._isOver = false;
-
-	/**
-	* If this button is selected.
-	* @private
-	* @property {Boolean} _isSelected
-	*/
-	p._isSelected = false;
-
-	/**
-	* If this button is a selectable button, and will respond to select being set.
-	* @private
-	* @property {Boolean} _isSelectable
-	*/
-	p._isSelectable = false;
-
-	/**
-	* If this button is highlighted.
-	* @private
-	* @property {Boolean} _isHighlighted
-	*/
-	p._isHighlighted = false;
-
+	p._statePriority = null;
 	
-	//===textures for different button states
 	/**
-	* [CreateJS only] An object noting the rectangles for the button up state. This should have a src property
-	*	and an optional trim property, both createjs.Rectangles.
+	* A dictionary of state graphic data, keyed by state name.
+	* Each object contains the sourceRect (src) and optionally 'trim', another Rectangle.
+	* Additionally, each object will contain a 'label' object if the button has a text label.
 	* @private
-	* @property {Object} _upRects
+	* @property {Object} _stateFlags
 	*/
-	p._upRects = null;
-
-	/**
-	* [CreateJS only] An object noting the rectangles for the button over state. This should have a src property
-	*	and an optional trim property, both createjs.Rectangles.
-	* @private
-	* @property {Object} _overRects
-	*/
-	p._overRects = null;
-
-	/**
-	* [CreateJS only] An object noting the rectangles for the button down state. This should have a src property
-	*	and an optional trim property, both createjs.Rectangles.
-	* @private
-	* @property {Object} _downRects
-	*/
-	p._downRects = null;
-
-	/**
-	* [CreateJS only] An object noting the rectangles for the button disabled state. This should have a src property
-	*	and an optional trim property, both createjs.Rectangles.
-	* @private
-	* @property {Object} _disabledRects
-	*/
-	p._disabledRects = null;
-
-	/**
-	* [CreateJS only] An object noting the rectangles for the button selected state. This should have a src property
-	*	and an optional trim property, both createjs.Rectangles.
-	* @private
-	* @property {Object} _selectedRects
-	*/
-	p._selectedRects = null;
-
-	/**
-	* [CreateJS only] An object noting the rectangles for the button highlighted state. This should have a src property
-	*	and an optional trim property, both createjs.Rectangles.
-	* @private
-	* @property {Object} _highlightedRects
-	*/
-	p._highlightedRects = null;
+	p._stateData = null;
 
 	/**
 	* The width of the button art, independent of the scaling of the button itself.
@@ -216,12 +161,35 @@
 	*/
 	p._height = 0;
 	
+	/**
+	* An event for when the button is pressed (while enabled).
+	* @public
+	* @static
+	* @property {String} BUTTON_PRESS
+	*/
+	Button.BUTTON_PRESS = "buttonPress";
+	
+	/*
+	* A list of state names that should not have properties autogenerated.
+	* @private
+	* @static
+	* @property {Array} RESERVED_STATES
+	*/
+	var RESERVED_STATES = ["disabled", "enabled", "up", "over", "down"];
+	/*
+	* A state priority list to use as the default.
+	* @private
+	* @static
+	* @property {Array} DEFAULT_PRIORITY
+	*/
+	var DEFAULT_PRIORITY = ["disabled", "up", "over", "down"];
+	
 	/** 
-	*  [CreateJS only] Constructor for the button when using CreateJS.
+	*  Constructor for the button when using CreateJS.
 	*  @method initialize
 	*  @param {Object|Image|HTMLCanvasElement} [imageSettings] See the constructor for more information
-	*  {Object} [label=null] Information about the text label on the button. Omitting this makes the button not use a label.
-	*  {Boolean} [enabled=true] Whether or not the button is initially enabled.
+	*  @param {Object} [label=null] Information about the text label on the button. Omitting this makes the button not use a label.
+	*  @param {Boolean} [enabled=true] Whether or not the button is initially enabled.
 	*/
 	p.initialize = function(imageSettings, label, enabled)
 	{
@@ -234,42 +202,91 @@
 		this._overCB = this._onMouseOver.bind(this);
 		this._outCB = this._onMouseOut.bind(this);
 		
-		var image, width, height;
+		var _stateData = this._stateData = {};
+		this._stateFlags = {};
+		
+		//a clone of the label data to use as a default value, without changing the original
+		var labelData;
+		if(label)
+		{
+			labelData = clone(label);
+			delete labelData.text;
+			if(labelData.x === undefined)
+				labelData.x = "center";
+			if(labelData.y === undefined)
+				labelData.y = "center";
+		}
+		
+		var image, width, height, i, state;
 		if(imageSettings.image)//is a settings object with rectangles
 		{
 			image = imageSettings.image;
+			this._statePriority = imageSettings.priority || DEFAULT_PRIORITY;
 			//each rects object has a src property (createjs.Rectangle), and optionally a trim rectangle
-			this._upRects = imageSettings.up;
-			if(this._upRects.trim)//if the texture is trimmed, use that for the sizing
+			for(i = this._statePriority.length - 1; i >= 0; ++i)//start at the end to start at the up state
 			{
-				this.upTrim = this._upRects.trim;
-				width = this.upTrim.width;
-				height = this.upTrim.height;
+				state = this._statePriority[i];
+				//set up the property for the state so it can be set - the function will ignore reserved states
+				this._addProperty(state);
+				//set the default value for the state flag
+				if(state != "disabled" && state != "up")
+					this._stateFlags[state] = false;
+				var inputData = imageSettings[state];
+				//it's established that over, down, and particularly disabled default to the up state
+				_stateData[state] = inputData ? clone(inputData) || _stateData.up;
+				//set up the label info for this state
+				if(label)
+				{
+					//if there is actual label data for this state, use that
+					if(inputData && inputData.label)
+					{
+						inputData = inputData.label;
+						var stateLabel = _stateData[state].label = {};
+						stateLabel.font = inputData.font || labelData.font;
+						stateLabel.color = inputData.color || labelData.color;
+						stateLabel.stroke = inputData.stroke || labelData.stroke;
+						stateLabel.textBaseline = inputData.textBaseline || labelData.textBaseline;
+						stateLabel.x = inputData.x || labelData.x;
+						stateLabel.y = inputData.y || labelData.y;
+					}
+					//otherwise use the default
+					else
+						_stateData[state].label = labelData;
+				}
+			}
+			if(_stateData.up.trim)//if the texture is trimmed, use that for the sizing
+			{
+				var upTrim = _stateData.up.trim;
+				width = upTrim.width;
+				height = upTrim.height;
 			}
 			else//texture is not trimmed and is full size
 			{
-				width = this.upRect.src.width;
-				height = this.upRect.src.height;
+				width = _stateData.up.src.width;
+				height = _stateData.up.src.height;
 			}
-			this._overRects = imageSettings.over || this._upRects;
-			this._downRects = imageSettings.down || this._upRects;
-			this._disabledRects = imageSettings.disabled || this._upRects;
-			this._highlightedRects = imageSettings.highlighted || this._overRects;
-			if(imageSettings.selected)
+			//ensure that our required states exist
+			if(!_stateData.up)
 			{
-				this._selectedRects = imageSettings.selected;
-				this._isSelectable = true;
+				Debug.error("Button lacks an up state! This is a serious problem! Input data follows:");
+				Debug.error(imageSettings);
 			}
+			if(!_stateData.over)
+				_stateData.over = _stateData.up;
+			if(!_stateData.down)
+				_stateData.down = _stateData.up;
+			if(!_stateData.disabled)
+				_stateData.disabled = _stateData.up;
 		}
 		else//imageSettings is just an image to use directly - use the old stacked images method
 		{
 			image = imageSettings;
 			width = image.width;
 			height = image.height / 3;
-			this._upRects = {src:new createjs.Rectangle(0, 0, width, height)};
-			this._highlightedRects = this._overRects = {src:new createjs.Rectangle(0, height, width, height)};
-			this._downRects = {src:new createjs.Rectangle(0, height * 2, width, height)};
-			this._disabledRects = this._upRects;
+			this._statePriority = DEFAULT_PRIORITY;
+			_stateData.disabled = _stateData.up = {src:new createjs.Rectangle(0, 0, width, height)};
+			_stateData.over = {src:new createjs.Rectangle(0, height, width, height)};
+			_stateData.down = {src:new createjs.Rectangle(0, height * 2, width, height)};
 		}
 		
 		this.back = new createjs.Bitmap(image);
@@ -279,18 +296,26 @@
 		
 		if(label)
 		{
-			this.label = new createjs.Text(label.text, label.font, label.color);
-			if(label.textBaseline)
-				this.label.textBaseline = label.textBaseline;
-			this.label.stroke = label.stroke;
+			this.label = new createjs.Text(label.text || "", _stateData.up.label.font, _stateData.up.label.color);
 			this.addChild(this.label);
-			this.label.x = (width - this.label.getMeasuredWidth()) * 0.5;
-			var h = this.label.getMeasuredLineHeight();
-			this.label.y = (height - h) * 0.5;
 		}
 		
+		//set the button state initially
 		this.enabled = enabled === undefined ? true : !!enabled;
 	};
+	
+	/*
+	*  A simple function for making a shallow copy of an object.
+	*/
+	function clone(obj)
+	{
+		if (!obj || "object" != typeof obj) return null;
+		var copy = obj.constructor();
+		for (var attr in obj) {
+			if (obj.hasOwnProperty(attr)) copy[attr] = obj[attr];
+		}
+		return copy;
+	}
 	
 	/**
 	*  The width of the button, based on the width of back. This value is affected by scale.
@@ -325,9 +350,26 @@
 		if(this.label)
 		{
 			this.label.text = text;
-			this.label.x = (width - this.label.getMeasuredWidth()) * 0.5;
-			var h = this.label.getMeasuredLineHeight();
-			this.label.y = (height - h) * 0.5;
+			var data;
+			for(var i = 0; i < this._statePriority.length; ++i)
+			{
+				if(this._stateFlags[this._statePriority[i]])
+				{
+					data = this._stateData[this._statePriority[i]];
+					break;
+				}
+			}
+			if(!data)
+				data = this._stateData.up;
+			data = data.label;
+			if(data.x == "center")
+				this.label.x = (width - this.label.getMeasuredWidth()) * 0.5;
+			else
+				this.label.x = data.x;
+			if(data.y == "center")
+				this.label.y = (height - this.label.getMeasuredLineHeight()) * 0.5;
+			else
+				this.label.y = label.y;
 		}
 	};
 	
@@ -337,12 +379,12 @@
 	*  @default true
 	*/
 	Object.defineProperty(p, "enabled", {
-		get: function() { return this._enabled; },
+		get: function() { return !this._stateFlags.disabled; },
 		set: function(value)
 		{
-			this._enabled = value;
+			this._stateFlags.disabled = !value;
 			
-			if(this._enabled)
+			if(value)
 			{
 				this.cursor = 'pointer';
 				this.addEventListener('mousedown', this._downCB);
@@ -355,7 +397,7 @@
 				this.removeEventListener('mousedown', this._downCB);
 				this.removeEventListener('mouseover', this._overCB);
 				this.removeEventListener('mouseout', this._outCB);
-				this._isDown = this._isOver = false;
+				this._stateFlags.down = this._stateFlags.over = false;
 			}
 			
 			this._updateState();
@@ -363,35 +405,26 @@
 	});
 	
 	/**
-	*  Whether or not the button is selected. Setting this only works if the button was given selected state when initialized.
-	*  @property {Boolean} selected
-	*  @default false
+	*  Adds a property to the button. Setting the property sets the value in
+	*  _stateFlags and calls _updateState().
+	*  @private
+	*  @method _addProperty
+	*  @param {String} propertyName The property name to add to the button.
 	*/
-	Object.defineProperty(p, "selected", {
-		get: function() { return this._isSelected; },
-		set: function(value)
-		{
-			if(this._isSelectable)
+	p._addProperty = function(propertyName)
+	{
+		//check to make sure we don't add reserved names
+		if(RESERVED_STATES.indexOf(propertyName >= 0)) return;
+		
+		Object.defineProperty(this, propertyName, {
+			get: function() { return this._stateFlags[propertyName]; },
+			set: function(value)
 			{
-				this._isSelected = value;
+				this._stateFlags[propertyName] = value;
 				this._updateState();
 			}
-		}
-	});
-	
-	/**
-	*  Whether or not the button is highlighted. The default highlighted state is the over state, but a specific texture can be supplied.
-	*  @property {Boolean} highlighted
-	*  @default false
-	*/
-	Object.defineProperty(p, "highlighted", {
-		get: function() { return this._isHighlighted; },
-		set: function(value)
-		{
-			this._isHighlighted = value;
-			this._updateState();
-		}
-	});
+		});
+	};
 	
 	/**
 	*  Updates back based on the current button state.
@@ -402,19 +435,20 @@
 	{
 		if(!this.back) return;
 		var data;
-		if(this._isHighlighted)
-			data = this._highlightedRects;
-		else if(!this._enabled)
-			data = this._disabledRects;
-		else if(this._isDown)
-			data = this._downRects;
-		else if(this._isOver)
-			data = this._overRects;
-		else if(this._isSelected)
-			data = this._selectedRects;
-		else
-			data = this._upRects;
+		//use the highest priority state
+		for(var i = 0; i < this._statePriority.length; ++i)
+		{
+			if(this._stateFlags[this._statePriority[i]])
+			{
+				data = this._stateData[this._statePriority[i]];
+				break;
+			}
+		}
+		//if no state is active, use the up state
+		if(!data)
+			data = this._stateData.up;
 		this.back.sourceRect = data.src;
+		//position the button back
 		if(data.trim)
 		{
 			this.back.x = data.trim.x;
@@ -424,17 +458,36 @@
 		{
 			this.back.x = this.back.y = 0;
 		}
+		//if we have a label, update that too
+		if(this.label)
+		{
+			data = data.label;
+			//update the text properties
+			this.label.textBaseline = data.textBaseline || "top";//defaults to top in CreateJS
+			this.label.stroke = data.stroke;
+			this.label.font = data.font;
+			this.label.color = data.color || "#000";//default for createjs.Text
+			//position the text
+			if(data.x == "center")
+				this.label.x = (width - this.label.getMeasuredWidth()) * 0.5;
+			else
+				this.label.x = data.x;
+			if(data.y == "center")
+				this.label.y = (height - this.label.getMeasuredLineHeight()) * 0.5;
+			else
+				this.label.y = label.y;
+		}
 	};
 	
 	/**
-	*  [CreateJS only] The callback for when the button receives a mouse down event.
+	*  The callback for when the button receives a mouse down event.
 	*  @private
 	*  @method _onMouseDown
 	*/
 	p._onMouseDown = function(e)
 	{
 		this.addEventListener('pressup', this._upCB);
-		this._isDown = true;
+		this._stateFlags.down = true;
 		this._updateState();
 	};
 	
@@ -447,29 +500,32 @@
 	p._onMouseUp = function(e)
 	{
 		this.removeEventListener('pressup', this._upCB);
-		this._isDown = false;
+		this._stateFlags.down = false;
+		//if the over flag is true, then the mouse was released while on the button, thus being a click
+		if(this._stateFlags.over)
+			this.dispatchEvent(new createjs.Event(Button.BUTTON_PRESS));
 		this._updateState();
 	};
 	
 	/**
-	*  [CreateJS only] The callback for when the button is moused over.
+	*  The callback for when the button is moused over.
 	*  @private
 	*  @method _onMouseOver
 	*/
 	p._onMouseOver = function(e)
 	{
-		this._isOver = true;
+		this._stateFlags.over = true;
 		this._updateState();
 	};
 	
 	/**
-	*  [CreateJS only] The callback for when the mouse leaves the button area.
+	*  The callback for when the mouse leaves the button area.
 	*  @private
 	*  @method _onMouseOut
 	*/
 	p._onMouseOut = function(e)
 	{
-		this._isOver = false;
+		this._stateFlags.over = false;
 		this._updateState();
 	};
 	
@@ -482,12 +538,6 @@
 	{
 		this.removeAllChildren();
 		this.removeAllEventListeners();
-		this._upRects = null;
-		this._overRects = null;
-		this._downRects = null;
-		this._disabledRects = null;
-		this._selectedRects = null;
-		this._highlightedRects = null;
 		this._downCB = null;
 		this._upCB = null;
 		this._overCB = null;
