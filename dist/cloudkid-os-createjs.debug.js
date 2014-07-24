@@ -477,7 +477,7 @@
         var image, width, height, i, state;
         if (imageSettings.image) {
             for (image = imageSettings.image, this._statePriority = imageSettings.priority || DEFAULT_PRIORITY, 
-            i = this._statePriority.length - 1; i >= 0; ++i) {
+            i = this._statePriority.length - 1; i >= 0; --i) {
                 state = this._statePriority[i], this._addProperty(state), "disabled" != state && "up" != state && (this._stateFlags[state] = !1);
                 var inputData = imageSettings[state];
                 if (_stateData[state] = inputData ? clone(inputData) : _stateData.up, label) if (inputData && inputData.label) {

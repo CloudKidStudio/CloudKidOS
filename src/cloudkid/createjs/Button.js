@@ -225,7 +225,7 @@
 			image = imageSettings.image;
 			this._statePriority = imageSettings.priority || DEFAULT_PRIORITY;
 			//each rects object has a src property (createjs.Rectangle), and optionally a trim rectangle
-			for(i = this._statePriority.length - 1; i >= 0; ++i)//start at the end to start at the up state
+			for(i = this._statePriority.length - 1; i >= 0; --i)//start at the end to start at the up state
 			{
 				state = this._statePriority[i];
 				//set up the property for the state so it can be set - the function will ignore reserved states
