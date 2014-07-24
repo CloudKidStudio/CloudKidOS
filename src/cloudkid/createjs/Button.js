@@ -556,12 +556,18 @@
 	*  @static
 	*  @param {Image|HTMLCanvasElement} image The image to use for all of the button states, in the standard up/over/down format.
 	*  @param {Object} [disabledSettings] The settings object for the disabled state. If omitted, no disabled state is created.
-	*  @param {Number} [disabledSettings.saturation] The amount of saturation for the disabled state. 100 is full-color, 0 is desaturated
+	*  @param {Number} [disabledSettings.saturation] The saturation adjustment for the disabled state. 
+	*         100 is fully saturated, 0 is unchanged, -100 is desaturated.
+	*  @param {Number} [disabledSettings.brightness] The brightness adjustment for the disabled state. 
+	*         100 is fully bright, 0 is unchanged, -100 is completely dark.
+	*  @param {Number} [disabledSettings.contrast] The contrast adjustment for the disabled state. 
+	*         100 is full contrast, 0 is unchanged, -100 is no contrast.
 	*  @param {Object} [highlightSettings] The settings object for the highlight state. If omitted, no state is created.
 	*  @param {Number} [highlightSettings.size] How many pixels to make the glow, eg 8 for an 8 pixel increase on each side.
 	*  @param {Number} [highlightSettings.red] The red value for the glow, from 0 to 255.
 	*  @param {Number} [highlightSettings.green] The green value for the glow, from 0 to 255.
 	*  @param {Number} [highlightSettings.blue] The blue value for the glow, from 0 to 255.
+	*  @param {Number} [highlightSettings.alpha] The alpha value for the glow, from 0 to 255, with 0 being transparent and 255 fully opaque.
 	*/
 	Button.generateDefaultStates = function(image, disabledSettings, highlightSettings)
 	{
@@ -605,7 +611,13 @@
 			//position the button to draw
 			context.translate(0, nextY);
 			//set up the desaturation matrix
-			var matrix = new createjs.ColorMatrix().adjustSaturation(100 - disabledSettings.saturation);
+			var matrix = new createjs.ColorMatrix();
+			if(disabledSettings.saturation !== undefined)
+				matrix.adjustSaturation(disabledSettings.saturation);
+			if(disabledSettings.brightness !== undefined)
+				matrix.adjustBrightness(disabledSettings.brightness * 2.55);//convert to CreateJS's -255->255 system from -100->100
+			if(disabledSettings.contrast !== undefined)
+				matrix.adjustContrast(disabledSettings.contrast);
 			drawingBitmap.filters = [new createjs.ColorMatrixFilter(matrix)];
 			//draw the state
 			drawingBitmap.cache(0, 0, output.up.src.width, output.up.src.height);
@@ -623,7 +635,10 @@
 			var highlightStateHeight = buttonHeight + highlightSettings.size * 2;
 			//set up the color changing filter
 			drawingBitmap.filters = [new createjs.ColorFilter(0,0,0,1, 
-				/*r*/highlightSettings.red, /*g*/highlightSettings.green, /*b*/highlightSettings.blue, 0)];
+				/*r*/highlightSettings.red, 
+				/*g*/highlightSettings.green, 
+				/*b*/highlightSettings.blue, 
+				highlightSettings.alpha !== undefined ? -255 + highlightSettings.alpha : 0)];
 			//size the colored highlight
 			drawingBitmap.scaleX = (highlightStateWidth) / buttonWidth;
 			drawingBitmap.scaleY = (highlightStateHeight) / buttonHeight;
