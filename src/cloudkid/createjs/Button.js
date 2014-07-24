@@ -59,11 +59,13 @@
 	*  @param {String} [label.font] The font name and size to use on the label, as createjs.Text expects.
 	*  @param {String} [label.color] The color of the text to use on the label, as createjs.Text expects.
 	*  @param {String} [label.textBaseline=top] The baseline for the label text, as createjs.Text expects.
-	*  @param {String} [label.stroke=null] The stroke to use for the label text, if desired, as createjs.Text expects.
+	*  @param {Object} [label.stroke=null] The stroke to use for the label text, if desired, as createjs.Text (CloudKid fork only) expects.
+	*  @param {createjs.Shadow} [label.shadow=null] A shadow object to apply to the label text.
 	*  @param {String|Number} [label.x=null] An x position to place the label text at relative to the button. If omitted,
 	*         "center" is used, which attempts to horizontally center the label on the button.
 	*  @param {String|Number} [label.y=null] A y position to place the label text at relative to the button. If omitted,
-	*         "center" is used, which attempts to vertically center the label on the button.
+	*         "center" is used, which attempts to vertically center the label on the button. This may be unreliable -
+	*         see documentation for createjs.Text.getMeasuredLineHeight().
 	*  @param {Boolean} [enabled=true] Whether or not the button is initially enabled.
 	*/
 	var Button = function(imageSettings, label, enabled)
@@ -245,6 +247,7 @@
 						stateLabel.font = inputData.font || labelData.font;
 						stateLabel.color = inputData.color || labelData.color;
 						stateLabel.stroke = inputData.stroke || labelData.stroke;
+						stateLabel.shadow = inputData.shadow || labelData.shadow;
 						stateLabel.textBaseline = inputData.textBaseline || labelData.textBaseline;
 						stateLabel.x = inputData.x || labelData.x;
 						stateLabel.y = inputData.y || labelData.y;
@@ -465,6 +468,7 @@
 			//update the text properties
 			this.label.textBaseline = data.textBaseline || "top";//defaults to top in CreateJS
 			this.label.stroke = data.stroke;
+			this.label.shadow = data.shadow;
 			this.label.font = data.font;
 			this.label.color = data.color || "#000";//default for createjs.Text
 			//position the text
@@ -655,6 +659,9 @@
 			output.highlighted = {
 				src:new createjs.Rectangle(0, nextY, highlightStateWidth, highlightStateHeight)
 			};
+			//set up the state priority to include the highlighted state
+			output.priority = DEFAULT_PRIORITY.slice();
+			output.priority.unshift("highlight");
 		}
 		return output;
 	};
