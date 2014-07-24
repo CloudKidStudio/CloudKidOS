@@ -528,8 +528,8 @@
                 data = this._stateData[this._statePriority[i]];
                 break;
             }
-            data || (data = this._stateData.up), data = data.label, this.label.x = "center" == data.x ? .5 * (width - this.label.getMeasuredWidth()) : data.x, 
-            this.label.y = "center" == data.y ? .5 * (height - this.label.getMeasuredLineHeight()) : label.y;
+            data || (data = this._stateData.up), data = data.label, this.label.x = "center" == data.x ? .5 * (this._width - this.label.getMeasuredWidth()) : data.x, 
+            this.label.y = "center" == data.y ? .5 * (this._height - this.label.getMeasuredLineHeight()) : label.y;
         }
     }, Object.defineProperty(p, "enabled", {
         get: function() {
@@ -561,8 +561,8 @@
             this.back.y = data.trim.y) : this.back.x = this.back.y = 0, this.label && (data = data.label, 
             this.label.textBaseline = data.textBaseline || "top", this.label.stroke = data.stroke, 
             this.label.shadow = data.shadow, this.label.font = data.font, this.label.color = data.color || "#000", 
-            this.label.x = "center" == data.x ? .5 * (width - this.label.getMeasuredWidth()) : data.x, 
-            this.label.y = "center" == data.y ? .5 * (height - this.label.getMeasuredLineHeight()) : label.y);
+            this.label.x = "center" == data.x ? .5 * (this._width - this.label.getMeasuredWidth()) : data.x, 
+            this.label.y = "center" == data.y ? .5 * (this._height - this.label.getMeasuredLineHeight()) : label.y);
         }
     }, p._onMouseDown = function() {
         this.addEventListener("pressup", this._upCB), this._stateFlags.down = !0, this._updateState();

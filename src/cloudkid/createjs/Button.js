@@ -366,11 +366,11 @@
 				data = this._stateData.up;
 			data = data.label;
 			if(data.x == "center")
-				this.label.x = (width - this.label.getMeasuredWidth()) * 0.5;
+				this.label.x = (this._width - this.label.getMeasuredWidth()) * 0.5;
 			else
 				this.label.x = data.x;
 			if(data.y == "center")
-				this.label.y = (height - this.label.getMeasuredLineHeight()) * 0.5;
+				this.label.y = (this._height - this.label.getMeasuredLineHeight()) * 0.5;
 			else
 				this.label.y = label.y;
 		}
@@ -473,11 +473,11 @@
 			this.label.color = data.color || "#000";//default for createjs.Text
 			//position the text
 			if(data.x == "center")
-				this.label.x = (width - this.label.getMeasuredWidth()) * 0.5;
+				this.label.x = (this._width - this.label.getMeasuredWidth()) * 0.5;
 			else
 				this.label.x = data.x;
 			if(data.y == "center")
-				this.label.y = (height - this.label.getMeasuredLineHeight()) * 0.5;
+				this.label.y = (this._height - this.label.getMeasuredLineHeight()) * 0.5;
 			else
 				this.label.y = label.y;
 		}
