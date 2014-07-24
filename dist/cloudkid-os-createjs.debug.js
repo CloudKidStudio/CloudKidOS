@@ -452,38 +452,61 @@
     }, namespace("cloudkid").CacheManager = CacheManager;
 }(), function(undefined) {
     "use strict";
+    function clone(obj) {
+        if (!obj || "object" != typeof obj) return null;
+        var copy = obj.constructor();
+        for (var attr in obj) obj.hasOwnProperty(attr) && (copy[attr] = obj[attr]);
+        return copy;
+    }
     var Button = function(imageSettings, label, enabled) {
         imageSettings && this.initialize(imageSettings, label, enabled);
     }, p = Button.prototype = new createjs.Container(), s = createjs.Container.prototype;
     p.back = null, p.label = null, p._overCB = null, p._outCB = null, p._downCB = null, 
-    p._upCB = null, p._enabled = !1, p._isDown = !1, p._isOver = !1, p._isSelected = !1, 
-    p._isSelectable = !1, p._isHighlighted = !1, p._upRects = null, p._overRects = null, 
-    p._downRects = null, p._disabledRects = null, p._selectedRects = null, p._highlightedRects = null, 
-    p._width = 0, p._height = 0, p.initialize = function(imageSettings, label, enabled) {
+    p._upCB = null, p._stateFlags = null, p._statePriority = null, p._stateData = null, 
+    p._width = 0, p._height = 0, Button.BUTTON_PRESS = "buttonPress";
+    var RESERVED_STATES = [ "disabled", "enabled", "up", "over", "down" ], DEFAULT_PRIORITY = [ "disabled", "up", "over", "down" ];
+    p.initialize = function(imageSettings, label, enabled) {
         s.initialize.call(this), this.mouseChildren = !1, this._downCB = this._onMouseDown.bind(this), 
         this._upCB = this._onMouseUp.bind(this), this._overCB = this._onMouseOver.bind(this), 
         this._outCB = this._onMouseOut.bind(this);
-        var image, width, height;
-        if (imageSettings.image ? (image = imageSettings.image, this._upRects = imageSettings.up, 
-        this._upRects.trim ? (this.upTrim = this._upRects.trim, width = this.upTrim.width, 
-        height = this.upTrim.height) : (width = this.upRect.src.width, height = this.upRect.src.height), 
-        this._overRects = imageSettings.over || this._upRects, this._downRects = imageSettings.down || this._upRects, 
-        this._disabledRects = imageSettings.disabled || this._upRects, this._highlightedRects = imageSettings.highlighted || this._overRects, 
-        imageSettings.selected && (this._selectedRects = imageSettings.selected, this._isSelectable = !0)) : (image = imageSettings, 
-        width = image.width, height = image.height / 3, this._upRects = {
+        var _stateData = this._stateData = {};
+        this._stateFlags = {};
+        var labelData;
+        label && (labelData = clone(label), delete labelData.text, labelData.x === undefined && (labelData.x = "center"), 
+        labelData.y === undefined && (labelData.y = "center"));
+        var image, width, height, i, state;
+        if (imageSettings.image) {
+            for (image = imageSettings.image, this._statePriority = imageSettings.priority || DEFAULT_PRIORITY, 
+            i = this._statePriority.length - 1; i >= 0; ++i) {
+                state = this._statePriority[i], this._addProperty(state), "disabled" != state && "up" != state && (this._stateFlags[state] = !1);
+                var inputData = imageSettings[state];
+                if (_stateData[state] = inputData ? clone(inputData) : _stateData.up, label) if (inputData && inputData.label) {
+                    inputData = inputData.label;
+                    var stateLabel = _stateData[state].label = {};
+                    stateLabel.font = inputData.font || labelData.font, stateLabel.color = inputData.color || labelData.color, 
+                    stateLabel.stroke = inputData.stroke || labelData.stroke, stateLabel.shadow = inputData.shadow || labelData.shadow, 
+                    stateLabel.textBaseline = inputData.textBaseline || labelData.textBaseline, stateLabel.x = inputData.x || labelData.x, 
+                    stateLabel.y = inputData.y || labelData.y;
+                } else _stateData[state].label = labelData;
+            }
+            if (_stateData.up.trim) {
+                var upTrim = _stateData.up.trim;
+                width = upTrim.width, height = upTrim.height;
+            } else width = _stateData.up.src.width, height = _stateData.up.src.height;
+            _stateData.up || (Debug.error("Button lacks an up state! This is a serious problem! Input data follows:"), 
+            Debug.error(imageSettings)), _stateData.over || (_stateData.over = _stateData.up), 
+            _stateData.down || (_stateData.down = _stateData.up), _stateData.disabled || (_stateData.disabled = _stateData.up);
+        } else image = imageSettings, width = image.width, height = image.height / 3, this._statePriority = DEFAULT_PRIORITY, 
+        _stateData.disabled = _stateData.up = {
             src: new createjs.Rectangle(0, 0, width, height)
-        }, this._highlightedRects = this._overRects = {
+        }, _stateData.over = {
             src: new createjs.Rectangle(0, height, width, height)
-        }, this._downRects = {
+        }, _stateData.down = {
             src: new createjs.Rectangle(0, 2 * height, width, height)
-        }, this._disabledRects = this._upRects), this.back = new createjs.Bitmap(image), 
-        this.addChild(this.back), this._width = width, this._height = height, label) {
-            this.label = new createjs.Text(label.text, label.font, label.color), label.textBaseline && (this.label.textBaseline = label.textBaseline), 
-            this.label.stroke = label.stroke, this.addChild(this.label), this.label.x = .5 * (width - this.label.getMeasuredWidth());
-            var h = this.label.getMeasuredLineHeight();
-            this.label.y = .5 * (height - h);
-        }
-        this.enabled = enabled === undefined ? !0 : !!enabled;
+        };
+        this.back = new createjs.Bitmap(image), this.addChild(this.back), this._width = width, 
+        this._height = height, label && (this.label = new createjs.Text(label.text || "", _stateData.up.label.font, _stateData.up.label.color), 
+        this.addChild(this.label)), this.enabled = enabled === undefined ? !0 : !!enabled;
     }, Object.defineProperty(p, "width", {
         get: function() {
             return this._width * this.scaleX;
@@ -500,54 +523,59 @@
         }
     }), p.setText = function(text) {
         if (this.label) {
-            this.label.text = text, this.label.x = .5 * (width - this.label.getMeasuredWidth());
-            var h = this.label.getMeasuredLineHeight();
-            this.label.y = .5 * (height - h);
+            this.label.text = text;
+            for (var data, i = 0; i < this._statePriority.length; ++i) if (this._stateFlags[this._statePriority[i]]) {
+                data = this._stateData[this._statePriority[i]];
+                break;
+            }
+            data || (data = this._stateData.up), data = data.label, this.label.x = "center" == data.x ? .5 * (width - this.label.getMeasuredWidth()) : data.x, 
+            this.label.y = "center" == data.y ? .5 * (height - this.label.getMeasuredLineHeight()) : label.y;
         }
     }, Object.defineProperty(p, "enabled", {
         get: function() {
-            return this._enabled;
+            return !this._stateFlags.disabled;
         },
         set: function(value) {
-            this._enabled = value, this._enabled ? (this.cursor = "pointer", this.addEventListener("mousedown", this._downCB), 
+            this._stateFlags.disabled = !value, value ? (this.cursor = "pointer", this.addEventListener("mousedown", this._downCB), 
             this.addEventListener("mouseover", this._overCB), this.addEventListener("mouseout", this._outCB)) : (this.cursor = null, 
             this.removeEventListener("mousedown", this._downCB), this.removeEventListener("mouseover", this._overCB), 
-            this.removeEventListener("mouseout", this._outCB), this._isDown = this._isOver = !1), 
+            this.removeEventListener("mouseout", this._outCB), this._stateFlags.down = this._stateFlags.over = !1), 
             this._updateState();
         }
-    }), Object.defineProperty(p, "selected", {
-        get: function() {
-            return this._isSelected;
-        },
-        set: function(value) {
-            this._isSelectable && (this._isSelected = value, this._updateState());
-        }
-    }), Object.defineProperty(p, "highlighted", {
-        get: function() {
-            return this._isHighlighted;
-        },
-        set: function(value) {
-            this._isHighlighted = value, this._updateState();
-        }
-    }), p._updateState = function() {
+    }), p._addProperty = function(propertyName) {
+        RESERVED_STATES.indexOf(propertyName >= 0) || Object.defineProperty(this, propertyName, {
+            get: function() {
+                return this._stateFlags[propertyName];
+            },
+            set: function(value) {
+                this._stateFlags[propertyName] = value, this._updateState();
+            }
+        });
+    }, p._updateState = function() {
         if (this.back) {
-            var data;
-            data = this._isHighlighted ? this._highlightedRects : this._enabled ? this._isDown ? this._downRects : this._isOver ? this._overRects : this._isSelected ? this._selectedRects : this._upRects : this._disabledRects, 
-            this.back.sourceRect = data.src, data.trim ? (this.back.x = data.trim.x, this.back.y = data.trim.y) : this.back.x = this.back.y = 0;
+            for (var data, i = 0; i < this._statePriority.length; ++i) if (this._stateFlags[this._statePriority[i]]) {
+                data = this._stateData[this._statePriority[i]];
+                break;
+            }
+            data || (data = this._stateData.up), this.back.sourceRect = data.src, data.trim ? (this.back.x = data.trim.x, 
+            this.back.y = data.trim.y) : this.back.x = this.back.y = 0, this.label && (data = data.label, 
+            this.label.textBaseline = data.textBaseline || "top", this.label.stroke = data.stroke, 
+            this.label.shadow = data.shadow, this.label.font = data.font, this.label.color = data.color || "#000", 
+            this.label.x = "center" == data.x ? .5 * (width - this.label.getMeasuredWidth()) : data.x, 
+            this.label.y = "center" == data.y ? .5 * (height - this.label.getMeasuredLineHeight()) : label.y);
         }
     }, p._onMouseDown = function() {
-        this.addEventListener("pressup", this._upCB), this._isDown = !0, this._updateState();
+        this.addEventListener("pressup", this._upCB), this._stateFlags.down = !0, this._updateState();
     }, p._onMouseUp = function() {
-        this.removeEventListener("pressup", this._upCB), this._isDown = !1, this._updateState();
+        this.removeEventListener("pressup", this._upCB), this._stateFlags.down = !1, this._stateFlags.over && this.dispatchEvent(new createjs.Event(Button.BUTTON_PRESS)), 
+        this._updateState();
     }, p._onMouseOver = function() {
-        this._isOver = !0, this._updateState();
+        this._stateFlags.over = !0, this._updateState();
     }, p._onMouseOut = function() {
-        this._isOver = !1, this._updateState();
+        this._stateFlags.over = !1, this._updateState();
     }, p.destroy = function() {
-        this.removeAllChildren(), this.removeAllEventListeners(), this._upRects = null, 
-        this._overRects = null, this._downRects = null, this._disabledRects = null, this._selectedRects = null, 
-        this._highlightedRects = null, this._downCB = null, this._upCB = null, this._overCB = null, 
-        this._outCB = null, this.back = null, this.label = null;
+        this.removeAllChildren(), this.removeAllEventListeners(), this._downCB = null, this._upCB = null, 
+        this._overCB = null, this._outCB = null, this.back = null, this.label = null;
     }, Button.generateDefaultStates = function(image, disabledSettings, highlightSettings) {
         var buttonWidth = image.width, buttonHeight = image.height / 3, canvas = document.createElement("canvas"), width = buttonWidth, height = image.height;
         disabledSettings && (height += buttonHeight), highlightSettings && (width += 2 * highlightSettings.size, 
@@ -570,7 +598,10 @@
         var nextY = image.height;
         if (disabledSettings) {
             context.save(), context.translate(0, nextY);
-            var matrix = new createjs.ColorMatrix().adjustSaturation(100 - disabledSettings.saturation);
+            var matrix = new createjs.ColorMatrix();
+            disabledSettings.saturation !== undefined && matrix.adjustSaturation(disabledSettings.saturation), 
+            disabledSettings.brightness !== undefined && matrix.adjustBrightness(2.55 * disabledSettings.brightness), 
+            disabledSettings.contrast !== undefined && matrix.adjustContrast(disabledSettings.contrast), 
             drawingBitmap.filters = [ new createjs.ColorMatrixFilter(matrix) ], drawingBitmap.cache(0, 0, output.up.src.width, output.up.src.height), 
             drawingBitmap.draw(context), output.disabled = {
                 src: new createjs.Rectangle(0, nextY, buttonWidth, buttonHeight)
@@ -579,7 +610,7 @@
         if (highlightSettings) {
             context.save();
             var highlightStateWidth = buttonWidth + 2 * highlightSettings.size, highlightStateHeight = buttonHeight + 2 * highlightSettings.size;
-            drawingBitmap.filters = [ new createjs.ColorFilter(0, 0, 0, 1, highlightSettings.red, highlightSettings.green, highlightSettings.blue, 0) ], 
+            drawingBitmap.filters = [ new createjs.ColorFilter(0, 0, 0, 1, highlightSettings.red, highlightSettings.green, highlightSettings.blue, highlightSettings.alpha !== undefined ? -255 + highlightSettings.alpha : 0) ], 
             drawingBitmap.scaleX = highlightStateWidth / buttonWidth, drawingBitmap.scaleY = highlightStateHeight / buttonHeight, 
             drawingBitmap.x = 0, drawingBitmap.y = nextY, drawingBitmap.cache(0, 0, highlightStateWidth, highlightStateHeight), 
             drawingBitmap.updateContext(context), drawingBitmap.draw(context), context.restore(), 
@@ -590,7 +621,7 @@
             output.up.trim = trim, output.over.trim = trim, output.down.trim = trim, output.disabled && (output.disabled.trim = trim), 
             output.highlighted = {
                 src: new createjs.Rectangle(0, nextY, highlightStateWidth, highlightStateHeight)
-            };
+            }, output.priority = DEFAULT_PRIORITY.slice(), output.priority.unshift("highlight");
         }
         return output;
     }, namespace("cloudkid").Button = Button;

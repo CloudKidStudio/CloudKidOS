@@ -235,7 +235,7 @@
 					this._stateFlags[state] = false;
 				var inputData = imageSettings[state];
 				//it's established that over, down, and particularly disabled default to the up state
-				_stateData[state] = inputData ? clone(inputData) || _stateData.up;
+				_stateData[state] = inputData ? clone(inputData) : _stateData.up;
 				//set up the label info for this state
 				if(label)
 				{
