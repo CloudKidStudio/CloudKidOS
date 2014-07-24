@@ -2,7 +2,7 @@
     "project": {
         "name": "CloudKid OS API",
         "description": "CloudKid OS API: A framework for HTML5 content built on top of createjs",
-        "version": "1.1.16",
+        "version": "1.1.17",
         "logo": ""
     },
     "files": {
@@ -447,6 +447,13 @@
                                     "optdefault": "null"
                                 }
                             ]
+                        },
+                        {
+                            "name": "origin",
+                            "description": "An optional offset for all button graphics, in case you want button \n       positioning to not include a highlight glow, or any other reason you would want to offset the button art and label.",
+                            "type": "createjs.Point",
+                            "optional": true,
+                            "optdefault": "null"
                         }
                     ]
                 },
@@ -480,7 +487,7 @@
                             "description": "The baseline for the label text, as createjs.Text expects.",
                             "type": "String",
                             "optional": true,
-                            "optdefault": "top"
+                            "optdefault": "\"middle\""
                         },
                         {
                             "name": "stroke",
@@ -1054,7 +1061,7 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 82,
+            "line": 84,
             "description": "The sprite that is the body of the button.\nThe type of this property is dependent on which version of the OS library is used.",
             "access": "public",
             "tagname": "",
@@ -1067,7 +1074,7 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 91,
+            "line": 93,
             "description": "The text field of the button. The label is centered by both width and height on the button.\nThe type of this property is dependent on which version of the OS library is used.",
             "access": "public",
             "tagname": "",
@@ -1080,7 +1087,7 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 101,
+            "line": 103,
             "description": "Callback for mouse over, bound to this button.",
             "access": "private",
             "tagname": "",
@@ -1092,7 +1099,7 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 108,
+            "line": 110,
             "description": "Callback for mouse out, bound to this button.",
             "access": "private",
             "tagname": "",
@@ -1104,7 +1111,7 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 115,
+            "line": 117,
             "description": "Callback for mouse down, bound to this button.",
             "access": "private",
             "tagname": "",
@@ -1116,7 +1123,7 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 122,
+            "line": 124,
             "description": "Callback for mouse up, bound to this button.",
             "access": "private",
             "tagname": "",
@@ -1128,7 +1135,7 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 129,
+            "line": 131,
             "description": "A dictionary of state booleans, keyed by state name.",
             "access": "private",
             "tagname": "",
@@ -1140,7 +1147,7 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 135,
+            "line": 137,
             "description": "An array of state names (Strings), in their order of priority.\nThe standard order previously was [\"highlighted\", \"disabled\", \"down\", \"over\", \"selected\", \"up\"].",
             "access": "private",
             "tagname": "",
@@ -1152,7 +1159,7 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 143,
+            "line": 145,
             "description": "A dictionary of state graphic data, keyed by state name.\nEach object contains the sourceRect (src) and optionally 'trim', another Rectangle.\nAdditionally, each object will contain a 'label' object if the button has a text label.",
             "access": "private",
             "tagname": "",
@@ -1164,7 +1171,7 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 152,
+            "line": 154,
             "description": "The width of the button art, independent of the scaling of the button itself.",
             "access": "private",
             "tagname": "",
@@ -1176,7 +1183,7 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 159,
+            "line": 161,
             "description": "The height of the button art, independent of the scaling of the button itself.",
             "access": "private",
             "tagname": "",
@@ -1188,7 +1195,19 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 166,
+            "line": 168,
+            "description": "An offset to button positioning, generally used to adjust for a highlight around the button.",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "_offset",
+            "type": "createjs.Point",
+            "class": "Button (CreateJS)",
+            "module": "cloudkid"
+        },
+        {
+            "file": "src/cloudkid/createjs/Button.js",
+            "line": 175,
             "description": "An event for when the button is pressed (while enabled).",
             "access": "public",
             "tagname": "",
@@ -1201,7 +1220,7 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 189,
+            "line": 198,
             "description": "Constructor for the button when using CreateJS.",
             "itemtype": "method",
             "name": "initialize",
@@ -1232,7 +1251,7 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 323,
+            "line": 344,
             "description": "The width of the button, based on the width of back. This value is affected by scale.",
             "itemtype": "property",
             "name": "width",
@@ -1242,7 +1261,7 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 334,
+            "line": 355,
             "description": "The height of the button, based on the height of back. This value is affected by scale.",
             "itemtype": "property",
             "name": "height",
@@ -1252,7 +1271,7 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 345,
+            "line": 366,
             "description": "Sets the text of the label. This does nothing if the button was not initialized with a label.",
             "access": "public",
             "tagname": "",
@@ -1270,7 +1289,7 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 379,
+            "line": 400,
             "description": "Whether or not the button is enabled.",
             "itemtype": "property",
             "name": "enabled",
@@ -1281,7 +1300,7 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 410,
+            "line": 431,
             "description": "Adds a property to the button. Setting the property sets the value in\n_stateFlags and calls _updateState().",
             "access": "private",
             "tagname": "",
@@ -1299,7 +1318,7 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 432,
+            "line": 453,
             "description": "Updates back based on the current button state.",
             "access": "private",
             "tagname": "",
@@ -1310,7 +1329,7 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 486,
+            "line": 508,
             "description": "The callback for when the button receives a mouse down event.",
             "access": "private",
             "tagname": "",
@@ -1321,7 +1340,7 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 498,
+            "line": 520,
             "description": "The callback for when the button for when the mouse/touch is released on the button\n- only when the button was held down initially.",
             "access": "private",
             "tagname": "",
@@ -1332,7 +1351,7 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 514,
+            "line": 536,
             "description": "The callback for when the button is moused over.",
             "access": "private",
             "tagname": "",
@@ -1343,7 +1362,7 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 525,
+            "line": 547,
             "description": "The callback for when the mouse leaves the button area.",
             "access": "private",
             "tagname": "",
@@ -1354,7 +1373,7 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 536,
+            "line": 558,
             "description": "Destroys the button.",
             "access": "public",
             "tagname": "",
@@ -1365,7 +1384,7 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 553,
+            "line": 575,
             "description": "Generates a desaturated up state as a disabled state, and an update with a solid colored glow for a highlighted state.",
             "itemtype": "method",
             "name": "generateDefaultStates",
