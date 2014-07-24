@@ -387,11 +387,11 @@
 				data = this._stateData.up;
 			data = data.label;
 			if(data.x == "center")
-				this.label.x = (width - this.label.getMeasuredWidth()) * 0.5 + this._offset.x;
+				this.label.x = (this._width - this.label.getMeasuredWidth()) * 0.5 + this._offset.x;
 			else
 				this.label.x = data.x + this._offset.x;
 			if(data.y == "center")
-				this.label.y = height * 0.5 + this._offset.y;
+				this.label.y = this._height * 0.5 + this._offset.y;
 			else
 				this.label.y = label.y + this._offset.y;
 		}

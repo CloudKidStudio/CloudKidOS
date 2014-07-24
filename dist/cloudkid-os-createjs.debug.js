@@ -529,8 +529,8 @@
                 data = this._stateData[this._statePriority[i]];
                 break;
             }
-            data || (data = this._stateData.up), data = data.label, this.label.x = "center" == data.x ? .5 * (width - this.label.getMeasuredWidth()) + this._offset.x : data.x + this._offset.x, 
-            this.label.y = "center" == data.y ? .5 * height + this._offset.y : label.y + this._offset.y;
+            data || (data = this._stateData.up), data = data.label, this.label.x = "center" == data.x ? .5 * (this._width - this.label.getMeasuredWidth()) + this._offset.x : data.x + this._offset.x, 
+            this.label.y = "center" == data.y ? .5 * this._height + this._offset.y : label.y + this._offset.y;
         }
     }, Object.defineProperty(p, "enabled", {
         get: function() {
