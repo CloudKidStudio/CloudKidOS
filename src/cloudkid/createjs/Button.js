@@ -256,8 +256,8 @@
 						var stateLabel = _stateData[state].label = {};
 						stateLabel.font = inputData.font || labelData.font;
 						stateLabel.color = inputData.color || labelData.color;
-						stateLabel.stroke = inputData.stroke || labelData.stroke;
-						stateLabel.shadow = inputData.shadow || labelData.shadow;
+						stateLabel.stroke = inputData.hasOwnProperty("stroke") ? inputData.stroke : labelData.stroke;
+						stateLabel.shadow = inputData.hasOwnProperty("shadow") ? inputData.shadow : labelData.shadow;
 						stateLabel.textBaseline = inputData.textBaseline || labelData.textBaseline;
 						stateLabel.x = inputData.x || labelData.x;
 						stateLabel.y = inputData.y || labelData.y;
