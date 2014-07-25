@@ -193,7 +193,7 @@
 	* @static
 	* @property {Array} DEFAULT_PRIORITY
 	*/
-	var DEFAULT_PRIORITY = ["disabled", "up", "over", "down"];
+	var DEFAULT_PRIORITY = ["disabled", "down", "over", "up"];
 	
 	/** 
 	*  Constructor for the button when using CreateJS.
