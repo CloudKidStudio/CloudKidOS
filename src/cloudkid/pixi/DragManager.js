@@ -389,7 +389,6 @@
 			{
 				leastDist = distSq;
 				closestPoint = p;
-				return;
 			}
 		}
 		if(closestPoint)

@@ -562,8 +562,8 @@
     }, p._handlePointSnap = function(localMousePos) {
         for (var snapSettings = this.snapSettings, minDistSq = snapSettings.dist * snapSettings.dist, points = snapSettings.points, objX = localMousePos.x - this._dragOffset.x, objY = localMousePos.y - this._dragOffset.y, leastDist = -1, closestPoint = null, i = points.length - 1; i >= 0; --i) {
             var p = points[i], distSq = distSquared(objX, objY, p.x, p.y);
-            if (minDistSq >= distSq && (leastDist > distSq || -1 == leastDist)) return leastDist = distSq, 
-            void (closestPoint = p);
+            minDistSq >= distSq && (leastDist > distSq || -1 == leastDist) && (leastDist = distSq, 
+            closestPoint = p);
         }
         closestPoint && (this.draggedObj.position.x = closestPoint.x, this.draggedObj.position.y = closestPoint.y);
     };
