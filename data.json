@@ -2,7 +2,7 @@
     "project": {
         "name": "CloudKid OS API",
         "description": "CloudKid OS API: A framework for HTML5 content built on top of createjs",
-        "version": "1.1.17",
+        "version": "1.1.19",
         "logo": ""
     },
     "files": {
@@ -540,7 +540,7 @@
             "namespace": "",
             "file": "src/cloudkid/createjs/DragManager.js",
             "line": 8,
-            "description": "[CreateJS only] Drag manager is responsible for handling the dragging of stage elements\nsupports click-n-stick and click-n-drag functionality.",
+            "description": "Drag manager is responsible for handling the dragging of stage elements.\nSupports click-n-stick (click to start, move mouse, click to release) and click-n-drag (standard dragging) functionality.",
             "is_constructor": 1,
             "params": [
                 {
@@ -777,7 +777,7 @@
             "namespace": "",
             "file": "src/cloudkid/pixi/DragManager.js",
             "line": 8,
-            "description": "[PIXI only] Drag manager is responsible for handling the dragging of stage elements\nsupports click-n-stick and click-n-drag functionality.",
+            "description": "Drag manager is responsible for handling the dragging of stage elements\nsupports click-n-stick and click-n-drag functionality.",
             "is_constructor": 1,
             "params": [
                 {
@@ -1472,18 +1472,6 @@
         {
             "file": "src/cloudkid/createjs/DragManager.js",
             "line": 25,
-            "description": "The function call when finished dragging",
-            "access": "private",
-            "tagname": "",
-            "itemtype": "property",
-            "name": "_updateCallback",
-            "type": "Function",
-            "class": "DragManager (CreateJS)",
-            "module": "cloudkid"
-        },
-        {
-            "file": "src/cloudkid/createjs/DragManager.js",
-            "line": 32,
             "description": "The object that's being dragged",
             "access": "public",
             "tagname": "",
@@ -1496,19 +1484,7 @@
         },
         {
             "file": "src/cloudkid/createjs/DragManager.js",
-            "line": 40,
-            "description": "The local to global position of the drag",
-            "access": "private",
-            "tagname": "",
-            "itemtype": "property",
-            "name": "_dragOffset",
-            "type": "createjs.Point",
-            "class": "DragManager (CreateJS)",
-            "module": "cloudkid"
-        },
-        {
-            "file": "src/cloudkid/createjs/DragManager.js",
-            "line": 47,
+            "line": 33,
             "description": "The radius in pixel to allow for dragging, or else does sticky click",
             "access": "public",
             "tagname": "",
@@ -1520,7 +1496,7 @@
         },
         {
             "file": "src/cloudkid/createjs/DragManager.js",
-            "line": 55,
+            "line": 41,
             "description": "The position x, y of the mouse down on the stage",
             "access": "private",
             "tagname": "",
@@ -1532,7 +1508,7 @@
         },
         {
             "file": "src/cloudkid/createjs/DragManager.js",
-            "line": 62,
+            "line": 48,
             "description": "The position x, y of the object when interaction with it started.",
             "access": "private",
             "tagname": "",
@@ -1544,7 +1520,20 @@
         },
         {
             "file": "src/cloudkid/createjs/DragManager.js",
-            "line": 69,
+            "line": 55,
+            "description": "If sticky click dragging is allowed.",
+            "access": "public",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "allowStickyClick",
+            "type": "Bool",
+            "default": "true",
+            "class": "DragManager (CreateJS)",
+            "module": "cloudkid"
+        },
+        {
+            "file": "src/cloudkid/createjs/DragManager.js",
+            "line": 63,
             "description": "Is the move touch based",
             "access": "public",
             "tagname": "",
@@ -1558,7 +1547,7 @@
         },
         {
             "file": "src/cloudkid/createjs/DragManager.js",
-            "line": 78,
+            "line": 72,
             "description": "Is the drag being held on mouse down (not sticky clicking)",
             "access": "public",
             "tagname": "",
@@ -1572,7 +1561,7 @@
         },
         {
             "file": "src/cloudkid/createjs/DragManager.js",
-            "line": 87,
+            "line": 81,
             "description": "Is the drag a sticky clicking (click on a item, then mouse the mouse)",
             "access": "public",
             "tagname": "",
@@ -1586,7 +1575,20 @@
         },
         {
             "file": "src/cloudkid/createjs/DragManager.js",
-            "line": 96,
+            "line": 90,
+            "description": "Settings for snapping.\n\n Format for snapping to a list of points:\n\t{\n\t\tmode:\"points\",\n\t\tdist:20,//snap when within 20 pixels/units\n\t\tpoints:[\n\t\t\t{ x: 20, y:30 },\n\t\t\t{ x: 50, y:10 }\n\t\t]\n\t}",
+            "access": "public",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "snapSettings",
+            "type": "Object",
+            "default": "null",
+            "class": "DragManager (CreateJS)",
+            "module": "cloudkid"
+        },
+        {
+            "file": "src/cloudkid/createjs/DragManager.js",
+            "line": 109,
             "description": "Reference to the stage",
             "access": "private",
             "tagname": "",
@@ -1598,7 +1600,19 @@
         },
         {
             "file": "src/cloudkid/createjs/DragManager.js",
-            "line": 103,
+            "line": 116,
+            "description": "The local to global position of the drag",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "_dragOffset",
+            "type": "createjs.Point",
+            "class": "DragManager (CreateJS)",
+            "module": "cloudkid"
+        },
+        {
+            "file": "src/cloudkid/createjs/DragManager.js",
+            "line": 123,
             "description": "Callback when we start dragging",
             "access": "private",
             "tagname": "",
@@ -1610,7 +1624,7 @@
         },
         {
             "file": "src/cloudkid/createjs/DragManager.js",
-            "line": 110,
+            "line": 130,
             "description": "Callback when we are done dragging",
             "access": "private",
             "tagname": "",
@@ -1622,8 +1636,8 @@
         },
         {
             "file": "src/cloudkid/createjs/DragManager.js",
-            "line": 117,
-            "description": "Callback when we are done dragging holding drag",
+            "line": 137,
+            "description": "Callback to test for the start a held drag",
             "access": "private",
             "tagname": "",
             "itemtype": "property",
@@ -1634,8 +1648,8 @@
         },
         {
             "file": "src/cloudkid/createjs/DragManager.js",
-            "line": 124,
-            "description": "Callback when we are done width sticky clicking",
+            "line": 144,
+            "description": "Callback to start a sticky click drag",
             "access": "private",
             "tagname": "",
             "itemtype": "property",
@@ -1646,8 +1660,8 @@
         },
         {
             "file": "src/cloudkid/createjs/DragManager.js",
-            "line": 131,
-            "description": "Callback when we are done width sticky clicking",
+            "line": 151,
+            "description": "Callback when we are done with the drag",
             "access": "private",
             "tagname": "",
             "itemtype": "property",
@@ -1658,7 +1672,7 @@
         },
         {
             "file": "src/cloudkid/createjs/DragManager.js",
-            "line": 138,
+            "line": 158,
             "description": "The collection of draggable objects",
             "access": "private",
             "tagname": "",
@@ -1670,7 +1684,31 @@
         },
         {
             "file": "src/cloudkid/createjs/DragManager.js",
-            "line": 145,
+            "line": 165,
+            "description": "The function call when the mouse/touch moves",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "_updateCallback",
+            "type": "Function",
+            "class": "DragManager (CreateJS)",
+            "module": "cloudkid"
+        },
+        {
+            "file": "src/cloudkid/createjs/DragManager.js",
+            "line": 172,
+            "description": "A point for reuse instead of lots of object creation.",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "_helperPoint",
+            "type": "createjs.Point",
+            "class": "DragManager (CreateJS)",
+            "module": "cloudkid"
+        },
+        {
+            "file": "src/cloudkid/createjs/DragManager.js",
+            "line": 179,
             "description": "Constructor",
             "itemtype": "method",
             "name": "initialize",
@@ -1692,7 +1730,7 @@
         },
         {
             "file": "src/cloudkid/createjs/DragManager.js",
-            "line": 166,
+            "line": 200,
             "description": "Manually starts dragging an object. If a mouse down event is not supplied as the second argument, it \n   defaults to a held drag, that ends as soon as the mouse is released.",
             "itemtype": "method",
             "name": "startDrag",
@@ -1715,7 +1753,7 @@
         },
         {
             "file": "src/cloudkid/createjs/DragManager.js",
-            "line": 179,
+            "line": 213,
             "description": "Mouse down on an obmect",
             "itemtype": "method",
             "name": "_objMouseDown",
@@ -1738,7 +1776,7 @@
         },
         {
             "file": "src/cloudkid/createjs/DragManager.js",
-            "line": 235,
+            "line": 269,
             "description": "Start the sticky click",
             "itemtype": "method",
             "name": "_triggerStickyClick",
@@ -1749,7 +1787,7 @@
         },
         {
             "file": "src/cloudkid/createjs/DragManager.js",
-            "line": 248,
+            "line": 282,
             "description": "Start hold dragging",
             "itemtype": "method",
             "name": "_triggerHeldDrag",
@@ -1767,7 +1805,7 @@
         },
         {
             "file": "src/cloudkid/createjs/DragManager.js",
-            "line": 267,
+            "line": 301,
             "description": "Internal start dragging on the stage",
             "itemtype": "method",
             "name": "_startDrag",
@@ -1778,7 +1816,7 @@
         },
         {
             "file": "src/cloudkid/createjs/DragManager.js",
-            "line": 283,
+            "line": 317,
             "description": "Stops dragging the currently dragged object.",
             "access": "public",
             "tagname": "",
@@ -1796,7 +1834,7 @@
         },
         {
             "file": "src/cloudkid/createjs/DragManager.js",
-            "line": 294,
+            "line": 328,
             "description": "Internal stop dragging on the stage",
             "itemtype": "method",
             "name": "_stopDrag",
@@ -1819,7 +1857,7 @@
         },
         {
             "file": "src/cloudkid/createjs/DragManager.js",
-            "line": 317,
+            "line": 351,
             "description": "Update the object position based on the mouse",
             "itemtype": "method",
             "name": "_updateObjPosition",
@@ -1837,14 +1875,25 @@
         },
         {
             "file": "src/cloudkid/createjs/DragManager.js",
-            "line": 333,
-            "description": "Simple clamp function",
+            "line": 383,
+            "description": "Handles snapping the dragged object to the nearest among a list of points",
+            "itemtype": "method",
+            "name": "_handlePointSnap",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "localMousePos",
+                    "description": "The mouse position in the same space as the dragged object.",
+                    "type": "createjs.Point"
+                }
+            ],
             "class": "DragManager (CreateJS)",
             "module": "cloudkid"
         },
         {
             "file": "src/cloudkid/createjs/DragManager.js",
-            "line": 359,
+            "line": 451,
             "description": "Adds properties and functions to the object - use enableDrag() and disableDrag() on \nobjects to enable/disable them (they start out disabled). Properties added to objects:\n_dragBounds (Rectangle), _onMouseDownListener (Function), _dragMan (cloudkid.DragManager) reference to the DragManager\nthese will override any existing properties of the same name",
             "itemtype": "method",
             "name": "addObject",
@@ -1867,7 +1916,7 @@
         },
         {
             "file": "src/cloudkid/createjs/DragManager.js",
-            "line": 390,
+            "line": 482,
             "description": "Removes properties and functions added by addObject().",
             "access": "public",
             "tagname": "",
@@ -1885,7 +1934,7 @@
         },
         {
             "file": "src/cloudkid/createjs/DragManager.js",
-            "line": 409,
+            "line": 501,
             "description": "Destroy the manager",
             "access": "public",
             "tagname": "",
@@ -1896,7 +1945,7 @@
         },
         {
             "file": "src/cloudkid/createjs/DragManager.js",
-            "line": 444,
+            "line": 537,
             "class": "DragManager (CreateJS)",
             "module": "cloudkid"
         },
@@ -3160,18 +3209,6 @@
         {
             "file": "src/cloudkid/pixi/DragManager.js",
             "line": 25,
-            "description": "The function call when finished dragging",
-            "access": "private",
-            "tagname": "",
-            "itemtype": "property",
-            "name": "_updateCallback",
-            "type": "Function",
-            "class": "DragManager (PIXI)",
-            "module": "cloudkid"
-        },
-        {
-            "file": "src/cloudkid/pixi/DragManager.js",
-            "line": 32,
             "description": "The object that's being dragged",
             "access": "public",
             "tagname": "",
@@ -3184,19 +3221,7 @@
         },
         {
             "file": "src/cloudkid/pixi/DragManager.js",
-            "line": 40,
-            "description": "The local to global position of the drag",
-            "access": "private",
-            "tagname": "",
-            "itemtype": "property",
-            "name": "_dragOffset",
-            "type": "PIXI.Point",
-            "class": "DragManager (PIXI)",
-            "module": "cloudkid"
-        },
-        {
-            "file": "src/cloudkid/pixi/DragManager.js",
-            "line": 47,
+            "line": 33,
             "description": "The radius in pixel to allow for dragging, or else does sticky click",
             "access": "public",
             "tagname": "",
@@ -3208,7 +3233,7 @@
         },
         {
             "file": "src/cloudkid/pixi/DragManager.js",
-            "line": 55,
+            "line": 41,
             "description": "The position x, y of the mouse down on the stage",
             "access": "private",
             "tagname": "",
@@ -3220,7 +3245,7 @@
         },
         {
             "file": "src/cloudkid/pixi/DragManager.js",
-            "line": 62,
+            "line": 48,
             "description": "The position x, y of the object when interaction with it started.",
             "access": "private",
             "tagname": "",
@@ -3232,7 +3257,7 @@
         },
         {
             "file": "src/cloudkid/pixi/DragManager.js",
-            "line": 69,
+            "line": 55,
             "description": "Is the move touch based",
             "access": "public",
             "tagname": "",
@@ -3246,7 +3271,7 @@
         },
         {
             "file": "src/cloudkid/pixi/DragManager.js",
-            "line": 78,
+            "line": 64,
             "description": "Is the drag being held on mouse down (not sticky clicking)",
             "access": "public",
             "tagname": "",
@@ -3260,7 +3285,7 @@
         },
         {
             "file": "src/cloudkid/pixi/DragManager.js",
-            "line": 87,
+            "line": 73,
             "description": "Is the drag a sticky clicking (click on a item, then mouse the mouse)",
             "access": "public",
             "tagname": "",
@@ -3274,11 +3299,10 @@
         },
         {
             "file": "src/cloudkid/pixi/DragManager.js",
-            "line": 96,
+            "line": 82,
             "description": "If sticky click dragging is allowed.",
             "access": "public",
             "tagname": "",
-            "readonly": "",
             "itemtype": "property",
             "name": "allowStickyClick",
             "type": "Bool",
@@ -3288,7 +3312,20 @@
         },
         {
             "file": "src/cloudkid/pixi/DragManager.js",
-            "line": 105,
+            "line": 90,
+            "description": "Settings for snapping.\n\n Format for snapping to a list of points:\n\t{\n\t\tmode:\"points\",\n\t\tdist:20,//snap when within 20 pixels/units\n\t\tpoints:[\n\t\t\t{ x: 20, y:30 },\n\t\t\t{ x: 50, y:10 }\n\t\t]\n\t}",
+            "access": "public",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "snapSettings",
+            "type": "Object",
+            "default": "null",
+            "class": "DragManager (PIXI)",
+            "module": "cloudkid"
+        },
+        {
+            "file": "src/cloudkid/pixi/DragManager.js",
+            "line": 109,
             "description": "Reference to the stage",
             "access": "private",
             "tagname": "",
@@ -3300,8 +3337,20 @@
         },
         {
             "file": "src/cloudkid/pixi/DragManager.js",
-            "line": 112,
-            "description": "Callback when we start dragging",
+            "line": 116,
+            "description": "The local to global position of the drag",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "_dragOffset",
+            "type": "PIXI.Point",
+            "class": "DragManager (PIXI)",
+            "module": "cloudkid"
+        },
+        {
+            "file": "src/cloudkid/pixi/DragManager.js",
+            "line": 123,
+            "description": "External callback when we start dragging",
             "access": "private",
             "tagname": "",
             "itemtype": "property",
@@ -3312,8 +3361,8 @@
         },
         {
             "file": "src/cloudkid/pixi/DragManager.js",
-            "line": 119,
-            "description": "Callback when we are done dragging",
+            "line": 130,
+            "description": "External callback when we are done dragging",
             "access": "private",
             "tagname": "",
             "itemtype": "property",
@@ -3324,8 +3373,8 @@
         },
         {
             "file": "src/cloudkid/pixi/DragManager.js",
-            "line": 126,
-            "description": "Callback when we are done dragging holding drag",
+            "line": 137,
+            "description": "Callback to test for the start a held drag",
             "access": "private",
             "tagname": "",
             "itemtype": "property",
@@ -3336,8 +3385,8 @@
         },
         {
             "file": "src/cloudkid/pixi/DragManager.js",
-            "line": 133,
-            "description": "Callback when we are done width sticky clicking",
+            "line": 144,
+            "description": "Callback to start a sticky click drag",
             "access": "private",
             "tagname": "",
             "itemtype": "property",
@@ -3348,8 +3397,8 @@
         },
         {
             "file": "src/cloudkid/pixi/DragManager.js",
-            "line": 140,
-            "description": "Callback when we are done width sticky clicking",
+            "line": 151,
+            "description": "Callback when we are done with the drag",
             "access": "private",
             "tagname": "",
             "itemtype": "property",
@@ -3360,7 +3409,19 @@
         },
         {
             "file": "src/cloudkid/pixi/DragManager.js",
-            "line": 147,
+            "line": 158,
+            "description": "The function call when the mouse/touch moves",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "_updateCallback",
+            "type": "Function",
+            "class": "DragManager (PIXI)",
+            "module": "cloudkid"
+        },
+        {
+            "file": "src/cloudkid/pixi/DragManager.js",
+            "line": 165,
             "description": "The collection of draggable objects",
             "access": "private",
             "tagname": "",
@@ -3372,7 +3433,7 @@
         },
         {
             "file": "src/cloudkid/pixi/DragManager.js",
-            "line": 159,
+            "line": 177,
             "description": "Constructor",
             "itemtype": "method",
             "name": "initialize",
@@ -3393,7 +3454,7 @@
         },
         {
             "file": "src/cloudkid/pixi/DragManager.js",
-            "line": 180,
+            "line": 198,
             "description": "Manually starts dragging an object. If a mouse down event is not supplied as the second argument, it \n   defaults to a held drag, that ends as soon as the mouse is released.",
             "itemtype": "method",
             "name": "startDrag",
@@ -3416,7 +3477,7 @@
         },
         {
             "file": "src/cloudkid/pixi/DragManager.js",
-            "line": 193,
+            "line": 211,
             "description": "Mouse down on an obmect",
             "itemtype": "method",
             "name": "_objMouseDown",
@@ -3439,7 +3500,7 @@
         },
         {
             "file": "src/cloudkid/pixi/DragManager.js",
-            "line": 235,
+            "line": 253,
             "description": "Start the sticky click",
             "itemtype": "method",
             "name": "_triggerStickyClick",
@@ -3450,7 +3511,7 @@
         },
         {
             "file": "src/cloudkid/pixi/DragManager.js",
-            "line": 248,
+            "line": 266,
             "description": "Start hold dragging",
             "itemtype": "method",
             "name": "_triggerHeldDrag",
@@ -3468,7 +3529,7 @@
         },
         {
             "file": "src/cloudkid/pixi/DragManager.js",
-            "line": 267,
+            "line": 285,
             "description": "Internal start dragging on the stage",
             "itemtype": "method",
             "name": "_startDrag",
@@ -3479,7 +3540,7 @@
         },
         {
             "file": "src/cloudkid/pixi/DragManager.js",
-            "line": 281,
+            "line": 299,
             "description": "Stops dragging the currently dragged object.",
             "access": "public",
             "tagname": "",
@@ -3497,7 +3558,7 @@
         },
         {
             "file": "src/cloudkid/pixi/DragManager.js",
-            "line": 292,
+            "line": 310,
             "description": "Internal stop dragging on the stage",
             "itemtype": "method",
             "name": "_stopDrag",
@@ -3520,7 +3581,7 @@
         },
         {
             "file": "src/cloudkid/pixi/DragManager.js",
-            "line": 315,
+            "line": 333,
             "description": "Update the object position based on the mouse",
             "itemtype": "method",
             "name": "_updateObjPosition",
@@ -3538,14 +3599,32 @@
         },
         {
             "file": "src/cloudkid/pixi/DragManager.js",
-            "line": 336,
+            "line": 369,
+            "description": "Handles snapping the dragged object to the nearest among a list of points",
+            "itemtype": "method",
+            "name": "_handlePointSnap",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "localMousePos",
+                    "description": "The mouse position in the same space as the dragged object.",
+                    "type": "createjs.Point"
+                }
+            ],
+            "class": "DragManager (PIXI)",
+            "module": "cloudkid"
+        },
+        {
+            "file": "src/cloudkid/pixi/DragManager.js",
+            "line": 411,
             "description": "Simple clamp function",
             "class": "DragManager (PIXI)",
             "module": "cloudkid"
         },
         {
             "file": "src/cloudkid/pixi/DragManager.js",
-            "line": 363,
+            "line": 438,
             "description": "Adds properties and functions to the object - use enableDrag() and disableDrag() on \nobjects to enable/disable them (they start out disabled). Properties added to objects:\n_dragBounds (Rectangle), _onMouseDownListener (Function), _dragMan (cloudkid.DragManager) reference to the DragManager\nthese will override any existing properties of the same name",
             "itemtype": "method",
             "name": "addObject",
@@ -3568,7 +3647,7 @@
         },
         {
             "file": "src/cloudkid/pixi/DragManager.js",
-            "line": 396,
+            "line": 471,
             "description": "Removes properties and functions added by addObject().",
             "access": "public",
             "tagname": "",
@@ -3586,7 +3665,7 @@
         },
         {
             "file": "src/cloudkid/pixi/DragManager.js",
-            "line": 418,
+            "line": 493,
             "description": "Destroy the manager",
             "access": "public",
             "tagname": "",
@@ -3597,7 +3676,7 @@
         },
         {
             "file": "src/cloudkid/pixi/DragManager.js",
-            "line": 450,
+            "line": 525,
             "class": "DragManager (PIXI)",
             "module": "cloudkid"
         },
@@ -5133,12 +5212,8 @@
             "line": " src/cloudkid/createjs/DragManager.js:22"
         },
         {
-            "message": "Missing item type\nSimple clamp function",
-            "line": " src/cloudkid/createjs/DragManager.js:333"
-        },
-        {
             "message": "Missing item type",
-            "line": " src/cloudkid/createjs/DragManager.js:444"
+            "line": " src/cloudkid/createjs/DragManager.js:537"
         },
         {
             "message": "Missing item type",
@@ -5182,11 +5257,11 @@
         },
         {
             "message": "Missing item type\nSimple clamp function",
-            "line": " src/cloudkid/pixi/DragManager.js:336"
+            "line": " src/cloudkid/pixi/DragManager.js:411"
         },
         {
             "message": "Missing item type",
-            "line": " src/cloudkid/pixi/DragManager.js:450"
+            "line": " src/cloudkid/pixi/DragManager.js:525"
         },
         {
             "message": "Missing item type",

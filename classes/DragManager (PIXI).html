@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
     <link rel="shortcut icon" type="image/png" href="../assets/favicon.ico">
     <script src="http://yui.yahooapis.com/3.10.1/build/yui/yui-min.js"></script>
-	<title>CloudKid OS API v1.1.17 API Documentation : DragManager (PIXI)</title>  
+	<title>CloudKid OS API v1.1.19 API Documentation : DragManager (PIXI)</title>  
 </head>
 <body class="yui3-skin-sam">
 
@@ -19,7 +19,7 @@
             
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Documentation for: 1.1.17</em>
+            <em>API Documentation for: 1.1.19</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -148,7 +148,7 @@
 
 
 <div class="box intro">
-    <p>[PIXI only] Drag manager is responsible for handling the dragging of stage elements
+    <p>Drag manager is responsible for handling the dragging of stage elements
 supports click-n-stick and click-n-drag functionality.</p>
 
 </div>
@@ -291,6 +291,13 @@ supports click-n-stick and click-n-drag functionality.</p>
                     <h3>Methods</h3>
 
                     <ul class="index-list methods">
+                        
+                            <li class="index-item method private">
+                                <a href="#method__handlePointSnap">_handlePointSnap</a>
+
+                                
+                                
+                            </li>
                         
                             <li class="index-item method private">
                                 <a href="#method__objMouseDown">_objMouseDown</a>
@@ -505,6 +512,13 @@ supports click-n-stick and click-n-drag functionality.</p>
                                 
                             </li>
                         
+                            <li class="index-item property public">
+                                <a href="#property_snapSettings">snapSettings</a>
+
+                                
+                                
+                            </li>
+                        
                     </ul>
                 </div>
             
@@ -517,6 +531,97 @@ supports click-n-stick and click-n-drag functionality.</p>
         
             <div id="methods" class="api-class-tabpanel">
                 <h2 class="off-left">Methods</h2>
+
+                
+                    <div id="method__handlePointSnap" class="method item private">
+    <h3 class="name"><code>_handlePointSnap</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>localMousePos</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+        <span class="flag private">private</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_cloudkid_pixi_DragManager.js.html#l369"><code>_handlePointSnap:369</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Handles snapping the dragged object to the nearest among a list of points</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">localMousePos</code>
+                        <span class="type">createjs.Point</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The mouse position in the same space as the dragged object.</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
 
                 
                     <div id="method__objMouseDown" class="method item private">
@@ -569,7 +674,7 @@ supports click-n-stick and click-n-drag functionality.</p>
             
         
         
-        <a href="../files/src_cloudkid_pixi_DragManager.js.html#l193"><code>_objMouseDown:193</code></a>
+        <a href="../files/src_cloudkid_pixi_DragManager.js.html#l211"><code>_objMouseDown:211</code></a>
         
         </p>
 
@@ -666,7 +771,7 @@ supports click-n-stick and click-n-drag functionality.</p>
             
         
         
-        <a href="../files/src_cloudkid_pixi_DragManager.js.html#l267"><code>_startDrag:267</code></a>
+        <a href="../files/src_cloudkid_pixi_DragManager.js.html#l285"><code>_startDrag:285</code></a>
         
         </p>
 
@@ -739,7 +844,7 @@ supports click-n-stick and click-n-drag functionality.</p>
             
         
         
-        <a href="../files/src_cloudkid_pixi_DragManager.js.html#l292"><code>_stopDrag:292</code></a>
+        <a href="../files/src_cloudkid_pixi_DragManager.js.html#l310"><code>_stopDrag:310</code></a>
         
         </p>
 
@@ -846,7 +951,7 @@ supports click-n-stick and click-n-drag functionality.</p>
             
         
         
-        <a href="../files/src_cloudkid_pixi_DragManager.js.html#l248"><code>_triggerHeldDrag:248</code></a>
+        <a href="../files/src_cloudkid_pixi_DragManager.js.html#l266"><code>_triggerHeldDrag:266</code></a>
         
         </p>
 
@@ -927,7 +1032,7 @@ supports click-n-stick and click-n-drag functionality.</p>
             
         
         
-        <a href="../files/src_cloudkid_pixi_DragManager.js.html#l235"><code>_triggerStickyClick:235</code></a>
+        <a href="../files/src_cloudkid_pixi_DragManager.js.html#l253"><code>_triggerStickyClick:253</code></a>
         
         </p>
 
@@ -994,7 +1099,7 @@ supports click-n-stick and click-n-drag functionality.</p>
             
         
         
-        <a href="../files/src_cloudkid_pixi_DragManager.js.html#l315"><code>_updateObjPosition:315</code></a>
+        <a href="../files/src_cloudkid_pixi_DragManager.js.html#l333"><code>_updateObjPosition:333</code></a>
         
         </p>
 
@@ -1091,7 +1196,7 @@ supports click-n-stick and click-n-drag functionality.</p>
             
         
         
-        <a href="../files/src_cloudkid_pixi_DragManager.js.html#l363"><code>addObject:363</code></a>
+        <a href="../files/src_cloudkid_pixi_DragManager.js.html#l438"><code>addObject:438</code></a>
         
         </p>
 
@@ -1191,7 +1296,7 @@ these will override any existing properties of the same name</p>
             
         
         
-        <a href="../files/src_cloudkid_pixi_DragManager.js.html#l418"><code>destroy:418</code></a>
+        <a href="../files/src_cloudkid_pixi_DragManager.js.html#l493"><code>destroy:493</code></a>
         
         </p>
 
@@ -1262,7 +1367,7 @@ these will override any existing properties of the same name</p>
             
         
         
-        <a href="../files/src_cloudkid_pixi_DragManager.js.html#l159"><code>initialize:159</code></a>
+        <a href="../files/src_cloudkid_pixi_DragManager.js.html#l177"><code>initialize:177</code></a>
         
         </p>
 
@@ -1369,7 +1474,7 @@ these will override any existing properties of the same name</p>
             
         
         
-        <a href="../files/src_cloudkid_pixi_DragManager.js.html#l396"><code>removeObject:396</code></a>
+        <a href="../files/src_cloudkid_pixi_DragManager.js.html#l471"><code>removeObject:471</code></a>
         
         </p>
 
@@ -1466,7 +1571,7 @@ these will override any existing properties of the same name</p>
             
         
         
-        <a href="../files/src_cloudkid_pixi_DragManager.js.html#l180"><code>startDrag:180</code></a>
+        <a href="../files/src_cloudkid_pixi_DragManager.js.html#l198"><code>startDrag:198</code></a>
         
         </p>
 
@@ -1574,7 +1679,7 @@ these will override any existing properties of the same name</p>
             
         
         
-        <a href="../files/src_cloudkid_pixi_DragManager.js.html#l281"><code>stopDrag:281</code></a>
+        <a href="../files/src_cloudkid_pixi_DragManager.js.html#l299"><code>stopDrag:299</code></a>
         
         </p>
 
@@ -1654,7 +1759,7 @@ these will override any existing properties of the same name</p>
             
         
         
-        <a href="../files/src_cloudkid_pixi_DragManager.js.html#l119"><code>_dragEndCallback:119</code></a>
+        <a href="../files/src_cloudkid_pixi_DragManager.js.html#l130"><code>_dragEndCallback:130</code></a>
         
         </p>
 
@@ -1664,7 +1769,7 @@ these will override any existing properties of the same name</p>
     </div>
 
     <div class="description">
-        <p>Callback when we are done dragging</p>
+        <p>External callback when we are done dragging</p>
 
     </div>
 
@@ -1701,7 +1806,7 @@ these will override any existing properties of the same name</p>
             
         
         
-        <a href="../files/src_cloudkid_pixi_DragManager.js.html#l147"><code>_draggableObjects:147</code></a>
+        <a href="../files/src_cloudkid_pixi_DragManager.js.html#l165"><code>_draggableObjects:165</code></a>
         
         </p>
 
@@ -1748,7 +1853,7 @@ these will override any existing properties of the same name</p>
             
         
         
-        <a href="../files/src_cloudkid_pixi_DragManager.js.html#l40"><code>_dragOffset:40</code></a>
+        <a href="../files/src_cloudkid_pixi_DragManager.js.html#l116"><code>_dragOffset:116</code></a>
         
         </p>
 
@@ -1795,7 +1900,7 @@ these will override any existing properties of the same name</p>
             
         
         
-        <a href="../files/src_cloudkid_pixi_DragManager.js.html#l112"><code>_dragStartCallback:112</code></a>
+        <a href="../files/src_cloudkid_pixi_DragManager.js.html#l123"><code>_dragStartCallback:123</code></a>
         
         </p>
 
@@ -1805,7 +1910,7 @@ these will override any existing properties of the same name</p>
     </div>
 
     <div class="description">
-        <p>Callback when we start dragging</p>
+        <p>External callback when we start dragging</p>
 
     </div>
 
@@ -1842,7 +1947,7 @@ these will override any existing properties of the same name</p>
             
         
         
-        <a href="../files/src_cloudkid_pixi_DragManager.js.html#l140"><code>_stageMouseUpCallback:140</code></a>
+        <a href="../files/src_cloudkid_pixi_DragManager.js.html#l151"><code>_stageMouseUpCallback:151</code></a>
         
         </p>
 
@@ -1852,7 +1957,7 @@ these will override any existing properties of the same name</p>
     </div>
 
     <div class="description">
-        <p>Callback when we are done width sticky clicking</p>
+        <p>Callback when we are done with the drag</p>
 
     </div>
 
@@ -1889,7 +1994,7 @@ these will override any existing properties of the same name</p>
             
         
         
-        <a href="../files/src_cloudkid_pixi_DragManager.js.html#l105"><code>_theStage:105</code></a>
+        <a href="../files/src_cloudkid_pixi_DragManager.js.html#l109"><code>_theStage:109</code></a>
         
         </p>
 
@@ -1936,7 +2041,7 @@ these will override any existing properties of the same name</p>
             
         
         
-        <a href="../files/src_cloudkid_pixi_DragManager.js.html#l126"><code>_triggerHeldDragCallback:126</code></a>
+        <a href="../files/src_cloudkid_pixi_DragManager.js.html#l137"><code>_triggerHeldDragCallback:137</code></a>
         
         </p>
 
@@ -1946,7 +2051,7 @@ these will override any existing properties of the same name</p>
     </div>
 
     <div class="description">
-        <p>Callback when we are done dragging holding drag</p>
+        <p>Callback to test for the start a held drag</p>
 
     </div>
 
@@ -1983,7 +2088,7 @@ these will override any existing properties of the same name</p>
             
         
         
-        <a href="../files/src_cloudkid_pixi_DragManager.js.html#l133"><code>_triggerStickyClickCallback:133</code></a>
+        <a href="../files/src_cloudkid_pixi_DragManager.js.html#l144"><code>_triggerStickyClickCallback:144</code></a>
         
         </p>
 
@@ -1993,7 +2098,7 @@ these will override any existing properties of the same name</p>
     </div>
 
     <div class="description">
-        <p>Callback when we are done width sticky clicking</p>
+        <p>Callback to start a sticky click drag</p>
 
     </div>
 
@@ -2030,7 +2135,7 @@ these will override any existing properties of the same name</p>
             
         
         
-        <a href="../files/src_cloudkid_pixi_DragManager.js.html#l25"><code>_updateCallback:25</code></a>
+        <a href="../files/src_cloudkid_pixi_DragManager.js.html#l158"><code>_updateCallback:158</code></a>
         
         </p>
 
@@ -2040,7 +2145,7 @@ these will override any existing properties of the same name</p>
     </div>
 
     <div class="description">
-        <p>The function call when finished dragging</p>
+        <p>The function call when the mouse/touch moves</p>
 
     </div>
 
@@ -2077,7 +2182,7 @@ these will override any existing properties of the same name</p>
             
         
         
-        <a href="../files/src_cloudkid_pixi_DragManager.js.html#l96"><code>allowStickyClick:96</code></a>
+        <a href="../files/src_cloudkid_pixi_DragManager.js.html#l82"><code>allowStickyClick:82</code></a>
         
         </p>
 
@@ -2126,7 +2231,7 @@ these will override any existing properties of the same name</p>
             
         
         
-        <a href="../files/src_cloudkid_pixi_DragManager.js.html#l32"><code>draggedObj:32</code></a>
+        <a href="../files/src_cloudkid_pixi_DragManager.js.html#l25"><code>draggedObj:25</code></a>
         
         </p>
 
@@ -2173,7 +2278,7 @@ these will override any existing properties of the same name</p>
             
         
         
-        <a href="../files/src_cloudkid_pixi_DragManager.js.html#l47"><code>dragStartThreshold:47</code></a>
+        <a href="../files/src_cloudkid_pixi_DragManager.js.html#l33"><code>dragStartThreshold:33</code></a>
         
         </p>
 
@@ -2222,7 +2327,7 @@ these will override any existing properties of the same name</p>
             
         
         
-        <a href="../files/src_cloudkid_pixi_DragManager.js.html#l78"><code>isHeldDrag:78</code></a>
+        <a href="../files/src_cloudkid_pixi_DragManager.js.html#l64"><code>isHeldDrag:64</code></a>
         
         </p>
 
@@ -2271,7 +2376,7 @@ these will override any existing properties of the same name</p>
             
         
         
-        <a href="../files/src_cloudkid_pixi_DragManager.js.html#l87"><code>isStickyClick:87</code></a>
+        <a href="../files/src_cloudkid_pixi_DragManager.js.html#l73"><code>isStickyClick:73</code></a>
         
         </p>
 
@@ -2320,7 +2425,7 @@ these will override any existing properties of the same name</p>
             
         
         
-        <a href="../files/src_cloudkid_pixi_DragManager.js.html#l69"><code>isTouchMove:69</code></a>
+        <a href="../files/src_cloudkid_pixi_DragManager.js.html#l55"><code>isTouchMove:55</code></a>
         
         </p>
 
@@ -2369,7 +2474,7 @@ these will override any existing properties of the same name</p>
             
         
         
-        <a href="../files/src_cloudkid_pixi_DragManager.js.html#l62"><code>mouseDownObjPos:62</code></a>
+        <a href="../files/src_cloudkid_pixi_DragManager.js.html#l48"><code>mouseDownObjPos:48</code></a>
         
         </p>
 
@@ -2416,7 +2521,7 @@ these will override any existing properties of the same name</p>
             
         
         
-        <a href="../files/src_cloudkid_pixi_DragManager.js.html#l55"><code>mouseDownStagePos:55</code></a>
+        <a href="../files/src_cloudkid_pixi_DragManager.js.html#l41"><code>mouseDownStagePos:41</code></a>
         
         </p>
 
@@ -2430,6 +2535,64 @@ these will override any existing properties of the same name</p>
 
     </div>
 
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_snapSettings" class="property item public">
+    <h3 class="name"><code>snapSettings</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+
+    
+
+    
+        <span class="flag public">public</span>
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_cloudkid_pixi_DragManager.js.html#l90"><code>snapSettings:90</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Settings for snapping.</p>
+<p> Format for snapping to a list of points:
+    {
+        mode:"points",
+        dist:20,//snap when within 20 pixels/units
+        points:[
+            { x: 20, y:30 },
+            { x: 50, y:10 }
+        ]
+    }</p>
+
+    </div>
+
+    
+        <p><strong>Default:</strong> null</p>
     
 
     
