@@ -1,6 +1,6 @@
 !function(undefined) {
     var OS = function() {}, p = OS.prototype = new createjs.Container(), _paused = !1, _isReady = !1, _framerate = null, _lastFrameTime = 0, _lastFPSUpdateTime = 0, _framerateValue = null, _frameCount = 0, _tickCallback = null, _instance = null, _tickId = -1, _useRAF = !1, _fps = 0, _msPerFrame = 0;
-    OS.VERSION = "1.1.18", p.Container_initialize = p.initialize, p.stage = null, 
+    OS.VERSION = "1.1.19", p.Container_initialize = p.initialize, p.stage = null, 
     p._app = null, p.options = null, p._updateFunctions = {}, OS.init = function(stageName, options) {
         return _instance || (Debug.log("Creating the singleton instance of OS"), _instance = new OS(), 
         _instance.initialize(stageName, options)), _instance;
@@ -484,7 +484,8 @@
                     inputData = inputData.label;
                     var stateLabel = _stateData[state].label = {};
                     stateLabel.font = inputData.font || labelData.font, stateLabel.color = inputData.color || labelData.color, 
-                    stateLabel.stroke = inputData.stroke || labelData.stroke, stateLabel.shadow = inputData.shadow || labelData.shadow, 
+                    stateLabel.stroke = inputData.hasOwnProperty("stroke") ? inputData.stroke : labelData.stroke, 
+                    stateLabel.shadow = inputData.hasOwnProperty("shadow") ? inputData.shadow : labelData.shadow, 
                     stateLabel.textBaseline = inputData.textBaseline || labelData.textBaseline, stateLabel.x = inputData.x || labelData.x, 
                     stateLabel.y = inputData.y || labelData.y;
                 } else _stateData[state].label = labelData;
@@ -635,11 +636,12 @@
     var DragManager = function(startCallback, endCallback) {
         this.initialize(startCallback, endCallback);
     }, p = DragManager.prototype = {};
-    p._updateCallback = null, p.draggedObj = null, p._dragOffset = null, p.dragStartThreshold = 20, 
-    p.mouseDownStagePos = null, p.mouseDownObjPos = null, p.isTouchMove = !1, p.isHeldDrag = !1, 
-    p.isStickyClick = !1, p._theStage = null, p._dragStartCallback = null, p._dragEndCallback = null, 
-    p._triggerHeldDragCallback = null, p._triggerStickyClickCallback = null, p._stageMouseUpCallback = null, 
-    p._draggableObjects = null, p.initialize = function(startCallback, endCallback) {
+    p.draggedObj = null, p.dragStartThreshold = 20, p.mouseDownStagePos = null, p.mouseDownObjPos = null, 
+    p.allowStickyClick = !0, p.isTouchMove = !1, p.isHeldDrag = !1, p.isStickyClick = !1, 
+    p.snapSettings = null, p._theStage = null, p._dragOffset = null, p._dragStartCallback = null, 
+    p._dragEndCallback = null, p._triggerHeldDragCallback = null, p._triggerStickyClickCallback = null, 
+    p._stageMouseUpCallback = null, p._draggableObjects = null, p._updateCallback = null, 
+    p._helperPoint = null, p.initialize = function(startCallback, endCallback) {
         this._updateCallback = this._updateObjPosition.bind(this), this._triggerHeldDragCallback = this._triggerHeldDrag.bind(this), 
         this._triggerStickyClickCallback = this._triggerStickyClick.bind(this), this._stageMouseUpCallback = this._stopDrag.bind(this), 
         this._theStage = cloudkid.OS.instance.stage, this._dragStartCallback = startCallback, 
@@ -657,11 +659,11 @@
         this._dragOffset = this.draggedObj.parent.globalToLocal(ev ? ev.stageX : 0, ev ? ev.stageY : 0), 
         this._dragOffset.x -= obj.x, this._dragOffset.y -= obj.y, this.mouseDownObjPos.x = obj.x, 
         this.mouseDownObjPos.y = obj.y, ev ? (this._theStage._getPointerData(ev.pointerID).target = obj, 
-        "touchstart" == ev.nativeEvent.type ? (this.mouseDownStagePos.x = ev.stageX, this.mouseDownStagePos.y = ev.stageY, 
-        this.isTouchMove = !0, this.isHeldDrag = !0, this._startDrag()) : (this.mouseDownStagePos.x = ev.stageX, 
+        this.allowStickyClick && "touchstart" != ev.nativeEvent.type ? (this.mouseDownStagePos.x = ev.stageX, 
         this.mouseDownStagePos.y = ev.stageY, obj.addEventListener("pressmove", this._triggerHeldDragCallback), 
-        obj.addEventListener("pressup", this._triggerStickyClickCallback))) : (this.isHeldDrag = !0, 
-        this._startDrag()));
+        obj.addEventListener("pressup", this._triggerStickyClickCallback)) : (this.mouseDownStagePos.x = ev.stageX, 
+        this.mouseDownStagePos.y = ev.stageY, this.isTouchMove = "touchstart" == ev.nativeEvent.type, 
+        this.isHeldDrag = !0, this._startDrag())) : (this.isHeldDrag = !0, this._startDrag()));
     }, p._triggerStickyClick = function() {
         this.isStickyClick = !0, this.draggedObj.removeEventListener("pressmove", this._triggerHeldDragCallback), 
         this.draggedObj.removeEventListener("pressup", this._triggerStickyClickCallback), 
@@ -687,12 +689,31 @@
         doCallback !== !1 && this._dragEndCallback(obj);
     }, p._updateObjPosition = function(e) {
         if (this.isTouchMove || this._theStage.mouseInBounds) {
-            var mousePos = this.draggedObj.parent.globalToLocal(e.stageX, e.stageY), bounds = this.draggedObj._dragBounds;
-            this.draggedObj.x = clamp(mousePos.x - this._dragOffset.x, bounds.x, bounds.right), 
-            this.draggedObj.y = clamp(mousePos.y - this._dragOffset.y, bounds.y, bounds.bottom);
+            var draggedObj = this.draggedObj, mousePos = draggedObj.parent.globalToLocal(e.stageX, e.stageY, this._helperPoint), bounds = draggedObj._dragBounds;
+            if (draggedObj.x = clamp(mousePos.x - this._dragOffset.x, bounds.x, bounds.right), 
+            draggedObj.y = clamp(mousePos.y - this._dragOffset.y, bounds.y, bounds.bottom), 
+            this.snapSettings) switch (this.snapSettings.mode) {
+              case "points":
+                this._handlePointSnap(mousePos);
+                break;
+
+              case "grid":
+                break;
+
+              case "line":            }
         }
+    }, p._handlePointSnap = function(localMousePos) {
+        for (var snapSettings = this.snapSettings, minDistSq = snapSettings.dist * snapSettings.dist, points = snapSettings.points, objX = localMousePos.x - this._dragOffset.x, objY = localMousePos.y - this._dragOffset.y, leastDist = -1, closestPoint = null, i = points.length - 1; i >= 0; --i) {
+            var p = points[i], distSq = distSquared(objX, objY, p.x, p.y);
+            if (minDistSq >= distSq && (leastDist > distSq || -1 == leastDist)) return leastDist = distSq, 
+            void (closestPoint = p);
+        }
+        closestPoint && (this.draggedObj.x = closestPoint.x, this.draggedObj.y = closestPoint.y);
     };
-    var clamp = function(x, a, b) {
+    var distSquared = function(x1, y1, x2, y2) {
+        var xDiff = x1 - x2, yDiff = y1 - y2;
+        return xDiff * xDiff + yDiff * yDiff;
+    }, clamp = function(x, a, b) {
         return a > x ? a : x > b ? b : x;
     }, enableDrag = function() {
         this.addEventListener("mousedown", this._onMouseDownListener), this.cursor = "pointer";
@@ -728,7 +749,7 @@
             obj.disableDrag(), delete obj.enableDrag, delete obj.disableDrag, delete obj._onMouseDownListener, 
             delete obj._dragMan, delete obj._dragBounds;
         }
-        this._draggableObjects = null;
+        this._draggableObjects = null, this._helperPoint = null;
     }, namespace("cloudkid").DragManager = DragManager;
 }(), function() {
     "use strict";

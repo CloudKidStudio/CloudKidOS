@@ -2706,7 +2706,7 @@
 	"use strict";
 	
 	/**
-	*  [PIXI only] Drag manager is responsible for handling the dragging of stage elements
+	*  Drag manager is responsible for handling the dragging of stage elements
 	*  supports click-n-stick and click-n-drag functionality.
 	*
 	*  @class DragManager (PIXI)
@@ -2721,13 +2721,6 @@
 	
 	/** Reference to the drag manager */
 	var p = DragManager.prototype = {};
-		
-	/**
-	* The function call when finished dragging
-	* @private
-	* @property {function} _updateCallback 
-	*/
-	p._updateCallback = null;
 	
 	/**
 	* The object that's being dragged
@@ -2736,13 +2729,6 @@
 	* @property {PIXI.DisplayObject} draggedObj
 	*/
 	p.draggedObj = null;
-	
-	/**
-	* The local to global position of the drag
-	* @private
-	* @property {PIXI.Point} _dragOffset
-	*/
-	p._dragOffset = null;
 	
 	/**
 	* The radius in pixel to allow for dragging, or else does sticky click
@@ -2796,11 +2782,29 @@
 	/**
 	* If sticky click dragging is allowed.
 	* @public
-	* @readOnly
 	* @property {Bool} allowStickyClick
 	* @default true
 	*/
 	p.allowStickyClick = true;
+
+	/**
+	* Settings for snapping.
+	*
+	*  Format for snapping to a list of points:
+	*	{
+	*		mode:"points",
+	*		dist:20,//snap when within 20 pixels/units
+	*		points:[
+	*			{ x: 20, y:30 },
+	*			{ x: 50, y:10 }
+	*		]
+	*	}
+	*
+	* @public
+	* @property {Object} snapSettings
+	* @default null
+	*/
+	p.snapSettings = null;
 	
 	/**
 	* Reference to the stage
@@ -2810,39 +2814,53 @@
 	p._theStage = null;
 	
 	/**
-	* Callback when we start dragging
+	* The local to global position of the drag
+	* @private
+	* @property {PIXI.Point} _dragOffset
+	*/
+	p._dragOffset = null;
+	
+	/**
+	* External callback when we start dragging
 	* @private
 	* @property {Function} _dragStartCallback
 	*/
 	p._dragStartCallback = null;
 	
 	/**
-	* Callback when we are done dragging
+	* External callback when we are done dragging
 	* @private
 	* @property {Function} _dragEndCallback
 	*/
 	p._dragEndCallback = null;
 	
 	/**
-	* Callback when we are done dragging holding drag
+	* Callback to test for the start a held drag
 	* @private
 	* @property {Function} _triggerHeldDragCallback
 	*/
 	p._triggerHeldDragCallback = null;
 	
 	/**
-	* Callback when we are done width sticky clicking
+	* Callback to start a sticky click drag
 	* @private
 	* @property {Function} _triggerStickyClickCallback
 	*/
 	p._triggerStickyClickCallback = null;
 	
 	/**
-	* Callback when we are done width sticky clicking
+	* Callback when we are done with the drag
 	* @private
 	* @property {Function} _stageMouseUpCallback
 	*/
 	p._stageMouseUpCallback = null;
+		
+	/**
+	* The function call when the mouse/touch moves
+	* @private
+	* @property {function} _updateCallback 
+	*/
+	p._updateCallback = null;
 	
 	/**
 	* The collection of draggable objects
@@ -3031,6 +3049,64 @@
 		var bounds = this.draggedObj._dragBounds;
 		this.draggedObj.position.x = clamp(mousePos.x - this._dragOffset.x, bounds.x, bounds.right);
 		this.draggedObj.position.y = clamp(mousePos.y - this._dragOffset.y, bounds.y, bounds.bottom);
+		if(this.snapSettings)
+		{
+			switch(this.snapSettings.mode)
+			{
+				case "points":
+					this._handlePointSnap(mousePos);
+					break;
+				case "grid":
+					//not yet implemented
+					break;
+				case "line":
+					//not yet implemented
+					break;
+			}
+		}
+	};
+
+	/**
+	* Handles snapping the dragged object to the nearest among a list of points
+	* @method _handlePointSnap
+	* @private
+	* @param {createjs.Point} localMousePos The mouse position in the same space as the dragged object.
+	*/
+	p._handlePointSnap = function(localMousePos)
+	{
+		var snapSettings = this.snapSettings;
+		var minDistSq = snapSettings.dist * snapSettings.dist;
+		var points = snapSettings.points;
+		var objX = localMousePos.x - this._dragOffset.x;
+		var objY = localMousePos.y - this._dragOffset.y;
+		var leastDist = -1;
+		var closestPoint = null;
+		for(var i = points.length - 1; i >= 0; --i)
+		{
+			var p = points[i];
+			var distSq = distSquared(objX, objY, p.x, p.y);
+			if(distSq <= minDistSq && (distSq < leastDist || leastDist == -1))
+			{
+				leastDist = distSq;
+				closestPoint = p;
+				return;
+			}
+		}
+		if(closestPoint)
+		{
+			this.draggedObj.position.x = closestPoint.x;
+			this.draggedObj.position.y = closestPoint.y;
+		}
+	};
+
+	/*
+	* Small distance squared function
+	*/
+	var distSquared = function(x1, y1, x2, y2)
+	{
+		var xDiff = x1 - x2;
+		var yDiff = y1 - y2;
+		return xDiff * xDiff + yDiff * yDiff;
 	};
 	
 	/**

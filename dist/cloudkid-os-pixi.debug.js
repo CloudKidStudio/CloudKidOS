@@ -1,6 +1,6 @@
 !function(undefined) {
     var OS = function() {}, p = OS.prototype = Object.create(PIXI.DisplayObjectContainer.prototype), _paused = !1, _isReady = !1, _framerate = null, _lastFrameTime = 0, _lastFPSUpdateTime = 0, _framerateValue = null, _frameCount = 0, _tickCallback = null, _instance = null, _tickId = -1, _useRAF = !1, _fps = 0, _msPerFrame = 0;
-    OS.VERSION = "1.1.18", p.stage = null, p._renderer = null, p.canvasContainer = null, 
+    OS.VERSION = "1.1.19", p.stage = null, p._renderer = null, p.canvasContainer = null, 
     p._app = null, p.options = null, p._updateFunctions = {}, OS.init = function(stageName, options) {
         return _instance || (Debug.log("Creating the singleton instance of OS"), _instance = new OS(), 
         _instance.initialize(stageName, options)), _instance;
@@ -499,11 +499,11 @@
     var DragManager = function(startCallback, endCallback) {
         this.initialize(startCallback, endCallback);
     }, p = DragManager.prototype = {};
-    p._updateCallback = null, p.draggedObj = null, p._dragOffset = null, p.dragStartThreshold = 20, 
-    p.mouseDownStagePos = null, p.mouseDownObjPos = null, p.isTouchMove = !1, p.isHeldDrag = !1, 
-    p.isStickyClick = !1, p.allowStickyClick = !0, p._theStage = null, p._dragStartCallback = null, 
+    p.draggedObj = null, p.dragStartThreshold = 20, p.mouseDownStagePos = null, p.mouseDownObjPos = null, 
+    p.isTouchMove = !1, p.isHeldDrag = !1, p.isStickyClick = !1, p.allowStickyClick = !0, 
+    p.snapSettings = null, p._theStage = null, p._dragOffset = null, p._dragStartCallback = null, 
     p._dragEndCallback = null, p._triggerHeldDragCallback = null, p._triggerStickyClickCallback = null, 
-    p._stageMouseUpCallback = null, p._draggableObjects = null;
+    p._stageMouseUpCallback = null, p._updateCallback = null, p._draggableObjects = null;
     var helperPoint = null, TYPE_MOUSE = 0, TYPE_TOUCH = 1;
     p.initialize = function(startCallback, endCallback) {
         this._updateCallback = this._updateObjPosition.bind(this), this._triggerHeldDragCallback = this._triggerHeldDrag.bind(this), 
@@ -547,11 +547,30 @@
         if (this.isTouchMove || this._theStage.interactionManager.mouseInStage) {
             if (!this.draggedObj || !this.draggedObj.parent) return void this._stopDrag(null, !1);
             var mousePos = interactionData.getLocalPosition(this.draggedObj.parent, helperPoint), bounds = this.draggedObj._dragBounds;
-            this.draggedObj.position.x = clamp(mousePos.x - this._dragOffset.x, bounds.x, bounds.right), 
-            this.draggedObj.position.y = clamp(mousePos.y - this._dragOffset.y, bounds.y, bounds.bottom);
+            if (this.draggedObj.position.x = clamp(mousePos.x - this._dragOffset.x, bounds.x, bounds.right), 
+            this.draggedObj.position.y = clamp(mousePos.y - this._dragOffset.y, bounds.y, bounds.bottom), 
+            this.snapSettings) switch (this.snapSettings.mode) {
+              case "points":
+                this._handlePointSnap(mousePos);
+                break;
+
+              case "grid":
+                break;
+
+              case "line":            }
         }
+    }, p._handlePointSnap = function(localMousePos) {
+        for (var snapSettings = this.snapSettings, minDistSq = snapSettings.dist * snapSettings.dist, points = snapSettings.points, objX = localMousePos.x - this._dragOffset.x, objY = localMousePos.y - this._dragOffset.y, leastDist = -1, closestPoint = null, i = points.length - 1; i >= 0; --i) {
+            var p = points[i], distSq = distSquared(objX, objY, p.x, p.y);
+            if (minDistSq >= distSq && (leastDist > distSq || -1 == leastDist)) return leastDist = distSq, 
+            void (closestPoint = p);
+        }
+        closestPoint && (this.draggedObj.position.x = closestPoint.x, this.draggedObj.position.y = closestPoint.y);
     };
-    var clamp = function(x, a, b) {
+    var distSquared = function(x1, y1, x2, y2) {
+        var xDiff = x1 - x2, yDiff = y1 - y2;
+        return xDiff * xDiff + yDiff * yDiff;
+    }, clamp = function(x, a, b) {
         return a > x ? a : x > b ? b : x;
     }, enableDrag = function() {
         this.mousedown = this._onMouseDownListener, this.touchstart = this._onTouchStartListener, 

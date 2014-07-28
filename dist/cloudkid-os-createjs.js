@@ -2639,8 +2639,8 @@
 						var stateLabel = _stateData[state].label = {};
 						stateLabel.font = inputData.font || labelData.font;
 						stateLabel.color = inputData.color || labelData.color;
-						stateLabel.stroke = inputData.stroke || labelData.stroke;
-						stateLabel.shadow = inputData.shadow || labelData.shadow;
+						stateLabel.stroke = inputData.hasOwnProperty("stroke") ? inputData.stroke : labelData.stroke;
+						stateLabel.shadow = inputData.hasOwnProperty("shadow") ? inputData.shadow : labelData.shadow;
 						stateLabel.textBaseline = inputData.textBaseline || labelData.textBaseline;
 						stateLabel.x = inputData.x || labelData.x;
 						stateLabel.y = inputData.y || labelData.y;
@@ -3098,8 +3098,8 @@
 	"use strict";
 	
 	/**
-	*  [CreateJS only] Drag manager is responsible for handling the dragging of stage elements
-	*  supports click-n-stick and click-n-drag functionality.
+	*  Drag manager is responsible for handling the dragging of stage elements.
+	*  Supports click-n-stick (click to start, move mouse, click to release) and click-n-drag (standard dragging) functionality.
 	*  
 	*  @class DragManager (CreateJS)
 	*  @constructor
@@ -3113,13 +3113,6 @@
 	
 	/** Reference to the drag manager */
 	var p = DragManager.prototype = {};
-		
-	/**
-	* The function call when finished dragging
-	* @private
-	* @property {function} _updateCallback 
-	*/
-	p._updateCallback = null;
 	
 	/**
 	* The object that's being dragged
@@ -3128,13 +3121,6 @@
 	* @property {createjs.DisplayObject} draggedObj
 	*/
 	p.draggedObj = null;
-	
-	/**
-	* The local to global position of the drag
-	* @private
-	* @property {createjs.Point} _dragOffset
-	*/
-	p._dragOffset = null;
 	
 	/**
 	* The radius in pixel to allow for dragging, or else does sticky click
@@ -3157,6 +3143,14 @@
 	* @property {object} mouseDownObjPos
 	*/
 	p.mouseDownObjPos = null;
+
+	/**
+	* If sticky click dragging is allowed.
+	* @public
+	* @property {Bool} allowStickyClick
+	* @default true
+	*/
+	p.allowStickyClick = true;
 	
 	/**
 	* Is the move touch based
@@ -3184,6 +3178,25 @@
 	* @default false
 	*/
 	p.isStickyClick = false;
+
+	/**
+	* Settings for snapping.
+	*
+	*  Format for snapping to a list of points:
+	*	{
+	*		mode:"points",
+	*		dist:20,//snap when within 20 pixels/units
+	*		points:[
+	*			{ x: 20, y:30 },
+	*			{ x: 50, y:10 }
+	*		]
+	*	}
+	*
+	* @public
+	* @property {Object} snapSettings
+	* @default null
+	*/
+	p.snapSettings = null;
 	
 	/**
 	* Reference to the stage
@@ -3191,6 +3204,13 @@
 	* @property {createjsStage} _theStage
 	*/
 	p._theStage = null;
+	
+	/**
+	* The local to global position of the drag
+	* @private
+	* @property {createjs.Point} _dragOffset
+	*/
+	p._dragOffset = null;
 	
 	/**
 	* Callback when we start dragging
@@ -3207,21 +3227,21 @@
 	p._dragEndCallback = null;
 	
 	/**
-	* Callback when we are done dragging holding drag
+	* Callback to test for the start a held drag
 	* @private
 	* @property {Function} _triggerHeldDragCallback
 	*/
 	p._triggerHeldDragCallback = null;
 	
 	/**
-	* Callback when we are done width sticky clicking
+	* Callback to start a sticky click drag
 	* @private
 	* @property {Function} _triggerStickyClickCallback
 	*/
 	p._triggerStickyClickCallback = null;
 	
 	/**
-	* Callback when we are done width sticky clicking
+	* Callback when we are done with the drag
 	* @private
 	* @property {Function} _stageMouseUpCallback
 	*/
@@ -3233,6 +3253,20 @@
 	* @property {Array} _draggableObjects
 	*/
 	p._draggableObjects = null;
+		
+	/**
+	* The function call when the mouse/touch moves
+	* @private
+	* @property {function} _updateCallback 
+	*/
+	p._updateCallback = null;
+
+	/**
+	* A point for reuse instead of lots of object creation.
+	* @private
+	* @property {createjs.Point} _helperPoint 
+	*/
+	p._helperPoint = null;
 	
 	/** 
 	* Constructor 
@@ -3306,11 +3340,11 @@
 			//override the target for the mousedown/touchstart event to be this object, in case we are dragging a cloned object
 			this._theStage._getPointerData(ev.pointerID).target = obj;
 
-			if(ev.nativeEvent.type == 'touchstart')//if it is a touch event, force it to be the held drag type
+			if(!this.allowStickyClick || ev.nativeEvent.type == 'touchstart')//if it is a touch event, force it to be the held drag type
 			{
 				this.mouseDownStagePos.x = ev.stageX;
 				this.mouseDownStagePos.y = ev.stageY;
-				this.isTouchMove = true;
+				this.isTouchMove = ev.nativeEvent.type == 'touchstart';
 				this.isHeldDrag = true;
 				this._startDrag();
 			}
@@ -3416,13 +3450,72 @@
 	{
 		if(!this.isTouchMove && !this._theStage.mouseInBounds) return;
 		
-		var mousePos = this.draggedObj.parent.globalToLocal(e.stageX, e.stageY);
-		var bounds = this.draggedObj._dragBounds;
-		this.draggedObj.x = clamp(mousePos.x - this._dragOffset.x, bounds.x, bounds.right);
-		this.draggedObj.y = clamp(mousePos.y - this._dragOffset.y, bounds.y, bounds.bottom);
+		var draggedObj = this.draggedObj;
+		var mousePos = draggedObj.parent.globalToLocal(e.stageX, e.stageY, this._helperPoint);
+		var bounds = draggedObj._dragBounds;
+		draggedObj.x = clamp(mousePos.x - this._dragOffset.x, bounds.x, bounds.right);
+		draggedObj.y = clamp(mousePos.y - this._dragOffset.y, bounds.y, bounds.bottom);
+		if(this.snapSettings)
+		{
+			switch(this.snapSettings.mode)
+			{
+				case "points":
+					this._handlePointSnap(mousePos);
+					break;
+				case "grid":
+					//not yet implemented
+					break;
+				case "line":
+					//not yet implemented
+					break;
+			}
+		}
+	};
+
+	/**
+	* Handles snapping the dragged object to the nearest among a list of points
+	* @method _handlePointSnap
+	* @private
+	* @param {createjs.Point} localMousePos The mouse position in the same space as the dragged object.
+	*/
+	p._handlePointSnap = function(localMousePos)
+	{
+		var snapSettings = this.snapSettings;
+		var minDistSq = snapSettings.dist * snapSettings.dist;
+		var points = snapSettings.points;
+		var objX = localMousePos.x - this._dragOffset.x;
+		var objY = localMousePos.y - this._dragOffset.y;
+		var leastDist = -1;
+		var closestPoint = null;
+		for(var i = points.length - 1; i >= 0; --i)
+		{
+			var p = points[i];
+			var distSq = distSquared(objX, objY, p.x, p.y);
+			if(distSq <= minDistSq && (distSq < leastDist || leastDist == -1))
+			{
+				leastDist = distSq;
+				closestPoint = p;
+				return;
+			}
+		}
+		if(closestPoint)
+		{
+			this.draggedObj.x = closestPoint.x;
+			this.draggedObj.y = closestPoint.y;
+		}
+	};
+
+	/*
+	* Small distance squared function
+	*/
+	var distSquared = function(x1, y1, x2, y2)
+	{
+		var xDiff = x1 - x2;
+		var yDiff = y1 - y2;
+		return xDiff * xDiff + yDiff * yDiff;
 	};
 	
-	/**
+	/*
 	* Simple clamp function
 	*/
 	var clamp = function(x,a,b)
@@ -3531,6 +3624,7 @@
 			delete obj._dragBounds;
 		}
 		this._draggableObjects = null;
+		this._helperPoint = null;
 	};
 	
 	/** Assign to the global namespace */
