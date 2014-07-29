@@ -2693,6 +2693,13 @@
 			_stateData.disabled = _stateData.up = {src:new createjs.Rectangle(0, 0, width, height)};
 			_stateData.over = {src:new createjs.Rectangle(0, height, width, height)};
 			_stateData.down = {src:new createjs.Rectangle(0, height * 2, width, height)};
+			if(labelData)
+			{
+				_stateData.up.label = 
+				_stateData.over.label = 
+				_stateData.down.label = 
+				_stateData.disabled.label = labelData;
+			}
 			this._offset.x = this._offset.y = 0;
 		}
 		
