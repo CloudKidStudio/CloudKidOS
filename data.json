@@ -949,14 +949,14 @@
                     "type": "Int"
                 },
                 {
-                    "name": "repeat",
+                    "name": "repeat=false",
                     "description": "If the DelayedCall should automatically repeat itself when completed.",
-                    "type": "Boolean=false"
+                    "type": "Boolean"
                 },
                 {
-                    "name": "autoDestroy",
+                    "name": "autoDestroy=true",
                     "description": "If the DelayedCall should clean itself up when completed.",
-                    "type": "Boolean=true"
+                    "type": "Boolean"
                 }
             ]
         },
