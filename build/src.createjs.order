@@ -4,6 +4,7 @@ cloudkid/createjs/BitmapUtils.js
 cloudkid/SavedData.js
 cloudkid/Worker.js
 cloudkid/CombinedCallback.js
+cloudkid/DelayedCall.js
 cloudkid/Application.js
 cloudkid/loaders/LoaderQueueItem.js
 cloudkid/loaders/MediaLoader.js

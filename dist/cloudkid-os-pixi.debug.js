@@ -1,6 +1,6 @@
 !function(undefined) {
     var OS = function() {}, p = OS.prototype = Object.create(PIXI.DisplayObjectContainer.prototype), _paused = !1, _isReady = !1, _framerate = null, _lastFrameTime = 0, _lastFPSUpdateTime = 0, _framerateValue = null, _frameCount = 0, _tickCallback = null, _instance = null, _tickId = -1, _useRAF = !1, _fps = 0, _msPerFrame = 0;
-    OS.VERSION = "1.1.20", p.stage = null, p._renderer = null, p.canvasContainer = null, 
+    OS.VERSION = "1.1.21", p.stage = null, p._renderer = null, p.canvasContainer = null, 
     p._app = null, p.options = null, p._updateFunctions = {}, OS.init = function(stageName, options) {
         return _instance || (Debug.log("Creating the singleton instance of OS"), _instance = new OS(), 
         _instance.initialize(stageName, options)), _instance;
@@ -221,6 +221,38 @@
     CombinedCallback.create = function(call, obj, prop, callProp) {
         return CombinedCallback.bind(this, call, obj, prop, callProp);
     }, namespace("cloudkid").CombinedCallback = CombinedCallback;
+}(), function(undefined) {
+    "use strict";
+    var NEXT_ID = 0, DelayedCall = function(callback, delay, repeat, autoDestroy) {
+        this._callback = callback, this._delay = delay, this._timer = delay, this._repeat = !!repeat, 
+        this._autoDestroy = autoDestroy === undefined ? !0 : !!autoDestroy, this._updateId = "DelayedCall#" + ++NEXT_ID, 
+        this._paused = !1, this._update = this._update.bind(this), cloudkid.OS.instance.addUpdateCallback(this._updateId, this._update);
+    }, p = DelayedCall.prototype;
+    p._update = function(elapsed) {
+        return this._callback ? (this._timer -= elapsed, void (this._timer <= 0 && (this._callback(), 
+        this._repeat ? this._timer += this._delay : this._autoDestroy ? this.destroy() : cloudkid.OS.instance.removeUpdateCallback(this._updateId)))) : void this.destroy();
+    }, p.restart = function() {
+        if (this._callback) {
+            var os = cloudkid.OS.instance;
+            os.hasUpdateCallback(this._updateId) || os.addUpdateCallback(this._updateId, this._update), 
+            this._timer = this._delay, this._paused = !1;
+        }
+    }, p.stop = function() {
+        cloudkid.OS.instance.removeUpdateCallback(this._updateId), this._paused = !1;
+    }, Object.defineProperty(p, "paused", {
+        get: function() {
+            return this._paused;
+        },
+        set: function(value) {
+            if (this._callback) {
+                var os = cloudkid.OS.instance;
+                this._paused && !value ? (this._paused = !1, os.hasUpdateCallback(this._updateId) || os.addUpdateCallback(this._updateId, this._update)) : value && os.hasUpdateCallback(this._updateId) && (this._paused = !0, 
+                os.removeUpdateCallback(this._updateId));
+            }
+        }
+    }), p.destroy = function() {
+        cloudkid.OS.instance.removeUpdateCallback(this._updateId), this._callback = null;
+    }, namespace("cloudkid").DelayedCall = DelayedCall;
 }(), function() {
     "use strict";
     var p, Application = function() {
