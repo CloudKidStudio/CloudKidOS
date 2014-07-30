@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
     <link rel="shortcut icon" type="image/png" href="../assets/favicon.ico">
     <script src="http://yui.yahooapis.com/3.10.1/build/yui/yui-min.js"></script>
-	<title>CloudKid OS API v1.1.21 API Documentation : LoaderQueueItem</title>  
+	<title>CloudKid OS API v1.1.21 API Documentation : DelayedCall</title>  
 </head>
 <body class="yui3-skin-sam">
 
@@ -126,7 +126,7 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1>LoaderQueueItem Class</h1>
+                        <h1>DelayedCall Class</h1>
 <div class="box meta">
     
 
@@ -134,7 +134,7 @@
 
     
         <div class="foundat">
-            Defined in: <a href="../files/src_cloudkid_loaders_LoaderQueueItem.js.html#l8"><code>LoaderQueueItem:8</code></a>
+            Defined in: <a href="../files/src_cloudkid_DelayedCall.js.html#l10"><code>DelayedCall:10</code></a>
         </div>
     
 
@@ -150,10 +150,167 @@
 
 
 <div class="box intro">
-    <p>Represents a single item in the loader queue</p>
+    <p>A class for delaying a call through the OS, instead of relying on setInterval() or setTimeout().</p>
 
 </div>
 
+
+    <div class="constructor">
+        <h2>Constructor</h2>
+        <div id="method_DelayedCall" class="method item">
+    <h3 class="name"><code>DelayedCall</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>callback</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>delay</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>repeat</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>autoDestroy</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_cloudkid_DelayedCall.js.html#l10"><code>DelayedCall:10</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">callback</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Function" class="crosslink external" target="_blank">Function</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The function to call when the delay has completed.</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">delay</code>
+                        <span class="type">Int</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The time to delay the call, in milliseconds.</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">repeat</code>
+                        <span class="type">Boolean=false</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>If the DelayedCall should automatically repeat itself when completed.</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">autoDestroy</code>
+                        <span class="type">Boolean=true</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>If the DelayedCall should clean itself up when completed.</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+    </div>
 
 
 <div id="classdocs" class="tabview">
@@ -180,6 +337,13 @@
 
                     <ul class="index-list methods">
                         
+                            <li class="index-item method private">
+                                <a href="#method__update">_update</a>
+
+                                
+                                
+                            </li>
+                        
                             <li class="index-item method public">
                                 <a href="#method_destroy">destroy</a>
 
@@ -188,7 +352,14 @@
                             </li>
                         
                             <li class="index-item method public">
-                                <a href="#method_toString">toString</a>
+                                <a href="#method_restart">restart</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method public">
+                                <a href="#method_stop">stop</a>
 
                                 
                                 
@@ -204,63 +375,57 @@
 
                     <ul class="index-list properties">
                         
-                            <li class="index-item property public">
-                                <a href="#property_callback">callback</a>
+                            <li class="index-item property private">
+                                <a href="#property__autoDestroy">_autoDestroy</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property private">
+                                <a href="#property__callback">_callback</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property private">
+                                <a href="#property__delay">_delay</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property private">
+                                <a href="#property__paused">_paused</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property private">
+                                <a href="#property__repeat">_repeat</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property private">
+                                <a href="#property__timer">_timer</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property private">
+                                <a href="#property__updateId">_updateId</a>
 
                                 
                                 
                             </li>
                         
                             <li class="index-item property public">
-                                <a href="#property_data">data</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item property public">
-                                <a href="#property_priority">priority</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item property public">
-                                <a href="#property_PRIORITY_HIGH">PRIORITY_HIGH</a>
-
-                                
-                                    <span class="flag static">static</span>
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item property public">
-                                <a href="#property_PRIORITY_LOW">PRIORITY_LOW</a>
-
-                                
-                                    <span class="flag static">static</span>
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item property public">
-                                <a href="#property_PRIORITY_NORMAL">PRIORITY_NORMAL</a>
-
-                                
-                                    <span class="flag static">static</span>
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item property public">
-                                <a href="#property_progress">progress</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item property public">
-                                <a href="#property_url">url</a>
+                                <a href="#property_paused">paused</a>
 
                                 
                                 
@@ -278,6 +443,97 @@
         
             <div id="methods" class="api-class-tabpanel">
                 <h2 class="off-left">Methods</h2>
+
+                
+                    <div id="method__update" class="method item private">
+    <h3 class="name"><code>_update</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>elapsed</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+        <span class="flag private">private</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_cloudkid_DelayedCall.js.html#l75"><code>_update:75</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>The callback supplied to the OS for an update each frame.</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">elapsed</code>
+                        <span class="type">Int</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The time elapsed since the previous frame.</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
 
                 
                     <div id="method_destroy" class="method item public">
@@ -314,7 +570,7 @@
             
         
         
-        <a href="../files/src_cloudkid_loaders_LoaderQueueItem.js.html#l103"><code>destroy:103</code></a>
+        <a href="../files/src_cloudkid_DelayedCall.js.html#l156"><code>destroy:156</code></a>
         
         </p>
 
@@ -325,7 +581,8 @@
     </div>
 
     <div class="description">
-        <p>Destroy this result</p>
+        <p>Stops and cleans up the DelayedCall. Do not use it after calling
+destroy().</p>
 
     </div>
 
@@ -337,17 +594,13 @@
 </div>
 
                 
-                    <div id="method_toString" class="method item public">
-    <h3 class="name"><code>toString</code></h3>
+                    <div id="method_restart" class="method item public">
+    <h3 class="name"><code>restart</code></h3>
 
     
         <span class="paren">()</span>
     
 
-    
-        <span class="returns-inline">
-            <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-        </span>
     
 
     
@@ -375,7 +628,7 @@
             
         
         
-        <a href="../files/src_cloudkid_loaders_LoaderQueueItem.js.html#l92"><code>toString:92</code></a>
+        <a href="../files/src_cloudkid_DelayedCall.js.html#l102"><code>restart:102</code></a>
         
         </p>
 
@@ -386,26 +639,69 @@
     </div>
 
     <div class="description">
-        <p>Represent this object as a string</p>
+        <p>Restarts the DelayedCall, whether it is running or not.</p>
 
     </div>
 
     
 
     
-        <div class="returns">
-            <h4>Returns:</h4>
 
-            <div class="returns-description">
-                
-                    
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>:
-                    
-                    <p>The string representation of this object</p>
+    
+</div>
 
                 
-            </div>
-        </div>
+                    <div id="method_stop" class="method item public">
+    <h3 class="name"><code>stop</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+
+    
+
+    
+        <span class="flag public">public</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_cloudkid_DelayedCall.js.html#l117"><code>stop:117</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Stops the DelayedCall, without destroying it.</p>
+
+    </div>
+
+    
+
     
 
     
@@ -420,14 +716,63 @@
                 <h2 class="off-left">Properties</h2>
 
                 
-                    <div id="property_callback" class="property item public">
-    <h3 class="name"><code>callback</code></h3>
+                    <div id="property__autoDestroy" class="property item private">
+    <h3 class="name"><code>_autoDestroy</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+
+    
+
+    
+        <span class="flag private">private</span>
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_cloudkid_DelayedCall.js.html#l47"><code>_autoDestroy:47</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>If the DelayedCall should destroy itself after completing</p>
+
+    </div>
+
+    
+        <p><strong>Default:</strong> true</p>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property__callback" class="property item private">
+    <h3 class="name"><code>_callback</code></h3>
     <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Function" class="crosslink external" target="_blank">Function</a></span>
 
     
 
     
-        <span class="flag public">public</span>
+        <span class="flag private">private</span>
     
 
     
@@ -445,7 +790,7 @@
             
         
         
-        <a href="../files/src_cloudkid_loaders_LoaderQueueItem.js.html#l59"><code>callback:59</code></a>
+        <a href="../files/src_cloudkid_DelayedCall.js.html#l22"><code>_callback:22</code></a>
         
         </p>
 
@@ -455,8 +800,7 @@
     </div>
 
     <div class="description">
-        <p>The callback function of the load, to call when 
-the load as finished, takes one argument as result</p>
+        <p>The function to call when the delay is completed.</p>
 
     </div>
 
@@ -468,61 +812,14 @@ the load as finished, takes one argument as result</p>
 </div>
 
                 
-                    <div id="property_data" class="property item public">
-    <h3 class="name"><code>data</code></h3>
-    <span class="type"></span>
-
-    
-
-    
-        <span class="flag public">public</span>
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/src_cloudkid_loaders_LoaderQueueItem.js.html#l52"><code>data:52</code></a>
-        
-        </p>
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>Data associate with the load</p>
-
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="property_priority" class="property item public">
-    <h3 class="name"><code>priority</code></h3>
+                    <div id="property__delay" class="property item private">
+    <h3 class="name"><code>_delay</code></h3>
     <span class="type">Int</span>
 
     
 
     
-        <span class="flag public">public</span>
+        <span class="flag private">private</span>
     
 
     
@@ -540,7 +837,7 @@ the load as finished, takes one argument as result</p>
             
         
         
-        <a href="../files/src_cloudkid_loaders_LoaderQueueItem.js.html#l67"><code>priority:67</code></a>
+        <a href="../files/src_cloudkid_DelayedCall.js.html#l28"><code>_delay:28</code></a>
         
         </p>
 
@@ -550,7 +847,7 @@ the load as finished, takes one argument as result</p>
     </div>
 
     <div class="description">
-        <p>The priority of this item</p>
+        <p>The delay time, in milliseconds.</p>
 
     </div>
 
@@ -562,167 +859,110 @@ the load as finished, takes one argument as result</p>
 </div>
 
                 
-                    <div id="property_PRIORITY_HIGH" class="property item public">
-    <h3 class="name"><code>PRIORITY_HIGH</code></h3>
+                    <div id="property__paused" class="property item private">
+    <h3 class="name"><code>_paused</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+
+    
+
+    
+        <span class="flag private">private</span>
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_cloudkid_DelayedCall.js.html#l60"><code>_paused:60</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>If the DelayedCall is currently paused (not stopped).</p>
+
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property__repeat" class="property item private">
+    <h3 class="name"><code>_repeat</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+
+    
+
+    
+        <span class="flag private">private</span>
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_cloudkid_DelayedCall.js.html#l40"><code>_repeat:40</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>If the DelayedCall should repeat itself automatically.</p>
+
+    </div>
+
+    
+        <p><strong>Default:</strong> false</p>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property__timer" class="property item private">
+    <h3 class="name"><code>_timer</code></h3>
     <span class="type">Int</span>
 
     
 
     
-        <span class="flag public">public</span>
-    
-
-    
-        <span class="flag final">final</span>
-    
-
-    
-        <span class="flag static">static</span>
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/src_cloudkid_loaders_LoaderQueueItem.js.html#l18"><code>PRIORITY_HIGH:18</code></a>
-        
-        </p>
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>Highest priority</p>
-
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="property_PRIORITY_LOW" class="property item public">
-    <h3 class="name"><code>PRIORITY_LOW</code></h3>
-    <span class="type">Int</span>
-
-    
-
-    
-        <span class="flag public">public</span>
-    
-
-    
-        <span class="flag final">final</span>
-    
-
-    
-        <span class="flag static">static</span>
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/src_cloudkid_loaders_LoaderQueueItem.js.html#l36"><code>PRIORITY_LOW:36</code></a>
-        
-        </p>
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>Lowest priority</p>
-
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="property_PRIORITY_NORMAL" class="property item public">
-    <h3 class="name"><code>PRIORITY_NORMAL</code></h3>
-    <span class="type">Int</span>
-
-    
-
-    
-        <span class="flag public">public</span>
-    
-
-    
-        <span class="flag final">final</span>
-    
-
-    
-        <span class="flag static">static</span>
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/src_cloudkid_loaders_LoaderQueueItem.js.html#l27"><code>PRIORITY_NORMAL:27</code></a>
-        
-        </p>
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>Normal priority, the default</p>
-
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="property_progress" class="property item public">
-    <h3 class="name"><code>progress</code></h3>
-    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
-
-    
-
-    
-        <span class="flag public">public</span>
+        <span class="flag private">private</span>
     
 
     
@@ -740,7 +980,7 @@ the load as finished, takes one argument as result</p>
             
         
         
-        <a href="../files/src_cloudkid_loaders_LoaderQueueItem.js.html#l74"><code>progress:74</code></a>
+        <a href="../files/src_cloudkid_DelayedCall.js.html#l34"><code>_timer:34</code></a>
         
         </p>
 
@@ -750,7 +990,7 @@ the load as finished, takes one argument as result</p>
     </div>
 
     <div class="description">
-        <p>The amount we&#39;ve loaded so far, from 0 to 1</p>
+        <p>The timer counting down from _delay, in milliseconds.</p>
 
     </div>
 
@@ -762,13 +1002,60 @@ the load as finished, takes one argument as result</p>
 </div>
 
                 
-                    <div id="property_url" class="property item public">
-    <h3 class="name"><code>url</code></h3>
+                    <div id="property__updateId" class="property item private">
+    <h3 class="name"><code>_updateId</code></h3>
     <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
 
     
 
     
+        <span class="flag private">private</span>
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_cloudkid_DelayedCall.js.html#l54"><code>_updateId:54</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>The unique ID used for the update callback for the OS.</p>
+
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_paused" class="property item public">
+    <h3 class="name"><code>paused</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+
+    
+
+    
         <span class="flag public">public</span>
     
 
@@ -787,7 +1074,7 @@ the load as finished, takes one argument as result</p>
             
         
         
-        <a href="../files/src_cloudkid_loaders_LoaderQueueItem.js.html#l45"><code>url:45</code></a>
+        <a href="../files/src_cloudkid_DelayedCall.js.html#l128"><code>paused:128</code></a>
         
         </p>
 
@@ -797,7 +1084,7 @@ the load as finished, takes one argument as result</p>
     </div>
 
     <div class="description">
-        <p>The url of the load</p>
+        <p>If the DelayedCall is paused or not.</p>
 
     </div>
 

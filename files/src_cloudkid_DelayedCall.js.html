@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
     <link rel="shortcut icon" type="image/png" href="../assets/favicon.ico">
     <script src="http://yui.yahooapis.com/3.10.1/build/yui/yui-min.js"></script>
-	<title>CloudKid OS API v1.1.21 API Documentation : src/cloudkid/scaling/UIElementSettings.js</title>  
+	<title>CloudKid OS API v1.1.21 API Documentation : src/cloudkid/DelayedCall.js</title>  
 </head>
 <body class="yui3-skin-sam">
 
@@ -127,67 +127,180 @@
                 <div id="docs-main">
                     <div class="content">
                         <script>
-	var name = src/cloudkid/scaling/UIElementSettings.js      
+	var name = src/cloudkid/DelayedCall.js      
 </script>
-<h1 class="file-heading">File:UIElementSettings.js</h1>
+<h1 class="file-heading">File:DelayedCall.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
-(function() {
-	
+/**
+*  @module cloudkid
+*/
+(function(undefined) {
+
 	&quot;use strict&quot;;
 
+	var NEXT_ID = 0;
+
 	/**
-	*  The UI Item Settings which is the positioning settings used to adjust each element
-	*  @module cloudkid
-	*  @class UIElementSettings
+	*  A class for delaying a call through the OS, instead of relying on setInterval() or setTimeout().
+	* 
+	*  @class DelayedCall
+	*  @constructor
+	*  @param {function} callback The function to call when the delay has completed.
+	*  @param {int} delay The time to delay the call, in milliseconds.
+	*  @param {Boolean=false} repeat If the DelayedCall should automatically repeat itself when completed.
+	*  @param {Boolean=true} autoDestroy If the DelayedCall should clean itself up when completed.
 	*/
-	var UIElementSettings = function(){};
-	
-	// Reference to the prototype
-	var p = UIElementSettings.prototype = {};
-	
-	/** 
-	*  What vertical screen location the item should be aligned to: &quot;top&quot;, &quot;center&quot;, &quot;bottom&quot;
-	*  @property {String} vertAlign
-	*/
-	p.vertAlign = null;
+	var DelayedCall = function(callback, delay, repeat, autoDestroy)
+	{
+		/**
+		*  The function to call when the delay is completed.
+		*  @private
+		*  @property {function} _callback
+		*/
+		this._callback = callback;
+		/**
+		*  The delay time, in milliseconds.
+		*  @private
+		*  @property {int} _delay
+		*/
+		this._delay = delay;
+		/**
+		*  The timer counting down from _delay, in milliseconds.
+		*  @private
+		*  @property {int} _timer
+		*/
+		this._timer = delay;
+		/**
+		*  If the DelayedCall should repeat itself automatically.
+		*  @private
+		*  @property {Boolean} _repeat
+		*  @default false
+		*/
+		this._repeat = !!repeat;
+		/**
+		*  If the DelayedCall should destroy itself after completing
+		*  @private
+		*  @property {Boolean} _autoDestroy
+		*  @default true
+		*/
+		this._autoDestroy = autoDestroy === undefined ? true : !!autoDestroy;
+		/**
+		*  The unique ID used for the update callback for the OS.
+		*  @private
+		*  @property {String} _updateId
+		*/
+		this._updateId = &quot;DelayedCall#&quot; + (++NEXT_ID);
+		/**
+		*  If the DelayedCall is currently paused (not stopped).
+		*  @private
+		*  @property {Boolean} _paused
+		*/
+		this._paused = false;
 
-	/** 
-	*  What horizontal screen location the item should be aligned to: &quot;left&quot;, &quot;center&quot;, &quot;right&quot;
-	*  @property {String} horiAlign
-	*/
-	p.horiAlign = null;
+		//save a bound version of the update function
+		this._update = this._update.bind(this);
+		//start the delay
+		cloudkid.OS.instance.addUpdateCallback(this._updateId, this._update);
+	};
 
-	/** 
-	*  If this element should be aligned to the title safe area, not the actual screen 
-	*  @property {Boolean} titleSafe
-	*  @default false
-	*/
-	p.titleSafe = false;
+	var p = DelayedCall.prototype;
 
-	/** 
-	*  Maximum scale allowed in physical size 
-	*  @property {Number} maxScale
-	*  @default 1
-	*/
-	p.maxScale = 1;
-
-	/** 
-	*  Minimum scale allowed in physical size 
-	*  @property {Number} minScale
-	*  @default 1
-	*/
-	p.minScale = 1;
-	
 	/**
-	*  If the UI element is centered horizontally
-	*  @property {Boolean} centeredHorizontally
-	*  @default false
+	*  The callback supplied to the OS for an update each frame.
+	*  @private
+	*  @method _update
+	*  @param {int} elapsed The time elapsed since the previous frame.
 	*/
-	p.centeredHorizontally = false;
-	
-	namespace(&#x27;cloudkid&#x27;).UIElementSettings = UIElementSettings;
+	p._update = function(elapsed)
+	{
+		if(!this._callback)
+		{
+			this.destroy();
+			return;
+		}
+
+		this._timer -= elapsed;
+		if(this._timer &lt;= 0)
+		{
+			this._callback();
+			if(this._repeat)
+				this._timer += this._delay;
+			else if(this._autoDestroy)
+				this.destroy();
+			else
+				cloudkid.OS.instance.removeUpdateCallback(this._updateId);
+		}
+	};
+
+	/**
+	*  Restarts the DelayedCall, whether it is running or not.
+	*  @public
+	*  @method restart
+	*/
+	p.restart = function()
+	{
+		if(!this._callback) return;
+		var os = cloudkid.OS.instance;
+		if(!os.hasUpdateCallback(this._updateId))
+			os.addUpdateCallback(this._updateId, this._update);
+		this._timer = this._delay;
+		this._paused = false;
+	};
+
+	/**
+	*  Stops the DelayedCall, without destroying it.
+	*  @public
+	*  @method stop
+	*/
+	p.stop = function()
+	{
+		cloudkid.OS.instance.removeUpdateCallback(this._updateId);
+		this._paused = false;
+	};
+
+	/**
+	*  If the DelayedCall is paused or not.
+	*  @public
+	*  @property {Boolean} paused
+	*/
+	Object.defineProperty(p, &quot;paused&quot;, {
+		get: function() { return this._paused; },
+		set: function(value)
+		{
+			if(!this._callback) return;
+			var os = cloudkid.OS.instance;
+			if(this._paused &amp;&amp; !value)
+			{
+				this._paused = false;
+				if(!os.hasUpdateCallback(this._updateId))
+					os.addUpdateCallback(this._updateId, this._update);
+			}
+			else if(value)
+			{
+				if(os.hasUpdateCallback(this._updateId))
+				{
+					this._paused = true;
+					os.removeUpdateCallback(this._updateId);
+				}
+			}
+		}
+	});
+
+	/**
+	*  Stops and cleans up the DelayedCall. Do not use it after calling
+	*  destroy().
+	*  @public
+	*  @method destroy
+	*/
+	p.destroy = function()
+	{
+		cloudkid.OS.instance.removeUpdateCallback(this._updateId);
+		this._callback = null;
+	};
+
+	namespace(&#x27;cloudkid&#x27;).DelayedCall = DelayedCall;
 }());
     </pre>
 </div>

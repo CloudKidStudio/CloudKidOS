@@ -2,7 +2,7 @@
     "project": {
         "name": "CloudKid OS API",
         "description": "CloudKid OS API: A framework for HTML5 content built on top of createjs",
-        "version": "1.1.19",
+        "version": "1.1.21",
         "logo": ""
     },
     "files": {
@@ -170,6 +170,15 @@
             "fors": {},
             "namespaces": {}
         },
+        "src/cloudkid/DelayedCall.js": {
+            "name": "src/cloudkid/DelayedCall.js",
+            "modules": {},
+            "classes": {
+                "DelayedCall": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
         "src/cloudkid/OS.js": {
             "name": "src/cloudkid/OS.js",
             "modules": {},
@@ -223,6 +232,7 @@
                 "UIScaler": 1,
                 "Application": 1,
                 "CombinedCallback": 1,
+                "DelayedCall": 1,
                 "OS": 1,
                 "SavedData": 1,
                 "Worker": 1,
@@ -913,6 +923,43 @@
                 }
             ]
         },
+        "DelayedCall": {
+            "name": "DelayedCall",
+            "shortname": "DelayedCall",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "cloudkid",
+            "namespace": "",
+            "file": "src/cloudkid/DelayedCall.js",
+            "line": 10,
+            "description": "A class for delaying a call through the OS, instead of relying on setInterval() or setTimeout().",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "callback",
+                    "description": "The function to call when the delay has completed.",
+                    "type": "Function"
+                },
+                {
+                    "name": "delay",
+                    "description": "The time to delay the call, in milliseconds.",
+                    "type": "Int"
+                },
+                {
+                    "name": "repeat",
+                    "description": "If the DelayedCall should automatically repeat itself when completed.",
+                    "type": "Boolean=false"
+                },
+                {
+                    "name": "autoDestroy",
+                    "description": "If the DelayedCall should clean itself up when completed.",
+                    "type": "Boolean=true"
+                }
+            ]
+        },
         "OS": {
             "name": "OS",
             "shortname": "OS",
@@ -1251,7 +1298,7 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 344,
+            "line": 351,
             "description": "The width of the button, based on the width of back. This value is affected by scale.",
             "itemtype": "property",
             "name": "width",
@@ -1261,7 +1308,7 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 355,
+            "line": 362,
             "description": "The height of the button, based on the height of back. This value is affected by scale.",
             "itemtype": "property",
             "name": "height",
@@ -1271,7 +1318,7 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 366,
+            "line": 373,
             "description": "Sets the text of the label. This does nothing if the button was not initialized with a label.",
             "access": "public",
             "tagname": "",
@@ -1289,7 +1336,7 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 400,
+            "line": 407,
             "description": "Whether or not the button is enabled.",
             "itemtype": "property",
             "name": "enabled",
@@ -1300,7 +1347,7 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 431,
+            "line": 438,
             "description": "Adds a property to the button. Setting the property sets the value in\n_stateFlags and calls _updateState().",
             "access": "private",
             "tagname": "",
@@ -1318,7 +1365,7 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 453,
+            "line": 460,
             "description": "Updates back based on the current button state.",
             "access": "private",
             "tagname": "",
@@ -1329,7 +1376,7 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 508,
+            "line": 515,
             "description": "The callback for when the button receives a mouse down event.",
             "access": "private",
             "tagname": "",
@@ -1340,7 +1387,7 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 520,
+            "line": 527,
             "description": "The callback for when the button for when the mouse/touch is released on the button\n- only when the button was held down initially.",
             "access": "private",
             "tagname": "",
@@ -1351,7 +1398,7 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 536,
+            "line": 543,
             "description": "The callback for when the button is moused over.",
             "access": "private",
             "tagname": "",
@@ -1362,7 +1409,7 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 547,
+            "line": 554,
             "description": "The callback for when the mouse leaves the button area.",
             "access": "private",
             "tagname": "",
@@ -1373,7 +1420,7 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 558,
+            "line": 565,
             "description": "Destroys the button.",
             "access": "public",
             "tagname": "",
@@ -1384,7 +1431,7 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 575,
+            "line": 582,
             "description": "Generates a desaturated up state as a disabled state, and an update with a solid colored glow for a highlighted state.",
             "itemtype": "method",
             "name": "generateDefaultStates",
@@ -4345,6 +4392,155 @@
                 }
             ],
             "class": "CombinedCallback",
+            "module": "cloudkid"
+        },
+        {
+            "file": "src/cloudkid/DelayedCall.js",
+            "line": 22,
+            "description": "The function to call when the delay is completed.",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "_callback",
+            "type": "Function",
+            "class": "DelayedCall",
+            "module": "cloudkid"
+        },
+        {
+            "file": "src/cloudkid/DelayedCall.js",
+            "line": 28,
+            "description": "The delay time, in milliseconds.",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "_delay",
+            "type": "Int",
+            "class": "DelayedCall",
+            "module": "cloudkid"
+        },
+        {
+            "file": "src/cloudkid/DelayedCall.js",
+            "line": 34,
+            "description": "The timer counting down from _delay, in milliseconds.",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "_timer",
+            "type": "Int",
+            "class": "DelayedCall",
+            "module": "cloudkid"
+        },
+        {
+            "file": "src/cloudkid/DelayedCall.js",
+            "line": 40,
+            "description": "If the DelayedCall should repeat itself automatically.",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "_repeat",
+            "type": "Boolean",
+            "default": "false",
+            "class": "DelayedCall",
+            "module": "cloudkid"
+        },
+        {
+            "file": "src/cloudkid/DelayedCall.js",
+            "line": 47,
+            "description": "If the DelayedCall should destroy itself after completing",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "_autoDestroy",
+            "type": "Boolean",
+            "default": "true",
+            "class": "DelayedCall",
+            "module": "cloudkid"
+        },
+        {
+            "file": "src/cloudkid/DelayedCall.js",
+            "line": 54,
+            "description": "The unique ID used for the update callback for the OS.",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "_updateId",
+            "type": "String",
+            "class": "DelayedCall",
+            "module": "cloudkid"
+        },
+        {
+            "file": "src/cloudkid/DelayedCall.js",
+            "line": 60,
+            "description": "If the DelayedCall is currently paused (not stopped).",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "_paused",
+            "type": "Boolean",
+            "class": "DelayedCall",
+            "module": "cloudkid"
+        },
+        {
+            "file": "src/cloudkid/DelayedCall.js",
+            "line": 75,
+            "description": "The callback supplied to the OS for an update each frame.",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "method",
+            "name": "_update",
+            "params": [
+                {
+                    "name": "elapsed",
+                    "description": "The time elapsed since the previous frame.",
+                    "type": "Int"
+                }
+            ],
+            "class": "DelayedCall",
+            "module": "cloudkid"
+        },
+        {
+            "file": "src/cloudkid/DelayedCall.js",
+            "line": 102,
+            "description": "Restarts the DelayedCall, whether it is running or not.",
+            "access": "public",
+            "tagname": "",
+            "itemtype": "method",
+            "name": "restart",
+            "class": "DelayedCall",
+            "module": "cloudkid"
+        },
+        {
+            "file": "src/cloudkid/DelayedCall.js",
+            "line": 117,
+            "description": "Stops the DelayedCall, without destroying it.",
+            "access": "public",
+            "tagname": "",
+            "itemtype": "method",
+            "name": "stop",
+            "class": "DelayedCall",
+            "module": "cloudkid"
+        },
+        {
+            "file": "src/cloudkid/DelayedCall.js",
+            "line": 128,
+            "description": "If the DelayedCall is paused or not.",
+            "access": "public",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "paused",
+            "type": "Boolean",
+            "class": "DelayedCall",
+            "module": "cloudkid"
+        },
+        {
+            "file": "src/cloudkid/DelayedCall.js",
+            "line": 156,
+            "description": "Stops and cleans up the DelayedCall. Do not use it after calling\ndestroy().",
+            "access": "public",
+            "tagname": "",
+            "itemtype": "method",
+            "name": "destroy",
+            "class": "DelayedCall",
             "module": "cloudkid"
         },
         {

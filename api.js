@@ -8,6 +8,7 @@ YUI.add("yuidoc-meta", function(Y) {
         "Button (PIXI)",
         "CacheManager",
         "CombinedCallback",
+        "DelayedCall",
         "DragManager (CreateJS)",
         "DragManager (PIXI)",
         "FallbackWorker",
