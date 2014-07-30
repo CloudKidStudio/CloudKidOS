@@ -122,11 +122,18 @@
 	p._downCB = null;
 
 	/**
-	* Callback for mouse up, bound to this button.
+	* Callback for press up, bound to this button.
 	* @private
 	* @property {Function} _upCB
 	*/
 	p._upCB = null;
+
+	/**
+	* Callback for click, bound to this button.
+	* @private
+	* @property {Function} _clickCB
+	*/
+	p._clickCB = null;
 	
 	/**
 	* A dictionary of state booleans, keyed by state name.
@@ -212,6 +219,7 @@
 		this._upCB = this._onMouseUp.bind(this);
 		this._overCB = this._onMouseOver.bind(this);
 		this._outCB = this._onMouseOut.bind(this);
+		this._clickCB = this._onClick.bind(this);
 		
 		var _stateData = this._stateData = {};
 		this._stateFlags = {};
@@ -428,6 +436,8 @@
 				this.removeEventListener('mousedown', this._downCB);
 				this.removeEventListener('mouseover', this._overCB);
 				this.removeEventListener('mouseout', this._outCB);
+				this.removeEventListener('pressup', this._upCB);
+				this.removeEventListener("click", this._clickCB);
 				this._stateFlags.down = this._stateFlags.over = false;
 			}
 			
@@ -520,6 +530,7 @@
 	p._onMouseDown = function(e)
 	{
 		this.addEventListener('pressup', this._upCB);
+		this.addEventListener("click", this._clickCB);
 		this._stateFlags.down = true;
 		this._updateState();
 	};
@@ -533,11 +544,22 @@
 	p._onMouseUp = function(e)
 	{
 		this.removeEventListener('pressup', this._upCB);
+		this.removeEventListener("click", this._clickCB);
 		this._stateFlags.down = false;
 		//if the over flag is true, then the mouse was released while on the button, thus being a click
-		if(this._stateFlags.over)
-			this.dispatchEvent(new createjs.Event(Button.BUTTON_PRESS));
 		this._updateState();
+	};
+
+	/**
+	*  The callback for when the button the button is clicked or tapped on. This is
+	*  the most reliable way of detecting mouse up/touch end events that are on this button
+	*  while letting the pressup event handle the mouse up/touch ends on and outside the button.
+	*  @private
+	*  @method _onClick
+	*/
+	p._onClick = function(e)
+	{
+		this.dispatchEvent(new createjs.Event(Button.BUTTON_PRESS));
 	};
 	
 	/**

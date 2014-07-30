@@ -1244,8 +1244,8 @@
 	*  @constructor
 	*  @param {function} callback The function to call when the delay has completed.
 	*  @param {int} delay The time to delay the call, in milliseconds.
-	*  @param {Boolean=false} repeat If the DelayedCall should automatically repeat itself when completed.
-	*  @param {Boolean=true} autoDestroy If the DelayedCall should clean itself up when completed.
+	*  @param {Boolean} repeat=false If the DelayedCall should automatically repeat itself when completed.
+	*  @param {Boolean} autoDestroy=true If the DelayedCall should clean itself up when completed.
 	*/
 	var DelayedCall = function(callback, delay, repeat, autoDestroy)
 	{

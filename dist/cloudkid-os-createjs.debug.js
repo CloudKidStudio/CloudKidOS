@@ -1,6 +1,6 @@
 !function(undefined) {
     var OS = function() {}, p = OS.prototype = new createjs.Container(), _paused = !1, _isReady = !1, _framerate = null, _lastFrameTime = 0, _lastFPSUpdateTime = 0, _framerateValue = null, _frameCount = 0, _tickCallback = null, _instance = null, _tickId = -1, _useRAF = !1, _fps = 0, _msPerFrame = 0;
-    OS.VERSION = "1.1.21", p.Container_initialize = p.initialize, p.stage = null, 
+    OS.VERSION = "1.1.22", p.Container_initialize = p.initialize, p.stage = null, 
     p._app = null, p.options = null, p._updateFunctions = {}, OS.init = function(stageName, options) {
         return _instance || (Debug.log("Creating the singleton instance of OS"), _instance = new OS(), 
         _instance.initialize(stageName, options)), _instance;
@@ -494,13 +494,13 @@
         imageSettings && this.initialize(imageSettings, label, enabled);
     }, p = Button.prototype = new createjs.Container(), s = createjs.Container.prototype;
     p.back = null, p.label = null, p._overCB = null, p._outCB = null, p._downCB = null, 
-    p._upCB = null, p._stateFlags = null, p._statePriority = null, p._stateData = null, 
-    p._width = 0, p._height = 0, p._offset = null, Button.BUTTON_PRESS = "buttonPress";
+    p._upCB = null, p._clickCB = null, p._stateFlags = null, p._statePriority = null, 
+    p._stateData = null, p._width = 0, p._height = 0, p._offset = null, Button.BUTTON_PRESS = "buttonPress";
     var RESERVED_STATES = [ "disabled", "enabled", "up", "over", "down" ], DEFAULT_PRIORITY = [ "disabled", "down", "over", "up" ];
     p.initialize = function(imageSettings, label, enabled) {
         s.initialize.call(this), this.mouseChildren = !1, this._downCB = this._onMouseDown.bind(this), 
         this._upCB = this._onMouseUp.bind(this), this._overCB = this._onMouseOver.bind(this), 
-        this._outCB = this._onMouseOut.bind(this);
+        this._outCB = this._onMouseOut.bind(this), this._clickCB = this._onClick.bind(this);
         var _stateData = this._stateData = {};
         this._stateFlags = {}, this._offset = new createjs.Point();
         var labelData;
@@ -574,7 +574,8 @@
             this._stateFlags.disabled = !value, value ? (this.cursor = "pointer", this.addEventListener("mousedown", this._downCB), 
             this.addEventListener("mouseover", this._overCB), this.addEventListener("mouseout", this._outCB)) : (this.cursor = null, 
             this.removeEventListener("mousedown", this._downCB), this.removeEventListener("mouseover", this._overCB), 
-            this.removeEventListener("mouseout", this._outCB), this._stateFlags.down = this._stateFlags.over = !1), 
+            this.removeEventListener("mouseout", this._outCB), this.removeEventListener("pressup", this._upCB), 
+            this.removeEventListener("click", this._clickCB), this._stateFlags.down = this._stateFlags.over = !1), 
             this._updateState();
         }
     }), p._addProperty = function(propertyName) {
@@ -600,10 +601,13 @@
             this.label.y = "center" == data.y ? .5 * this._height + this._offset.y : label.y + this._offset.y);
         }
     }, p._onMouseDown = function() {
-        this.addEventListener("pressup", this._upCB), this._stateFlags.down = !0, this._updateState();
+        this.addEventListener("pressup", this._upCB), this.addEventListener("click", this._clickCB), 
+        this._stateFlags.down = !0, this._updateState();
     }, p._onMouseUp = function() {
-        this.removeEventListener("pressup", this._upCB), this._stateFlags.down = !1, this._stateFlags.over && this.dispatchEvent(new createjs.Event(Button.BUTTON_PRESS)), 
-        this._updateState();
+        this.removeEventListener("pressup", this._upCB), this.removeEventListener("click", this._clickCB), 
+        this._stateFlags.down = !1, this._updateState();
+    }, p._onClick = function() {
+        this.dispatchEvent(new createjs.Event(Button.BUTTON_PRESS));
     }, p._onMouseOver = function() {
         this._stateFlags.over = !0, this._updateState();
     }, p._onMouseOut = function() {
