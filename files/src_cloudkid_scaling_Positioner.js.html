@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
     <link rel="shortcut icon" type="image/png" href="../assets/favicon.ico">
     <script src="http://yui.yahooapis.com/3.10.1/build/yui/yui-min.js"></script>
-	<title>CloudKid OS API v1.1.21 API Documentation : src/cloudkid/scaling/Positioner.js</title>  
+	<title>CloudKid OS API v1.1.23 API Documentation : src/cloudkid/scaling/Positioner.js</title>  
 </head>
 <body class="yui3-skin-sam">
 
@@ -19,7 +19,7 @@
             
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Documentation for: 1.1.21</em>
+            <em>API Documentation for: 1.1.23</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -244,7 +244,9 @@
 	*  * An object describing a circle, where x and y are the center, e.g.
 	*
 	*		{type:&quot;circle&quot;, x:0, y:0, r:20}
-	*  @param {Number} scale The size to scale hitArea by
+	*  @param {Number} scale=1 The size to scale hitArea by
+	*  @return {Object} A geometric shape object for hit testing, either a Polygon, Rectangle, Ellipse, or Circle,
+	*      depending on the hitArea object. The shape will have a contains() function for hit testing.
 	*/
 	Positioner.generateHitArea = function(hitArea, scale)
 	{

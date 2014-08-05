@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
     <link rel="shortcut icon" type="image/png" href="../assets/favicon.ico">
     <script src="http://yui.yahooapis.com/3.10.1/build/yui/yui-min.js"></script>
-	<title>CloudKid OS API v1.1.21 API Documentation : Button (CreateJS)</title>  
+	<title>CloudKid OS API v1.1.23 API Documentation : Button (CreateJS)</title>  
 </head>
 <body class="yui3-skin-sam">
 
@@ -19,7 +19,7 @@
             
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Documentation for: 1.1.21</em>
+            <em>API Documentation for: 1.1.23</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -706,7 +706,7 @@ button clicks and mouse overs, respectively.</p>
                             
                             <li class="param">
                                 
-                                    <code class="param-name optional">[x=null]</code>
+                                    <code class="param-name optional">[x=&quot;center&quot;]</code>
                                     <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a> | <a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
                                     <span class="flag optional" title="This parameter is optional.">optional</span>
                                 
@@ -722,7 +722,7 @@ button clicks and mouse overs, respectively.</p>
                             
                             <li class="param">
                                 
-                                    <code class="param-name optional">[y=null]</code>
+                                    <code class="param-name optional">[y=&quot;center&quot;]</code>
                                     <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a> | <a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
                                     <span class="flag optional" title="This parameter is optional.">optional</span>
                                 
@@ -796,6 +796,13 @@ button clicks and mouse overs, respectively.</p>
                         
                             <li class="index-item method private">
                                 <a href="#method__addProperty">_addProperty</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method private">
+                                <a href="#method__onClick">_onClick</a>
 
                                 
                                 
@@ -877,6 +884,13 @@ button clicks and mouse overs, respectively.</p>
                     <ul class="index-list properties extends">
                         
                             <li class="index-item property private">
+                                <a href="#property__clickCB">_clickCB</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property private">
                                 <a href="#property__downCB">_downCB</a>
 
                                 
@@ -912,7 +926,7 @@ button clicks and mouse overs, respectively.</p>
                             </li>
                         
                             <li class="index-item property private">
-                                <a href="#property__stateFlags">_stateFlags</a>
+                                <a href="#property__stateData">_stateData</a>
 
                                 
                                 
@@ -1048,7 +1062,7 @@ button clicks and mouse overs, respectively.</p>
             
         
         
-        <a href="../files/src_cloudkid_createjs_Button.js.html#l438"><code>_addProperty:438</code></a>
+        <a href="../files/src_cloudkid_createjs_Button.js.html#l448"><code>_addProperty:448</code></a>
         
         </p>
 
@@ -1096,6 +1110,65 @@ _stateFlags and calls _updateState().</p>
 </div>
 
                 
+                    <div id="method__onClick" class="method item private">
+    <h3 class="name"><code>_onClick</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+
+    
+
+    
+        <span class="flag private">private</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_cloudkid_createjs_Button.js.html#l553"><code>_onClick:553</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>The callback for when the button the button is clicked or tapped on. This is
+the most reliable way of detecting mouse up/touch end events that are on this button
+while letting the pressup event handle the mouse up/touch ends on and outside the button.</p>
+
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
                     <div id="method__onMouseDown" class="method item private">
     <h3 class="name"><code>_onMouseDown</code></h3>
 
@@ -1130,7 +1203,7 @@ _stateFlags and calls _updateState().</p>
             
         
         
-        <a href="../files/src_cloudkid_createjs_Button.js.html#l515"><code>_onMouseDown:515</code></a>
+        <a href="../files/src_cloudkid_createjs_Button.js.html#l525"><code>_onMouseDown:525</code></a>
         
         </p>
 
@@ -1187,7 +1260,7 @@ _stateFlags and calls _updateState().</p>
             
         
         
-        <a href="../files/src_cloudkid_createjs_Button.js.html#l554"><code>_onMouseOut:554</code></a>
+        <a href="../files/src_cloudkid_createjs_Button.js.html#l576"><code>_onMouseOut:576</code></a>
         
         </p>
 
@@ -1244,7 +1317,7 @@ _stateFlags and calls _updateState().</p>
             
         
         
-        <a href="../files/src_cloudkid_createjs_Button.js.html#l543"><code>_onMouseOver:543</code></a>
+        <a href="../files/src_cloudkid_createjs_Button.js.html#l565"><code>_onMouseOver:565</code></a>
         
         </p>
 
@@ -1301,7 +1374,7 @@ _stateFlags and calls _updateState().</p>
             
         
         
-        <a href="../files/src_cloudkid_createjs_Button.js.html#l527"><code>_onMouseUp:527</code></a>
+        <a href="../files/src_cloudkid_createjs_Button.js.html#l538"><code>_onMouseUp:538</code></a>
         
         </p>
 
@@ -1361,7 +1434,7 @@ _stateFlags and calls _updateState().</p>
             
         
         
-        <a href="../files/src_cloudkid_createjs_Button.js.html#l460"><code>_updateState:460</code></a>
+        <a href="../files/src_cloudkid_createjs_Button.js.html#l470"><code>_updateState:470</code></a>
         
         </p>
 
@@ -1418,7 +1491,7 @@ _stateFlags and calls _updateState().</p>
             
         
         
-        <a href="../files/src_cloudkid_createjs_Button.js.html#l565"><code>destroy:565</code></a>
+        <a href="../files/src_cloudkid_createjs_Button.js.html#l587"><code>destroy:587</code></a>
         
         </p>
 
@@ -1497,7 +1570,7 @@ _stateFlags and calls _updateState().</p>
             
         
         
-        <a href="../files/src_cloudkid_createjs_Button.js.html#l582"><code>generateDefaultStates:582</code></a>
+        <a href="../files/src_cloudkid_createjs_Button.js.html#l607"><code>generateDefaultStates:607</code></a>
         
         </p>
 
@@ -1763,7 +1836,7 @@ _stateFlags and calls _updateState().</p>
             
         
         
-        <a href="../files/src_cloudkid_createjs_Button.js.html#l198"><code>initialize:198</code></a>
+        <a href="../files/src_cloudkid_createjs_Button.js.html#l205"><code>initialize:205</code></a>
         
         </p>
 
@@ -1889,7 +1962,7 @@ _stateFlags and calls _updateState().</p>
             
         
         
-        <a href="../files/src_cloudkid_createjs_Button.js.html#l373"><code>setText:373</code></a>
+        <a href="../files/src_cloudkid_createjs_Button.js.html#l381"><code>setText:381</code></a>
         
         </p>
 
@@ -1942,6 +2015,53 @@ _stateFlags and calls _updateState().</p>
         
             <div id="properties" class="api-class-tabpanel">
                 <h2 class="off-left">Properties</h2>
+
+                
+                    <div id="property__clickCB" class="property item private">
+    <h3 class="name"><code>_clickCB</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Function" class="crosslink external" target="_blank">Function</a></span>
+
+    
+
+    
+        <span class="flag private">private</span>
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_cloudkid_createjs_Button.js.html#l131"><code>_clickCB:131</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Callback for click, bound to this button.</p>
+
+    </div>
+
+    
+
+    
+
+    
+</div>
 
                 
                     <div id="property__downCB" class="property item private">
@@ -2016,7 +2136,7 @@ _stateFlags and calls _updateState().</p>
             
         
         
-        <a href="../files/src_cloudkid_createjs_Button.js.html#l161"><code>_height:161</code></a>
+        <a href="../files/src_cloudkid_createjs_Button.js.html#l168"><code>_height:168</code></a>
         
         </p>
 
@@ -2063,7 +2183,7 @@ _stateFlags and calls _updateState().</p>
             
         
         
-        <a href="../files/src_cloudkid_createjs_Button.js.html#l168"><code>_offset:168</code></a>
+        <a href="../files/src_cloudkid_createjs_Button.js.html#l175"><code>_offset:175</code></a>
         
         </p>
 
@@ -2179,8 +2299,8 @@ _stateFlags and calls _updateState().</p>
 </div>
 
                 
-                    <div id="property__stateFlags" class="property item private">
-    <h3 class="name"><code>_stateFlags</code></h3>
+                    <div id="property__stateData" class="property item private">
+    <h3 class="name"><code>_stateData</code></h3>
     <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
 
     
@@ -2204,7 +2324,7 @@ _stateFlags and calls _updateState().</p>
             
         
         
-        <a href="../files/src_cloudkid_createjs_Button.js.html#l145"><code>_stateFlags:145</code></a>
+        <a href="../files/src_cloudkid_createjs_Button.js.html#l152"><code>_stateData:152</code></a>
         
         </p>
 
@@ -2253,7 +2373,7 @@ Additionally, each object will contain a &#39;label&#39; object if the button ha
             
         
         
-        <a href="../files/src_cloudkid_createjs_Button.js.html#l131"><code>_stateFlags:131</code></a>
+        <a href="../files/src_cloudkid_createjs_Button.js.html#l138"><code>_stateFlags:138</code></a>
         
         </p>
 
@@ -2300,7 +2420,7 @@ Additionally, each object will contain a &#39;label&#39; object if the button ha
             
         
         
-        <a href="../files/src_cloudkid_createjs_Button.js.html#l137"><code>_statePriority:137</code></a>
+        <a href="../files/src_cloudkid_createjs_Button.js.html#l144"><code>_statePriority:144</code></a>
         
         </p>
 
@@ -2358,7 +2478,7 @@ The standard order previously was ["highlighted", "disabled", "down", "over", "s
     </div>
 
     <div class="description">
-        <p>Callback for mouse up, bound to this button.</p>
+        <p>Callback for press up, bound to this button.</p>
 
     </div>
 
@@ -2395,7 +2515,7 @@ The standard order previously was ["highlighted", "disabled", "down", "over", "s
             
         
         
-        <a href="../files/src_cloudkid_createjs_Button.js.html#l154"><code>_width:154</code></a>
+        <a href="../files/src_cloudkid_createjs_Button.js.html#l161"><code>_width:161</code></a>
         
         </p>
 
@@ -2492,7 +2612,7 @@ The type of this property is dependent on which version of the OS library is use
             
         
         
-        <a href="../files/src_cloudkid_createjs_Button.js.html#l175"><code>BUTTON_PRESS:175</code></a>
+        <a href="../files/src_cloudkid_createjs_Button.js.html#l182"><code>BUTTON_PRESS:182</code></a>
         
         </p>
 
@@ -2537,7 +2657,7 @@ The type of this property is dependent on which version of the OS library is use
             
         
         
-        <a href="../files/src_cloudkid_createjs_Button.js.html#l407"><code>enabled:407</code></a>
+        <a href="../files/src_cloudkid_createjs_Button.js.html#l415"><code>enabled:415</code></a>
         
         </p>
 
@@ -2584,7 +2704,7 @@ The type of this property is dependent on which version of the OS library is use
             
         
         
-        <a href="../files/src_cloudkid_createjs_Button.js.html#l362"><code>height:362</code></a>
+        <a href="../files/src_cloudkid_createjs_Button.js.html#l370"><code>height:370</code></a>
         
         </p>
 
@@ -2677,7 +2797,7 @@ The type of this property is dependent on which version of the OS library is use
             
         
         
-        <a href="../files/src_cloudkid_createjs_Button.js.html#l351"><code>width:351</code></a>
+        <a href="../files/src_cloudkid_createjs_Button.js.html#l359"><code>width:359</code></a>
         
         </p>
 

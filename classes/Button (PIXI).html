@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
     <link rel="shortcut icon" type="image/png" href="../assets/favicon.ico">
     <script src="http://yui.yahooapis.com/3.10.1/build/yui/yui-min.js"></script>
-	<title>CloudKid OS API v1.1.21 API Documentation : Button (PIXI)</title>  
+	<title>CloudKid OS API v1.1.23 API Documentation : Button (PIXI)</title>  
 </head>
 <body class="yui3-skin-sam">
 
@@ -19,7 +19,7 @@
             
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Documentation for: 1.1.21</em>
+            <em>API Documentation for: 1.1.23</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -258,13 +258,14 @@ Use releaseCallback and overCallback to know about button clicks and mouse overs
                             
                             <li class="param">
                                 
-                                    <code class="param-name optional">[up]</code>
-                                    <span class="type">PIXI.Texture</span>
+                                    <code class="param-name optional">[priority=null]</code>
+                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array" class="crosslink external" target="_blank">Array</a></span>
                                     <span class="flag optional" title="This parameter is optional.">optional</span>
                                 
 
                                 <div class="param-description">
-                                    <p>The texture for the up state of the button.</p>
+                                    <p>The state priority order. If omitted, defaults to ["disabled", "down", "over", "up"].
+       Previous versions of Button used a hard coded order: ["highlighted", "disabled", "down", "over", "selected", "up"].</p>
 
                                 </div>
 
@@ -273,8 +274,53 @@ Use releaseCallback and overCallback to know about button clicks and mouse overs
                             
                             <li class="param">
                                 
+                                    <code class="param-name optional">[up]</code>
+                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a> | PIXI.Texture</span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>The texture for the up state of the button. This can be either the texture itself,
+       or an object with &#39;tex&#39; and &#39;label&#39; properties.</p>
+
+                                </div>
+
+                                
+                                    <ul class="params-list">
+                                        
+                                        <li class="param">
+                                            
+                                                <code class="param-name optional">[tex]</code>
+                                                <span class="type">PIXI.Texture</span>
+                                                <span class="flag optional" title="This parameter is optional.">optional</span>
+                                            
+
+                                            <div class="param-description">
+                                                The sourceRect for the state within the image.
+                                            </div>
+                                        </li>
+                                        
+                                        <li class="param">
+                                            
+                                                <code class="param-name optional">[label=null]</code>
+                                                <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                                                <span class="flag optional" title="This parameter is optional.">optional</span>
+                                            
+
+                                            <div class="param-description">
+                                                Label information specific to this state. Properties on this parameter override data 
+       in the label parameter for this button state only. All values except "text" and "type" from the label parameter may be overridden.
+                                            </div>
+                                        </li>
+                                        
+                                    </ul>
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
                                     <code class="param-name optional">[over=null]</code>
-                                    <span class="type">PIXI.Texture</span>
+                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a> | PIXI.Texture</span>
                                     <span class="flag optional" title="This parameter is optional.">optional</span>
                                 
 
@@ -284,12 +330,41 @@ Use releaseCallback and overCallback to know about button clicks and mouse overs
                                 </div>
 
                                 
+                                    <ul class="params-list">
+                                        
+                                        <li class="param">
+                                            
+                                                <code class="param-name optional">[tex]</code>
+                                                <span class="type">PIXI.Texture</span>
+                                                <span class="flag optional" title="This parameter is optional.">optional</span>
+                                            
+
+                                            <div class="param-description">
+                                                The sourceRect for the state within the image.
+                                            </div>
+                                        </li>
+                                        
+                                        <li class="param">
+                                            
+                                                <code class="param-name optional">[label=null]</code>
+                                                <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                                                <span class="flag optional" title="This parameter is optional.">optional</span>
+                                            
+
+                                            <div class="param-description">
+                                                Label information specific to this state. Properties on this parameter override data 
+       in the label parameter for this button state only. All values except "text" and "type" from the label parameter may be overridden.
+                                            </div>
+                                        </li>
+                                        
+                                    </ul>
+                                
                             </li>
                             
                             <li class="param">
                                 
                                     <code class="param-name optional">[down=null]</code>
-                                    <span class="type">PIXI.Texture</span>
+                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a> | PIXI.Texture</span>
                                     <span class="flag optional" title="This parameter is optional.">optional</span>
                                 
 
@@ -299,12 +374,41 @@ Use releaseCallback and overCallback to know about button clicks and mouse overs
                                 </div>
 
                                 
+                                    <ul class="params-list">
+                                        
+                                        <li class="param">
+                                            
+                                                <code class="param-name optional">[tex]</code>
+                                                <span class="type">PIXI.Texture</span>
+                                                <span class="flag optional" title="This parameter is optional.">optional</span>
+                                            
+
+                                            <div class="param-description">
+                                                The sourceRect for the state within the image.
+                                            </div>
+                                        </li>
+                                        
+                                        <li class="param">
+                                            
+                                                <code class="param-name optional">[label=null]</code>
+                                                <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                                                <span class="flag optional" title="This parameter is optional.">optional</span>
+                                            
+
+                                            <div class="param-description">
+                                                Label information specific to this state. Properties on this parameter override data 
+       in the label parameter for this button state only. All values except "text" and "type" from the label parameter may be overridden.
+                                            </div>
+                                        </li>
+                                        
+                                    </ul>
+                                
                             </li>
                             
                             <li class="param">
                                 
                                     <code class="param-name optional">[disabled=null]</code>
-                                    <span class="type">PIXI.Texture</span>
+                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a> | PIXI.Texture</span>
                                     <span class="flag optional" title="This parameter is optional.">optional</span>
                                 
 
@@ -314,32 +418,94 @@ Use releaseCallback and overCallback to know about button clicks and mouse overs
                                 </div>
 
                                 
+                                    <ul class="params-list">
+                                        
+                                        <li class="param">
+                                            
+                                                <code class="param-name optional">[tex]</code>
+                                                <span class="type">PIXI.Texture</span>
+                                                <span class="flag optional" title="This parameter is optional.">optional</span>
+                                            
+
+                                            <div class="param-description">
+                                                The sourceRect for the state within the image.
+                                            </div>
+                                        </li>
+                                        
+                                        <li class="param">
+                                            
+                                                <code class="param-name optional">[label=null]</code>
+                                                <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                                                <span class="flag optional" title="This parameter is optional.">optional</span>
+                                            
+
+                                            <div class="param-description">
+                                                Label information specific to this state. Properties on this parameter override data 
+       in the label parameter for this button state only. All values except "text" and "type" from the label parameter may be overridden.
+                                            </div>
+                                        </li>
+                                        
+                                    </ul>
+                                
                             </li>
                             
                             <li class="param">
                                 
-                                    <code class="param-name optional">[highlighted=null]</code>
-                                    <span class="type">PIXI.Texture</span>
+                                    <code class="param-name optional">[&lt;yourCustomState&gt;=null]</code>
+                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a> | PIXI.Texture</span>
                                     <span class="flag optional" title="This parameter is optional.">optional</span>
                                 
 
                                 <div class="param-description">
-                                    <p>The texture for the highlighted state of the button. If omitted, uses the over state.</p>
+                                    <p>The visual information about a custom state found in imageSettings.priority.
+       Any state added this way has a property of the same name added to the button. Examples of previous states that have been
+       moved to this system are "selected" and "highlighted".</p>
 
                                 </div>
 
                                 
+                                    <ul class="params-list">
+                                        
+                                        <li class="param">
+                                            
+                                                <code class="param-name optional">[tex]</code>
+                                                <span class="type">PIXI.Texture</span>
+                                                <span class="flag optional" title="This parameter is optional.">optional</span>
+                                            
+
+                                            <div class="param-description">
+                                                The texture for the custom state.
+                                            </div>
+                                        </li>
+                                        
+                                        <li class="param">
+                                            
+                                                <code class="param-name optional">[label=null]</code>
+                                                <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                                                <span class="flag optional" title="This parameter is optional.">optional</span>
+                                            
+
+                                            <div class="param-description">
+                                                Label information specific to this state. Properties on this parameter 
+       override data in the label parameter for this button state only. All values except "text" from the label parameter may be
+       overridden.
+                                            </div>
+                                        </li>
+                                        
+                                    </ul>
+                                
                             </li>
                             
                             <li class="param">
                                 
-                                    <code class="param-name optional">[selected=null]</code>
-                                    <span class="type">PIXI.Texture</span>
+                                    <code class="param-name optional">[origin=null]</code>
+                                    <span class="type">PIXI.Point</span>
                                     <span class="flag optional" title="This parameter is optional.">optional</span>
                                 
 
                                 <div class="param-description">
-                                    <p>The texture for the selected state of the button. If omitted, the button is not a selectable button.</p>
+                                    <p>An optional offset for all button graphics, in case you want button 
+       positioning to not include a highlight glow, or any other reason you would want to offset the button art and label.</p>
 
                                 </div>
 
@@ -427,6 +593,37 @@ Use releaseCallback and overCallback to know about button clicks and mouse overs
                                 
                             </li>
                             
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[x=&quot;center&quot;]</code>
+                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a> | <a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>An x position to place the label text at relative to the button.</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[y=&quot;center&quot;]</code>
+                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a> | <a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>A y position to place the label text at relative to the button. If omitted,
+       "center" is used, which attempts to vertically center the label on the button.</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
                         </ul>
                     
                 </li>
@@ -485,6 +682,13 @@ Use releaseCallback and overCallback to know about button clicks and mouse overs
                     <ul class="index-list methods extends">
                         
                             <li class="index-item method private">
+                                <a href="#method__addProperty">_addProperty</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method private">
                                 <a href="#method__onDown">_onDown</a>
 
                                 
@@ -537,77 +741,35 @@ Use releaseCallback and overCallback to know about button clicks and mouse overs
                     <ul class="index-list properties extends">
                         
                             <li class="index-item property private">
-                                <a href="#property__disabledTex">_disabledTex</a>
+                                <a href="#property__currentLabelStyle">_currentLabelStyle</a>
 
                                 
                                 
                             </li>
                         
                             <li class="index-item property private">
-                                <a href="#property__downTex">_downTex</a>
+                                <a href="#property__offset">_offset</a>
 
                                 
                                 
                             </li>
                         
                             <li class="index-item property private">
-                                <a href="#property__highlightedTex">_highlightedTex</a>
+                                <a href="#property__stateData">_stateData</a>
 
                                 
                                 
                             </li>
                         
                             <li class="index-item property private">
-                                <a href="#property__overTex">_overTex</a>
+                                <a href="#property__stateFlags">_stateFlags</a>
 
                                 
                                 
                             </li>
                         
                             <li class="index-item property private">
-                                <a href="#property__selectedTex">_selectedTex</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item property private">
-                                <a href="#property__slaveDisabledTex">_slaveDisabledTex</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item property private">
-                                <a href="#property__slaveDownTex">_slaveDownTex</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item property private">
-                                <a href="#property__slaveHighlightedTex">_slaveHighlightedTex</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item property private">
-                                <a href="#property__slaveOverTex">_slaveOverTex</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item property private">
-                                <a href="#property__slaveSelectedTex">_slaveSelectedTex</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item property private">
-                                <a href="#property__slaveUpTex">_slaveUpTex</a>
+                                <a href="#property__statePriority">_statePriority</a>
 
                                 
                                 
@@ -615,13 +777,6 @@ Use releaseCallback and overCallback to know about button clicks and mouse overs
                         
                             <li class="index-item property private">
                                 <a href="#property__upOutCB">_upOutCB</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item property private">
-                                <a href="#property__upTex">_upTex</a>
 
                                 
                                 
@@ -662,6 +817,98 @@ Use releaseCallback and overCallback to know about button clicks and mouse overs
                 <h2 class="off-left">Methods</h2>
 
                 
+                    <div id="method__addProperty" class="method item private">
+    <h3 class="name"><code>_addProperty</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>propertyName</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+        <span class="flag private">private</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_cloudkid_pixi_Button.js.html#l443"><code>_addProperty:443</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Adds a property to the button. Setting the property sets the value in
+_stateFlags and calls _updateState().</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">propertyName</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The property name to add to the button.</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
                     <div id="method__onDown" class="method item private">
     <h3 class="name"><code>_onDown</code></h3>
 
@@ -696,7 +943,7 @@ Use releaseCallback and overCallback to know about button clicks and mouse overs
             
         
         
-        <a href="../files/src_cloudkid_pixi_Button.js.html#l501"><code>_onDown:501</code></a>
+        <a href="../files/src_cloudkid_pixi_Button.js.html#l555"><code>_onDown:555</code></a>
         
         </p>
 
@@ -707,7 +954,7 @@ Use releaseCallback and overCallback to know about button clicks and mouse overs
     </div>
 
     <div class="description">
-        <p>[PIXI only] The callback for when the button receives a mouse down event.</p>
+        <p>The callback for when the button receives a mouse down event.</p>
 
     </div>
 
@@ -753,7 +1000,7 @@ Use releaseCallback and overCallback to know about button clicks and mouse overs
             
         
         
-        <a href="../files/src_cloudkid_pixi_Button.js.html#l488"><code>_onOut:488</code></a>
+        <a href="../files/src_cloudkid_pixi_Button.js.html#l542"><code>_onOut:542</code></a>
         
         </p>
 
@@ -764,7 +1011,7 @@ Use releaseCallback and overCallback to know about button clicks and mouse overs
     </div>
 
     <div class="description">
-        <p>[PIXI only] The callback for when the mouse leaves the button area.</p>
+        <p>The callback for when the mouse leaves the button area.</p>
 
     </div>
 
@@ -810,7 +1057,7 @@ Use releaseCallback and overCallback to know about button clicks and mouse overs
             
         
         
-        <a href="../files/src_cloudkid_pixi_Button.js.html#l475"><code>_onOver:475</code></a>
+        <a href="../files/src_cloudkid_pixi_Button.js.html#l529"><code>_onOver:529</code></a>
         
         </p>
 
@@ -821,7 +1068,7 @@ Use releaseCallback and overCallback to know about button clicks and mouse overs
     </div>
 
     <div class="description">
-        <p>[PIXI only] The callback for when the button is moused over.</p>
+        <p>The callback for when the button is moused over.</p>
 
     </div>
 
@@ -867,7 +1114,7 @@ Use releaseCallback and overCallback to know about button clicks and mouse overs
             
         
         
-        <a href="../files/src_cloudkid_pixi_Button.js.html#l516"><code>_onUp:516</code></a>
+        <a href="../files/src_cloudkid_pixi_Button.js.html#l570"><code>_onUp:570</code></a>
         
         </p>
 
@@ -878,7 +1125,7 @@ Use releaseCallback and overCallback to know about button clicks and mouse overs
     </div>
 
     <div class="description">
-        <p>[PIXI only] The callback for when the button for when the mouse/touch is released on the button</p>
+        <p>The callback for when the button for when the mouse/touch is released on the button</p>
 <ul>
 <li>only when the button was held down initially.</li>
 </ul>
@@ -927,7 +1174,7 @@ Use releaseCallback and overCallback to know about button clicks and mouse overs
             
         
         
-        <a href="../files/src_cloudkid_pixi_Button.js.html#l534"><code>_onUpOutside:534</code></a>
+        <a href="../files/src_cloudkid_pixi_Button.js.html#l588"><code>_onUpOutside:588</code></a>
         
         </p>
 
@@ -938,7 +1185,7 @@ Use releaseCallback and overCallback to know about button clicks and mouse overs
     </div>
 
     <div class="description">
-        <p>[PIXI only] The callback for when the mouse/touch is released outside the button when the button was held down.</p>
+        <p>The callback for when the mouse/touch is released outside the button when the button was held down.</p>
 
     </div>
 
@@ -1004,7 +1251,7 @@ Use releaseCallback and overCallback to know about button clicks and mouse overs
             
         
         
-        <a href="../files/src_cloudkid_pixi_Button.js.html#l267"><code>initialize:267</code></a>
+        <a href="../files/src_cloudkid_pixi_Button.js.html#l208"><code>initialize:208</code></a>
         
         </p>
 
@@ -1015,7 +1262,7 @@ Use releaseCallback and overCallback to know about button clicks and mouse overs
     </div>
 
     <div class="description">
-        <p><strong>[PIXI only]</strong> Constructor for the button when using PIXI.</p>
+        <p>Constructor for the button when using PIXI.</p>
 
     </div>
 
@@ -1094,9 +1341,9 @@ Use releaseCallback and overCallback to know about button clicks and mouse overs
                 <h2 class="off-left">Properties</h2>
 
                 
-                    <div id="property__disabledTex" class="property item private">
-    <h3 class="name"><code>_disabledTex</code></h3>
-    <span class="type">PIXI.Texture</span>
+                    <div id="property__currentLabelStyle" class="property item private">
+    <h3 class="name"><code>_currentLabelStyle</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
 
     
 
@@ -1119,7 +1366,7 @@ Use releaseCallback and overCallback to know about button clicks and mouse overs
             
         
         
-        <a href="../files/src_cloudkid_pixi_Button.js.html#l182"><code>_disabledTex:182</code></a>
+        <a href="../files/src_cloudkid_pixi_Button.js.html#l129"><code>_currentLabelStyle:129</code></a>
         
         </p>
 
@@ -1129,7 +1376,7 @@ Use releaseCallback and overCallback to know about button clicks and mouse overs
     </div>
 
     <div class="description">
-        <p>[PIXI only] The texture for the disabled state of the button</p>
+        <p>The current style for the label, to avoid setting this if it is unchanged.</p>
 
     </div>
 
@@ -1141,9 +1388,9 @@ Use releaseCallback and overCallback to know about button clicks and mouse overs
 </div>
 
                 
-                    <div id="property__downTex" class="property item private">
-    <h3 class="name"><code>_downTex</code></h3>
-    <span class="type">PIXI.Texture</span>
+                    <div id="property__offset" class="property item private">
+    <h3 class="name"><code>_offset</code></h3>
+    <span class="type">PIXI.Point</span>
 
     
 
@@ -1166,7 +1413,7 @@ Use releaseCallback and overCallback to know about button clicks and mouse overs
             
         
         
-        <a href="../files/src_cloudkid_pixi_Button.js.html#l175"><code>_downTex:175</code></a>
+        <a href="../files/src_cloudkid_pixi_Button.js.html#l136"><code>_offset:136</code></a>
         
         </p>
 
@@ -1176,7 +1423,7 @@ Use releaseCallback and overCallback to know about button clicks and mouse overs
     </div>
 
     <div class="description">
-        <p>[PIXI only] The texture for the down state of the button</p>
+        <p>An offset to button positioning, generally used to adjust for a highlight around the button.</p>
 
     </div>
 
@@ -1188,9 +1435,9 @@ Use releaseCallback and overCallback to know about button clicks and mouse overs
 </div>
 
                 
-                    <div id="property__highlightedTex" class="property item private">
-    <h3 class="name"><code>_highlightedTex</code></h3>
-    <span class="type">PIXI.Texture</span>
+                    <div id="property__stateData" class="property item private">
+    <h3 class="name"><code>_stateData</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
 
     
 
@@ -1213,7 +1460,7 @@ Use releaseCallback and overCallback to know about button clicks and mouse overs
             
         
         
-        <a href="../files/src_cloudkid_pixi_Button.js.html#l196"><code>_highlightedTex:196</code></a>
+        <a href="../files/src_cloudkid_pixi_Button.js.html#l120"><code>_stateData:120</code></a>
         
         </p>
 
@@ -1223,7 +1470,9 @@ Use releaseCallback and overCallback to know about button clicks and mouse overs
     </div>
 
     <div class="description">
-        <p>[PIXI only] The texture for the highlighted state of the button</p>
+        <p>A dictionary of state graphic data, keyed by state name.
+Each object contains the sourceRect (src) and optionally &#39;trim&#39;, another Rectangle.
+Additionally, each object will contain a &#39;label&#39; object if the button has a text label.</p>
 
     </div>
 
@@ -1235,9 +1484,9 @@ Use releaseCallback and overCallback to know about button clicks and mouse overs
 </div>
 
                 
-                    <div id="property__overTex" class="property item private">
-    <h3 class="name"><code>_overTex</code></h3>
-    <span class="type">PIXI.Texture</span>
+                    <div id="property__stateFlags" class="property item private">
+    <h3 class="name"><code>_stateFlags</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
 
     
 
@@ -1260,7 +1509,7 @@ Use releaseCallback and overCallback to know about button clicks and mouse overs
             
         
         
-        <a href="../files/src_cloudkid_pixi_Button.js.html#l168"><code>_overTex:168</code></a>
+        <a href="../files/src_cloudkid_pixi_Button.js.html#l106"><code>_stateFlags:106</code></a>
         
         </p>
 
@@ -1270,7 +1519,7 @@ Use releaseCallback and overCallback to know about button clicks and mouse overs
     </div>
 
     <div class="description">
-        <p>[PIXI only] The texture for the over state of the button</p>
+        <p>A dictionary of state booleans, keyed by state name.</p>
 
     </div>
 
@@ -1282,9 +1531,9 @@ Use releaseCallback and overCallback to know about button clicks and mouse overs
 </div>
 
                 
-                    <div id="property__selectedTex" class="property item private">
-    <h3 class="name"><code>_selectedTex</code></h3>
-    <span class="type">PIXI.Texture</span>
+                    <div id="property__statePriority" class="property item private">
+    <h3 class="name"><code>_statePriority</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array" class="crosslink external" target="_blank">Array</a></span>
 
     
 
@@ -1307,7 +1556,7 @@ Use releaseCallback and overCallback to know about button clicks and mouse overs
             
         
         
-        <a href="../files/src_cloudkid_pixi_Button.js.html#l189"><code>_selectedTex:189</code></a>
+        <a href="../files/src_cloudkid_pixi_Button.js.html#l112"><code>_statePriority:112</code></a>
         
         </p>
 
@@ -1317,289 +1566,8 @@ Use releaseCallback and overCallback to know about button clicks and mouse overs
     </div>
 
     <div class="description">
-        <p>[PIXI only] The texture for the selected state of the button</p>
-
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="property__slaveDisabledTex" class="property item private">
-    <h3 class="name"><code>_slaveDisabledTex</code></h3>
-    <span class="type">PIXI.Texture</span>
-
-    
-
-    
-        <span class="flag private">private</span>
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/src_cloudkid_pixi_Button.js.html#l232"><code>_slaveDisabledTex:232</code></a>
-        
-        </p>
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>[PIXI only] The texture for the disabled state of the button</p>
-
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="property__slaveDownTex" class="property item private">
-    <h3 class="name"><code>_slaveDownTex</code></h3>
-    <span class="type">PIXI.Texture</span>
-
-    
-
-    
-        <span class="flag private">private</span>
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/src_cloudkid_pixi_Button.js.html#l226"><code>_slaveDownTex:226</code></a>
-        
-        </p>
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>[PIXI only] The texture for the down state of the button</p>
-
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="property__slaveHighlightedTex" class="property item private">
-    <h3 class="name"><code>_slaveHighlightedTex</code></h3>
-    <span class="type">PIXI.Texture</span>
-
-    
-
-    
-        <span class="flag private">private</span>
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/src_cloudkid_pixi_Button.js.html#l246"><code>_slaveHighlightedTex:246</code></a>
-        
-        </p>
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>[PIXI only] The texture for the highlighted state of the button</p>
-
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="property__slaveOverTex" class="property item private">
-    <h3 class="name"><code>_slaveOverTex</code></h3>
-    <span class="type">PIXI.Texture</span>
-
-    
-
-    
-        <span class="flag private">private</span>
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/src_cloudkid_pixi_Button.js.html#l219"><code>_slaveOverTex:219</code></a>
-        
-        </p>
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>[PIXI only] The texture for the over state of the button</p>
-
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="property__slaveSelectedTex" class="property item private">
-    <h3 class="name"><code>_slaveSelectedTex</code></h3>
-    <span class="type">PIXI.Texture</span>
-
-    
-
-    
-        <span class="flag private">private</span>
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/src_cloudkid_pixi_Button.js.html#l239"><code>_slaveSelectedTex:239</code></a>
-        
-        </p>
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>[PIXI only] The texture for the selected state of the button</p>
-
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="property__slaveUpTex" class="property item private">
-    <h3 class="name"><code>_slaveUpTex</code></h3>
-    <span class="type">PIXI.Texture</span>
-
-    
-
-    
-        <span class="flag private">private</span>
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/src_cloudkid_pixi_Button.js.html#l212"><code>_slaveUpTex:212</code></a>
-        
-        </p>
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>[PIXI only] The texture for the up state of the button</p>
+        <p>An array of state names (Strings), in their order of priority.
+The standard order previously was ["highlighted", "disabled", "down", "over", "selected", "up"].</p>
 
     </div>
 
@@ -1636,7 +1604,7 @@ Use releaseCallback and overCallback to know about button clicks and mouse overs
             
         
         
-        <a href="../files/src_cloudkid_pixi_Button.js.html#l153"><code>_upOutCB:153</code></a>
+        <a href="../files/src_cloudkid_pixi_Button.js.html#l172"><code>_upOutCB:172</code></a>
         
         </p>
 
@@ -1646,54 +1614,7 @@ Use releaseCallback and overCallback to know about button clicks and mouse overs
     </div>
 
     <div class="description">
-        <p>[PIXI only] Callback for mouse up outside, bound to this button.</p>
-
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="property__upTex" class="property item private">
-    <h3 class="name"><code>_upTex</code></h3>
-    <span class="type">PIXI.Texture</span>
-
-    
-
-    
-        <span class="flag private">private</span>
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/src_cloudkid_pixi_Button.js.html#l161"><code>_upTex:161</code></a>
-        
-        </p>
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>[PIXI only] The texture for the up state of the button</p>
+        <p>Callback for mouse up outside, bound to this button.</p>
 
     </div>
 
@@ -1730,7 +1651,7 @@ Use releaseCallback and overCallback to know about button clicks and mouse overs
             
         
         
-        <a href="../files/src_cloudkid_pixi_Button.js.html#l74"><code>outCallback:74</code></a>
+        <a href="../files/src_cloudkid_pixi_Button.js.html#l99"><code>outCallback:99</code></a>
         
         </p>
 
@@ -1740,7 +1661,7 @@ Use releaseCallback and overCallback to know about button clicks and mouse overs
     </div>
 
     <div class="description">
-        <p><strong>[PIXI only]</strong> The function that should be called when mouse leaves the button.</p>
+        <p>The function that should be called when mouse leaves the button.</p>
 
     </div>
 
@@ -1777,7 +1698,7 @@ Use releaseCallback and overCallback to know about button clicks and mouse overs
             
         
         
-        <a href="../files/src_cloudkid_pixi_Button.js.html#l67"><code>overCallback:67</code></a>
+        <a href="../files/src_cloudkid_pixi_Button.js.html#l92"><code>overCallback:92</code></a>
         
         </p>
 
@@ -1787,7 +1708,7 @@ Use releaseCallback and overCallback to know about button clicks and mouse overs
     </div>
 
     <div class="description">
-        <p><strong>[PIXI only]</strong> The function that should be called when the button is moused over.</p>
+        <p>The function that should be called when the button is moused over.</p>
 
     </div>
 
@@ -1824,7 +1745,7 @@ Use releaseCallback and overCallback to know about button clicks and mouse overs
             
         
         
-        <a href="../files/src_cloudkid_pixi_Button.js.html#l60"><code>releaseCallback:60</code></a>
+        <a href="../files/src_cloudkid_pixi_Button.js.html#l85"><code>releaseCallback:85</code></a>
         
         </p>
 
@@ -1834,7 +1755,7 @@ Use releaseCallback and overCallback to know about button clicks and mouse overs
     </div>
 
     <div class="description">
-        <p><strong>[PIXI only]</strong> The function that should be called when the button is released.</p>
+        <p>The function that should be called when the button is released.</p>
 
     </div>
 

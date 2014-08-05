@@ -2,7 +2,7 @@
     "project": {
         "name": "CloudKid OS API",
         "description": "CloudKid OS API: A framework for HTML5 content built on top of createjs",
-        "version": "1.1.21",
+        "version": "1.1.23",
         "logo": ""
     },
     "files": {
@@ -518,14 +518,14 @@
                             "description": "An x position to place the label text at relative to the button. If omitted,\n       \"center\" is used, which attempts to horizontally center the label on the button.",
                             "type": "String|Number",
                             "optional": true,
-                            "optdefault": "null"
+                            "optdefault": "\"center\""
                         },
                         {
                             "name": "y",
                             "description": "A y position to place the label text at relative to the button. If omitted,\n       \"center\" is used, which attempts to vertically center the label on the button. This may be unreliable -\n       see documentation for createjs.Text.getMeasuredLineHeight().",
                             "type": "String|Number",
                             "optional": true,
-                            "optdefault": "null"
+                            "optdefault": "\"center\""
                         }
                     ]
                 },
@@ -690,43 +690,125 @@
                     "optional": true,
                     "props": [
                         {
+                            "name": "priority",
+                            "description": "The state priority order. If omitted, defaults to [\"disabled\", \"down\", \"over\", \"up\"].\n       Previous versions of Button used a hard coded order: [\"highlighted\", \"disabled\", \"down\", \"over\", \"selected\", \"up\"].",
+                            "type": "Array",
+                            "optional": true,
+                            "optdefault": "null"
+                        },
+                        {
                             "name": "up",
-                            "description": "The texture for the up state of the button.",
-                            "type": "PIXI.Texture",
-                            "optional": true
+                            "description": "The texture for the up state of the button. This can be either the texture itself,\n       or an object with 'tex' and 'label' properties.",
+                            "type": "Object|PIXI.Texture",
+                            "optional": true,
+                            "props": [
+                                {
+                                    "name": "tex",
+                                    "description": "The sourceRect for the state within the image.",
+                                    "type": "PIXI.Texture",
+                                    "optional": true
+                                },
+                                {
+                                    "name": "label",
+                                    "description": "Label information specific to this state. Properties on this parameter override data \n       in the label parameter for this button state only. All values except \"text\" and \"type\" from the label parameter may be overridden.",
+                                    "type": "Object",
+                                    "optional": true,
+                                    "optdefault": "null"
+                                }
+                            ]
                         },
                         {
                             "name": "over",
                             "description": "The texture for the over state of the button. If omitted, uses the up state.",
-                            "type": "PIXI.Texture",
+                            "type": "Object|PIXI.Texture",
                             "optional": true,
-                            "optdefault": "null"
+                            "optdefault": "null",
+                            "props": [
+                                {
+                                    "name": "tex",
+                                    "description": "The sourceRect for the state within the image.",
+                                    "type": "PIXI.Texture",
+                                    "optional": true
+                                },
+                                {
+                                    "name": "label",
+                                    "description": "Label information specific to this state. Properties on this parameter override data \n       in the label parameter for this button state only. All values except \"text\" and \"type\" from the label parameter may be overridden.",
+                                    "type": "Object",
+                                    "optional": true,
+                                    "optdefault": "null"
+                                }
+                            ]
                         },
                         {
                             "name": "down",
                             "description": "The texture for the down state of the button. If omitted, uses the up state.",
-                            "type": "PIXI.Texture",
+                            "type": "Object|PIXI.Texture",
                             "optional": true,
-                            "optdefault": "null"
+                            "optdefault": "null",
+                            "props": [
+                                {
+                                    "name": "tex",
+                                    "description": "The sourceRect for the state within the image.",
+                                    "type": "PIXI.Texture",
+                                    "optional": true
+                                },
+                                {
+                                    "name": "label",
+                                    "description": "Label information specific to this state. Properties on this parameter override data \n       in the label parameter for this button state only. All values except \"text\" and \"type\" from the label parameter may be overridden.",
+                                    "type": "Object",
+                                    "optional": true,
+                                    "optdefault": "null"
+                                }
+                            ]
                         },
                         {
                             "name": "disabled",
                             "description": "The texture for the disabled state of the button. If omitted, uses the up state.",
-                            "type": "PIXI.Texture",
+                            "type": "Object|PIXI.Texture",
                             "optional": true,
-                            "optdefault": "null"
+                            "optdefault": "null",
+                            "props": [
+                                {
+                                    "name": "tex",
+                                    "description": "The sourceRect for the state within the image.",
+                                    "type": "PIXI.Texture",
+                                    "optional": true
+                                },
+                                {
+                                    "name": "label",
+                                    "description": "Label information specific to this state. Properties on this parameter override data \n       in the label parameter for this button state only. All values except \"text\" and \"type\" from the label parameter may be overridden.",
+                                    "type": "Object",
+                                    "optional": true,
+                                    "optdefault": "null"
+                                }
+                            ]
                         },
                         {
-                            "name": "highlighted",
-                            "description": "The texture for the highlighted state of the button. If omitted, uses the over state.",
-                            "type": "PIXI.Texture",
+                            "name": "<yourCustomState>",
+                            "description": "The visual information about a custom state found in imageSettings.priority.\n       Any state added this way has a property of the same name added to the button. Examples of previous states that have been\n       moved to this system are \"selected\" and \"highlighted\".",
+                            "type": "Object|PIXI.Texture",
                             "optional": true,
-                            "optdefault": "null"
+                            "optdefault": "null",
+                            "props": [
+                                {
+                                    "name": "tex",
+                                    "description": "The texture for the custom state.",
+                                    "type": "PIXI.Texture",
+                                    "optional": true
+                                },
+                                {
+                                    "name": "label",
+                                    "description": "Label information specific to this state. Properties on this parameter \n       override data in the label parameter for this button state only. All values except \"text\" from the label parameter may be\n       overridden.",
+                                    "type": "Object",
+                                    "optional": true,
+                                    "optdefault": "null"
+                                }
+                            ]
                         },
                         {
-                            "name": "selected",
-                            "description": "The texture for the selected state of the button. If omitted, the button is not a selectable button.",
-                            "type": "PIXI.Texture",
+                            "name": "origin",
+                            "description": "An optional offset for all button graphics, in case you want button \n       positioning to not include a highlight glow, or any other reason you would want to offset the button art and label.",
+                            "type": "PIXI.Point",
                             "optional": true,
                             "optdefault": "null"
                         },
@@ -763,6 +845,20 @@
                             "description": "The style of the text field, in the format that PIXI.BitmapText and PIXI.Text expect.",
                             "type": "Object",
                             "optional": true
+                        },
+                        {
+                            "name": "x",
+                            "description": "An x position to place the label text at relative to the button.",
+                            "type": "String|Number",
+                            "optional": true,
+                            "optdefault": "\"center\""
+                        },
+                        {
+                            "name": "y",
+                            "description": "A y position to place the label text at relative to the button. If omitted,\n       \"center\" is used, which attempts to vertically center the label on the button.",
+                            "type": "String|Number",
+                            "optional": true,
+                            "optdefault": "\"center\""
                         }
                     ]
                 },
@@ -1171,7 +1267,7 @@
         {
             "file": "src/cloudkid/createjs/Button.js",
             "line": 124,
-            "description": "Callback for mouse up, bound to this button.",
+            "description": "Callback for press up, bound to this button.",
             "access": "private",
             "tagname": "",
             "itemtype": "property",
@@ -1183,6 +1279,18 @@
         {
             "file": "src/cloudkid/createjs/Button.js",
             "line": 131,
+            "description": "Callback for click, bound to this button.",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "_clickCB",
+            "type": "Function",
+            "class": "Button (CreateJS)",
+            "module": "cloudkid"
+        },
+        {
+            "file": "src/cloudkid/createjs/Button.js",
+            "line": 138,
             "description": "A dictionary of state booleans, keyed by state name.",
             "access": "private",
             "tagname": "",
@@ -1194,7 +1302,7 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 137,
+            "line": 144,
             "description": "An array of state names (Strings), in their order of priority.\nThe standard order previously was [\"highlighted\", \"disabled\", \"down\", \"over\", \"selected\", \"up\"].",
             "access": "private",
             "tagname": "",
@@ -1206,19 +1314,19 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 145,
+            "line": 152,
             "description": "A dictionary of state graphic data, keyed by state name.\nEach object contains the sourceRect (src) and optionally 'trim', another Rectangle.\nAdditionally, each object will contain a 'label' object if the button has a text label.",
             "access": "private",
             "tagname": "",
             "itemtype": "property",
-            "name": "_stateFlags",
+            "name": "_stateData",
             "type": "Object",
             "class": "Button (CreateJS)",
             "module": "cloudkid"
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 154,
+            "line": 161,
             "description": "The width of the button art, independent of the scaling of the button itself.",
             "access": "private",
             "tagname": "",
@@ -1230,7 +1338,7 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 161,
+            "line": 168,
             "description": "The height of the button art, independent of the scaling of the button itself.",
             "access": "private",
             "tagname": "",
@@ -1242,7 +1350,7 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 168,
+            "line": 175,
             "description": "An offset to button positioning, generally used to adjust for a highlight around the button.",
             "access": "private",
             "tagname": "",
@@ -1254,7 +1362,7 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 175,
+            "line": 182,
             "description": "An event for when the button is pressed (while enabled).",
             "access": "public",
             "tagname": "",
@@ -1267,7 +1375,7 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 198,
+            "line": 205,
             "description": "Constructor for the button when using CreateJS.",
             "itemtype": "method",
             "name": "initialize",
@@ -1298,7 +1406,7 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 351,
+            "line": 359,
             "description": "The width of the button, based on the width of back. This value is affected by scale.",
             "itemtype": "property",
             "name": "width",
@@ -1308,7 +1416,7 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 362,
+            "line": 370,
             "description": "The height of the button, based on the height of back. This value is affected by scale.",
             "itemtype": "property",
             "name": "height",
@@ -1318,7 +1426,7 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 373,
+            "line": 381,
             "description": "Sets the text of the label. This does nothing if the button was not initialized with a label.",
             "access": "public",
             "tagname": "",
@@ -1336,7 +1444,7 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 407,
+            "line": 415,
             "description": "Whether or not the button is enabled.",
             "itemtype": "property",
             "name": "enabled",
@@ -1347,7 +1455,7 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 438,
+            "line": 448,
             "description": "Adds a property to the button. Setting the property sets the value in\n_stateFlags and calls _updateState().",
             "access": "private",
             "tagname": "",
@@ -1365,7 +1473,7 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 460,
+            "line": 470,
             "description": "Updates back based on the current button state.",
             "access": "private",
             "tagname": "",
@@ -1376,7 +1484,7 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 515,
+            "line": 525,
             "description": "The callback for when the button receives a mouse down event.",
             "access": "private",
             "tagname": "",
@@ -1387,7 +1495,7 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 527,
+            "line": 538,
             "description": "The callback for when the button for when the mouse/touch is released on the button\n- only when the button was held down initially.",
             "access": "private",
             "tagname": "",
@@ -1398,7 +1506,18 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 543,
+            "line": 553,
+            "description": "The callback for when the button the button is clicked or tapped on. This is\nthe most reliable way of detecting mouse up/touch end events that are on this button\nwhile letting the pressup event handle the mouse up/touch ends on and outside the button.",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "method",
+            "name": "_onClick",
+            "class": "Button (CreateJS)",
+            "module": "cloudkid"
+        },
+        {
+            "file": "src/cloudkid/createjs/Button.js",
+            "line": 565,
             "description": "The callback for when the button is moused over.",
             "access": "private",
             "tagname": "",
@@ -1409,7 +1528,7 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 554,
+            "line": 576,
             "description": "The callback for when the mouse leaves the button area.",
             "access": "private",
             "tagname": "",
@@ -1420,7 +1539,7 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 565,
+            "line": 587,
             "description": "Destroys the button.",
             "access": "public",
             "tagname": "",
@@ -1431,7 +1550,7 @@
         },
         {
             "file": "src/cloudkid/createjs/Button.js",
-            "line": 582,
+            "line": 607,
             "description": "Generates a desaturated up state as a disabled state, and an update with a solid colored glow for a highlighted state.",
             "itemtype": "method",
             "name": "generateDefaultStates",
@@ -2971,8 +3090,8 @@
         },
         {
             "file": "src/cloudkid/pixi/Button.js",
-            "line": 60,
-            "description": "**[PIXI only]** The function that should be called when the button is released.",
+            "line": 85,
+            "description": "The function that should be called when the button is released.",
             "access": "public",
             "tagname": "",
             "itemtype": "property",
@@ -2983,8 +3102,8 @@
         },
         {
             "file": "src/cloudkid/pixi/Button.js",
-            "line": 67,
-            "description": "**[PIXI only]** The function that should be called when the button is moused over.",
+            "line": 92,
+            "description": "The function that should be called when the button is moused over.",
             "access": "public",
             "tagname": "",
             "itemtype": "property",
@@ -2995,8 +3114,8 @@
         },
         {
             "file": "src/cloudkid/pixi/Button.js",
-            "line": 74,
-            "description": "**[PIXI only]** The function that should be called when mouse leaves the button.",
+            "line": 99,
+            "description": "The function that should be called when mouse leaves the button.",
             "access": "public",
             "tagname": "",
             "itemtype": "property",
@@ -3007,8 +3126,68 @@
         },
         {
             "file": "src/cloudkid/pixi/Button.js",
-            "line": 153,
-            "description": "[PIXI only] Callback for mouse up outside, bound to this button.",
+            "line": 106,
+            "description": "A dictionary of state booleans, keyed by state name.",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "_stateFlags",
+            "type": "Object",
+            "class": "Button (PIXI)",
+            "module": "cloudkid"
+        },
+        {
+            "file": "src/cloudkid/pixi/Button.js",
+            "line": 112,
+            "description": "An array of state names (Strings), in their order of priority.\nThe standard order previously was [\"highlighted\", \"disabled\", \"down\", \"over\", \"selected\", \"up\"].",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "_statePriority",
+            "type": "Array",
+            "class": "Button (PIXI)",
+            "module": "cloudkid"
+        },
+        {
+            "file": "src/cloudkid/pixi/Button.js",
+            "line": 120,
+            "description": "A dictionary of state graphic data, keyed by state name.\nEach object contains the sourceRect (src) and optionally 'trim', another Rectangle.\nAdditionally, each object will contain a 'label' object if the button has a text label.",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "_stateData",
+            "type": "Object",
+            "class": "Button (PIXI)",
+            "module": "cloudkid"
+        },
+        {
+            "file": "src/cloudkid/pixi/Button.js",
+            "line": 129,
+            "description": "The current style for the label, to avoid setting this if it is unchanged.",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "_currentLabelStyle",
+            "type": "Object",
+            "class": "Button (PIXI)",
+            "module": "cloudkid"
+        },
+        {
+            "file": "src/cloudkid/pixi/Button.js",
+            "line": 136,
+            "description": "An offset to button positioning, generally used to adjust for a highlight around the button.",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "_offset",
+            "type": "PIXI.Point",
+            "class": "Button (PIXI)",
+            "module": "cloudkid"
+        },
+        {
+            "file": "src/cloudkid/pixi/Button.js",
+            "line": 172,
+            "description": "Callback for mouse up outside, bound to this button.",
             "access": "private",
             "tagname": "",
             "itemtype": "property",
@@ -3019,152 +3198,8 @@
         },
         {
             "file": "src/cloudkid/pixi/Button.js",
-            "line": 161,
-            "description": "[PIXI only] The texture for the up state of the button",
-            "access": "private",
-            "tagname": "",
-            "itemtype": "property",
-            "name": "_upTex",
-            "type": "PIXI.Texture",
-            "class": "Button (PIXI)",
-            "module": "cloudkid"
-        },
-        {
-            "file": "src/cloudkid/pixi/Button.js",
-            "line": 168,
-            "description": "[PIXI only] The texture for the over state of the button",
-            "access": "private",
-            "tagname": "",
-            "itemtype": "property",
-            "name": "_overTex",
-            "type": "PIXI.Texture",
-            "class": "Button (PIXI)",
-            "module": "cloudkid"
-        },
-        {
-            "file": "src/cloudkid/pixi/Button.js",
-            "line": 175,
-            "description": "[PIXI only] The texture for the down state of the button",
-            "access": "private",
-            "tagname": "",
-            "itemtype": "property",
-            "name": "_downTex",
-            "type": "PIXI.Texture",
-            "class": "Button (PIXI)",
-            "module": "cloudkid"
-        },
-        {
-            "file": "src/cloudkid/pixi/Button.js",
-            "line": 182,
-            "description": "[PIXI only] The texture for the disabled state of the button",
-            "access": "private",
-            "tagname": "",
-            "itemtype": "property",
-            "name": "_disabledTex",
-            "type": "PIXI.Texture",
-            "class": "Button (PIXI)",
-            "module": "cloudkid"
-        },
-        {
-            "file": "src/cloudkid/pixi/Button.js",
-            "line": 189,
-            "description": "[PIXI only] The texture for the selected state of the button",
-            "access": "private",
-            "tagname": "",
-            "itemtype": "property",
-            "name": "_selectedTex",
-            "type": "PIXI.Texture",
-            "class": "Button (PIXI)",
-            "module": "cloudkid"
-        },
-        {
-            "file": "src/cloudkid/pixi/Button.js",
-            "line": 196,
-            "description": "[PIXI only] The texture for the highlighted state of the button",
-            "access": "private",
-            "tagname": "",
-            "itemtype": "property",
-            "name": "_highlightedTex",
-            "type": "PIXI.Texture",
-            "class": "Button (PIXI)",
-            "module": "cloudkid"
-        },
-        {
-            "file": "src/cloudkid/pixi/Button.js",
-            "line": 212,
-            "description": "[PIXI only] The texture for the up state of the button",
-            "access": "private",
-            "tagname": "",
-            "itemtype": "property",
-            "name": "_slaveUpTex",
-            "type": "PIXI.Texture",
-            "class": "Button (PIXI)",
-            "module": "cloudkid"
-        },
-        {
-            "file": "src/cloudkid/pixi/Button.js",
-            "line": 219,
-            "description": "[PIXI only] The texture for the over state of the button",
-            "access": "private",
-            "tagname": "",
-            "itemtype": "property",
-            "name": "_slaveOverTex",
-            "type": "PIXI.Texture",
-            "class": "Button (PIXI)",
-            "module": "cloudkid"
-        },
-        {
-            "file": "src/cloudkid/pixi/Button.js",
-            "line": 226,
-            "description": "[PIXI only] The texture for the down state of the button",
-            "access": "private",
-            "tagname": "",
-            "itemtype": "property",
-            "name": "_slaveDownTex",
-            "type": "PIXI.Texture",
-            "class": "Button (PIXI)",
-            "module": "cloudkid"
-        },
-        {
-            "file": "src/cloudkid/pixi/Button.js",
-            "line": 232,
-            "description": "[PIXI only] The texture for the disabled state of the button",
-            "access": "private",
-            "tagname": "",
-            "itemtype": "property",
-            "name": "_slaveDisabledTex",
-            "type": "PIXI.Texture",
-            "class": "Button (PIXI)",
-            "module": "cloudkid"
-        },
-        {
-            "file": "src/cloudkid/pixi/Button.js",
-            "line": 239,
-            "description": "[PIXI only] The texture for the selected state of the button",
-            "access": "private",
-            "tagname": "",
-            "itemtype": "property",
-            "name": "_slaveSelectedTex",
-            "type": "PIXI.Texture",
-            "class": "Button (PIXI)",
-            "module": "cloudkid"
-        },
-        {
-            "file": "src/cloudkid/pixi/Button.js",
-            "line": 246,
-            "description": "[PIXI only] The texture for the highlighted state of the button",
-            "access": "private",
-            "tagname": "",
-            "itemtype": "property",
-            "name": "_slaveHighlightedTex",
-            "type": "PIXI.Texture",
-            "class": "Button (PIXI)",
-            "module": "cloudkid"
-        },
-        {
-            "file": "src/cloudkid/pixi/Button.js",
-            "line": 267,
-            "description": "**[PIXI only]** Constructor for the button when using PIXI.",
+            "line": 208,
+            "description": "Constructor for the button when using PIXI.",
             "itemtype": "method",
             "name": "initialize",
             "params": [
@@ -3194,8 +3229,26 @@
         },
         {
             "file": "src/cloudkid/pixi/Button.js",
-            "line": 475,
-            "description": "[PIXI only] The callback for when the button is moused over.",
+            "line": 443,
+            "description": "Adds a property to the button. Setting the property sets the value in\n_stateFlags and calls _updateState().",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "method",
+            "name": "_addProperty",
+            "params": [
+                {
+                    "name": "propertyName",
+                    "description": "The property name to add to the button.",
+                    "type": "String"
+                }
+            ],
+            "class": "Button (PIXI)",
+            "module": "cloudkid"
+        },
+        {
+            "file": "src/cloudkid/pixi/Button.js",
+            "line": 529,
+            "description": "The callback for when the button is moused over.",
             "access": "private",
             "tagname": "",
             "itemtype": "method",
@@ -3205,8 +3258,8 @@
         },
         {
             "file": "src/cloudkid/pixi/Button.js",
-            "line": 488,
-            "description": "[PIXI only] The callback for when the mouse leaves the button area.",
+            "line": 542,
+            "description": "The callback for when the mouse leaves the button area.",
             "access": "private",
             "tagname": "",
             "itemtype": "method",
@@ -3216,8 +3269,8 @@
         },
         {
             "file": "src/cloudkid/pixi/Button.js",
-            "line": 501,
-            "description": "[PIXI only] The callback for when the button receives a mouse down event.",
+            "line": 555,
+            "description": "The callback for when the button receives a mouse down event.",
             "access": "private",
             "tagname": "",
             "itemtype": "method",
@@ -3227,8 +3280,8 @@
         },
         {
             "file": "src/cloudkid/pixi/Button.js",
-            "line": 516,
-            "description": "[PIXI only] The callback for when the button for when the mouse/touch is released on the button\n- only when the button was held down initially.",
+            "line": 570,
+            "description": "The callback for when the button for when the mouse/touch is released on the button\n- only when the button was held down initially.",
             "access": "private",
             "tagname": "",
             "itemtype": "method",
@@ -3238,8 +3291,8 @@
         },
         {
             "file": "src/cloudkid/pixi/Button.js",
-            "line": 534,
-            "description": "[PIXI only] The callback for when the mouse/touch is released outside the button when the button was held down.",
+            "line": 588,
+            "description": "The callback for when the mouse/touch is released outside the button when the button was held down.",
             "access": "private",
             "tagname": "",
             "itemtype": "method",
@@ -3763,11 +3816,15 @@
                     "type": "Object|Array"
                 },
                 {
-                    "name": "scale",
+                    "name": "scale=1",
                     "description": "The size to scale hitArea by",
                     "type": "Number"
                 }
             ],
+            "return": {
+                "description": "A geometric shape object for hit testing, either a Polygon, Rectangle, Ellipse, or Circle,\n    depending on the hitArea object. The shape will have a contains() function for hit testing.",
+                "type": "Object"
+            },
             "class": "Positioner",
             "module": "cloudkid"
         },
@@ -4768,6 +4825,7 @@
             "description": "[Pixi Only] A div that contains the canvas, so that games can layer it with other canvases if desired",
             "itemtype": "property",
             "name": "canvasContainer The div element.",
+            "type": "DOMElement",
             "class": "OS",
             "module": "cloudkid"
         },
