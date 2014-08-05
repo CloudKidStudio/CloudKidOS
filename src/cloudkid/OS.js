@@ -159,7 +159,7 @@
 	/**
 	* [Pixi Only] A div that contains the canvas, so that games can layer it with other canvases if desired
 	* 
-	* @property canvasContainer The div element.
+	* @property {DOMElement} canvasContainer The div element.
 	*/
 	if(CONFIG_PIXI)
 		p.canvasContainer = null;

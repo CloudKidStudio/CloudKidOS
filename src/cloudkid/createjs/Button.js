@@ -63,9 +63,9 @@
 	*  @param {String} [label.textBaseline="middle"] The baseline for the label text, as createjs.Text expects.
 	*  @param {Object} [label.stroke=null] The stroke to use for the label text, if desired, as createjs.Text (CloudKid fork only) expects.
 	*  @param {createjs.Shadow} [label.shadow=null] A shadow object to apply to the label text.
-	*  @param {String|Number} [label.x=null] An x position to place the label text at relative to the button. If omitted,
+	*  @param {String|Number} [label.x="center"] An x position to place the label text at relative to the button. If omitted,
 	*         "center" is used, which attempts to horizontally center the label on the button.
-	*  @param {String|Number} [label.y=null] A y position to place the label text at relative to the button. If omitted,
+	*  @param {String|Number} [label.y="center"] A y position to place the label text at relative to the button. If omitted,
 	*         "center" is used, which attempts to vertically center the label on the button. This may be unreliable -
 	*         see documentation for createjs.Text.getMeasuredLineHeight().
 	*  @param {Boolean} [enabled=true] Whether or not the button is initially enabled.
@@ -154,7 +154,7 @@
 	* Each object contains the sourceRect (src) and optionally 'trim', another Rectangle.
 	* Additionally, each object will contain a 'label' object if the button has a text label.
 	* @private
-	* @property {Object} _stateFlags
+	* @property {Object} _stateData
 	*/
 	p._stateData = null;
 
@@ -599,6 +599,9 @@
 		this._outCB = null;
 		this.back = null;
 		this.label = null;
+		this._statePriority = null;
+		this._stateFlags = null;
+		this._stateData = null;
 	};
 
 	/**

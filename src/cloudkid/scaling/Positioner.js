@@ -109,7 +109,9 @@
 	*  * An object describing a circle, where x and y are the center, e.g.
 	*
 	*		{type:"circle", x:0, y:0, r:20}
-	*  @param {Number} scale The size to scale hitArea by
+	*  @param {Number} scale=1 The size to scale hitArea by
+	*  @return {Object} A geometric shape object for hit testing, either a Polygon, Rectangle, Ellipse, or Circle,
+	*      depending on the hitArea object. The shape will have a contains() function for hit testing.
 	*/
 	Positioner.generateHitArea = function(hitArea, scale)
 	{

@@ -16,17 +16,42 @@
 	*  @extends PIXI.DisplayObjectContainer
 	*  @constructor
 	*  @param {Object} [imageSettings] Information about the art to be used for button states, as well as if the button is selectable or not.
-	*  @param {PIXI.Texture} [imageSettings.up] The texture for the up state of the button.
-	*  @param {PIXI.Texture} [imageSettings.over=null] The texture for the over state of the button. If omitted, uses the up state.
-	*  @param {PIXI.Texture} [imageSettings.down=null] The texture for the down state of the button. If omitted, uses the up state.
-	*  @param {PIXI.Texture} [imageSettings.disabled=null] The texture for the disabled state of the button. If omitted, uses the up state.
-	*  @param {PIXI.Texture} [imageSettings.highlighted=null] The texture for the highlighted state of the button. If omitted, uses the over state.
-	*  @param {PIXI.Texture} [imageSettings.selected=null] The texture for the selected state of the button. If omitted, the button is not a selectable button.
+	*  @param {Array} [imageSettings.priority=null] The state priority order. If omitted, defaults to ["disabled", "down", "over", "up"].
+	*         Previous versions of Button used a hard coded order: ["highlighted", "disabled", "down", "over", "selected", "up"].
+	*  @param {Object|PIXI.Texture} [imageSettings.up] The texture for the up state of the button. This can be either the texture itself,
+	*         or an object with 'tex' and 'label' properties.
+	*  @param {PIXI.Texture} [imageSettings.up.tex] The sourceRect for the state within the image.
+	*  @param {Object} [imageSettings.up.label=null] Label information specific to this state. Properties on this parameter override data 
+	*         in the label parameter for this button state only. All values except "text" and "type" from the label parameter may be overridden.
+	*  @param {Object|PIXI.Texture} [imageSettings.over=null] The texture for the over state of the button. If omitted, uses the up state.
+	*  @param {PIXI.Texture} [imageSettings.over.tex] The sourceRect for the state within the image.
+	*  @param {Object} [imageSettings.over.label=null] Label information specific to this state. Properties on this parameter override data 
+	*         in the label parameter for this button state only. All values except "text" and "type" from the label parameter may be overridden.
+	*  @param {Object|PIXI.Texture} [imageSettings.down=null] The texture for the down state of the button. If omitted, uses the up state.
+	*  @param {PIXI.Texture} [imageSettings.down.tex] The sourceRect for the state within the image.
+	*  @param {Object} [imageSettings.down.label=null] Label information specific to this state. Properties on this parameter override data 
+	*         in the label parameter for this button state only. All values except "text" and "type" from the label parameter may be overridden.
+	*  @param {Object|PIXI.Texture} [imageSettings.disabled=null] The texture for the disabled state of the button. If omitted, uses the up state.
+	*  @param {PIXI.Texture} [imageSettings.disabled.tex] The sourceRect for the state within the image.
+	*  @param {Object} [imageSettings.disabled.label=null] Label information specific to this state. Properties on this parameter override data 
+	*         in the label parameter for this button state only. All values except "text" and "type" from the label parameter may be overridden.
+	*  @param {Object|PIXI.Texture} [imageSettings.<yourCustomState>=null] The visual information about a custom state found in imageSettings.priority.
+	*         Any state added this way has a property of the same name added to the button. Examples of previous states that have been
+	*         moved to this system are "selected" and "highlighted".
+	*  @param {PIXI.Texture} [imageSettings.<yourCustomState>.tex] The texture for the custom state.
+	*  @param {Object} [imageSettings.<yourCustomState>.label=null] Label information specific to this state. Properties on this parameter 
+	*         override data in the label parameter for this button state only. All values except "text" from the label parameter may be
+	*         overridden.
+	*  @param {PIXI.Point} [imageSettings.origin=null] An optional offset for all button graphics, in case you want button 
+	*         positioning to not include a highlight glow, or any other reason you would want to offset the button art and label.
 	*  @param {Number} [imageSettings.scale=1] The scale to use for the textures. This allows smaller art assets than the designed size to be used.
 	*  @param {Object} [label=null] Information about the text label on the button. Omitting this makes the button not use a label.
 	*  @param {String} [label.type] If label.type is "bitmap", then a PIXI.BitmapText text is created, otherwise a PIXI.Text is created for the label.
 	*  @param {String} [label.text] The text to display on the label.
 	*  @param {Object} [label.style] The style of the text field, in the format that PIXI.BitmapText and PIXI.Text expect.
+	*  @param {String|Number} [label.x="center"] An x position to place the label text at relative to the button.
+	*  @param {String|Number} [label.y="center"] A y position to place the label text at relative to the button. If omitted,
+	*         "center" is used, which attempts to vertically center the label on the button.
 	*  @param {Boolean} [enabled=true] Whether or not the button is initially enabled.
 	*/
 	var Button = function(imageSettings, label, enabled)
@@ -58,68 +83,62 @@
 	p.label = null;
 
 	/**
-	*  **[PIXI only]** The function that should be called when the button is released.
+	*  The function that should be called when the button is released.
 	*  @public
 	*  @property {function} releaseCallback
 	*/
 	p.releaseCallback = null;
 
 	/**
-	*  **[PIXI only]** The function that should be called when the button is moused over.
+	*  The function that should be called when the button is moused over.
 	*  @public
 	*  @property {function} overCallback
 	*/
 	p.overCallback = null;
 	
 	/**
-	*  **[PIXI only]** The function that should be called when mouse leaves the button.
+	*  The function that should be called when mouse leaves the button.
 	*  @public
 	*  @property {function} outCallback
 	*/
 	p.outCallback = null;
+
+	/**
+	* A dictionary of state booleans, keyed by state name.
+	* @private
+	* @property {Object} _stateFlags
+	*/
+	p._stateFlags = null;
+	/**
+	* An array of state names (Strings), in their order of priority.
+	* The standard order previously was ["highlighted", "disabled", "down", "over", "selected", "up"].
+	* @private
+	* @property {Array} _statePriority
+	*/
+	p._statePriority = null;
 	
-	//===button state variables
-	/*
-	* If this button is enabled.
+	/**
+	* A dictionary of state graphic data, keyed by state name.
+	* Each object contains the sourceRect (src) and optionally 'trim', another Rectangle.
+	* Additionally, each object will contain a 'label' object if the button has a text label.
 	* @private
-	* @property {Boolean} _enabled
+	* @property {Object} _stateData
 	*/
-	p._enabled = false;
+	p._stateData = null;
 
-	/*
-	* If this button is held down.
+	/**
+	* The current style for the label, to avoid setting this if it is unchanged.
 	* @private
-	* @property {Boolean} _isDown
+	* @property {Object} _currentLabelStyle
 	*/
-	p._isDown = false;
+	p._currentLabelStyle = null;
 
-	/*
-	* If the mouse is over this button
+	/**
+	* An offset to button positioning, generally used to adjust for a highlight around the button.
 	* @private
-	* @property {Boolean} _isOver
+	* @property {PIXI.Point} _offset
 	*/
-	p._isOver = false;
-
-	/*
-	* If this button is selected.
-	* @private
-	* @property {Boolean} _isSelected
-	*/
-	p._isSelected = false;
-
-	/*
-	* If this button is a selectable button, and will respond to select being set.
-	* @private
-	* @property {Boolean} _isSelectable
-	*/
-	p._isSelectable = false;
-
-	/*
-	* If this button is highlighted.
-	* @private
-	* @property {Boolean} _isHighlighted
-	*/
-	p._isHighlighted = false;
+	p._offset = null;
 	
 	//===callbacks for mouse/touch events
 	/*
@@ -151,104 +170,11 @@
 	p._upCB = null;
 
 	/**
-	* [PIXI only] Callback for mouse up outside, bound to this button.
+	* Callback for mouse up outside, bound to this button.
 	* @private
 	* @property {Function} _upOutCB
 	*/
 	p._upOutCB = null;
-	
-	//===textures for different button states
-	/**
-	* [PIXI only] The texture for the up state of the button
-	* @private
-	* @property {PIXI.Texture} _upTex
-	*/
-	p._upTex = null;
-
-	/**
-	* [PIXI only] The texture for the over state of the button
-	* @private
-	* @property {PIXI.Texture} _overTex
-	*/
-	p._overTex = null;
-
-	/**
-	* [PIXI only] The texture for the down state of the button
-	* @private
-	* @property {PIXI.Texture} _downTex
-	*/
-	p._downTex = null;
-
-	/**
-	* [PIXI only] The texture for the disabled state of the button
-	* @private
-	* @property {PIXI.Texture} _disabledTex
-	*/
-	p._disabledTex = null;
-
-	/**
-	* [PIXI only] The texture for the selected state of the button
-	* @private
-	* @property {PIXI.Texture} _selectedTex
-	*/
-	p._selectedTex = null;
-
-	/**
-	* [PIXI only] The texture for the highlighted state of the button
-	* @private
-	* @property {PIXI.Texture} _highlightedTex
-	*/
-	p._highlightedTex = null;
-	
-	/*
-	* [PIXI only] An additional sprite that is made to be a 'slave' to this button. Its state is updated with the button state, from slaveSettings's art.
-	* @private
-	* @property {PIXI.Sprite} _slave
-	* @readOnly
-	*/
-	p._slave = null;
-	
-	//===textures for different button states
-	/**
-	* [PIXI only] The texture for the up state of the button
-	* @private
-	* @property {PIXI.Texture} _slaveUpTex
-	*/
-	p._slaveUpTex = null;
-
-	/**
-	* [PIXI only] The texture for the over state of the button
-	* @private
-	* @property {PIXI.Texture} _slaveOverTex
-	*/
-	p._slaveOverTex = null;
-
-	/**
-	* [PIXI only] The texture for the down state of the button
-	* @private
-	* @property {PIXI.Texture} _slaveDownTex
-	*/
-	p._slaveDownTex = null;
-	/**
-	* [PIXI only] The texture for the disabled state of the button
-	* @private
-	* @property {PIXI.Texture} _slaveDisabledTex
-	*/
-	p._slaveDisabledTex = null;
-
-	/**
-	* [PIXI only] The texture for the selected state of the button
-	* @private
-	* @property {PIXI.Texture} _slaveSelectedTex
-	*/
-	p._slaveSelectedTex = null;
-
-	/**
-	* [PIXI only] The texture for the highlighted state of the button
-	* @private
-	* @property {PIXI.Texture} _slaveHighlightedTex
-	*/
-	p._slaveHighlightedTex = null;
 	
 	/*
 	* The width of the button art, independent of the scaling of the button itself.
@@ -263,9 +189,24 @@
 	* @property {Number} _height
 	*/
 	p._height = 0;
+
+	/*
+	* A list of state names that should not have properties autogenerated.
+	* @private
+	* @static
+	* @property {Array} RESERVED_STATES
+	*/
+	var RESERVED_STATES = ["disabled", "enabled", "up", "over", "down"];
+	/*
+	* A state priority list to use as the default.
+	* @private
+	* @static
+	* @property {Array} DEFAULT_PRIORITY
+	*/
+	var DEFAULT_PRIORITY = ["disabled", "down", "over", "up"];
 	
 	/** 
-	*  **[PIXI only]** Constructor for the button when using PIXI.
+	*  Constructor for the button when using PIXI.
 	*  @method initialize
 	*  @param  {Object} [imageSettings] Information about the art to be used for button states, as well as if the button is selectable or not.
 	*  @param {Object} [label=null] Information about the text label on the button. Omitting this makes the button not use a label.
@@ -281,51 +222,124 @@
 		this._downCB = this._onDown.bind(this);
 		this._upCB = this._onUp.bind(this);
 		this._upOutCB = this._onUpOutside.bind(this);
+
+		var _stateData = this._stateData = {};
+		this._stateFlags = {};
+		this._offset = new createjs.Point();
 		
-		this._upTex = imageSettings.up;
-		this._overTex = imageSettings.over || this._upTex;
-		this._downTex = imageSettings.down || this._upTex;
-		this._disabledTex = imageSettings.disabled || this._upTex;
-		this._highlightedTex = imageSettings.highlighted || this._overTex;
-		if(imageSettings.selected)
+		//a clone of the label data to use as a default value, without changing the original
+		var labelData;
+		if(label)
 		{
-			this._isSelectable = true;
-			this._selectedTex = imageSettings.selected;
+			labelData = clone(label);
+			delete labelData.text;
+			delete labelData.type;
+			if(labelData.x === undefined)
+				labelData.x = "center";
+			if(labelData.y === undefined)
+				labelData.y = "center";
 		}
-		if(imageSettings.slave && imageSettings.slaveSettings)
+		
+		this._statePriority = imageSettings.priority || DEFAULT_PRIORITY;
+		//each rects object has a src property (createjs.Rectangle), and optionally a trim rectangle
+		for(var i = this._statePriority.length - 1; i >= 0; --i)//start at the end to start at the up state
 		{
-			this._slave = imageSettings.slave;
-			var slaveSettings = imageSettings.slaveSettings;
-			this._slaveUpTex = slaveSettings.up;
-			this._slaveOverTex = slaveSettings.over || this._slaveUpTex;
-			this._slaveDownTex = slaveSettings.down || this._slaveUpTex;
-			this._slaveDisabledTex = slaveSettings.disabled || this._slaveUpTex;
-			this._slaveHighlightedTex = slaveSettings.highlighted || this._slaveOverTex;
-			if(this._isSelectable)
-				this._slaveSelectedTex = slaveSettings.selected || this._slaveUpTex;
+			state = this._statePriority[i];
+			//set up the property for the state so it can be set - the function will ignore reserved states
+			this._addProperty(state);
+			//set the default value for the state flag
+			if(state != "disabled" && state != "up")
+				this._stateFlags[state] = false;
+			var inputData = imageSettings[state];
+			
+			if(inputData)
+			{
+				//if inputData is an object with a tex property, use that
+				//otherwise it is a texture itself
+				if(inputData.tex)
+					_stateData[state] = {tex: inputData.tex};
+				else
+					_stateData[state] = {tex: inputData};
+			}
+			else
+			{
+				//it's established that over, down, and particularly disabled default to the up state
+				_stateData[state] = _stateData.up;
+			}
+			//set up the label info for this state
+			if(label)
+			{
+				//if there is actual label data for this state, use that
+				if(inputData && inputData.label)
+				{
+					inputData = inputData.label;
+					var stateLabel = _stateData[state].label = {};
+					stateLabel.style = inputData.style || labelData.style;
+					stateLabel.x = inputData.x || labelData.x;
+					stateLabel.y = inputData.y || labelData.y;
+				}
+				//otherwise use the default
+				else
+					_stateData[state].label = labelData;
+			}
 		}
+		//ensure that our required states exist
+		if(!_stateData.up)
+		{
+			Debug.error("Button lacks an up state! This is a serious problem! Input data follows:");
+			Debug.error(imageSettings);
+		}
+		if(!_stateData.over)
+			_stateData.over = _stateData.up;
+		if(!_stateData.down)
+			_stateData.down = _stateData.up;
+		if(!_stateData.disabled)
+			_stateData.disabled = _stateData.up;
+		//set up the offset
+		if(imageSettings.offset)
+		{
+			this._offset.x = imageSettings.offset.x;
+			this._offset.y = imageSettings.offset.y;
+		}
+		else
+		{
+			this._offset.x = this._offset.y = 0;
+		}
+
 		if(imageSettings.scale)
 		{
 			var s = imageSettings.scale || 1;
 			this.back.scale.x = this.back.scale.y = s;
-			if(this._slave)
-				this._slave.scale.x = this._slave.scale.x = s;
 		}
 		
 		if(label)
 		{
 			this.label = label.type == "bitmap" ? new PIXI.BitmapText(label.text, label.style) : new PIXI.Text(label.text, label.style);
 			this.addChild(this.label);
-			this.label.position.x = (this.back.width - this.label.width) * 0.5;
-			var h = this.label.height;
-			this.label.position.y = (this.back.height - h) * 0.5 + h * 0.125;
+			this._currentLabelStyle = label.style;
 		}
+
+		this.back.x = this._offset.x;
+		this.back.y = this._offset.y;
 		
 		this._width = this.back.width;
 		this._height = this.back.height;
 		
 		this.enabled = enabled === undefined ? true : !!enabled;
 	};
+
+	/*
+	*  A simple function for making a shallow copy of an object.
+	*/
+	function clone(obj)
+	{
+		if (!obj || "object" != typeof obj) return null;
+		var copy = obj.constructor();
+		for (var attr in obj) {
+			if (obj.hasOwnProperty(attr)) copy[attr] = obj[attr];
+		}
+		return copy;
+	}
 	
 	/*
 	*  The width of the button, based on the width of back. This value is affected by scale.
@@ -362,9 +376,33 @@
 		{
 			this.label.setText(text);
 			this.label.forceUpdateText();
-			this.label.position.x = (this.back.width - this.label.width) * 0.5;
-			var h = this.label.height;
-			this.label.position.y = (this.back.height - h) * 0.5 + h * 0.125;
+			//position the text
+			if(data.x == "center")
+			{
+				var bW = this.back.width, lW = this.label.width;
+				switch(this._currentLabelStyle.align)
+				{
+					case "center":
+						this.label.position.x = (bW - lW) * 0.5 + lW;
+						break;
+					case "right":
+						this.label.position.x = bW * 0.5;
+						break;
+					default://left or null (defaults to left)
+						this.label.position.x = (bW - lW) * 0.5;
+						break;
+				}
+			}
+			else
+				this.label.x = data.x + this._offset.x;
+			if(data.y == "center")
+			{
+				var h = this.label.height;
+				//adding a tiny offset of h*0.125 seemed to improve centering
+				this.label.position.y = (this.back.height - h) * 0.5 + h * 0.125;
+			}
+			else
+				this.label.position.y = label.y + this._offset.y;
 		}
 	};
 	
@@ -375,10 +413,10 @@
 	*  @default true
 	*/
 	Object.defineProperty(p, "enabled", {
-		get: function() { return this._enabled; },
+		get: function() { return !this._stateFlags.disabled; },
 		set: function(value)
 		{
-			this._enabled = value;
+			this._stateFlags.disabled = !value;
 			this.buttonMode = value;
 			this.interactive = value;
 			
@@ -393,7 +431,7 @@
 			{
 				this.mousedown = this.touchstart = this.mouseover = this.mouseout = null;
 				this.mouseup = this.touchend = this.mouseupoutside = this.touchendoutside = null;
-				this._isDown = this._isOver = false;
+				this._stateData.down = this._stateData.over = false;
 				//also turn off pixi values so that re-enabling button works properly
 				this.__isOver = false;
 			}
@@ -401,39 +439,28 @@
 			this._updateState();
 		}
 	});
-	
-	/*
-	*  Whether or not the button is selected. Setting this only works if the button was given selected state when initialized.
-	*  @public
-	*  @property {Boolean} selected
-	*  @default false
+
+	/**
+	*  Adds a property to the button. Setting the property sets the value in
+	*  _stateFlags and calls _updateState().
+	*  @private
+	*  @method _addProperty
+	*  @param {String} propertyName The property name to add to the button.
 	*/
-	Object.defineProperty(p, "selected", {
-		get: function() { return this._isSelected; },
-		set: function(value)
-		{
-			if(this._isSelectable)
+	p._addProperty = function(propertyName)
+	{
+		//check to make sure we don't add reserved names
+		if(RESERVED_STATES.indexOf(propertyName) >= 0) return;
+		
+		Object.defineProperty(this, propertyName, {
+			get: function() { return this._stateFlags[propertyName]; },
+			set: function(value)
 			{
-				this._isSelected = value;
+				this._stateFlags[propertyName] = value;
 				this._updateState();
 			}
-		}
-	});
-	
-	/*
-	*  Whether or not the button is highlighted. The default highlighted state is the over state, but a specific texture can be supplied.
-	*  @public
-	*  @property {Boolean} highlighted
-	*  @default false
-	*/
-	Object.defineProperty(p, "highlighted", {
-		get: function() { return this._isHighlighted; },
-		set: function(value)
-		{
-			this._isHighlighted = value;
-			this._updateState();
-		}
-	});
+		});
+	};
 	
 	/*
 	*  Updates back based on the current button state.
@@ -443,70 +470,97 @@
 	p._updateState = function()
 	{
 		if(!this.back) return;
-		if(this._isHighlighted)
-			this.back.setTexture(this._highlightedTex);
-		else if(!this._enabled)
-			this.back.setTexture(this._disabledTex);
-		else if(this._isDown)
-			this.back.setTexture(this._downTex);
-		else if(this._isOver)
-			this.back.setTexture(this._overTex);
-		else if(this._isSelected)
-			this.back.setTexture(this._selectedTex);
-		else
-			this.back.setTexture(this._upTex);
-		if(this._slave)
+
+		var data;
+		//use the highest priority state
+		for(var i = 0; i < this._statePriority.length; ++i)
 		{
-			if(this._isHighlighted)
-				this._slave.setTexture(this._slaveHighlightedTex);
-			else if(!this._enabled)
-				this._slave.setTexture(this._slaveDisabledTex);
-			else if(this._isDown)
-				this._slave.setTexture(this._slaveDownTex);
-			else if(this._isOver)
-				this._slave.setTexture(this._slaveOverTex);
-			else if(this._isSelected)
-				this._slave.setTexture(this._slaveSelectedTex);
+			if(this._stateFlags[this._statePriority[i]])
+			{
+				data = this._stateData[this._statePriority[i]];
+				break;
+			}
+		}
+		//if no state is active, use the up state
+		if(!data)
+			data = this._stateData.up;
+		this.back.setTexture(data.tex);
+		//if we have a label, update that too
+		if(this.label)
+		{
+			data = data.label;
+			//update the text style
+			if(!this._currentLabelStyle || this._currentLabelStyle.font != data.font || this._currentLabelStyle.align != style.align)
+			{
+				this.label.setStyle(data);
+				this._currentLabelStyle = data;
+				this.label.forceUpdateText();//make the text update so we can figure out the size for positioning
+			}
+			//position the text
+			if(data.x == "center")
+			{
+				var bW = this.back.width, lW = this.label.width;
+				switch(this._currentLabelStyle.align)
+				{
+					case "center":
+						this.label.position.x = (bW - lW) * 0.5 + lW;
+						break;
+					case "right":
+						this.label.position.x = bW * 0.5;
+						break;
+					default://left or null (defaults to left)
+						this.label.position.x = (bW - lW) * 0.5;
+						break;
+				}
+			}
 			else
-				this._slave.setTexture(this._slaveUpTex);
+				this.label.x = data.x + this._offset.x;
+			if(data.y == "center")
+			{
+				var h = this.label.height;
+				//adding a tiny offset of h*0.125 seemed to improve centering
+				this.label.position.y = (this.back.height - h) * 0.5 + h * 0.125;
+			}
+			else
+				this.label.position.y = label.y + this._offset.y;
 		}
 	};
 	
 	/**
-	*  [PIXI only] The callback for when the button is moused over.
+	*  The callback for when the button is moused over.
 	*  @private
 	*  @method _onOver
 	*/
 	p._onOver = function(data)
 	{
-		this._isOver = true;
+		this._stateData.over = true;
 		this._updateState();
 		if(this.overCallback)
 			this.overCallback(this);
 	};
 	
 	/**
-	*  [PIXI only] The callback for when the mouse leaves the button area.
+	*  The callback for when the mouse leaves the button area.
 	*  @private
 	*  @method _onOut
 	*/
 	p._onOut = function(data)
 	{
-		this._isOver = false;
+		this._stateData.over = false;
 		this._updateState();
 		if(this.outCallback)
 			this.outCallback(this);
 	};
 	
 	/**
-	*  [PIXI only] The callback for when the button receives a mouse down event.
+	*  The callback for when the button receives a mouse down event.
 	*  @private
 	*  @method _onDown
 	*/
 	p._onDown = function(data)
 	{
 		data.originalEvent.preventDefault();
-		this._isDown = true;
+		this._stateData.down = true;
 		this._updateState();
 		
 		this.mouseup = this.touchend = this._upCB;
@@ -514,7 +568,7 @@
 	};
 	
 	/**
-	*  [PIXI only] The callback for when the button for when the mouse/touch is released on the button
+	*  The callback for when the button for when the mouse/touch is released on the button
 	*  - only when the button was held down initially.
 	*  @private
 	*  @method _onUp
@@ -522,7 +576,7 @@
 	p._onUp = function(data)
 	{
 		data.originalEvent.preventDefault();
-		this._isDown = false;
+		this._stateData.down = false;
 		this.mouseup = this.touchend = null;
 		this.mouseupoutside = this.touchendoutside = null;
 		
@@ -532,13 +586,13 @@
 	};
 	
 	/**
-	*  [PIXI only] The callback for when the mouse/touch is released outside the button when the button was held down.
+	*  The callback for when the mouse/touch is released outside the button when the button was held down.
 	*  @private
 	*  @method _onUpOutside
 	*/
 	p._onUpOutside = function(data)
 	{
-		this._isDown = false;
+		this._stateData.down = false;
 		this.mouseup = this.touchend = null;
 		this.mouseupoutside = this.touchendoutside = null;
 		
@@ -555,24 +609,19 @@
 		this.mousedown = this.touchstart = this.mouseover = this.mouseout = null;
 		this.mouseup = this.touchend = this.mouseupoutside = this.touchendoutside = null;
 		this.removeChildren(true);
-		this._upTex = null;
-		this._overTex = null;
-		this._downTex = null;
-		this._disabledTex = null;
-		this._selectedTex = null;
-		this._highlightedTex = null;
 		this.label = null;
 		this.back = null;
 		this.releaseCallback = null;
 		this.overCallback = null;
 		this.outCallback = null;
-		this._slave = null;
-		this._slaveUpTex = null;
-		this._slaveOverTex = null;
-		this._slaveDownTex = null;
-		this._slaveDisabledTex = null;
-		this._slaveSelectedTex = null;
-		this._slaveHighlightedTex = null;
+		this._stateData = null;
+		this._stateFlags = null;
+		this._statePriority = null;
+		this._downCB = null;
+		this._upCB = null;
+		this._overCB = null;
+		this._outCB = null;
+		this._upOutCB = null;
 	};
 	
 	namespace('cloudkid').Button = Button;

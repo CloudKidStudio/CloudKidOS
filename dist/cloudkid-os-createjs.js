@@ -159,7 +159,7 @@
 	/**
 	* [Pixi Only] A div that contains the canvas, so that games can layer it with other canvases if desired
 	* 
-	* @property canvasContainer The div element.
+	* @property {DOMElement} canvasContainer The div element.
 	*/
 	if(false)
 		p.canvasContainer = null;
@@ -2615,9 +2615,9 @@
 	*  @param {String} [label.textBaseline="middle"] The baseline for the label text, as createjs.Text expects.
 	*  @param {Object} [label.stroke=null] The stroke to use for the label text, if desired, as createjs.Text (CloudKid fork only) expects.
 	*  @param {createjs.Shadow} [label.shadow=null] A shadow object to apply to the label text.
-	*  @param {String|Number} [label.x=null] An x position to place the label text at relative to the button. If omitted,
+	*  @param {String|Number} [label.x="center"] An x position to place the label text at relative to the button. If omitted,
 	*         "center" is used, which attempts to horizontally center the label on the button.
-	*  @param {String|Number} [label.y=null] A y position to place the label text at relative to the button. If omitted,
+	*  @param {String|Number} [label.y="center"] A y position to place the label text at relative to the button. If omitted,
 	*         "center" is used, which attempts to vertically center the label on the button. This may be unreliable -
 	*         see documentation for createjs.Text.getMeasuredLineHeight().
 	*  @param {Boolean} [enabled=true] Whether or not the button is initially enabled.
@@ -2706,7 +2706,7 @@
 	* Each object contains the sourceRect (src) and optionally 'trim', another Rectangle.
 	* Additionally, each object will contain a 'label' object if the button has a text label.
 	* @private
-	* @property {Object} _stateFlags
+	* @property {Object} _stateData
 	*/
 	p._stateData = null;
 
@@ -3151,6 +3151,9 @@
 		this._outCB = null;
 		this.back = null;
 		this.label = null;
+		this._statePriority = null;
+		this._stateFlags = null;
+		this._stateData = null;
 	};
 
 	/**
@@ -3938,7 +3941,9 @@
 	*  * An object describing a circle, where x and y are the center, e.g.
 	*
 	*		{type:"circle", x:0, y:0, r:20}
-	*  @param {Number} scale The size to scale hitArea by
+	*  @param {Number} scale=1 The size to scale hitArea by
+	*  @return {Object} A geometric shape object for hit testing, either a Polygon, Rectangle, Ellipse, or Circle,
+	*      depending on the hitArea object. The shape will have a contains() function for hit testing.
 	*/
 	Positioner.generateHitArea = function(hitArea, scale)
 	{

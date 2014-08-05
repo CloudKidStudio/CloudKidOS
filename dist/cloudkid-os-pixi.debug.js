@@ -1,6 +1,6 @@
 !function(undefined) {
     var OS = function() {}, p = OS.prototype = Object.create(PIXI.DisplayObjectContainer.prototype), _paused = !1, _isReady = !1, _framerate = null, _lastFrameTime = 0, _lastFPSUpdateTime = 0, _framerateValue = null, _frameCount = 0, _tickCallback = null, _instance = null, _tickId = -1, _useRAF = !1, _fps = 0, _msPerFrame = 0;
-    OS.VERSION = "1.1.22", p.stage = null, p._renderer = null, p.canvasContainer = null, 
+    OS.VERSION = "1.1.23", p.stage = null, p._renderer = null, p.canvasContainer = null, 
     p._app = null, p.options = null, p._updateFunctions = {}, OS.init = function(stageName, options) {
         return _instance || (Debug.log("Creating the singleton instance of OS"), _instance = new OS(), 
         _instance.initialize(stageName, options)), _instance;
@@ -423,40 +423,56 @@
     }, namespace("cloudkid").CacheManager = CacheManager;
 }(), function(undefined) {
     "use strict";
+    function clone(obj) {
+        if (!obj || "object" != typeof obj) return null;
+        var copy = obj.constructor();
+        for (var attr in obj) obj.hasOwnProperty(attr) && (copy[attr] = obj[attr]);
+        return copy;
+    }
     var Button = function(imageSettings, label, enabled) {
         imageSettings && (PIXI.DisplayObjectContainer.call(this), this.initialize(imageSettings, label, enabled));
     }, p = Button.prototype = Object.create(PIXI.DisplayObjectContainer.prototype);
     p.back = null, p.label = null, p.releaseCallback = null, p.overCallback = null, 
-    p.outCallback = null, p._enabled = !1, p._isDown = !1, p._isOver = !1, p._isSelected = !1, 
-    p._isSelectable = !1, p._isHighlighted = !1, p._overCB = null, p._outCB = null, 
-    p._downCB = null, p._upCB = null, p._upOutCB = null, p._upTex = null, p._overTex = null, 
-    p._downTex = null, p._disabledTex = null, p._selectedTex = null, p._highlightedTex = null, 
-    p._slave = null, p._slaveUpTex = null, p._slaveOverTex = null, p._slaveDownTex = null, 
-    p._slaveDisabledTex = null, p._slaveSelectedTex = null, p._slaveHighlightedTex = null, 
-    p._width = 0, p._height = 0, p.initialize = function(imageSettings, label, enabled) {
-        if (this.back = new PIXI.Sprite(imageSettings.up), this.addChild(this.back), this._overCB = this._onOver.bind(this), 
+    p.outCallback = null, p._stateFlags = null, p._statePriority = null, p._stateData = null, 
+    p._currentLabelStyle = null, p._offset = null, p._overCB = null, p._outCB = null, 
+    p._downCB = null, p._upCB = null, p._upOutCB = null, p._width = 0, p._height = 0;
+    var RESERVED_STATES = [ "disabled", "enabled", "up", "over", "down" ], DEFAULT_PRIORITY = [ "disabled", "down", "over", "up" ];
+    p.initialize = function(imageSettings, label, enabled) {
+        this.back = new PIXI.Sprite(imageSettings.up), this.addChild(this.back), this._overCB = this._onOver.bind(this), 
         this._outCB = this._onOut.bind(this), this._downCB = this._onDown.bind(this), this._upCB = this._onUp.bind(this), 
-        this._upOutCB = this._onUpOutside.bind(this), this._upTex = imageSettings.up, this._overTex = imageSettings.over || this._upTex, 
-        this._downTex = imageSettings.down || this._upTex, this._disabledTex = imageSettings.disabled || this._upTex, 
-        this._highlightedTex = imageSettings.highlighted || this._overTex, imageSettings.selected && (this._isSelectable = !0, 
-        this._selectedTex = imageSettings.selected), imageSettings.slave && imageSettings.slaveSettings) {
-            this._slave = imageSettings.slave;
-            var slaveSettings = imageSettings.slaveSettings;
-            this._slaveUpTex = slaveSettings.up, this._slaveOverTex = slaveSettings.over || this._slaveUpTex, 
-            this._slaveDownTex = slaveSettings.down || this._slaveUpTex, this._slaveDisabledTex = slaveSettings.disabled || this._slaveUpTex, 
-            this._slaveHighlightedTex = slaveSettings.highlighted || this._slaveOverTex, this._isSelectable && (this._slaveSelectedTex = slaveSettings.selected || this._slaveUpTex);
+        this._upOutCB = this._onUpOutside.bind(this);
+        var _stateData = this._stateData = {};
+        this._stateFlags = {}, this._offset = new createjs.Point();
+        var labelData;
+        label && (labelData = clone(label), delete labelData.text, delete labelData.type, 
+        labelData.x === undefined && (labelData.x = "center"), labelData.y === undefined && (labelData.y = "center")), 
+        this._statePriority = imageSettings.priority || DEFAULT_PRIORITY;
+        for (var i = this._statePriority.length - 1; i >= 0; --i) {
+            state = this._statePriority[i], this._addProperty(state), "disabled" != state && "up" != state && (this._stateFlags[state] = !1);
+            var inputData = imageSettings[state];
+            if (_stateData[state] = inputData ? inputData.tex ? {
+                tex: inputData.tex
+            } : {
+                tex: inputData
+            } : _stateData.up, label) if (inputData && inputData.label) {
+                inputData = inputData.label;
+                var stateLabel = _stateData[state].label = {};
+                stateLabel.style = inputData.style || labelData.style, stateLabel.x = inputData.x || labelData.x, 
+                stateLabel.y = inputData.y || labelData.y;
+            } else _stateData[state].label = labelData;
         }
-        if (imageSettings.scale) {
+        if (_stateData.up || (Debug.error("Button lacks an up state! This is a serious problem! Input data follows:"), 
+        Debug.error(imageSettings)), _stateData.over || (_stateData.over = _stateData.up), 
+        _stateData.down || (_stateData.down = _stateData.up), _stateData.disabled || (_stateData.disabled = _stateData.up), 
+        imageSettings.offset ? (this._offset.x = imageSettings.offset.x, this._offset.y = imageSettings.offset.y) : this._offset.x = this._offset.y = 0, 
+        imageSettings.scale) {
             var s = imageSettings.scale || 1;
-            this.back.scale.x = this.back.scale.y = s, this._slave && (this._slave.scale.x = this._slave.scale.x = s);
+            this.back.scale.x = this.back.scale.y = s;
         }
-        if (label) {
-            this.label = "bitmap" == label.type ? new PIXI.BitmapText(label.text, label.style) : new PIXI.Text(label.text, label.style), 
-            this.addChild(this.label), this.label.position.x = .5 * (this.back.width - this.label.width);
-            var h = this.label.height;
-            this.label.position.y = .5 * (this.back.height - h) + .125 * h;
-        }
-        this._width = this.back.width, this._height = this.back.height, this.enabled = enabled === undefined ? !0 : !!enabled;
+        label && (this.label = "bitmap" == label.type ? new PIXI.BitmapText(label.text, label.style) : new PIXI.Text(label.text, label.style), 
+        this.addChild(this.label), this._currentLabelStyle = label.style), this.back.x = this._offset.x, 
+        this.back.y = this._offset.y, this._width = this.back.width, this._height = this.back.height, 
+        this.enabled = enabled === undefined ? !0 : !!enabled;
     }, Object.defineProperty(p, "width", {
         get: function() {
             return this._width * this.scale.x;
@@ -473,58 +489,94 @@
         }
     }), p.setText = function(text) {
         if (this.label) {
-            this.label.setText(text), this.label.forceUpdateText(), this.label.position.x = .5 * (this.back.width - this.label.width);
-            var h = this.label.height;
-            this.label.position.y = .5 * (this.back.height - h) + .125 * h;
+            if (this.label.setText(text), this.label.forceUpdateText(), "center" == data.x) {
+                var bW = this.back.width, lW = this.label.width;
+                switch (this._currentLabelStyle.align) {
+                  case "center":
+                    this.label.position.x = .5 * (bW - lW) + lW;
+                    break;
+
+                  case "right":
+                    this.label.position.x = .5 * bW;
+                    break;
+
+                  default:
+                    this.label.position.x = .5 * (bW - lW);
+                }
+            } else this.label.x = data.x + this._offset.x;
+            if ("center" == data.y) {
+                var h = this.label.height;
+                this.label.position.y = .5 * (this.back.height - h) + .125 * h;
+            } else this.label.position.y = label.y + this._offset.y;
         }
     }, Object.defineProperty(p, "enabled", {
         get: function() {
-            return this._enabled;
+            return !this._stateFlags.disabled;
         },
         set: function(value) {
-            this._enabled = value, this.buttonMode = value, this.interactive = value, value ? (this.mousedown = this.touchstart = this._downCB, 
-            this.mouseover = this._overCB, this.mouseout = this._outCB) : (this.mousedown = this.touchstart = this.mouseover = this.mouseout = null, 
+            this._stateFlags.disabled = !value, this.buttonMode = value, this.interactive = value, 
+            value ? (this.mousedown = this.touchstart = this._downCB, this.mouseover = this._overCB, 
+            this.mouseout = this._outCB) : (this.mousedown = this.touchstart = this.mouseover = this.mouseout = null, 
             this.mouseup = this.touchend = this.mouseupoutside = this.touchendoutside = null, 
-            this._isDown = this._isOver = !1, this.__isOver = !1), this._updateState();
+            this._stateData.down = this._stateData.over = !1, this.__isOver = !1), this._updateState();
         }
-    }), Object.defineProperty(p, "selected", {
-        get: function() {
-            return this._isSelected;
-        },
-        set: function(value) {
-            this._isSelectable && (this._isSelected = value, this._updateState());
+    }), p._addProperty = function(propertyName) {
+        RESERVED_STATES.indexOf(propertyName) >= 0 || Object.defineProperty(this, propertyName, {
+            get: function() {
+                return this._stateFlags[propertyName];
+            },
+            set: function(value) {
+                this._stateFlags[propertyName] = value, this._updateState();
+            }
+        });
+    }, p._updateState = function() {
+        if (this.back) {
+            for (var data, i = 0; i < this._statePriority.length; ++i) if (this._stateFlags[this._statePriority[i]]) {
+                data = this._stateData[this._statePriority[i]];
+                break;
+            }
+            if (data || (data = this._stateData.up), this.back.setTexture(data.tex), this.label) {
+                if (data = data.label, this._currentLabelStyle && this._currentLabelStyle.font == data.font && this._currentLabelStyle.align == style.align || (this.label.setStyle(data), 
+                this._currentLabelStyle = data, this.label.forceUpdateText()), "center" == data.x) {
+                    var bW = this.back.width, lW = this.label.width;
+                    switch (this._currentLabelStyle.align) {
+                      case "center":
+                        this.label.position.x = .5 * (bW - lW) + lW;
+                        break;
+
+                      case "right":
+                        this.label.position.x = .5 * bW;
+                        break;
+
+                      default:
+                        this.label.position.x = .5 * (bW - lW);
+                    }
+                } else this.label.x = data.x + this._offset.x;
+                if ("center" == data.y) {
+                    var h = this.label.height;
+                    this.label.position.y = .5 * (this.back.height - h) + .125 * h;
+                } else this.label.position.y = label.y + this._offset.y;
+            }
         }
-    }), Object.defineProperty(p, "highlighted", {
-        get: function() {
-            return this._isHighlighted;
-        },
-        set: function(value) {
-            this._isHighlighted = value, this._updateState();
-        }
-    }), p._updateState = function() {
-        this.back && (this.back.setTexture(this._isHighlighted ? this._highlightedTex : this._enabled ? this._isDown ? this._downTex : this._isOver ? this._overTex : this._isSelected ? this._selectedTex : this._upTex : this._disabledTex), 
-        this._slave && this._slave.setTexture(this._isHighlighted ? this._slaveHighlightedTex : this._enabled ? this._isDown ? this._slaveDownTex : this._isOver ? this._slaveOverTex : this._isSelected ? this._slaveSelectedTex : this._slaveUpTex : this._slaveDisabledTex));
     }, p._onOver = function() {
-        this._isOver = !0, this._updateState(), this.overCallback && this.overCallback(this);
+        this._stateData.over = !0, this._updateState(), this.overCallback && this.overCallback(this);
     }, p._onOut = function() {
-        this._isOver = !1, this._updateState(), this.outCallback && this.outCallback(this);
+        this._stateData.over = !1, this._updateState(), this.outCallback && this.outCallback(this);
     }, p._onDown = function(data) {
-        data.originalEvent.preventDefault(), this._isDown = !0, this._updateState(), this.mouseup = this.touchend = this._upCB, 
-        this.mouseupoutside = this.touchendoutside = this._upOutCB;
+        data.originalEvent.preventDefault(), this._stateData.down = !0, this._updateState(), 
+        this.mouseup = this.touchend = this._upCB, this.mouseupoutside = this.touchendoutside = this._upOutCB;
     }, p._onUp = function(data) {
-        data.originalEvent.preventDefault(), this._isDown = !1, this.mouseup = this.touchend = null, 
+        data.originalEvent.preventDefault(), this._stateData.down = !1, this.mouseup = this.touchend = null, 
         this.mouseupoutside = this.touchendoutside = null, this._updateState(), this.releaseCallback && this.releaseCallback(this);
     }, p._onUpOutside = function() {
-        this._isDown = !1, this.mouseup = this.touchend = null, this.mouseupoutside = this.touchendoutside = null, 
+        this._stateData.down = !1, this.mouseup = this.touchend = null, this.mouseupoutside = this.touchendoutside = null, 
         this._updateState();
     }, p.destroy = function() {
         this.mousedown = this.touchstart = this.mouseover = this.mouseout = null, this.mouseup = this.touchend = this.mouseupoutside = this.touchendoutside = null, 
-        this.removeChildren(!0), this._upTex = null, this._overTex = null, this._downTex = null, 
-        this._disabledTex = null, this._selectedTex = null, this._highlightedTex = null, 
-        this.label = null, this.back = null, this.releaseCallback = null, this.overCallback = null, 
-        this.outCallback = null, this._slave = null, this._slaveUpTex = null, this._slaveOverTex = null, 
-        this._slaveDownTex = null, this._slaveDisabledTex = null, this._slaveSelectedTex = null, 
-        this._slaveHighlightedTex = null;
+        this.removeChildren(!0), this.label = null, this.back = null, this.releaseCallback = null, 
+        this.overCallback = null, this.outCallback = null, this._stateData = null, this._stateFlags = null, 
+        this._statePriority = null, this._downCB = null, this._upCB = null, this._overCB = null, 
+        this._outCB = null, this._upOutCB = null;
     }, namespace("cloudkid").Button = Button;
 }(), function() {
     "use strict";
