@@ -3229,7 +3229,7 @@
         },
         {
             "file": "src/cloudkid/pixi/Button.js",
-            "line": 443,
+            "line": 474,
             "description": "Adds a property to the button. Setting the property sets the value in\n_stateFlags and calls _updateState().",
             "access": "private",
             "tagname": "",
@@ -3247,7 +3247,7 @@
         },
         {
             "file": "src/cloudkid/pixi/Button.js",
-            "line": 529,
+            "line": 580,
             "description": "The callback for when the button is moused over.",
             "access": "private",
             "tagname": "",
@@ -3258,7 +3258,7 @@
         },
         {
             "file": "src/cloudkid/pixi/Button.js",
-            "line": 542,
+            "line": 593,
             "description": "The callback for when the mouse leaves the button area.",
             "access": "private",
             "tagname": "",
@@ -3269,7 +3269,7 @@
         },
         {
             "file": "src/cloudkid/pixi/Button.js",
-            "line": 555,
+            "line": 606,
             "description": "The callback for when the button receives a mouse down event.",
             "access": "private",
             "tagname": "",
@@ -3280,7 +3280,7 @@
         },
         {
             "file": "src/cloudkid/pixi/Button.js",
-            "line": 570,
+            "line": 621,
             "description": "The callback for when the button for when the mouse/touch is released on the button\n- only when the button was held down initially.",
             "access": "private",
             "tagname": "",
@@ -3291,7 +3291,7 @@
         },
         {
             "file": "src/cloudkid/pixi/Button.js",
-            "line": 588,
+            "line": 639,
             "description": "The callback for when the mouse/touch is released outside the button when the button was held down.",
             "access": "private",
             "tagname": "",
