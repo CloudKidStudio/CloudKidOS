@@ -2960,7 +2960,7 @@
 			if(data.y == "center")
 				this.label.y = this._height * 0.5 + this._offset.y;
 			else
-				this.label.y = label.y + this._offset.y;
+				this.label.y = data.y + this._offset.y;
 		}
 	};
 	
@@ -3070,7 +3070,7 @@
 			if(data.y == "center")
 				this.label.y = this._height * 0.5 + this._offset.y;
 			else
-				this.label.y = label.y + this._offset.y;
+				this.label.y = data.y + this._offset.y;
 		}
 	};
 	

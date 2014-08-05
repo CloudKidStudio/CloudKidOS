@@ -2515,7 +2515,7 @@
 
 		var _stateData = this._stateData = {};
 		this._stateFlags = {};
-		this._offset = new createjs.Point();
+		this._offset = new PIXI.Point();
 		
 		//a clone of the label data to use as a default value, without changing the original
 		var labelData;
@@ -2528,13 +2528,28 @@
 				labelData.x = "center";
 			if(labelData.y === undefined)
 				labelData.y = "center";
+			//clone the style object and set up the defaults from PIXI.Text or PIXI.BitmapText
+			var style = labelData.style = clone(label.style);
+			if(label.type == "bitmap")
+			{
+				style.align = style.align || "left";
+			}
+			else
+			{
+				style.font = style.font || "bold 20pt Arial";
+				style.fill = style.fill || "black";
+				style.align = style.align || "left";
+				style.stroke = style.stroke || "black";
+				style.strokeThickness = style.strokeThickness || 0;
+				style.wordWrap = style.wordWrap || false;
+				style.wordWrapWidth = style.wordWrapWidth || 100;
+			}
 		}
 		
 		this._statePriority = imageSettings.priority || DEFAULT_PRIORITY;
-		//each rects object has a src property (createjs.Rectangle), and optionally a trim rectangle
 		for(var i = this._statePriority.length - 1; i >= 0; --i)//start at the end to start at the up state
 		{
-			state = this._statePriority[i];
+			var state = this._statePriority[i];
 			//set up the property for the state so it can be set - the function will ignore reserved states
 			this._addProperty(state);
 			//set the default value for the state flag
@@ -2604,9 +2619,8 @@
 		
 		if(label)
 		{
-			this.label = label.type == "bitmap" ? new PIXI.BitmapText(label.text, label.style) : new PIXI.Text(label.text, label.style);
+			this.label = label.type == "bitmap" ? new PIXI.BitmapText(label.text, labelData.style) : new PIXI.Text(label.text, labelData.style);
 			this.addChild(this.label);
-			this._currentLabelStyle = label.style;
 		}
 
 		this.back.x = this._offset.x;
@@ -2665,18 +2679,37 @@
 		if(this.label)
 		{
 			this.label.setText(text);
-			this.label.forceUpdateText();
+			//make the text update so we can figure out the size for positioning
+			if(this.label instanceof PIXI.Text)
+			{
+				this.label.updateText();
+				this.label.dirty = false;
+			}
+			else
+				this.label.forceUpdateText();
 			//position the text
+			var data;
+			for(var i = 0; i < this._statePriority.length; ++i)
+			{
+				if(this._stateFlags[this._statePriority[i]])
+				{
+					data = this._stateData[this._statePriority[i]];
+					break;
+				}
+			}
+			if(!data)
+				data = this._stateData.up;
+			data = data.label;
 			if(data.x == "center")
 			{
 				var bW = this.back.width, lW = this.label.width;
 				switch(this._currentLabelStyle.align)
 				{
 					case "center":
-						this.label.position.x = (bW - lW) * 0.5 + lW;
+						this.label.position.x = bW * 0.5;
 						break;
 					case "right":
-						this.label.position.x = bW * 0.5;
+						this.label.position.x = (bW - lW) * 0.5 + lW;
 						break;
 					default://left or null (defaults to left)
 						this.label.position.x = (bW - lW) * 0.5;
@@ -2684,15 +2717,13 @@
 				}
 			}
 			else
-				this.label.x = data.x + this._offset.x;
+				this.label.position.x = data.x + this._offset.x;
 			if(data.y == "center")
 			{
-				var h = this.label.height;
-				//adding a tiny offset of h*0.125 seemed to improve centering
-				this.label.position.y = (this.back.height - h) * 0.5 + h * 0.125;
+				this.label.position.y = (this.back.height - this.label.height) * 0.5;
 			}
 			else
-				this.label.position.y = label.y + this._offset.y;
+				this.label.position.y = data.y + this._offset.y;
 		}
 	};
 	
@@ -2721,7 +2752,7 @@
 			{
 				this.mousedown = this.touchstart = this.mouseover = this.mouseout = null;
 				this.mouseup = this.touchend = this.mouseupoutside = this.touchendoutside = null;
-				this._stateData.down = this._stateData.over = false;
+				this._stateFlags.down = this._stateFlags.over = false;
 				//also turn off pixi values so that re-enabling button works properly
 				this.__isOver = false;
 			}
@@ -2780,11 +2811,18 @@
 		{
 			data = data.label;
 			//update the text style
-			if(!this._currentLabelStyle || this._currentLabelStyle.font != data.font || this._currentLabelStyle.align != style.align)
+			if(!this._currentLabelStyle || !doObjectsMatch(this._currentLabelStyle, data.style))
 			{
-				this.label.setStyle(data);
-				this._currentLabelStyle = data;
-				this.label.forceUpdateText();//make the text update so we can figure out the size for positioning
+				this.label.setStyle(data.style);
+				this._currentLabelStyle = data.style;
+				//make the text update so we can figure out the size for positioning
+				if(this.label instanceof PIXI.Text)
+				{
+					this.label.updateText();
+					this.label.dirty = false;
+				}
+				else
+					this.label.forceUpdateText();
 			}
 			//position the text
 			if(data.x == "center")
@@ -2793,10 +2831,10 @@
 				switch(this._currentLabelStyle.align)
 				{
 					case "center":
-						this.label.position.x = (bW - lW) * 0.5 + lW;
+						this.label.position.x = bW * 0.5;
 						break;
 					case "right":
-						this.label.position.x = bW * 0.5;
+						this.label.position.x = (bW - lW) * 0.5 + lW;
 						break;
 					default://left or null (defaults to left)
 						this.label.position.x = (bW - lW) * 0.5;
@@ -2804,17 +2842,30 @@
 				}
 			}
 			else
-				this.label.x = data.x + this._offset.x;
+				this.label.position.x = data.x + this._offset.x;
 			if(data.y == "center")
 			{
-				var h = this.label.height;
-				//adding a tiny offset of h*0.125 seemed to improve centering
-				this.label.position.y = (this.back.height - h) * 0.5 + h * 0.125;
+				this.label.position.y = (this.back.height - this.label.height) * 0.5;
 			}
 			else
-				this.label.position.y = label.y + this._offset.y;
+				this.label.position.y = data.y + this._offset.y;
 		}
 	};
+
+	/*
+	* A simple function for comparing the properties of two objects
+	*/
+	function doObjectsMatch(obj1, obj2)
+	{
+		if(obj1 === obj2)
+			return true;
+		for(var key in obj1)
+		{
+			if(obj1[key] != obj2[key])
+				return false;
+		}
+		return true;
+	}
 	
 	/**
 	*  The callback for when the button is moused over.
@@ -2823,7 +2874,7 @@
 	*/
 	p._onOver = function(data)
 	{
-		this._stateData.over = true;
+		this._stateFlags.over = true;
 		this._updateState();
 		if(this.overCallback)
 			this.overCallback(this);
@@ -2836,7 +2887,7 @@
 	*/
 	p._onOut = function(data)
 	{
-		this._stateData.over = false;
+		this._stateFlags.over = false;
 		this._updateState();
 		if(this.outCallback)
 			this.outCallback(this);
@@ -2850,7 +2901,7 @@
 	p._onDown = function(data)
 	{
 		data.originalEvent.preventDefault();
-		this._stateData.down = true;
+		this._stateFlags.down = true;
 		this._updateState();
 		
 		this.mouseup = this.touchend = this._upCB;
@@ -2866,7 +2917,7 @@
 	p._onUp = function(data)
 	{
 		data.originalEvent.preventDefault();
-		this._stateData.down = false;
+		this._stateFlags.down = false;
 		this.mouseup = this.touchend = null;
 		this.mouseupoutside = this.touchendoutside = null;
 		
@@ -2882,7 +2933,7 @@
 	*/
 	p._onUpOutside = function(data)
 	{
-		this._stateData.down = false;
+		this._stateFlags.down = false;
 		this.mouseup = this.touchend = null;
 		this.mouseupoutside = this.touchendoutside = null;
 		

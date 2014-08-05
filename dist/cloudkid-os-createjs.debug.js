@@ -564,7 +564,7 @@
                 break;
             }
             data || (data = this._stateData.up), data = data.label, this.label.x = "center" == data.x ? .5 * (this._width - this.label.getMeasuredWidth()) + this._offset.x : data.x + this._offset.x, 
-            this.label.y = "center" == data.y ? .5 * this._height + this._offset.y : label.y + this._offset.y;
+            this.label.y = "center" == data.y ? .5 * this._height + this._offset.y : data.y + this._offset.y;
         }
     }, Object.defineProperty(p, "enabled", {
         get: function() {
@@ -598,7 +598,7 @@
             this.label && (data = data.label, this.label.textBaseline = data.textBaseline || "middle", 
             this.label.stroke = data.stroke, this.label.shadow = data.shadow, this.label.font = data.font, 
             this.label.color = data.color || "#000", this.label.x = "center" == data.x ? .5 * (this._width - this.label.getMeasuredWidth()) + this._offset.x : data.x + this._offset.x, 
-            this.label.y = "center" == data.y ? .5 * this._height + this._offset.y : label.y + this._offset.y);
+            this.label.y = "center" == data.y ? .5 * this._height + this._offset.y : data.y + this._offset.y);
         }
     }, p._onMouseDown = function() {
         this.addEventListener("pressup", this._upCB), this.addEventListener("click", this._clickCB), 

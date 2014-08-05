@@ -71,8 +71,6 @@
 		button.x = OS.instance.stageWidth - button.width - 5;
 		button.y = OS.instance.stageHeight - button.height - 5;
 		
-		button.label.y -= 3;
-		
 		button.addEventListener('click', this._clear.bind(this));
 		
 		this.addChild(button);

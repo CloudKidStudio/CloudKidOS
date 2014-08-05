@@ -84,9 +84,6 @@
 			}
 		);
 		
-		// Adjust the text position
-		button.label.position.y -= 4;
-		
 		button.position.x = OS.instance.stageWidth - button.width - 5;
 		button.position.y = OS.instance.stageHeight - button.height - 5;
 		button.releaseCallback = this._clear.bind(this);

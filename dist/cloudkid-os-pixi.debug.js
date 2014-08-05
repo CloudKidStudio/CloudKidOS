@@ -429,6 +429,11 @@
         for (var attr in obj) obj.hasOwnProperty(attr) && (copy[attr] = obj[attr]);
         return copy;
     }
+    function doObjectsMatch(obj1, obj2) {
+        if (obj1 === obj2) return !0;
+        for (var key in obj1) if (obj1[key] != obj2[key]) return !1;
+        return !0;
+    }
     var Button = function(imageSettings, label, enabled) {
         imageSettings && (PIXI.DisplayObjectContainer.call(this), this.initialize(imageSettings, label, enabled));
     }, p = Button.prototype = Object.create(PIXI.DisplayObjectContainer.prototype);
@@ -442,13 +447,21 @@
         this._outCB = this._onOut.bind(this), this._downCB = this._onDown.bind(this), this._upCB = this._onUp.bind(this), 
         this._upOutCB = this._onUpOutside.bind(this);
         var _stateData = this._stateData = {};
-        this._stateFlags = {}, this._offset = new createjs.Point();
+        this._stateFlags = {}, this._offset = new PIXI.Point();
         var labelData;
-        label && (labelData = clone(label), delete labelData.text, delete labelData.type, 
-        labelData.x === undefined && (labelData.x = "center"), labelData.y === undefined && (labelData.y = "center")), 
+        if (label) {
+            labelData = clone(label), delete labelData.text, delete labelData.type, labelData.x === undefined && (labelData.x = "center"), 
+            labelData.y === undefined && (labelData.y = "center");
+            var style = labelData.style = clone(label.style);
+            "bitmap" == label.type ? style.align = style.align || "left" : (style.font = style.font || "bold 20pt Arial", 
+            style.fill = style.fill || "black", style.align = style.align || "left", style.stroke = style.stroke || "black", 
+            style.strokeThickness = style.strokeThickness || 0, style.wordWrap = style.wordWrap || !1, 
+            style.wordWrapWidth = style.wordWrapWidth || 100);
+        }
         this._statePriority = imageSettings.priority || DEFAULT_PRIORITY;
         for (var i = this._statePriority.length - 1; i >= 0; --i) {
-            state = this._statePriority[i], this._addProperty(state), "disabled" != state && "up" != state && (this._stateFlags[state] = !1);
+            var state = this._statePriority[i];
+            this._addProperty(state), "disabled" != state && "up" != state && (this._stateFlags[state] = !1);
             var inputData = imageSettings[state];
             if (_stateData[state] = inputData ? inputData.tex ? {
                 tex: inputData.tex
@@ -469,10 +482,9 @@
             var s = imageSettings.scale || 1;
             this.back.scale.x = this.back.scale.y = s;
         }
-        label && (this.label = "bitmap" == label.type ? new PIXI.BitmapText(label.text, label.style) : new PIXI.Text(label.text, label.style), 
-        this.addChild(this.label), this._currentLabelStyle = label.style), this.back.x = this._offset.x, 
-        this.back.y = this._offset.y, this._width = this.back.width, this._height = this.back.height, 
-        this.enabled = enabled === undefined ? !0 : !!enabled;
+        label && (this.label = "bitmap" == label.type ? new PIXI.BitmapText(label.text, labelData.style) : new PIXI.Text(label.text, labelData.style), 
+        this.addChild(this.label)), this.back.x = this._offset.x, this.back.y = this._offset.y, 
+        this._width = this.back.width, this._height = this.back.height, this.enabled = enabled === undefined ? !0 : !!enabled;
     }, Object.defineProperty(p, "width", {
         get: function() {
             return this._width * this.scale.x;
@@ -489,25 +501,28 @@
         }
     }), p.setText = function(text) {
         if (this.label) {
-            if (this.label.setText(text), this.label.forceUpdateText(), "center" == data.x) {
+            this.label.setText(text), this.label instanceof PIXI.Text ? (this.label.updateText(), 
+            this.label.dirty = !1) : this.label.forceUpdateText();
+            for (var data, i = 0; i < this._statePriority.length; ++i) if (this._stateFlags[this._statePriority[i]]) {
+                data = this._stateData[this._statePriority[i]];
+                break;
+            }
+            if (data || (data = this._stateData.up), data = data.label, "center" == data.x) {
                 var bW = this.back.width, lW = this.label.width;
                 switch (this._currentLabelStyle.align) {
                   case "center":
-                    this.label.position.x = .5 * (bW - lW) + lW;
+                    this.label.position.x = .5 * bW;
                     break;
 
                   case "right":
-                    this.label.position.x = .5 * bW;
+                    this.label.position.x = .5 * (bW - lW) + lW;
                     break;
 
                   default:
                     this.label.position.x = .5 * (bW - lW);
                 }
-            } else this.label.x = data.x + this._offset.x;
-            if ("center" == data.y) {
-                var h = this.label.height;
-                this.label.position.y = .5 * (this.back.height - h) + .125 * h;
-            } else this.label.position.y = label.y + this._offset.y;
+            } else this.label.position.x = data.x + this._offset.x;
+            this.label.position.y = "center" == data.y ? .5 * (this.back.height - this.label.height) : data.y + this._offset.y;
         }
     }, Object.defineProperty(p, "enabled", {
         get: function() {
@@ -518,7 +533,7 @@
             value ? (this.mousedown = this.touchstart = this._downCB, this.mouseover = this._overCB, 
             this.mouseout = this._outCB) : (this.mousedown = this.touchstart = this.mouseover = this.mouseout = null, 
             this.mouseup = this.touchend = this.mouseupoutside = this.touchendoutside = null, 
-            this._stateData.down = this._stateData.over = !1, this.__isOver = !1), this._updateState();
+            this._stateFlags.down = this._stateFlags.over = !1, this.__isOver = !1), this._updateState();
         }
     }), p._addProperty = function(propertyName) {
         RESERVED_STATES.indexOf(propertyName) >= 0 || Object.defineProperty(this, propertyName, {
@@ -536,40 +551,38 @@
                 break;
             }
             if (data || (data = this._stateData.up), this.back.setTexture(data.tex), this.label) {
-                if (data = data.label, this._currentLabelStyle && this._currentLabelStyle.font == data.font && this._currentLabelStyle.align == style.align || (this.label.setStyle(data), 
-                this._currentLabelStyle = data, this.label.forceUpdateText()), "center" == data.x) {
+                if (data = data.label, this._currentLabelStyle && doObjectsMatch(this._currentLabelStyle, data.style) || (this.label.setStyle(data.style), 
+                this._currentLabelStyle = data.style, this.label instanceof PIXI.Text ? (this.label.updateText(), 
+                this.label.dirty = !1) : this.label.forceUpdateText()), "center" == data.x) {
                     var bW = this.back.width, lW = this.label.width;
                     switch (this._currentLabelStyle.align) {
                       case "center":
-                        this.label.position.x = .5 * (bW - lW) + lW;
+                        this.label.position.x = .5 * bW;
                         break;
 
                       case "right":
-                        this.label.position.x = .5 * bW;
+                        this.label.position.x = .5 * (bW - lW) + lW;
                         break;
 
                       default:
                         this.label.position.x = .5 * (bW - lW);
                     }
-                } else this.label.x = data.x + this._offset.x;
-                if ("center" == data.y) {
-                    var h = this.label.height;
-                    this.label.position.y = .5 * (this.back.height - h) + .125 * h;
-                } else this.label.position.y = label.y + this._offset.y;
+                } else this.label.position.x = data.x + this._offset.x;
+                this.label.position.y = "center" == data.y ? .5 * (this.back.height - this.label.height) : data.y + this._offset.y;
             }
         }
     }, p._onOver = function() {
-        this._stateData.over = !0, this._updateState(), this.overCallback && this.overCallback(this);
+        this._stateFlags.over = !0, this._updateState(), this.overCallback && this.overCallback(this);
     }, p._onOut = function() {
-        this._stateData.over = !1, this._updateState(), this.outCallback && this.outCallback(this);
+        this._stateFlags.over = !1, this._updateState(), this.outCallback && this.outCallback(this);
     }, p._onDown = function(data) {
-        data.originalEvent.preventDefault(), this._stateData.down = !0, this._updateState(), 
+        data.originalEvent.preventDefault(), this._stateFlags.down = !0, this._updateState(), 
         this.mouseup = this.touchend = this._upCB, this.mouseupoutside = this.touchendoutside = this._upOutCB;
     }, p._onUp = function(data) {
-        data.originalEvent.preventDefault(), this._stateData.down = !1, this.mouseup = this.touchend = null, 
+        data.originalEvent.preventDefault(), this._stateFlags.down = !1, this.mouseup = this.touchend = null, 
         this.mouseupoutside = this.touchendoutside = null, this._updateState(), this.releaseCallback && this.releaseCallback(this);
     }, p._onUpOutside = function() {
-        this._stateData.down = !1, this.mouseup = this.touchend = null, this.mouseupoutside = this.touchendoutside = null, 
+        this._stateFlags.down = !1, this.mouseup = this.touchend = null, this.mouseupoutside = this.touchendoutside = null, 
         this._updateState();
     }, p.destroy = function() {
         this.mousedown = this.touchstart = this.mouseover = this.mouseout = null, this.mouseup = this.touchend = this.mouseupoutside = this.touchendoutside = null, 
