@@ -642,13 +642,13 @@
                     "type": "*"
                 },
                 {
-                    "name": "string",
-                    "description": "",
+                    "name": "url",
+                    "description": "The url that was loaded",
                     "type": "String"
                 },
                 {
                     "name": "loader",
-                    "description": "",
+                    "description": "The LoadQueue that performed the load",
                     "type": "createjs.LoadQueue"
                 }
             ]
@@ -3843,7 +3843,7 @@
             "line": 22,
             "description": "The screen height in pixels",
             "itemtype": "property",
-            "name": "width",
+            "name": "height",
             "type": "Number",
             "class": "ScreenSettings",
             "module": "cloudkid"
@@ -4822,16 +4822,18 @@
         {
             "file": "src/cloudkid/OS.js",
             "line": 159,
-            "description": "[Pixi Only] A div that contains the canvas, so that games can layer it with other canvases if desired",
+            "description": "[Pixi Only] A div that contains the canvas, so that games can layer it with other canvases if desired.",
             "itemtype": "property",
-            "name": "canvasContainer The div element.",
+            "name": "canvasContainer",
             "type": "DOMElement",
+            "access": "public",
+            "tagname": "",
             "class": "OS",
             "module": "cloudkid"
         },
         {
             "file": "src/cloudkid/OS.js",
-            "line": 167,
+            "line": 168,
             "description": "Reference to the current application",
             "access": "protected",
             "tagname": "",
@@ -4843,7 +4845,7 @@
         },
         {
             "file": "src/cloudkid/OS.js",
-            "line": 174,
+            "line": 175,
             "description": "The collection of query string parameters",
             "access": "public",
             "tagname": "",
@@ -4855,7 +4857,7 @@
         },
         {
             "file": "src/cloudkid/OS.js",
-            "line": 181,
+            "line": 182,
             "description": "Collection of update functions",
             "access": "protected",
             "tagname": "",
@@ -4867,7 +4869,7 @@
         },
         {
             "file": "src/cloudkid/OS.js",
-            "line": 188,
+            "line": 189,
             "description": "Static constructor for setting up the stage",
             "example": [
                 "\n\t\tvar os = cloudkid.OS.init(\"stage\", {\n\t\t\tshowFramerate: true,\n\t\t\tfps: 60,\n\t\t\tparseQueryString: true,\n\t\t\tdebug: true\n\t\t});\n\t\t\n\t\tos.addApp(myApplication);"
@@ -4914,7 +4916,8 @@
                             "name": "ip",
                             "description": "The IP address for doing remote debugging",
                             "type": "String",
-                            "optional": true
+                            "optional": true,
+                            "optdefault": "null"
                         },
                         {
                             "name": "parseQueryString",
@@ -4941,19 +4944,22 @@
                             "name": "backgroundColor",
                             "description": "(PIXI only) The background color of the stage as a uint, e.g. 0xFFFFFF for white.",
                             "type": "Int",
-                            "optional": true
+                            "optional": true,
+                            "optdefault": "0x000000"
                         },
                         {
                             "name": "preMultAlpha",
                             "description": "(PIXI only) If the renderer is to use pre multiplied alpha for all images. This only affects the WebGL renderer.",
                             "type": "Boolean",
-                            "optional": true
+                            "optional": true,
+                            "optdefault": "false"
                         },
                         {
                             "name": "transparent",
                             "description": "(PIXI only) The stage is transparent",
                             "type": "Boolean",
-                            "optional": true
+                            "optional": true,
+                            "optdefault": "false"
                         },
                         {
                             "name": "width",
@@ -5015,7 +5021,7 @@
         },
         {
             "file": "src/cloudkid/OS.js",
-            "line": 240,
+            "line": 241,
             "description": "The internal constructor extends Container constructor",
             "is_constructor": 1,
             "access": "protected",
@@ -5040,7 +5046,7 @@
         },
         {
             "file": "src/cloudkid/OS.js",
-            "line": 498,
+            "line": 497,
             "description": "Define all of the query string parameters",
             "access": "private",
             "tagname": "",
@@ -5058,7 +5064,7 @@
         },
         {
             "file": "src/cloudkid/OS.js",
-            "line": 527,
+            "line": 526,
             "description": "Pause the OS and stop frame updates",
             "access": "public",
             "tagname": "",
@@ -5069,7 +5075,7 @@
         },
         {
             "file": "src/cloudkid/OS.js",
-            "line": 554,
+            "line": 553,
             "description": "Gets the current time in milliseconds for timing purposes",
             "access": "public",
             "tagname": "",
@@ -5080,7 +5086,7 @@
         },
         {
             "file": "src/cloudkid/OS.js",
-            "line": 564,
+            "line": 563,
             "description": "Resume the OS updates",
             "access": "public",
             "tagname": "",
@@ -5091,7 +5097,7 @@
         },
         {
             "file": "src/cloudkid/OS.js",
-            "line": 582,
+            "line": 581,
             "description": "The FPS that the OS is targeting.",
             "itemtype": "property",
             "name": "fps",
@@ -5103,7 +5109,7 @@
         },
         {
             "file": "src/cloudkid/OS.js",
-            "line": 597,
+            "line": 596,
             "description": "Convenience for accessing the stage's width",
             "itemtype": "property",
             "name": "stageWidth",
@@ -5116,7 +5122,7 @@
         },
         {
             "file": "src/cloudkid/OS.js",
-            "line": 611,
+            "line": 610,
             "description": "Convenience for accessing the stage's height",
             "itemtype": "property",
             "name": "stageHeight",
@@ -5129,7 +5135,7 @@
         },
         {
             "file": "src/cloudkid/OS.js",
-            "line": 633,
+            "line": 632,
             "description": "Remove the application",
             "access": "public",
             "tagname": "",
@@ -5151,7 +5157,7 @@
         },
         {
             "file": "src/cloudkid/OS.js",
-            "line": 687,
+            "line": 686,
             "description": "Add an app to this display list",
             "access": "public",
             "tagname": "",
@@ -5169,7 +5175,7 @@
         },
         {
             "file": "src/cloudkid/OS.js",
-            "line": 709,
+            "line": 708,
             "description": "Get the current application",
             "itemtype": "method",
             "name": "getApp",
@@ -5184,7 +5190,7 @@
         },
         {
             "file": "src/cloudkid/OS.js",
-            "line": 720,
+            "line": 719,
             "description": "Add an update callback, must take elapsed as a parameter",
             "itemtype": "method",
             "name": "addUpdateCallback",
@@ -5207,7 +5213,7 @@
         },
         {
             "file": "src/cloudkid/OS.js",
-            "line": 735,
+            "line": 734,
             "description": "Remove an update callback, must take elapsed as a parameter",
             "access": "public",
             "tagname": "",
@@ -5225,7 +5231,7 @@
         },
         {
             "file": "src/cloudkid/OS.js",
-            "line": 749,
+            "line": 748,
             "description": "Called by the stage listener",
             "access": "public",
             "tagname": "",
@@ -5236,7 +5242,7 @@
         },
         {
             "file": "src/cloudkid/OS.js",
-            "line": 803,
+            "line": 802,
             "description": "[PIXI Only] Resizes the renderer and the canvasContainer.",
             "access": "public",
             "tagname": "",
@@ -5247,7 +5253,7 @@
         },
         {
             "file": "src/cloudkid/OS.js",
-            "line": 817,
+            "line": 816,
             "description": "Destroy the instance of the OS, can init after this,\nalso destroys the application, if around",
             "access": "public",
             "tagname": "",
@@ -5258,7 +5264,7 @@
         },
         {
             "file": "src/cloudkid/OS.js",
-            "line": 854,
+            "line": 853,
             "description": "Static function for getting the singleton instance",
             "static": 1,
             "readonly": "",
