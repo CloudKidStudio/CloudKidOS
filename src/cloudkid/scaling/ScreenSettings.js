@@ -21,7 +21,7 @@
 
 		/**
 		*  The screen height in pixels
-		*  @property {Number} width 
+		*  @property {Number} height 
 		*/
 		this.height = height;
 

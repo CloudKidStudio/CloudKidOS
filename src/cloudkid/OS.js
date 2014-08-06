@@ -157,9 +157,10 @@
 		p._renderer = null;
 	
 	/**
-	* [Pixi Only] A div that contains the canvas, so that games can layer it with other canvases if desired
+	* [Pixi Only] A div that contains the canvas, so that games can layer it with other canvases if desired.
 	* 
-	* @property {DOMElement} canvasContainer The div element.
+	* @property {DOMElement} canvasContainer
+	* @public
 	*/
 	if(CONFIG_PIXI)
 		p.canvasContainer = null;
@@ -201,18 +202,18 @@
 	*  @method init
 	*  @static
 	*  @public
-	*  @param {string} stageName The stage name selector
+	*  @param {String} stageName The stage name selector
 	*  @param {Dictionary} [options] Additional options
 	*  @param {int} [options.mouseOverRate=30] (CreateJS only) the framerate for mouseover effects, higher is more responsive
 	*  @param {Boolean} [options.debug=false] If we should enable the Debug class for doing console and remote logs
 	*  @param {int} [options.minLogLevel=0] The minimum log level for the Debug class, default is show all statements, values from 0 (all)-4 (errors only)
-	*  @param {String} [options.ip] The IP address for doing remote debugging
+	*  @param {String} [options.ip=null] The IP address for doing remote debugging
 	*  @param {Boolean} [options.parseQueryString=false] If we should convert the query string into OS options
 	*  @param {Boolean} [options.showFramerate=false] To display the current framerate counter
 	*  @param {Boolean} [options.clearView=false] Auto clear the stage render
-	*  @param {int} [options.backgroundColor] (PIXI only) The background color of the stage as a uint, e.g. 0xFFFFFF for white.
-	*  @param {Boolean} [options.preMultAlpha] (PIXI only) If the renderer is to use pre multiplied alpha for all images. This only affects the WebGL renderer.
-	*  @param {Boolean} [options.transparent] (PIXI only) The stage is transparent
+	*  @param {int} [options.backgroundColor=0x000000] (PIXI only) The background color of the stage as a uint, e.g. 0xFFFFFF for white.
+	*  @param {Boolean} [options.preMultAlpha=false] (PIXI only) If the renderer is to use pre multiplied alpha for all images. This only affects the WebGL renderer.
+	*  @param {Boolean} [options.transparent=false] (PIXI only) The stage is transparent
 	*  @param {int} [options.width] (PIXI only) The width of the renderer, default is the canvas width
 	*  @param {int} [options.height] (PIXI only) The height of the renderer, default is the canvas height
 	*  @param {String} [options.forceContext=null] (PIXI only) The stage renderer, options are "canvas2d", "webgl" or null. Omitting this (or null) uses WebGL if available, and Canvas2D otherwise.
@@ -296,8 +297,6 @@
 		}
 		this.stage.addChild(this);
 		
-
-
 		//listen for when the page visibility changes so we can pause our timings
 		this.visibleListener = this.onWindowVisibilityChanged.bind(this);
 		addPageHideListener(this.visibleListener);
