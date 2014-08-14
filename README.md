@@ -1,21 +1,8 @@
 CloudKid OS
 ==========
 
-An application framework for canvas that works with Pixi or CreateJS
+This project has been deprecated and replaced with:
 
-##Documentation##
-http://cloudkidstudio.github.io/CloudKidOS/
-
-##Installation##
-
-CloudKid OS can be install using Bower.
-
-```bash
-bower install cloudkid-os
-```
-
-##License##
-
-Copyright (c) 2014 [CloudKid](http://github.com/cloudkidstudio)
-
-Released under the MIT License.
+* [CloudKidFramework](https://github.com/CloudKidStudio/CloudKidFramework)
+* [CreateJSDisplay](https://github.com/CloudKidStudio/CreateJSDisplay)
+* [PixiDisplay](https://github.com/CloudKidStudio/PixiDisplay)
