@@ -1,6 +1,6 @@
 !function(undefined) {
     var OS = function() {}, p = OS.prototype = new createjs.Container(), _paused = !1, _isReady = !1, _framerate = null, _lastFrameTime = 0, _lastFPSUpdateTime = 0, _framerateValue = null, _frameCount = 0, _tickCallback = null, _instance = null, _tickId = -1, _useRAF = !1, _fps = 0, _msPerFrame = 0;
-    OS.VERSION = "1.1.24", p.Container_initialize = p.initialize, p.stage = null, 
+    OS.VERSION = "1.1.25", p.Container_initialize = p.initialize, p.stage = null, 
     p._app = null, p.options = null, p._updateFunctions = {}, OS.init = function(stageName, options) {
         return _instance || (Debug.log("Creating the singleton instance of OS"), _instance = new OS(), 
         _instance.initialize(stageName, options)), _instance;
@@ -206,7 +206,18 @@
     } catch (e) {
         WEB_STORAGE_SUPPORT = !1;
     }
-    SavedData.remove = function(name) {
+    Object.defineProperty(SavedData, "useWebStorage", {
+        get: function() {
+            return WEB_STORAGE_SUPPORT;
+        },
+        set: function(value) {
+            if (value && "undefined" != typeof window.Storage) try {
+                localStorage.setItem("LS_TEST", "test"), localStorage.removeItem("LS_TEST"), WEB_STORAGE_SUPPORT = !0;
+            } catch (e) {
+                WEB_STORAGE_SUPPORT = !1;
+            } else WEB_STORAGE_SUPPORT = !1;
+        }
+    }), SavedData.remove = function(name) {
         WEB_STORAGE_SUPPORT ? (localStorage.removeItem(name), sessionStorage.removeItem(name)) : SavedData.write(name, "", ERASE_COOKIE);
     }, SavedData.write = function(name, value, tempOnly) {
         if (WEB_STORAGE_SUPPORT) tempOnly ? sessionStorage.setItem(name, JSON.stringify(value)) : localStorage.setItem(name, JSON.stringify(value)); else {

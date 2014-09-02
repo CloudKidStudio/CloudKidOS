@@ -31,6 +31,33 @@
 			WEB_STORAGE_SUPPORT = false;
 		}
 	}
+
+	/**
+	 * If SavedData will be using localStorage and sessionStorage.
+	 * @property {Boolean} useWebStorage
+	 * @default  true
+	 */
+	Object.defineProperty(SavedData, "useWebStorage", {
+		get: function() { return WEB_STORAGE_SUPPORT; },
+		set: function(value)
+		{
+			if(value && typeof(window.Storage) !== "undefined")
+			{
+				try
+				{
+					localStorage.setItem("LS_TEST", "test");
+					localStorage.removeItem("LS_TEST");
+					WEB_STORAGE_SUPPORT = true;
+				}
+				catch(e)
+				{
+					WEB_STORAGE_SUPPORT = false;
+				}
+			}
+			else
+				WEB_STORAGE_SUPPORT = false;
+		}
+	}); 
 	
 	/** 
 	*  Remove a saved variable by name.
