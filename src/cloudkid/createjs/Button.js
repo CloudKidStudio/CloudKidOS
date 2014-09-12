@@ -677,7 +677,7 @@
 			drawingBitmap.cache(0, 0, output.up.src.width, output.up.src.height);
 			drawingBitmap.draw(context);
 			//update the output with the state
-			output.disabled = { src: new createjs.Rectangle(0, nextY, buttonWidth, buttonHeight) };
+			output.disabled = { src: new createjs.Rectangle(0, nextY, buttonWidth, buttonHeight | 0) };
 			nextY += buttonHeight;//set up the next position for the highlight state, if we have it
 			context.restore();//reset any transformations
 		}
@@ -726,7 +726,7 @@
 				output.disabled.trim = trim;
 			//set up the highlight state for the button
 			output.highlighted = {
-				src:new createjs.Rectangle(0, nextY, highlightStateWidth, highlightStateHeight)
+				src:new createjs.Rectangle(0, nextY, highlightStateWidth | 0, highlightStateHeight | 0)
 			};
 			//set up the state priority to include the highlighted state
 			output.priority = DEFAULT_PRIORITY.slice();
