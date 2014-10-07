@@ -108,8 +108,8 @@
 	{
 		if(!this._callback) return;
 		var os = cloudkid.OS.instance;
-		if(!os.hasUpdateCallback(this._updateId))
-			os.addUpdateCallback(this._updateId, this._update);
+		//can't add duplicates
+		os.addUpdateCallback(this._updateId, this._update);
 		this._timer = this._delay;
 		this._paused = false;
 	};

@@ -1,6 +1,6 @@
 !function(undefined) {
     var OS = function() {}, p = OS.prototype = new createjs.Container(), _paused = !1, _isReady = !1, _framerate = null, _lastFrameTime = 0, _lastFPSUpdateTime = 0, _framerateValue = null, _frameCount = 0, _tickCallback = null, _instance = null, _tickId = -1, _useRAF = !1, _fps = 0, _msPerFrame = 0;
-    OS.VERSION = "1.1.26", p.Container_initialize = p.initialize, p.stage = null, 
+    OS.VERSION = "1.1.27", p.Container_initialize = p.initialize, p.stage = null, 
     p._app = null, p.options = null, p._updateFunctions = {}, OS.init = function(stageName, options) {
         return _instance || (Debug.log("Creating the singleton instance of OS"), _instance = new OS(), 
         _instance.initialize(stageName, options)), _instance;
@@ -307,8 +307,7 @@
     }, p.restart = function() {
         if (this._callback) {
             var os = cloudkid.OS.instance;
-            os.hasUpdateCallback(this._updateId) || os.addUpdateCallback(this._updateId, this._update), 
-            this._timer = this._delay, this._paused = !1;
+            os.addUpdateCallback(this._updateId, this._update), this._timer = this._delay, this._paused = !1;
         }
     }, p.stop = function() {
         cloudkid.OS.instance.removeUpdateCallback(this._updateId), this._paused = !1;
