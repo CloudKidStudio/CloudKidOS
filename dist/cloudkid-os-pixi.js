@@ -791,7 +791,7 @@
 		}
 		//render stage
 		if (true) this._renderer.render(this.stage);
-		if (false) this.stage.update(dTime);
+		if (false) this.stage.update({delta:dTime});
 		
 		//request the next animation frame
 		_tickId = _useRAF ? 

@@ -120,7 +120,9 @@
         }
         _lastFrameTime = now, this._app && this._app.update(dTime);
         for (var alias in this._updateFunctions) this._updateFunctions[alias](dTime);
-        this.stage.update(dTime), _tickId = _useRAF ? requestAnimFrame(_tickCallback) : setTargetedTimeout(_tickCallback, this.getTime() - _lastFrameTime);
+        this.stage.update({
+            delta: dTime
+        }), _tickId = _useRAF ? requestAnimFrame(_tickCallback) : setTargetedTimeout(_tickCallback, this.getTime() - _lastFrameTime);
     }, p.destroy = function() {
         var stage = this.stage, ml = cloudkid.MediaLoader.instance;
         this.pause(), this.removeApp(!0), _instance = null, createjs.Touch.disable(stage), 

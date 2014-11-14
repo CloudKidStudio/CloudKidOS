@@ -791,7 +791,7 @@
 		}
 		//render stage
 		if (CONFIG_PIXI) this._renderer.render(this.stage);
-		if (CONFIG_CREATEJS) this.stage.update(dTime);
+		if (CONFIG_CREATEJS) this.stage.update({delta:dTime});
 		
 		//request the next animation frame
 		_tickId = _useRAF ? 
